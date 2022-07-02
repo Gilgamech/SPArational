@@ -1,0 +1,3203 @@
+{
+  "jmlVersion": "23JAN2018",
+  "applicationName": "giltech",
+  "applicationTitle": "Gilgamech Technologies",
+  "applicationVersion": 1553,
+  "startingPage": "fruitBot",
+  "apiVersion": "null",
+  "siteDomain": "www.gilgamech.com",
+  "googleApiKey": "aSecretToEverybody",
+  "errgoLogic": "",
+  "pageSettingsJson": "https://s3.amazonaws.com/gilpublic/giltech/giltech.spa",
+  "serverSettingsJson": "https://gil-api.herokuapp.com/settings.json",
+  "currentPage": "s3",
+  "wrapperVar": {
+    "elements": [
+      {
+        "elementParent": "body",
+        "id": "headWrapper"
+      },
+      {
+        "elementParent": "body",
+        "id": "bodyWrapper"
+      },
+      {
+        "elementParent": "body",
+        "id": "footWrapper"
+      },
+      {
+        "elementParent": "nav3dd",
+        "elementClass": "$_.classes.DdownContent",
+        "id": "NavDDWrapper"
+      }
+    ]
+  },
+  "classes": {
+    "SmallHiddenLargeQuarter": "col-md-3 hidden-xs ",
+    "HalfDesktopFullMobile": "col-md-6 col-xs-12 ",
+    "FullDesktopFullMobile": "col-md-12 col-xs-12 ",
+    "DdownContent": "dropdown-content ",
+    "ContentItems": "contentItems ",
+    "QuarterWidth": "col-md-3 col-xs-3 ",
+    "SmallFullLargeQuarter": "col-md-3 col-sm-6 col-xs-12 ",
+    "SmallHidden": "hidden-sm hidden-xs ",
+    "LargeHidden": "hidden-md hidden-lg ",
+    "ContentTitle": "contentTitles ",
+    "NavbarRight": "navbar-right ",
+    "ThirdWidth": "col-md-4 col-xs-4 ",
+    "HalfWidth": "col-md-6 col-xs-6 ",
+    "NarrowCol": "col-md-2 col-xs-2 ",
+    "Dropdown": "dropdown ",
+    "Container": "container ",
+    "ColorRow": "colorRow ",
+    "ImgRnd": "img-rounded ",
+    "NavBar": "nav navbar-nav ",
+    "Top": "top ",
+    "Row": "row img-rounded "
+  },
+  "style": {
+    "BlackText": "color: #000;",
+    "WhiteText": "color: #fff;",
+    "WhiteBack": "background-color: #fff;",
+    "BlackBack": "background-color: #000;",
+    "RedField": "background-color: #833;",
+    "GreenField": "background-color: #383;",
+    "BlueField": "background-color: #338;",
+    "QuarterHeight": "height: 25vh;",
+    "ThreeQuarterHeight": "height: 75vh;"
+  },
+  "pages": {
+    "s3": {
+      "pageTitle": "S3 Page",
+      "pageDesc": "This page is for S3'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "sidebar $_.classes.ImgRnd $_.classes.HalfDesktopFullMobile",
+          "elementStyle": "border:1px solid #333;overflow:scroll;resize:horizontal;height: 50vh",
+          "id": "sidebar"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile",
+          "elementStyle": "border:1px solid #333;overflow:scroll;resize:horizontal;height: 50vh",
+          "id": "contentInner"
+        },
+        {
+          "elementParent": "contentInner",
+          "id": "htmlDiv"
+        },
+        {
+          "elementParent": "sidebar",
+          "id": "currentPageDiv"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Current Site",
+          "id": "currentSiteDiv"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementType": "select",
+          "onChange": "$fileName = readElement('currentSiteSel');$fileName = readElement('currentSiteSel');xhrRequest('GET','https://s3.amazonaws.com/gilpublic/'+$fileName+'/'+$fileName+'.spa',function(cb){$pageVar = cb;if ($pageVar.length){appendElement('errDiv',$pageVar)}else{$pageVar.currentPage = $pageVar.startingPage;removeElement('treeDiv');cje('currentPageDiv',{'elements':[ {'elementParent':'currentPageDiv','id':'treeDiv','elementClass':'img-rounded col-md-12 col-xs-12'}]});writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$pageVar.currentPage]));writeElement('currentSiteDiv',$pageVar.applicationTitle);for ($page in $pageVar.pages) {cje('delPageSel',{'elements':[ {'elementParent':'delPageSel','elementType':'option','attributeType':'value','attributeValue':$page,'innerText':$page}, {'elementParent':'treeDiv','id':'li'+$page}, {'elementParent':'li'+$page,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':$page,'onClick':'buildHighlightedPage(\"'+$page+'\")'}]})};prettyPrint('jmlTextArea');$pageVar.currentPage = $pageVar.startingPage;removeElement('treeDiv');cje('currentPageDiv',{'elements':[ {'elementParent':'currentPageDiv','id':'treeDiv','elementClass':'img-rounded col-md-12 col-xs-12'}]});writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$pageVar.currentPage]));for ($page in $pageVar.pages) {cje('delPageSel',{'elements':[ {'elementParent':'delPageSel','elementType':'option','attributeType':'value','attributeValue':$page,'innerText':$page}, {'elementParent':'treeDiv','id':'li'+$page}, {'elementParent':'li'+$page,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':$page,'onClick':'buildHighlightedPage(\"'+$page+'\")'}]})};prettyPrint('jmlTextArea')}},'JSON');",
+          "id": "currentSiteSel"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "advDD"
+        },
+        {
+          "elementParent": "advDD",
+          "innerText": "Advanced",
+          "elementClass": "btn btn-primary",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "advDD",
+          "elementClass": "$_.classes.DdownContent",
+          "id": "advancedPageDiv",
+          "innerText": "Version:"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementType": "input",
+          "id": "pageVerNum"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Refresh",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "$site=readElement('currentSiteSel');xhrRequest('GET','https://s3.amazonaws.com/gilpublic/'+$site+'/'+$site+'.spa',function(cb){writeElement('pageVerNum',cb.applicationVersion)},'JSON');"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "id": "newPageDiv"
+        },
+        {
+          "elementParent": "newPageDiv",
+          "innerText": "Add Page:"
+        },
+        {
+          "elementParent": "newPageDiv",
+          "elementType": "input",
+          "id": "newPageName"
+        },
+        {
+          "elementParent": "newPageDiv",
+          "innerText": "Add Page",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "$page=(readElement('newPageName'));$pageVar.pages[$page]=$pageVar.pages.login;"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Delete Page",
+          "id": "delPageDiv"
+        },
+        {
+          "elementParent": "delPageDiv",
+          "elementType": "select",
+          "id": "delPageSel"
+        },
+        {
+          "elementParent": "delPageDiv",
+          "innerText": "Delete Page",
+          "elementClass": "btn btn-danger",
+          "elementType": "button",
+          "attributeType": "disabled",
+          "attributeValue": "true",
+          "onClick": "if(confirm('Do you want to delete page '+readElement('delPageSel')+'?')){delete $pageVar.pages[(readElement('delPageSel'))]};",
+          "id": "delBtn"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "JSON",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "outputRow"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "outputRowJmlDiv"
+        },
+        {
+          "elementParent": "outputRowJmlDiv",
+          "innerText": "JSON goes here",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea",
+          "onChange": "prettyPrint('jmlTextArea');",
+          "id": "jmlTextArea"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "outputRowHtmlDiv"
+        },
+        {
+          "elementParent": "outputRowHtmlDiv",
+          "innerText": "HtmlTxtArea",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea",
+          "id": "htmlTextArea"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Build Page from HTML",
+          "elementClass": "btn btn-warning",
+          "elementType": "button",
+          "onClick": "document.getElementById('htmlDiv').innerHTML = document.getElementById('htmlTextArea').value;"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Convert HTML to JSON",
+          "elementClass": "btn btn-warning",
+          "elementType": "button",
+          "onClick": "parseHtml('htmlTextArea','jmlTextArea');"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.BlackText;",
+          "id": "treeDiv"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "innerText": "Upload to S3",
+          "elementClass": "btn btn-success",
+          "elementType": "button",
+          "onClick": "s3UrlUpload();"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "innerText": "function s3UrlUpload() {xhrRequest('POST','/s3url?siteName='+readElement('currentSiteSel'),function(key){$pageVar.applicationVersion++;$pageVar.pages[$pageVar.currentPage] = JSON.parse(readElement('jmlTextArea'));xhrRequest('PUT',JSON.parse(key),function(e){writeElement('errDiv',e)},'',JSON.stringify($pageVar))})};function renameEItem($element,$current,$new){$pageVar.pages[$pageVar.currentPage].elements[$element][$new]=$pageVar.pages[$pageVar.currentPage].elements[$element][$current];$pageVar.pages[$pageVar.currentPage].elements[$element].splice($current,1)};function updateEitem($page,$element,$eItem) {$pageVar.pages[$page].elements[$element][$eItem]=readElement('ulPage'+$page+'Element'+$element+'eItem'+$eItem)};var $pageItemList = ['pageTitle','pageDesc','elements'];var $elementItemList = ['elementParent','elementType','elementClass','innerText','id','elementStyle','elementType','onClick','onChange','attributeType','attributeAction','href'];var $elementTypeList = ['a','button','canvas','p','textarea','img','li','ul','hr','h1','h2','h3','h4','h5','h6','div','image','input','script','code','link','option','title','datalist','style','select','td','th','tr','abbr','acronym','address','applet','area','article','aside','audio','b','base','basefont','bdi','bdo','bgsound','big','blink','blockquote','body','br','caption','center','cite','col','colgroup','command','content','data','dd','del','details','dfn','dialog','dir','dl','dt','element','em','embed','fieldset','figcaption','figure','font','footer','form','frame','frameset','head','header','hgroup','html','i','iframe','ins','isindex','kbd','keygen','label','legend','listing','main','map','mark','marquee','menu','menuitem','meta','meter','multicol','nav','nextid','nobr','noembed','noframes','noscript','object','ol','optgroup','output','param','picture','plaintext','pre','progress','q','rp','rt','rtc','ruby','s','samp','section','shadow','slot','small','source','spacer','span','strike','strong','sub','summary','sup','table','tbody','template','tfoot','thead','time','track','tt','u','var','video','wbr','xmp'];function addOption($inputItem,$elementParent) {for ($option in $inputItem) {cje($elementParent,{'elements':[ {'elementParent':$elementParent,'elementType':'option','innerText':$inputItem[$option]}]})}};function buildHighlightedElement($element) {removeElement('highlighterDiv');removeElement('ulPageRow');cje('headWrapper',{'elements':[{'elementParent':'headWrapper','id':'highlighterDiv','elementType':'style','innerText':'.Element' + $element + ' {background-color: lightblue;}'},{'elementParent':'ulPage'+$pageVar.currentPage+'Element'+$element,'id':'ulPageRow'}]});buildElementRow('ulPageRow','',$element,$elementItemList,'add');buildElementRow('ulPageRow',$pageVar.pages[$pageVar.currentPage].elements[$element],$element,$elementItemList,'delItem');cje('ulPageRow',{'elements':[ {'elementParent':'ulPageRow','elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'X','onClick':'if (confirm(\"Do you want to delete element '+$element+'?\")) {$pageVar.pages[$pageVar.currentPage].elements.splice('+$element+',1)}'}]});};function buildHighlightedPage($page) {$pageVar.currentPage = $page;writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$page]));removeElement('ulPage');cje('li'+$page,{'elements':[{'elementParent':'li'+$page,'elementType':'ul','id':'ulPage'}]});buildElementRow('ulPage','','',$pageItemList,'add');buildElementRow('ulPage',$pageVar.pages[$page],'',$pageItemList,'delPage');cje('ulPage',{'elements':[ {'elementParent':'ulPage','elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':'new','onClick':'$pageVar.pages[$pageVar.currentPage].elements[$pageVar.pages[$pageVar.currentPage].elements.length] = {\"elementParent\":\"parentElement\"}'}, {'elementParent':'ulPage','elementType':'ul','id':'ulPage'+$page+'New'}]});for ($element in $pageVar.pages[$page].elements) {cje('ulPage',{'elements':[{'elementParent':'ulPage','elementType':'button','elementClass':'btn btn-primary btn-xs Element'+$element,'innerText':$element,'onClick':'buildHighlightedElement('+$element+');'}, {'elementParent':'ulPage','elementType':'ul','id':'ulPage'+$page+'Element'+$element}]})};writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$page]));prettyPrint('jmlTextArea');rebuildElement('htmlDiv');var $s = JSON.parse(readElement('jmlTextArea'));for ($element in $s.elements){$s.elements[$element].elementClass += ' highlightDiv Element' + $element;$s.elements[$element].onClick = 'buildHighlightedElement('+$element+');'};cje('htmlDiv',$s)};function buildElementRow($parentElement,$itemArray,$element,$inputItem,$errLocype) {var $itemType = 'input';switch ($errLocype) {case 'add': $parentWrapper = 'wrapper'+$parentElement;cje($parentElement,{'elements':[ {'elementParent':$parentElement,'id':$parentWrapper},{'elementParent':$parentWrapper,'elementType':'select','id':'selectAdd'+ $parentWrapper}, {'elementParent':$parentWrapper,'elementType':'input','id':'inputAdd'+ $parentWrapper}, {'elementParent':$parentWrapper,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':'add','onClick':'renameEItem('+$element+',\"\",readElement(\"selectAdd'+ $parentWrapper+'\"))'}]});addOption($inputItem,'selectAdd'+ $parentWrapper);break;case 'delItem': var $styleHolder='$_.style.QuarterHeight';var $classHolder='div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile';for ($item in $itemArray) {var $itemClass = '';var $itemStyle = '';switch ($item) {case 'elementParent': $itemType = 'select';break;case 'elementType': $itemType = 'select';break;case 'innerText': $itemType = 'textarea';$itemClass=$classHolder;$itemStyle=$styleHolder;break;case 'onClick': $itemType = 'textarea';$itemClass=$classHolder;$itemStyle=$styleHolder;break;case 'onChange': $itemType = 'textarea';$itemClass=$classHolder;$itemStyle=$styleHolder;break;default: $itemType = 'input';break;};$currentParentElementName = 'ulPage'+$pageVar.currentPage+'Element'+$element+'item'+$item;$selectItem = 'select'+$item;$parentWrapper = 'wrapper'+$item;cje($parentElement,{'elements':[ {'elementParent':$parentElement,'id':$parentWrapper},{'elementParent':$parentWrapper,'elementType':'select','innerText':$item,'id':$selectItem,'onChange':'renameEItem('+$element+',\"'+$item+'\",readElement(\"select'+$item+'\"))'}, {'elementParent':$parentWrapper,'elementType':$itemType,'innerText':$itemArray[$item],'elementClass':$itemClass,'elementStyle':$itemStyle,'id':$currentParentElementName,'onChange':'$pageVar.pages[\"'+$pageVar.currentPage+'\"].elements[\"'+$element+'\"][\"'+$item+'\"]=readElement(\"'+$currentParentElementName+'\")'}, {'elementParent':$parentWrapper,'elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'X','onClick':'if (confirm(\"Do you want to delete element item '+$item+'?\")) {delete $pageVar.pages[$pageVar.currentPage].elements['+$element+'][\"'+$item+'\"]}'}]});addOption($inputItem,$selectItem);writeElement($selectItem,$item);switch ($item) {case 'elementParent': var $elementIdList=['parent'+'Element','headWrapper','bodyWrapper','footWrapper','NavDDWrapper'];var $eLen = $elementIdList.length;for($e2=0;$e2<$pageVar.pages[$pageVar.currentPage].elements.length;$e2++){try{$pv = $pageVar.pages[$pageVar.currentPage].elements[$e2].id}catch{};if($pv){$elementIdList[$eLen]=$pv;$eLen++}};addOption($elementIdList,$currentParentElementName);console.log($element+','+$item+','+$pageVar.currentPage);writeElement($currentParentElementName,$pageVar.pages[$pageVar.currentPage].elements[$element].elementParent);break;case 'elementType': addOption($elementTypeList,$currentParentElementName);console.log($element+','+$item+','+$pageVar.currentPage);writeElement($currentParentElementName,$pageVar.pages[$pageVar.currentPage].elements[$element].elementType);break;default: break;}};break;case 'delPage': for ($item in $itemArray) {$selectItem = 'select'+$item;$parentWrapper = 'wrapper'+$item;switch ($item) {case 'pageDesc': $itemType = 'textarea';break;case 'elements': $itemType = 'select';break;default: $itemType = 'input';break;};cje($parentElement,{'elements':[ {'elementParent':$parentElement,'id':$parentWrapper},{'elementParent':$parentWrapper,'elementType':'select','innerText':$item,'id':$selectItem,'onChange':'renameEItem('+$element+',\"'+$item+'\",readElement(\"'+$selectItem+'\"))'}, {'elementParent':$parentWrapper,'elementType':'input','innerText':$itemArray[$item],'id':$parentWrapper+$pageVar.currentPage+'item'+$item,'onChange':'$pageVar.pages[\"'+$pageVar.currentPage+'\"][\"'+$item+'\"]=readElement(\"'+$parentWrapper+$pageVar.currentPage+'item'+$item+'\")'}, {'elementParent':$parentWrapper,'elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'X','onClick':'if (confirm(\"Do you want to delete item '+$item+'?\")) {delete $pageVar.pages[$pageVar.currentPage][\"'+$item+'\"]}'}]});addOption($inputItem,$selectItem);writeElement($selectItem,$item)};break;default: break;}};xhrRequest('GET','https://s3.amazonaws.com/gilpublic/giltech/giltech.spa',function(cb){$pageVar = JSON.parse(cb);if ($settingsVar.userACLTable.length>25){$settingsVar.userACLTable =$settingsVar.userACLTable.split(',')};addOption($settingsVar.userACLTable,'currentSiteSel');$pageVar.currentPage = 's3';writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$pageVar.currentPage]));for ($page in $pageVar.pages) {cje('delPageSel',{'elements':[ {'elementParent':'delPageSel','elementType':'option','attributeType':'value','attributeValue':$page,'innerText':$page},{'elementParent':'treeDiv','id':'li'+$page}, {'elementParent':'li'+$page,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':$page,'onClick':'buildHighlightedPage(\"'+$page+'\")'}]})};buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage');prettyPrint('jmlTextArea')});"
+        }
+      ]
+    },
+    "admin": {
+      "pageTitle": "Admin Page",
+      "pageDesc": "This page is for admin'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd",
+          "id": "outerWrapper"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "innerText": "Admin Page",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "id": "innerWrapper"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "function s3FileUpload($siteName,$fileDiv) {var $file = document.getElementById($fileDiv).files[0];xhrRequest('POST','/s3url?siteName='+$siteName+'&fileName='+$file.name+'&contentType='+$file.type,function(key){xhrRequest('PUT',key,function(e){writeElement('errDiv',e)},'',$file )},'JSON')};var $siteNo=0;var $currentSiteVar=[];function addSitePane($inputList,$elementParent) {for ($site in $inputList) {console.log($site);cje($elementParent,{'elements':[ {'elementParent':$elementParent, 'elementClass':'$_.classes.ImgRnd $_.classes.FullDesktopFullHMobile','elementStyle':'$_.style.QuarterHeight $_.style.BlackText','id':'site'+$site+'parent'+$elementParent},{'elementParent':'site'+$site+'parent'+$elementParent, 'elementClass':'$_.classes.ImgRnd col-md-9 col-xs-9','elementStyle':'$_.style.QuarterHeight $_.style.BlackText','id':'site'+$site+'infoDiv'},{'elementParent':'site'+$site+'infoDiv','elementClass':'$_.classes.Row $_.classes.ContentTitle','innerText':$inputList[$site]},{'elementParent':'site'+$site+'infoDiv','innerText':'Public website URL','elementType':'a','href':'https://www.sparational.com/'+$inputList[$site]},{'elementParent':'site'+$site+'infoDiv','elementType':'br'},{'elementParent':'site'+$site+'infoDiv','innerText':'Site in S3','elementType':'a','href':'https://s3.amazonaws.com/gilpublic/'+$inputList[$site]+'/'+$inputList[$site]+'.spa'},{'elementParent':'site'+$site+'infoDiv','id':'site'+$site+'uploadRow'},{'elementParent':'site'+$site+'uploadRow','elementType':'input','elementClass':'col-md-6 col-sm-6','attributeType':'type','attributeAction':'file','id':'site'+$site+'file'},{'elementParent':'site'+$site+'uploadRow','elementType':'button','elementClass':'btn btn-primary','innerText':'Upload','onClick':'s3FileUpload(\\\"'+$inputList[$site]+'\\\",\\\"site'+$site+'file\\\")'},{'elementParent':'site'+$site+'infoDiv','elementType':'button','elementClass':'btn btn-primary','onClick':'$pageVar.currentPage=$site;rbp(\\\"s3\\\");','innerText':'Edit site'},{'elementParent':'site'+$site+'infoDiv','elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'Delete Site'},{'elementParent':'site'+$site+'parent'+$elementParent, 'elementClass':'$_.classes.ImgRnd col-md-3 col-xs-3','elementStyle':'$_.style.QuarterHeight $_.style.BlackText','id':'site'+$site+'htmlDiv'},{'elementParent':'site'+$site+'htmlDiv','elementClass':'$_.classes.ImgRnd','elementType':'iframe','href':'https://www.sparational.com/'+$inputList[$site],'elementStyle':'zoom: 4.0;-moz-transform:scale(0.15);-moz-transform-origin: 0 0;-o-transform: scale(0.15);-o-transform-origin: 0 0;-webkit-transform: scale(0.15);-webkit-transform-origin: 0 0;height: 40vh;width: 40vh;$_.style.BlackText','id':'site'+$site+'innerHtmlDiv'}]});$siteNo++;}};addSitePane($settingsVar.userACLTable,'outerWrapper');"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "innerText": "New Site",
+          "elementType": "button",
+          "elementClass": "btn btn-primary",
+          "onClick": "xhrRequest('POST','/newSite',function(cb){console.log(cb)});"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "innerText": "Delete Account",
+          "elementType": "button",
+          "elementClass": "btn btn-danger btn-xs",
+          "onClick": "if(confirm(\"Do you want to delete your account?\")){alert(\"Account would be deleted. Contact support.\")};"
+        }
+      ]
+    },
+    "login": {
+      "pageTitle": "login",
+      "pageDesc": "This page is for logout'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "login",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "id": "username",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "password",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "xhrRequest('POST','/login?username=' + readElement('username') + '&password=' + readElement('password'),function(cb){$settingsVar=JSON.parse(cb)});if (!$pageVar){xhrRequest('GET','$_.pageSettingsJson',function(cb){$pageVar = JSON.parse(cb);rbp('s3')})};"
+        }
+      ]
+    },
+    "bplan": {
+      "pageTitle": "Business Plan",
+      "pageDesc": "This page is for Business Plan'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.SmallHiddenLargeQuarter",
+          "id": "contentOuter"
+        },
+        {
+          "elementParent": "contentOuter",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whoArea"
+        },
+        {
+          "elementParent": "whoArea",
+          "innerText": "Who will be needed?",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whoArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whatArea"
+        },
+        {
+          "elementParent": "whatArea",
+          "innerText": "What raw materials, assembled equipment, computer software, and processes will be needed?",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whatArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whenArea"
+        },
+        {
+          "elementParent": "whenArea",
+          "innerText": "What are the timeframes involved?",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whenArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whereArea"
+        },
+        {
+          "elementParent": "whereArea",
+          "innerText": "Where will production be? Where will customers be?",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whereArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whyArea"
+        },
+        {
+          "elementParent": "whyArea",
+          "innerText": "Why will people give you money?",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whyArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "howArea"
+        },
+        {
+          "elementParent": "howArea",
+          "innerText": "How will you deliver the product, service, or benefit?",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "howArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        }
+      ]
+    },
+    "arkdata": {
+      "pageTitle": "Arkdata",
+      "pageDesc": "This page is for arkdata'ing.",
+      "elements": [
+        {
+          "id": "arkDataWrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Container $_.classes.ImgRnd"
+        },
+        {
+          "id": "spacer",
+          "elementParent": "arkDataWrapper",
+          "elementClass": "$_.classes.ImgRnd $_.classes.SmallHiddenLargeQuarter"
+        },
+        {
+          "id": "content",
+          "elementParent": "arkDataWrapper",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile"
+        },
+        {
+          "id": "coinArea",
+          "elementParent": "content"
+        },
+        {
+          "id": "contentLabel1",
+          "elementParent": "coinArea",
+          "innerText": "Welcome to ARKData",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "id": "contentLabel2",
+          "elementParent": "coinArea",
+          "innerText": "Gil's player and tribe tracker",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "id": "contentLabel3",
+          "elementParent": "coinArea",
+          "innerText": "Players currently being tracked:",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "PlayerName"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "ServerName"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "Firstseen"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "Timeseen"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "dopey.tim"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "Asgard Awakens-Ragnarok (Cluster-x5,XP&amp;H,x10T) - (v272.3)"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/23/2017 13:25:45"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/24/2017 22:46:34"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "MFrider88"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "Asgard Awakens-Ragnarok (Cluster-x5,XP&amp;H,x10T) - (v272.3)"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/23/2017 21:41:57"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/23/2017 23:02:46"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "MacNCheese3"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "Asgard Awakens-Ragnarok (Cluster-x5,XP&amp;H,x10T) - (v272.3)"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "9/1/2017 14:42:06"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/24/2017 15:21:50"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "GenMaxiu"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "Asgard Awakens-Ragnarok (Cluster-x5,XP&amp;H,x10T) - (v272.3)"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "6/10/2017 10:09:07"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/24/2017 0:10:12"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "FMFrider88"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "Asgard Awakens-Ragnarok (Cluster-x5,XP&amp;H,x10T) - (v272.3)"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/23/2017 21:23:43"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "10/23/2017 23:39:49"
+        }
+      ]
+    },
+    "rental": {
+      "pageTitle": "DiffeRentIal",
+      "pageDesc": "This page is for rental'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Container $_.classes.ImgRnd",
+          "id": "wrapper"
+        },
+        {
+          "elementParent": "wrapper",
+          "innerText": "DiffeRENTial",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "wrapper",
+          "elementStyle": "width: 100vh;height: 75vh",
+          "id": "map"
+        },
+        {
+          "elementParent": "wrapper",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "Add Rentals",
+          "onClick": "for (loc in rentalLocations) {addMarker(rentalLocations[loc].lat,rentalLocations[loc].lng,rentalLocations[loc].price)};"
+        },
+        {
+          "elementParent": "wrapper",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "Add Sales",
+          "onClick": "for (loc in saleLocations) {addMarker(saleLocations[loc].lat,saleLocations[loc].lng,saleLocations[loc].price)};"
+        },
+        {
+          "elementParent": "NavDDWrapper",
+          "innerText": "Adding Google Maps to your website",
+          "href": "https://developers.google.com/maps/documentation/javascript/adding-a-google-map#key"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "addElement('headWrapper','','','script','','https://maps.googleapis.com/maps/api/js?key='+$settingsVar.googleApiKey+'&callback=initMap')"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "$canvas.rent=[];function initMap(){$canvas.rent.map = new google.maps.Map(document.getElementById('map'), {zoom: 10,center: {lat: 47, lng: -122}});};function addMarker($lat,$lng,$title){;$canvas.rent.marker = new google.maps.Marker({position: {lat: $lat, lng: $lng},map: $canvas.rent.map,title:$title})};var saleLocations = [{'lat':47.612149,'lng':-122.329712,'price':'$475,000'}, {'lat':47.43227,'lng':-120.3441,'price':'$305,000'}, {'lat':46.1941931481713,'lng':-119.257999793824,'price':'$274,900'}, {'lat':46.2718,'lng':-119.30831,'price':'$235,000'}, {'lat':47.8778,'lng':-121.8741,'price':'$225,000'}, {'lat':48.36712,'lng':-122.64438,'price':'$162,500'}, {'lat':47.69872,'lng':-117.46932,'price':'$135,000'}, {'lat':48.06162,'lng':-117.74114,'price':'$68,500'}, {'lat':47.6130983,'lng':-122.3394215,'price':'$,540,000'}, {'lat':47.700808,'lng':-122.2863689,'price':'$750,000'}, {'lat':47.9010001,'lng':-122.6781968,'price':'$469,900'}, {'lat':47.637688,'lng':-117.222862,'price':'$439,900'}, {'lat':47.0907254,'lng':-122.7759114,'price':'$419,990'}, {'lat':46.175125,'lng':-122.940605,'price':'$369,900'}, {'lat':45.7059938,'lng':-122.669813,'price':'$337,500'}, {'lat':47.4999902,'lng':-122.3176712,'price':'$312,000'}, {'lat':48.2411164,'lng':-122.701749,'price':'$290,000'}, {'lat':45.723827,'lng':-122.649409,'price':'$215,000'}];var rentalLocations = [{'lat':47.6196595,'lng':-122.3218535,'price':'$1,740 - $2,500'}, {'lat':47.621519,'lng':-122.355807,'price':'$1,805 - $3,300'}, {'lat':47.6191124,'lng':-122.3459073,'price':'$1,925 - $7,520'}, {'lat':47.6158467,'lng':-122.3334478,'price':'$1,755 - $3,385'}, {'lat':47.6024495,'lng':-122.3208957,'price':'$1,815 - $5,950'}, {'lat':47.6119117,'lng':-122.3454488,'price':'$1,413 - $3,147'}, {'lat':47.5377258,'lng':-122.2803812,'price':'$1,760 - $3,320'}, {'lat':47.6253528,'lng':-122.320846,'price':'$1,646 - $2,565'}, {'lat':47.717859,'lng':-122.2943837,'price':'$1,424 - $3,357'}, {'lat':47.659425,'lng':-122.3425601,'price':'$1,780 - $3,165'}, {'lat':47.6479615,'lng':-122.3567085,'price':'$2,125 - $3,000'}, {'lat':47.623719,'lng':-122.3359958,'price':'$1,175 - $1,250'}, {'lat':47.6189029,'lng':-122.3050238,'price':'$1,546 - $3,474'}, {'lat':47.6168246,'lng':-122.3470117,'price':'$1,402 - $2,089'}, {'lat':47.6153241,'lng':-122.3450206,'price':'$1,850 - $3,034'}, {'lat':47.6211715,'lng':-122.3334134,'price':'$1,519 - $2,248'}, {'lat':47.669111,'lng':-122.3772868,'price':'$1,565 - $2,465'}, {'lat':47.605117,'lng':-122.3271494,'price':'$1,805 - $3,185'}, {'lat':47.6203748,'lng':-122.3333454,'price':'$1,375 - $5,175'}, {'lat':47.6133201,'lng':-122.3189839,'price':'$1,791 - $9,051'}, {'lat':47.6063434,'lng':-122.3381982,'price':'$1,677 - $1,991'}, {'lat':47.6201665,'lng':-122.3584514,'price':'$1,719 - $2,351'}];"
+        }
+      ]
+    },
+    "meme": {
+      "pageTitle": "Meme Maker",
+      "pageDesc": "This page is for meme'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "innerText": "MemeGen",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "parentElement",
+          "id": "canvas",
+          "elementClass": "$_.classes.ImgRnd",
+          "elementType": "canvas",
+          "elementStyle": "display: block;margin: 0px auto;border: 1px solid black;"
+        },
+        {
+          "elementParent": "parentElement",
+          "id": "urlInput",
+          "innerText": "https://technabob.com/blog/wp-content/uploads/2014/08/picard1.jpg",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementType": "input"
+        },
+        {
+          "elementParent": "parentElement",
+          "id": "topTextInput",
+          "innerText": "Top Text",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementType": "input"
+        },
+        {
+          "elementParent": "parentElement",
+          "id": "bottomTextInput",
+          "innerText": "Bottom Text",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementType": "input"
+        },
+        {
+          "elementParent": "NavDDWrapper",
+          "innerText": "How to add a border on html5 canvas text?",
+          "href": "https://stackoverflow.com/questions/1421082/how-to-add-a-border-on-html5-canvas-text#1421598"
+        },
+        {
+          "elementParent": "headWrapper",
+          "innerText": "$canvas.memeCanvas = document.getElementById('canvas');$ctx = $canvas.memeCanvas.getContext('2d');$canvas.memeCanvas.height = (window.innerHeight * 0.75);$canvas.memeCanvas.width = (window.innerWidth * 0.75);$canvas.memebgImage = new Image();$canvas.memebgImage.onload = function () {$ctx.drawImage($canvas.memebgImage, 0, 0, $canvas.memebgImage.width, $canvas.memebgImage.height, 0, 0, $canvas.memeCanvas.width, ($canvas.memeCanvas.width * ImageRatio));$ctx.font='100px Impact';$ctx.lineWidth = 4;$ctx.fillStyle = 'white';$ctx.strokeStyle = 'black';$ctx.fillText(readElement('topTextInput'),10,100);$ctx.strokeText(readElement('topTextInput'),10,100);$ctx.fillText(readElement('bottomTextInput'),10,($ctx.canvas.height - 20));$ctx.strokeText(readElement('bottomTextInput'),10,($ctx.canvas.height - 20));};$canvas.memebgImage.src = readElement('urlInput');var ImageRatio = $canvas.memebgImage.width / $canvas.memebgImage.height;$canvas.memeCanvas.width = $canvas.memeCanvas.height * ImageRatio;",
+          "elementType": "script"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "parentElement"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Create Meme!",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "$canvas.memebgImage.src = readElement('urlInput');"
+        }
+      ]
+    },
+    "coins": {
+      "pageTitle": "Coins",
+      "pageDesc": "This page is for mining.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "sidebar col-md-2 hidden-sm hidden-xs $_.classes.ImgRnd $_.classes.ContentTitle",
+          "elementStyle": "border:1px solid #333;",
+          "id": "sidebar"
+        },
+        {
+          "elementParent": "sidebar",
+          "innerText": "Coinsole Log"
+        },
+        {
+          "elementParent": "sidebar",
+          "innerText": "Data Loading..",
+          "elementClass": "$_.classes.ImgRnd",
+          "elementStyle": "background-color:#fff;height:75vh;font-size: small;overflow-x: hidden;overflow-y:auto;"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd col-md-10 col-xs-10",
+          "id": "content"
+        },
+        {
+          "elementParent": "content",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.Row",
+          "elementStyle": "$_.style.BlackText $_.style.WhiteBack",
+          "id": "cointentArea"
+        },
+        {
+          "elementParent": "content",
+          "elementClass": "$_.classes.ImgRnd",
+          "elementStyle": "$_.style.BlackText $_.style.WhiteBack",
+          "id": "coinTentWrapper"
+        },
+        {
+          "elementParent": "coinTentWrapper",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "id": "titleRow"
+        },
+        {
+          "elementParent": "titleRow",
+          "innerText": "Cointent",
+          "elementClass": "col-md-10 col-xs-10 $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "coinTentWrapper",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.Row",
+          "id": "cointentArea2"
+        },
+        {
+          "elementParent": "cointentArea2",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "elementStyle": "$_.style.BlackText $_.style.WhiteBack"
+        },
+        {
+          "elementParent": "cointentArea2",
+          "innerText": "MyBotName",
+          "elementClass": "col-md-10 col-xs-10 $_.classes.ContentTitle $_.classes.ImgRnd",
+          "elementStyle": "$_.style.BlackText $_.style.WhiteBack",
+          "attributeType": "contenteditable",
+          "attributeAction": "true"
+        },
+        {
+          "elementParent": "titleRow",
+          "innerText": "Refresh",
+          "onClick": "refreshCharts();"
+        },
+        {
+          "elementParent": "cointentArea2",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "Add Bot",
+          "onClick": "rbp('bodyWrapper',$_.addBotVar);"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "Coin"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "Value"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "My Coins"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "MyBot"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "Fruitbot"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "SimpleBot"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "BTC"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "LTC"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "ETH"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "FBC"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "content",
+          "innerText": "0"
+        }
+      ]
+    },
+    "fruitBot": {
+      "pageName": "Fruitbot",
+      "pageTitle": "Fruitbot",
+      "pageDesc": "This page is for Fruitbot'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row",
+          "elementStyle": "$_.style.WhiteText $_.style.BlackBack"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/seedrandom.js"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/board.js"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/grid.js"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/mybot.js"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/simplebot.js"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/player.js"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/thirdparty/jquery.min.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Fruitbot",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "elementType": "canvas",
+          "elementStyle": "display: block;margin: 0px auto;border: 1px solid black;",
+          "id": "game_view"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "myBoardRow"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "Board number",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "0",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "number"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ImgRnd col-md-4 col-xs-6",
+          "id": "myScoreRow"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "parentElement",
+          "innerText": "Start!",
+          "onClick": "GamePlay.init();"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "parentElement",
+          "innerText": "new",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "parentElement",
+          "innerText": "reset",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "parentElement",
+          "innerText": "pause",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "parentElement",
+          "innerText": "forward",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "parentElement",
+          "innerText": "innerText",
+          "onClick": "onClick"
+        },
+        {
+          "elementParent": "myScoreRow",
+          "innerText": "Wins"
+        },
+        {
+          "elementParent": "myScoreRow",
+          "innerText": "0",
+          "id": "scoreWins"
+        },
+        {
+          "elementParent": "myScoreRow",
+          "innerText": "Losses"
+        },
+        {
+          "elementParent": "myScoreRow",
+          "innerText": "0",
+          "id": "scoreLoss"
+        },
+        {
+          "elementParent": "myScoreRow",
+          "innerText": "Ties"
+        },
+        {
+          "elementParent": "myScoreRow",
+          "innerText": "0",
+          "id": "scoreTies"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "GamePlay.init();"
+        }
+      ]
+    },
+    "main": {
+      "pageTitle": "Product Page",
+      "pageDesc": "This page is for tiers & pricing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "jumbotron text-center",
+          "id": "jumbotron"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementClass": "container"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "a",
+          "href": "\\/",
+          "elementClass": "lang-logo"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "img",
+          "innerText": "",
+          "href": "https://s3.amazonaws.com/gilpublic/images/Gil.png"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "h1",
+          "innerText": "Gilgamech is now on Heroku - GilAPI v1.1.1 Atrocious Abnegation"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "p",
+          "innerText": "This is a terrible idea and nobody knows who let him set this up. It s a reasonably simple app - which is about as much as we can expect from such a simple mind."
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "a",
+          "type": "button",
+          "elementClass": "btn btn-lg btn-default",
+          "href": "https://github.com/Gilgamech/GilAPI/issues",
+          "innerText": " Tell the nutter there s something wrong with his app. "
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "a",
+          "type": "button",
+          "elementClass": "btn btn-lg btn-primary",
+          "href": "https://github.com/Gilgamech/GilAPI/",
+          "innerText": "Source on GitHub "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "container"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "alert alert-info text-center",
+          "innerText": " To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs",
+          "elementClass": "alert-link",
+          "innerText": "Getting Started with Node on Heroku tutorial. "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "hr"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "row"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "h3",
+          "innerText": " SourceQuery"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Currently in late Alpha, SteamQuery for Powershell gives you 3 simple cmdlets to query any Steam server for numerous datapoints, including: "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Player list with Steam names"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Player connection count and connected time"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Map name"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Server OS"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://Github.com/Gilgamech/SteamQuery",
+          "innerText": "Check out SteamQuery here."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "h3",
+          "innerText": " PowerGIL"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Currently Build 568, PowerGIL is a Powershell utility kit."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "It provides numerous useless tools, ranging from: "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "making new Powershell windows and resizing current windows"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "opening Explorer windows"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "encrypting and decrypting text messages"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "sending and reciving with UDP"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "watching your clipboard and even sending it to another PC with UDP!"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Flip your text into bytes and back!"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "http://Gilgamech.com/PS1/PowerGIL.ps1",
+          "innerText": "Check out PowerGIL here."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "h3",
+          "innerText": "ARKData"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Now in its 2.2 revision, the ARKData player tracker now can track multiple servers simultaneously."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Just give it an IP and it does the rest:"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "find the server"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "get players"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "time of day"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "write data files"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Stamp self-refreshing website report dashboards every minute."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "Filling out the .tribe.csv data file is still a manual process, but for a little bit of work (typing out the ARK name and Tribe name) you get crazy more useful data."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "All written in Powershell."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "http://Gilgamech.com/Arkdata.html",
+          "innerText": "Check out Arkdata here."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://Github.com/Gilgamech/SteamQuery",
+          "innerText": "Github page."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "h3",
+          "innerText": "How this sample app works"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "This app was deployed to Heroku, either using Git or by using "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://github.com/heroku/node-js-getting-started",
+          "innerText": "Heroku Button on the repository."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "When Heroku received the source code, it fetched all the dependencies in the "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://github.com/heroku/node-js-getting-started/blob/master/package.json",
+          "innerText": "package.json, creating a deployable slug."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "You can scale your app, manage it, and deploy over "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://addons.heroku.com/",
+          "innerText": "150 add-on services, from the Dashboard or CLI."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "h3",
+          "innerText": " Next Steps"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "If you are following the "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs",
+          "innerText": "Getting Started guide, then please head back to the tutorial and follow the next steps!"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "If you deployed this app by deploying the Heroku Button, then in a command line shell, run:"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "code",
+          "innerText": "git clone https://github.com/heroku/node-js-getting-started.git - this will create a local copy of the source code for the app"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "code",
+          "innerText": "cd node-js-getting-started - change directory into the local source code repository"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "code",
+          "innerText": " - associate the Heroku app with the repository"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li",
+          "innerText": "You ll now be set up to run the app locally, or "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes",
+          "innerText": "deploy changes to Heroku"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "h3",
+          "innerText": " Helpful Links"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://www.heroku.com/home",
+          "innerText": "Heroku"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/",
+          "innerText": "Heroku Dev Center"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs",
+          "innerText": "Getting Started with Node on Heroku"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/deploying-nodejs",
+          "innerText": "Deploying Node Apps on Heroku"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "!-- row --"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "alert alert-info text-center",
+          "innerText": " Please do work through the Getting Started guide, even if you do know how to build such an application. The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps. "
+        }
+      ]
+    },
+    "sheet": {
+      "pageTitle": "Spreadsheet",
+      "pageDesc": "This page is for Spreadsheet'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row",
+          "elementStyle": "$_.style.WhiteText $_.style.BlackBack"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Spreadsheet",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "myBoardRow"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "0",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "number"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ImgRnd col-md-4 col-xs-6",
+          "id": "myScoreRow"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "myBoardRow",
+          "innerText": "Set",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "myBoardRow",
+          "innerText": "new",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "myBoardRow",
+          "innerText": "reset",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "myBoardRow",
+          "innerText": "pause",
+          "onClick": "onClick"
+        },
+        {
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "elementParent": "myBoardRow",
+          "innerText": "forward",
+          "onClick": "onClick"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "Wins"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "Losses"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "Ties"
+        },
+        {
+          "elementParent": "myBoardRow",
+          "innerText": "innerText",
+          "onClick": "0"
+        }
+      ]
+    },
+    "rgb": {
+      "pageTitle": "RGB Calculator",
+      "pageDesc": "This page is for rgb'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.SmallHiddenLargeQuarter"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile",
+          "id": "content"
+        },
+        {
+          "elementParent": "content",
+          "id": "coinArea"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": "RGB Calculator",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "id": "contentLabel"
+        },
+        {
+          "elementParent": "coinArea",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "input",
+          "elementStyle": "$_.style.BlackText $_.style.WhiteBack",
+          "onChange": "var $hex = hexToRgb(readElement(\"htmlInput\"));writeElement(\"redInput\",$hex.r);writeElement(\"greenInput\",$hex.g);writeElement(\"blueInput\",$hex.b);document.getElementById(\"contentLabel\").style.backgroundColor = readElement(\"htmlInput\");",
+          "attributeType": "maxlength",
+          "attributeAction": "7",
+          "id": "htmlInput"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": 171,
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "input",
+          "onChange": "updateRgbDivColor('redInput');",
+          "attributeType": "type",
+          "attributeAction": "number",
+          "id": "redInput"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": 205,
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "input",
+          "onChange": "updateRgbDivColor('greenInput');",
+          "attributeType": "type",
+          "attributeAction": "number",
+          "id": "greenInput"
+        },
+        {
+          "elementParent": "coinArea",
+          "innerText": 239,
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "input",
+          "onChange": "updateRgbDivColor('blueInput');",
+          "attributeType": "type",
+          "attributeAction": "number",
+          "id": "blueInput"
+        },
+        {
+          "elementParent": "headWrapper",
+          "innerText": "function rgbToHex(r, g, b) {function componentToHex(c) {var hex = c.toString(16);return hex.length == 1 ? \"0\" + hex : hex;};return \"#\" + componentToHex(r) + componentToHex(g) + componentToHex(b);};function hexToRgb(hex) {var result = /^#?([a-f\\d]{2})([a-f\\d]{2})([a-f\\d]{2})$/i.exec(hex);return result ? {r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16)}: null;};function updateRgbDivColor($divId) {var $colorRatio = .25;var $Color = getNumberFromDiv($divId);if ($Color > 255) {writeElement($divId) = 255;$Color = getNumberFromDiv($divId);};$Color2 = Math.round(($Color) * $colorRatio);switch ($divId) {case \"redInput\": document.getElementById($divId).style.backgroundColor = rgbToHex( $Color,$Color2,$Color2 );break;case \"greenInput\": document.getElementById($divId).style.backgroundColor = rgbToHex( $Color2,$Color,$Color2 );break;case \"blueInput\": document.getElementById($divId).style.backgroundColor = rgbToHex( $Color2,$Color2,$Color );break;};writeElement(\"htmlInput\",rgbToHex(getNumberFromDiv(\"redInput\"), getNumberFromDiv(\"greenInput\"),getNumberFromDiv(\"blueInput\")));document.getElementById(\"contentLabel\").style.backgroundColor = readElement(\"htmlInput\")};updateRgbDivColor('redInput');updateRgbDivColor('greenInput');updateRgbDivColor('blueInput');",
+          "elementType": "script"
+        }
+      ]
+    },
+    "chat": {
+      "pageTitle": "Chat",
+      "pageDesc": "This page is for chat'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "id": "wrapper",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile"
+        },
+        {
+          "elementParent": "wrapper",
+          "innerText": "Room:",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "wrapper",
+          "id": "chatWrapper",
+          "elementClass": "$_.classes.Row $_.classes.ColorRow"
+        },
+        {
+          "elementParent": "chatWrapper",
+          "id": "chatRoom",
+          "innerText": "General",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "input",
+          "elementStyle": "$_.style.BlackText"
+        },
+        {
+          "elementParent": "wrapper",
+          "id": "wrapperdInner",
+          "elementClass": "$_.classes.Row $_.classes.ColorRow"
+        },
+        {
+          "elementParent": "wrapperdInner",
+          "id": "chatBox",
+          "innerText": "Chat loading..",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "textarea",
+          "elementStyle": "$_.style.BlackText"
+        },
+        {
+          "elementParent": "wrapper",
+          "id": "nameRow",
+          "elementClass": "$_.classes.Row $_.classes.ColorRow"
+        },
+        {
+          "elementParent": "nameRow",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "input",
+          "elementStyle": "background-color: #338",
+          "attributeType": "placeholder",
+          "attributeAction": "User Name"
+        },
+        {
+          "elementParent": "wrapperdInner",
+          "id": "chatMessage",
+          "elementClass": "$_.classes.Row $_.classes.ColorRow"
+        },
+        {
+          "elementParent": "wrapperdInner",
+          "innerText": "Hello World!",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "elementType": "input",
+          "elementStyle": "background-color: #383",
+          "attributeType": "onkeypress",
+          "attributeAction": "detectEnter(event,updateChat(),"
+        }
+      ]
+    },
+    "BadPW": {
+      "pageTitle": "Bad Password",
+      "pageDesc": "This page is for chat'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.SmallHiddenLargeQuarter"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile",
+          "id": "contentOuter"
+        },
+        {
+          "elementParent": "contentOuter",
+          "innerText": "Bad Password",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "contentOuter",
+          "innerText": "Entropy not guaranteed",
+          "elementType": "input",
+          "id": "textField",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile"
+        },
+        {
+          "elementParent": "contentOuter",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "Get Bad Password",
+          "onClick": "writeElement('textField',getBadPW());"
+        },
+        {
+          "elementParent": "contentOuter",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "Copy to Clipboard",
+          "onClick": "copyToClipboard('textField');"
+        }
+      ]
+    },
+    "calc": {
+      "pageTitle": "Calculator",
+      "pageDesc": "This page is for Calculon!",
+      "elements": [
+        {
+          "id": "outerWrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.SmallFullLargeQuarter"
+        },
+        {
+          "id": "innerWrapper",
+          "elementParent": "outerWrapper"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Calculator"
+        },
+        {
+          "id": "outputRow",
+          "elementParent": "outerWrapper",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ContentRow",
+          "attributeType": "onkeypress",
+          "attributeAction": "detectEnter(event,writeElement('output',eval(readElement('output'))))"
+        },
+        {
+          "id": "output",
+          "elementParent": "outerWrapper",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementType": "input"
+        },
+        {
+          "id": "btnRow1",
+          "elementParent": "outerWrapper"
+        },
+        {
+          "elementParent": "btnRow1",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "1",
+          "onClick": "appendElement('output',1)"
+        },
+        {
+          "elementParent": "btnRow1",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "2",
+          "onClick": "appendElement('output',2)"
+        },
+        {
+          "elementParent": "btnRow1",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "3",
+          "onClick": "appendElement('output',3)"
+        },
+        {
+          "elementParent": "btnRow1",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "/",
+          "onClick": "appendElement('output','/')"
+        },
+        {
+          "id": "btnRow2",
+          "elementParent": "outerWrapper"
+        },
+        {
+          "elementParent": "btnRow2",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "4",
+          "onClick": "appendElement('output',4)"
+        },
+        {
+          "elementParent": "btnRow2",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "5",
+          "onClick": "appendElement('output',5)"
+        },
+        {
+          "elementParent": "btnRow2",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "6",
+          "onClick": "appendElement('output',6)"
+        },
+        {
+          "elementParent": "btnRow2",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "*",
+          "onClick": "appendElement('output','*')"
+        },
+        {
+          "id": "btnRow3",
+          "elementParent": "outerWrapper"
+        },
+        {
+          "elementParent": "btnRow3",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "7",
+          "onClick": "appendElement('output',7)"
+        },
+        {
+          "elementParent": "btnRow3",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "8",
+          "onClick": "appendElement('output',8)"
+        },
+        {
+          "elementParent": "btnRow3",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "9",
+          "onClick": "appendElement('output',9)"
+        },
+        {
+          "elementParent": "btnRow3",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "-",
+          "onClick": "appendElement('output','-')"
+        },
+        {
+          "id": "btnRow4",
+          "elementParent": "outerWrapper"
+        },
+        {
+          "elementParent": "btnRow4",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "=",
+          "onClick": "writeElement('output',eval(readElement('output')))"
+        },
+        {
+          "elementParent": "btnRow4",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "0",
+          "onClick": "appendElement('output',0)"
+        },
+        {
+          "elementParent": "btnRow4",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": ".",
+          "onClick": "appendElement('output','.')"
+        },
+        {
+          "elementParent": "btnRow4",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "innerText": "+",
+          "onClick": "appendElement('output','+')"
+        }
+      ]
+    },
+    "botRowVar": {
+      "pageName": "botRowVar",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Buy",
+          "onClick": "onClick"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Sell",
+          "onClick": "onClick"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "0"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Del",
+          "onClick": "removeElement('parentElement');"
+        }
+      ]
+    },
+    "header": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementType": "title",
+          "innerText": "$_.applicationTitle"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/thirdparty/jquery.min.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "link",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/thirdparty/bootstrap.min.css"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "link",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/thirdparty/normalize.css"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "style",
+          "innerText": "html,body {width: auto !important;overflow-x: hidden !important;}html {}body {background-color:#bbb;}.deleteme {visibility: visible;}.dropdown {position: relative;display: inline-block;color: #9d9d9d;padding-top: 15px;padding-left: 15px;}.dropdown-content {color: #9d9d9d;background-color: #010101;display: none;position: absolute;min-width: 160px;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);padding: 12px 16px;z-index: 1;}.dropdown:hover .dropdown-content {display: block;}div.dropdown-content a:link{text-decoration:none;color:#9d9d9d;}div.dropdown-content a:visited{text-decoration:none;color:#7f7f7f;}nav {color: #A3C7B2;margin:0;padding:0;border:0;text-align:left;background-color:#000;position: fixed;margin-top: 3em;width: 100%;}div.content {padding-top: 3em;/* top 5px plus height 30px */ margin: 2px 1em 0 5px;}div.top {top:0;margin:0;padding:0;font-variant: small-caps;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;text-align:left;position: fixed;width: 100%;}div.top a:link{text-decoration:none;color:#000;}div.top a:visited {color:#000;}.contentItems {font-size: initial;}.contentTitles {text-align: center;font-size: xx-large;background-color:#eee;color:#000;}.colorRow {text-align: center;font-size: x-large;color:#fff;border:white;}.contentRow {text-align: center;font-size: x-large;border:white;}/* Let's get this party started https://css-tricks.com/custom-scrollbars-in-webkit */ ::-webkit-scrollbar {width: 12px;}/* Track */ ::-webkit-scrollbar-track {-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);-webkit-border-radius: 10px;border-radius: 10px;}/* Handle */ ::-webkit-scrollbar-thumb {-webkit-border-radius: 10px;border-radius: 10px;background: rgba(200,200,200,0.8);-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);}::-webkit-scrollbar-thumb:window-inactive {background: rgba(255,0,0,0.4);}input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;margin: 0;}"
+        }
+      ]
+    },
+    "nav": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Container",
+          "id": "titleParent"
+        },
+        {
+          "elementParent": "titleParent",
+          "innerText": "$_.applicationTitle",
+          "elementClass": "$_.classes.ImgRnd $_.classes.Top $_.classes.SmallHidden",
+          "elementType": "a",
+          "elementStyle": "font-size: 7ex;color: #000;text-decoration: none",
+          "href": "/"
+        },
+        {
+          "elementParent": "titleParent",
+          "innerText": "$_.applicationTitle",
+          "elementClass": "$_.classes.ImgRnd $_.classes.Top $_.classes.LargeHidden",
+          "elementType": "a",
+          "elementStyle": "font-size: 4ex;color: #000;text-decoration: none",
+          "href": "/"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "navbar navbar-static-top navbar-inverse",
+          "id": "navBar"
+        },
+        {
+          "elementParent": "navBar",
+          "elementClass": "$_.classes.Container",
+          "id": "NavDDOuter"
+        },
+        {
+          "elementParent": "NavDDOuter",
+          "elementClass": "$_.classes.NavBar col-md-6 col-xs-6",
+          "elementType": "ul",
+          "id": "nav2"
+        },
+        {
+          "elementParent": "nav2",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "nav2dd"
+        },
+        {
+          "elementParent": "nav2dd",
+          "innerText": "Menu",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "nav2dd",
+          "elementClass": "$_.classes.DdownContent",
+          "id": "nav2ddc"
+        },
+        {
+          "elementParent": "NavDDOuter",
+          "elementClass": "$_.classes.NavBar $_.classes.HalfWidth $_.classes.NavbarRight",
+          "elementType": "ul",
+          "id": "nav3"
+        },
+        {
+          "elementParent": "nav3",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "nav3dd"
+        },
+        {
+          "elementParent": "nav3dd",
+          "innerText": "Login",
+          "elementType": "p"
+        }
+      ]
+    },
+    "footer": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "container-fluid"
+        },
+        {
+          "elementParent": "parentElement",
+          "id": "spacerName"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        },
+        {
+          "elementParent": "footWrapper",
+          "elementClass": "$_.classes.Row $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "errDiv"
+        },
+        {
+          "elementParent": "footWrapper",
+          "elementClass": "navbar-static-bottom",
+          "elementStyle": "text-align: center;",
+          "id": "footerStatic"
+        },
+        {
+          "elementParent": "footerStatic",
+          "elementType": "p",
+          "elementClass": "width: 100%;text-align: center;",
+          "id": "footerBanner"
+        },
+        {
+          "elementParent": "footerBanner",
+          "elementType": "a",
+          "href": "https://www.duckduckgo.com",
+          "id": "footerLink"
+        },
+        {
+          "elementParent": "footerLink",
+          "elementType": "img",
+          "innerText": "C1ick h34r ph0r m04r inph0",
+          "href": "https://gilpublic.s3.amazonaws.com/images/BannerImage.gif",
+          "elementStyle": "height: 150px",
+          "elementClass": "$_.classes.ImgRnd hidden-sm hidden-xs"
+        },
+        {
+          "elementParent": "footerStatic",
+          "innerText": "Gil-API version: $settingsVar.apiVersion - Gilgamech.js version: $GilJSVer - Giltech Site Version: $_.applicationVersion",
+          "elementStyle": "font-weight:bold;text-align:center;",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "footerStatic",
+          "innerText": "(c) 2013-2018 Gilgamech Technologies - We are the gears that make our world go around.",
+          "elementStyle": "font-weight:bold;text-align:center;",
+          "elementType": "p"
+        }
+      ]
+    },
+    "addBotRowVar": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "innerText": "Add Asset",
+          "onClick": "cje('coinAreaID','assetLabelID');"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Del Bot",
+          "onClick": "removeElement('coinAreaID');"
+        }
+      ]
+    },
+    "addBotVar": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.Row",
+          "elementStyle": "$_.style.BlackText $_.style.WhiteBack",
+          "id": "coinAreaID"
+        },
+        {
+          "elementParent": "coinAreaID",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "id": "titleRowID"
+        },
+        {
+          "elementParent": "titleRowID",
+          "elementClass": "$_.classes.HalfWidth",
+          "id": "contentLabelID"
+        },
+        {
+          "elementParent": "titleRowID",
+          "elementType": "datalist",
+          "id": "dropdownListName"
+        },
+        {
+          "elementParent": "dropdownListName",
+          "innerText": "Coin",
+          "elementType": "option"
+        },
+        {
+          "elementParent": "dropdownListName",
+          "innerText": "firefox",
+          "elementType": "option"
+        },
+        {
+          "elementParent": "titleRowID",
+          "innerText": "Coin",
+          "elementClass": "$_.classes.ThirdWidth $_.classes.ImgRnd",
+          "elementType": "input",
+          "elementStyle": "$_.style.BlackText $_.style.WhiteBack",
+          "attributeType": "list",
+          "attributeAction": "dropdownListName",
+          "id": "assetLabelID"
+        },
+        {
+          "elementParent": "coinAreaID",
+          "id": "spacerName"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        }
+      ]
+    },
+    "min": {
+      "pageTitle": "Minimalism",
+      "pageDesc": "This page is for min'ing.",
+      "headerText": "1 year rule.",
+      "bodyText": "If I don't use something once every 12 months (or so, I'm not exact), I get rid of it. Having so many objects cluttering the room is reminiscent of Victorian Era homes, which were cluttered with tables and chairs and curiosities. Stanley Kubrick in the 1970s flirted with the agoraphobia of large, empty living spaces - but so long as the space isn't completely empty, square footage is a luxury."
+    },
+    "humanpower": {
+      "pageTitle": "Human Power",
+      "pageDesc": "This page is for Human Power'ing.",
+      "headerText": "Human Power",
+      "bodyText": "A human is a large, highly exothermic object - with a pair of powerful neuroprocessors operating numerous protein engines, pushing a calcium crystalline frame, grown over by a phospho-lipid leather. But since you are one, you already knew all of that. <br><br>A human body burns about 800 calories per day, or 33 per hour, just to maintain itself - digestion, blood flow, immune functions, optical functions (rotating hemi-beta-carotine), "
+    },
+    "addElement": {
+      "pageTitle": "addElement Explained",
+      "pageDesc": "This page is for adding elements.",
+      "headerText": "addElement($_.elementParent,$_.innerText,$_.elementClass,$_.elementType,$_.elementStyle,$_.href,$_.attributeType,$_.attributeAction,$_.elementId);",
+      "bodyText": "This can be complex to look at, but will make sense as we work through it. You'll almost never use all of these parameters at the same time, but even being able to use a few of them will give you a powerful tool.\n\n $_.divID - The only mandatory one is the first one.\n\n $_.divClass- Specify CSS classes here.\n\n $_.divParent- Nest under parent div. Specify just 'head' or 'body' to attach directly to the document.\n\n $_.innerText- This will be the innerText if it's a Div, or if it's an IMG this will be the title, or if it's Input this will be the Value.\n\n $_.elementType- Specify element type. Default is Div, but can be anything from an A to Canvas to Link.\n\n $_.href- Specify HRef link if A type, HRef link and CSS type for Link type, or Source if IMG or Script type.\n\n $_.attributeType- Set a custom attribute, like 'onclick' or 'placeholder' or 'contenteditable'.\n\n $_.attributeAction- Set the value for the above attribute type. Leave blank for attributes with no value, such as 'contenteditable'.\n\n \n\n Other key parts of this framework are removeElement, wrapperHead, wrapperBody, and wrapperFoot. These divs are unloaded and rebuilt on each page change.\n\n \n\n Call other Javascript scripts, CSS files, and other Head-based items in wrapperHead.\n\n Nest all of your page within wrapperBody.\n\n Add any extra footer elements to wrapperFoot."
+    },
+    "tic": {
+      "pageTitle": "Tic Tac Toe",
+      "pageDesc": "This page is for Tic Tac Toe'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.SmallHiddenLargeQuarter"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "h2",
+          "innerText": "Gil Tac Toe"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "p",
+          "innerText": "This is the first game I made myself. Here is my "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "tictactoe.js",
+          "innerText": "tictactoe.js."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "href": "tictactoe.js",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "img",
+          "href": "https://dl.dropboxusercontent.com/u/21982561/html5/images/tictactoe.png"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "canvas",
+          "id": "canvas"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "button",
+          "id": "as",
+          "elementClass": "btn btn-primary",
+          "onclick": "",
+          "innerText": "restart"
+        }
+      ]
+    },
+    "demon": {
+      "pageName": "Catch The Demon",
+      "pageTitle": "Demon",
+      "pageDesc": "This page is for Catch The Demon'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementType": "h2",
+          "innerText": "Catch the demon"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "p",
+          "innerText": "Game code copied from "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/",
+          "innerText": "here and modified with "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "a",
+          "href": "http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/",
+          "innerText": "this code"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "canvas",
+          "id": "canvas",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "button",
+          "id": "as",
+          "elementClass": "btn btn-primary",
+          "onclick": "",
+          "innerText": "restart"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "var canvas = document.getElementById(\"canvas\");var ctx = canvas.getContext(\"2d\");canvas.width = 512;canvas.height = 480;var bgReady = false;var bgImage = new Image();var heeroReady = false;var heeroImage = new Image();var demonReady = false;var demonImage = new Image();var heero = {};var demon = {};var demonsCaught = 0;var mousePos = {};bgImage.onload = function () {bgReady = true};heeroImage.onload = function () {heeroReady = true};demonImage.onload = function () {demonReady = true};heeroImage.src = \"http://www.gilgamech.com/images/heero.png\";bgImage.src = \"http://www.gilgamech.com/images/background.png\";demonImage.src = \"http://www.gilgamech.com/images/demon.png\";addEventListener('mousemove', function(evt) {mousePos = function (canvas, evt) {var rect = canvas.getBoundingClientRect();return {x: evt.clientX - rect.left, y: evt.clientY - rect.top};}}, false);var reset = function () {demon.x = 32 + (Math.random() * (canvas.width - 64));demon.y = 32 + (Math.random() * (canvas.height - 64));};var update = function(modifier) {if ( mousePos.x <= (demon.x + 16) && demon.x <= (mousePos.x + 16) && mousePos.y <= (demon.y + 16) && demon.y <= (mousePos.y + 16) ) {++demonsCaught;reset();}};var render = function () {if (bgReady) {ctx.drawImage(bgImage, 0, 0);}if (heeroReady) {ctx.drawImage(heeroImage, (mousePos.x-16), (mousePos.y-16));}if (demonReady) {ctx.drawImage(demonImage, demon.x, demon.y);};var main = function () {var now = Date.now();var delta = now - then;update(delta/1000);render();then = now;};reset();var then = Date.now();setInterval(main, 1);ctx.fillStyle = \"rgb(250, 250, 250,)\";ctx.font = \"24px Helvetica\";ctx.textAlign = \"left\";ctx.textBaseline = \"top\";ctx.fillText(\"Demons caught: \" + demonsCaught, 32, 32);};$canvas.demon = new Array();$canvas.demon.canvas = document.getElementById('canvas');$canvas.demon.ctx = $canvas.demon.canvas.getContext('2d');$canvas.demon.canvas.width = 512;$canvas.demon.canvas.height = 480;$canvas.demon.bgReady = false;$canvas.demon.bgImage = new Image();$canvas.demon.heeroReady = false;$canvas.demon.heeroImage = new Image();$canvas.demon.demonReady = false;$canvas.demon.demonImage = new Image();$canvas.demon.demonsCaught = 0;$canvas.demon.mousePos = {};$canvas.demon.heeroImage.src = 'https://s3.amazonaws.com/gilpublic/giltech/images/heero.png';$canvas.demon.bgImage.src = 'https://s3.amazonaws.com/gilpublic/giltech/images/background.png';$canvas.demon.demonImage.src = 'https://s3.amazonaws.com/gilpublic/giltech/images/demon.png';$canvas.demon.canvas.addEventListener('mousemove', function(evt) {function getMousePos(canvas, evt) {var rect = canvas.getBoundingClientRect();return {x: evt.clientX - rect.left,y: evt.clientY - rect.top}}$canvas.demon.mousePos = getMousePos($canvas.demon.canvas, evt);$canvas.demon.ctx.drawImage($canvas.demon.heeroImage, ($canvas.demon.mousePos.x-16), ($canvas.demon.mousePos.y-16));writeElement('canvas', 'Mouse position: ' + $canvas.demon.mousePos.x + ',' + $canvas.demon.mousePos.y);}, false);$canvas.demon.reset = function () {$canvas.demon.ctx.drawImage($canvas.demon.bgImage, 0, 0);$canvas.demon.ctx.drawImage($canvas.demon.demonImage, $canvas.demon.x, $canvas.demon.y);$canvas.demon.x = 32 + (Math.random() * ($canvas.demon.canvas.width - 64));$canvas.demon.y = 32 + (Math.random() * ($canvas.demon.canvas.height - 64));};$canvas.demon.update = function() {if ( $canvas.demon.mousePos.x <= ($canvas.demon.x + 16) && $canvas.demon.x <= ($canvas.demon.mousePos.x + 16) && $canvas.demon.mousePos.y <= ($canvas.demon.y + 16) && $canvas.demon.y <= ($canvas.demon.mousePos.y + 16) ) {++$canvas.demon.demonsCaught;$canvas.demon.reset();}};$canvas.demon.main = function () {$canvas.demon.now = Date.now();$canvas.demon.delta = $canvas.demon.now - $canvas.demon.then;$canvas.demon.update();$canvas.demon.then = $canvas.demon.now;};$canvas.demon.reset();$canvas.demon.then = Date.now();$canvas.demon.timer = setInterval($canvas.demon.main, 1);"
+        }
+      ]
+    },
+    "cidr": {
+      "pageTitle": "cidr",
+      "pageDesc": "This page is for Internet Addresses'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementType": "table",
+          " cellSpacing": "0",
+          "cellPadding": "0",
+          "border": "2",
+          "width": "451",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tbody",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "82",
+          "innerText": "Hosts"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "138",
+          "innerText": "Netmask"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "135",
+          "innerText": "Number of Subnets"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/30"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 4"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.255.252"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 64"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/29"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 8"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.255.248"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 32"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/28"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 16"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.255.240"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 16"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/27"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 32"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.255.224"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 8"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/26"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 64"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.255.192"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 4"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/25"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 128"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.255.128"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 2"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/24"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 256"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.255.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 1"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/23"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 512"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.254.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 2"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/22"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 1024"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.252.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 4"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/21"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 2048"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.248.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 8"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/20"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 4096"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.240.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 16"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/19"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 8192"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.224.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 32"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/18"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 16384"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.192.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 64"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/17"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 32768"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.128.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " align": "left",
+          "width": "135",
+          "innerText": " 128"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "tr",
+          " align": "",
+          "innerText": ""
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "th",
+          " width": "58",
+          "innerText": "/16"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "82",
+          "innerText": " 65536"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "138",
+          "innerText": " 255.255.0.0"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "td",
+          " width": "135",
+          "innerText": " 256 "
+        }
+      ]
+    },
+    "Dynamap": {
+      "pageTitle": "Dynamap",
+      "pageDesc": "This page is for Dynamap'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "login",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/ARKMap.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "canvas",
+          "id": "canvas"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/background.png\";"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/ARKMap.jpg\";"
+        }
+      ]
+    },
+    "Terminal": {
+      "pageTitle": "Terminal",
+      "pageDesc": "This page is for Terminal'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "elementParent": "wrapper",
+          "elementType": "textarea",
+          "id": "historyArea",
+          "href": "wrapper"
+        },
+        {
+          "elementParent": "wrapper",
+          "elementType": "input",
+          "id": "inputField",
+          "attributeType": "onkeypress",
+          "attributeAction": "detectEnter(event,appendElement('historyArea',readElement('inputField') + '\n\r'));try{appendElement('historyArea',eval(readElement('inputField')))}catch(e){appendElement('historyArea',e)}"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "appendElement('historyArea',readElement('inputField') + '');try{appendElement('historyArea',eval(readElement('inputField')))}catch(e){appendElement('historyArea',e)}"
+        }
+      ]
+    },
+    "Voxel": {
+      "pageTitle": "Voxel",
+      "pageDesc": "This page is for Voxel'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "login",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/ARKMap.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "canvas",
+          "id": "canvas"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/background.png\";"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/background.jpg\";"
+        }
+      ]
+    },
+    "MLorAI": {
+      "pageTitle": "Learning",
+      "pageDesc": "This page is for Learning'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "login",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/ARKMap.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "canvas",
+          "id": "canvas"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/background.png\";"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/background.jpg\";"
+        }
+      ]
+    },
+    "DragCode": {
+      "pageTitle": "DynaCode",
+      "pageDesc": "This page is for login'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "login",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/DynaCode.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "menu",
+          "type": "context",
+          "id": "supermenu",
+          "innerText": ""
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "trial",
+          "onClick": "alert('Smile please')"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "rotate",
+          "onClick": "rotate()",
+          "icon": "http://cdn1.iconfinder.com/data/icons/silk2/arrow_rotate_clockwise.png"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "resize",
+          "onClick": "resize()",
+          "icon": "http://cdn3.iconfinder.com/data/icons/fugue/icon/image-resize.png"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menu",
+          "label": "share",
+          "innerText": ""
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "twitter",
+          "onClick": "alert('foo')"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "facebook",
+          "onClick": "alert('bar')"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "canvas",
+          "onClick": "dragClickDrop();",
+          "id": "canvas"
+        },
+        {
+          "id": "outputArea",
+          "elementType": "textarea",
+          "elementParent": "wrapper"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "xhrRequest('POST','/login?username=' + readElement('username') + '&password=' + readElement('password'),function(cb){$settingsVar=JSON.parse(cb)});if (!$pageVar){xhrRequest('GET','$_.pageSettingsJson',function(cb){$pageVar = JSON.parse(cb);rbp('s3')})};"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/background.png\";"
+        }
+      ]
+    },
+    "Indivisual": {
+      "pageTitle": "Indivisual",
+      "pageDesc": "This page is for Indivisual'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "Indivisual"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/fruitbot/Indivisual.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "menu",
+          "type": "context",
+          "id": "supermenu",
+          "innerText": ""
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "trial",
+          "onClick": "alert('Smile please')"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "rotate",
+          "onClick": "rotate()",
+          "icon": "http://cdn1.iconfinder.com/data/icons/silk2/arrow_rotate_clockwise.png"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "resize",
+          "onClick": "resize()",
+          "icon": "http://cdn3.iconfinder.com/data/icons/fugue/icon/image-resize.png"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menu",
+          "label": "share",
+          "innerText": ""
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "twitter",
+          "onClick": "alert('foo')"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "menuitem",
+          "label": "facebook",
+          "onClick": "alert('bar')"
+        },
+        {
+          "elementParent": "supermenu",
+          "elementType": "canvas",
+          "onClick": "dragClickDrop();",
+          "id": "canvas"
+        },
+        {
+          "id": "outputArea",
+          "elementType": "textarea",
+          "elementParent": "wrapper"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "xhrRequest('POST','/login?username=' + readElement('username') + '&password=' + readElement('password'),function(cb){$settingsVar=JSON.parse(cb)});if (!$pageVar){xhrRequest('GET','$_.pageSettingsJson',function(cb){$pageVar = JSON.parse(cb);rbp('s3')})};"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "canvas = document.getElementById(\"canvas\");ctx = canvas.getContext(\"2d\");canvas.width = window.innerWidth;canvas.height = window.innerHeight;bgImage = new Image();bgReady = false;bgImage.onload = function () {bgReady = true;};bgImage.src = \"https://s3.amazonaws.com/gilpublic/giltech/images/background.png\";"
+        }
+      ]
+    },
+    "logout": {
+      "pageTitle": "logout",
+      "pageDesc": "This page is for logout'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "logout",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "id": "username",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "none",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "password",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "none",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "xhrRequest('POST','/logout?username=' + readElement('username'),function(cb){$settingsVar=JSON.parse(cb)});rbp('login');"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "jmlVersion": "23JAN2018",
+  "applicationName": "sudokusolver",
+  "applicationTitle": "Sudoku Solver",
+  "applicationVersion": 212,
+  "startingPage": "gridbox",
+  "apiVersion": "null",
+  "googleApiKey": "aSecretToEverybody",
+  "errgoLogic": "",
+  "pageSettingsJson": "https://s3.amazonaws.com/gilpublic/giltech/giltech.json",
+  "serverSettingsJson": "https://gil-api.herokuapp.com/settings.json",
+  "currentPage": "gridbox",
+  "wrapperVar": {
+    "elements": [
+      {
+        "elementParent": "body",
+        "id": "headWrapper"
+      },
+      {
+        "elementParent": "body",
+        "id": "bodyWrapper"
+      },
+      {
+        "elementParent": "body",
+        "id": "footWrapper"
+      },
+      {
+        "elementParent": "nav3dd",
+        "elementClass": "$_.classes.DdownContent",
+        "id": "NavDDwrapper"
+      }
+    ]
+  },
+  "classes": {
+    "SmallHiddenLargeQuarter": "col-md-3 hidden-xs ",
+    "HalfDesktopFullMobile": "col-md-6 col-xs-12 ",
+    "FullDesktopFullMobile": "col-md-12 col-xs-12 ",
+    "DdownContent": "dropdown-content ",
+    "ContentItems": "contentItems ",
+    "QuarterWidth": "col-md-3 col-xs-3 ",
+    "SmallFullLargeQuarter": "col-md-3 col-sm-6 col-xs-12 ",
+    "SmallHidden": "hidden-sm hidden-xs ",
+    "LargeHidden": "hidden-md hidden-lg ",
+    "ContentTitle": "contentTitles ",
+    "NavbarRight": "navbar-right ",
+    "ThirdWidth": "col-md-4 col-xs-4 ",
+    "HalfWidth": "col-md-6 col-xs-6 ",
+    "NarrowCol": "col-md-2 col-xs-2 ",
+    "Dropdown": "dropdown ",
+    "Container": "container ",
+    "ColorRow": "colorRow ",
+    "ImgRnd": "img-rounded ",
+    "NavBar": "nav navbar-nav ",
+    "Top": "top ",
+    "Row": "row img-rounded "
+  },
+  "style": {
+    "BlackText": "color: #000; ",
+    "WhiteText": "color: #fff; ",
+    "WhiteBack": "background-color: #fff; ",
+    "BlackBack": "background-color: #000; ",
+    "RedField": "background-color: #833; ",
+    "GreenField": "background-color: #383; ",
+    "BlueField": "background-color: #338; ",
+    "QuarterHeight": "height: 25vh; ",
+    "ThreeQuarterHeight": "height: 75vh; "
+  },
+  "pages": {
+    "header": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementType": "title",
+          "innerText": "Sudoku Solver"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/thirdparty/jquery.min.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "link",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/thirdparty/bootstrap.min.css"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "link",
+          "href": "https://s3.amazonaws.com/gilpublic/giltech/thirdparty/normalize.css"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "style",
+          "innerText": "html,body { width: auto !important; overflow-x: hidden !important; } html { } body { background-color:#bbb; } .deleteme { visibility: visible; }  .dropdown { position: relative; display: inline-block; color: #9d9d9d; padding-top: 15px; padding-left: 15px; }  .dropdown-content { color: #9d9d9d; background-color: #010101; display: none; position: absolute; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); padding: 12px 16px; z-index: 1; }  .dropdown:hover .dropdown-content { display: block; } div.dropdown-content a:link{ text-decoration:none; color:#9d9d9d; } div.dropdown-content a:visited{ text-decoration:none; color:#7f7f7f; }  nav { color: #A3C7B2; margin:0; padding:0; border:0; text-align:left; background-color:#000; position: fixed; margin-top: 3em; width: 100%; } div.content { padding-top: 3em; /* top 5px plus height 30px */ margin: 2px 1em 0 5px; }  div.top { top:0; margin:0; padding:0; font-variant: small-caps; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight:bold; text-align:left; position: fixed; width: 100%; } div.top a:link{ text-decoration:none; color:#000; } div.top a:visited { color:#000; } .contentItems { font-size: initial; } .contentTitles { text-align: center; font-size: xx-large; background-color:#eee; color:#000; } .colorRow { text-align: center; font-size: x-large; color:#fff; border:white; } .contentRow { text-align: center; font-size: x-large; border:white; }  /* Let's get this party started https://css-tricks.com/custom-scrollbars-in-webkit */ ::-webkit-scrollbar { width: 12px; }  /* Track */ ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); -webkit-border-radius: 10px; border-radius: 10px; }  /* Handle */ ::-webkit-scrollbar-thumb { -webkit-border-radius: 10px; border-radius: 10px; background: rgba(200,200,200,0.8); -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); }::-webkit-scrollbar-thumb:window-inactive { background: rgba(255,0,0,0.4); }input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }"
+        }
+      ]
+    },
+    "nav": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Container",
+          "id": "titleParent"
+        },
+        {
+          "elementParent": "titleParent",
+          "innerText": "Sudoku Solver",
+          "elementClass": "$_.classes.ImgRnd $_.classes.Top $_.classes.SmallHidden",
+          "elementType": "a",
+          "elementStyle": "font-size: 7ex; color: #000; text-decoration: none",
+          "href": "/"
+        },
+        {
+          "elementParent": "titleParent",
+          "innerText": "DynaCode",
+          "elementClass": "$_.classes.ImgRnd $_.classes.Top $_.classes.LargeHidden",
+          "elementType": "a",
+          "elementStyle": "font-size: 4ex; color: #000; text-decoration: none",
+          "href": "/"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "navbar navbar-static-top navbar-inverse",
+          "id": "navBar"
+        },
+        {
+          "elementParent": "navBar",
+          "elementClass": "$_.classes.Container",
+          "id": "NavDDOuter"
+        },
+        {
+          "elementParent": "NavDDOuter",
+          "elementClass": "$_.classes.NavBar col-md-6 col-xs-6",
+          "elementType": "ul",
+          "id": "nav2"
+        },
+        {
+          "elementParent": "nav2",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "nav2dd"
+        },
+        {
+          "elementParent": "nav2dd",
+          "innerText": "Menu",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "nav2dd",
+          "elementClass": "$_.classes.DdownContent",
+          "id": "nav2ddc"
+        },
+        {
+          "elementParent": "NavDDOuter",
+          "elementClass": "$_.classes.NavBar $_.classes.HalfWidth $_.classes.NavbarRight",
+          "elementType": "ul",
+          "id": "nav3"
+        },
+        {
+          "elementParent": "nav3",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "nav3dd"
+        },
+        {
+          "elementParent": "nav3dd",
+          "innerText": "Login",
+          "elementType": "p"
+        }
+      ]
+    },
+    "footer": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "container-fluid"
+        },
+        {
+          "elementParent": "parentElement",
+          "id": "spacerName"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        },
+        {
+          "elementParent": "footWrapper",
+          "elementClass": "$_.classes.Row $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "errDiv"
+        },
+        {
+          "elementParent": "footWrapper",
+          "elementClass": "navbar-static-bottom",
+          "elementStyle": "text-align: center;",
+          "id": "footerStatic"
+        },
+        {
+          "elementParent": "footerStatic",
+          "elementType": "p",
+          "elementClass": "width: 100%;text-align: center;",
+          "id": "footerBanner"
+        },
+        {
+          "elementParent": "footerBanner",
+          "elementType": "a",
+          "href": "https://www.duckduckgo.com",
+          "id": "footerLink"
+        },
+        {
+          "elementParent": "footerLink",
+          "elementType": "img",
+          "innerText": "C1ick h34r ph0r m04r inph0",
+          "href": "https://gilpublic.s3.amazonaws.com/images/BannerImage.gif",
+          "elementStyle": "height: 150px",
+          "elementClass": "$_.classes.ImgRnd hidden-sm hidden-xs"
+        },
+        {
+          "elementParent": "footerStatic",
+          "innerText": "Gil-API version: $settingsVar.apiVersion - Gilgamech.js version: $GilJSVer - Giltech Site Version: $_.applicationVersion",
+          "elementStyle": "font-weight:bold;text-align:center;",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "footerStatic",
+          "innerText": "(c) 2013-2018 Gilgamech Technologies - We are the gears that make our world go around.",
+          "elementStyle": "font-weight:bold;text-align:center;",
+          "elementType": "p"
+        }
+      ]
+    },
+    "gridbox": {
+      "pageTitle": "Gridbox",
+      "pageDesc": "This page is for login'ing.",
+      "elements": [
+        {
+          "id": "wrapper1",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper2",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper3",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper4",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper5",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper6",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper7",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper8",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "id": "wrapper9",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow img-rounded col-md-4 col-xs-4",
+          "elementStyle": "border: 1px solid rgb(51, 51, 51);"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "var g1 = [\"a\",\"b\",\"c\"];var g2 = [\"d\",\"e\",\"f\"];var g3 = [\"g\",\"h\",\"i\"];for (var i = 0, len = g1.length; i < len; i++) {for (var j = 0; j <= 2; j++) { var $id=g1[i]+\"\"+j;addElement(\"wrapper1\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};for (var j = 3; j <= 5; j++) { var $id=g1[i]+\"\"+j;addElement(\"wrapper2\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};for (var j = 6; j <= 8; j++) { var $id=g1[i]+\"\"+j;addElement(\"wrapper3\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};}for (var i = 0, len = g2.length; i < len; i++) {for (var j = 0; j <= 2; j++) { var $id=g2[i]+\"\"+j;addElement(\"wrapper4\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};for (var j = 3; j <= 5; j++) { var $id=g2[i]+\"\"+j;addElement(\"wrapper5\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};for (var j = 6; j <= 8; j++) { var $id=g2[i]+\"\"+j;addElement(\"wrapper6\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};}for (var i = 0, len = g3.length; i < len; i++) {for (var j = 0; j <= 2; j++) { var $id=g3[i]+\"\"+j;addElement(\"wrapper7\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};for (var j = 3; j <= 5; j++) { var $id=g3[i]+\"\"+j;addElement(\"wrapper8\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};for (var j = 6; j <= 8; j++) { var $id=g3[i]+\"\"+j;addElement(\"wrapper9\",$id,\"col-md-4 col-xs-4\",\"div\",\"border: 1px solid rgb(51, 51, 51);\",\"\",\"\",\"\",\"true\",\"\",\"\",$id)};}"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "var $arr = {}; $arr.a0=3; $arr.a6=8; $arr.a7=2; $arr.a8=4; $arr.b0=9; $arr.b2=7; $arr.b5=4; $arr.b6=6; $arr.c1=2; $arr.c3=6; $arr.c6=3; $arr.d2=2; $arr.d3=3; $arr.d5=1; $arr.d8=8; $arr.e1=7; $arr.e2=3; $arr.f0=1; $arr.f1=9; $arr.f3=4; $arr.f4=7; $arr.f6=5; $arr.g2=4; $arr.g3=7; $arr.g4=6; $arr.h0=7; $arr.h1=1; $arr.h2=6; $arr.h3=5; $arr.h4=9; $arr.h7=8; $arr.i6=7; function addToGrid($checkArr) { var $checkRow = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\"],$output=\"\",i; for (i = 0; i <=8; i++) { for (j = 0; j <=8; j++) { var $loc = ($checkRow[i]+\"\"+j); var $val = $checkArr[$loc]; if ($val == null) { writeElement($loc,\"\"); } else { writeElement($loc,$val); }; }; }; }; function readFromGrid($checkArr) { var $checkRow = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\"],$output=\"\",i; for (i = 0; i <=8; i++) { for (j = 0; j <=8; j++) { var $loc = ($checkRow[i]+\"\"+j); $checkArr[$loc] = readElement($loc); if ($checkArr[$loc]==\"\"){$checkArr[$loc]=null}; }; }; }; function checkCol($col,$checkNum,$checkArr,$returnVar,$start=0,$end=8) { var $checkRow = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\"],$output=\"\",i; for (i = $start; i <= $end; i++) { if ($checkArr[$checkRow[i]+$col] == $checkNum) { $output += $checkRow[i]+$col+\",\"; } else { }; }; return $returnVar($output); }; function checkRow($row,$checkNum,$checkArr,$returnVar,$start=0,$end=8) { var $output=\"\",i; for (i = $start; i <= $end; i++) { if ($checkArr[$row+i] == $checkNum) { $output += $row+i+\",\"; } else { }; }; return $returnVar($output); }; function checkEnnerant($ennerant,$checkNum,$checkArr,$returnVar) { var $checkRow = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\"],$output=\"\";  switch ($ennerant){ case 1: var $cStart=0,$rStart=0; break; case 2: var $cStart=0,$rStart=3; break; case 3: var $cStart=0,$rStart=6; break; case 4: var $cStart=3,$rStart=0; break; case 5: var $cStart=3,$rStart=3; break; case 6: var $cStart=3,$rStart=6; break; case 7: var $cStart=6,$rStart=0; break; case 8: var $cStart=6,$rStart=3; break; case 9: var $cStart=6,$rStart=6; break; default: console.log(\"Err ennerant: \"+$ennerant) } var $cEnd = $cStart +2; var $rEnd = $rStart +2;  checkCol($rStart,$checkNum,$checkArr,($rv)=> $output += $rv,$cStart,$cEnd); checkCol($rStart+1,$checkNum,$checkArr,($rv)=> $output += $rv,$cStart,$cEnd); checkCol($rStart+2,$checkNum,$checkArr,($rv)=> $output += $rv,$cStart,$cEnd); checkRow($checkRow[$cStart],$checkNum,$checkArr,($rv)=> $output += $rv,$rStart,$rEnd); checkRow($checkRow[$cStart+1],$checkNum,$checkArr,($rv)=> $output += $rv,$rStart,$rEnd); checkRow($checkRow[$cStart+2],$checkNum,$checkArr,($rv)=> $output += $rv,$rStart,$rEnd); return $returnVar($output); }; function check($row,$col,$checkNum,$checkArr,$returnVar) { var $output = \"\",$colOut,$rowOut,$o=[],$rv; checkCol($col,$checkNum,$checkArr,($rv)=> $colOut = $rv); $o[\"col\"] = $colOut; checkRow($row,$checkNum,$checkArr,($rv)=> $rowOut = $rv); $o[\"row\"] = $rowOut; if ($row == \"a\" || $row == \"b\" || $row == \"c\"){ if ($col >= 0 && $col <= 2){ checkEnnerant(1,$checkNum,$checkArr,($rv)=> $output += $rv) } else if ($col >= 3 && $col <= 5){ checkEnnerant(2,$checkNum,$checkArr,($rv)=> $output += $rv) } else if ($col >= 6 && $col <= 8){ checkEnnerant(3,$checkNum,$checkArr,($rv)=> $output += $rv) }; } else if ($row == \"d\" || $row == \"e\" || $row == \"f\"){ if ($col >= 0 && $col <= 2){ checkEnnerant(4,$checkNum,$checkArr,($rv)=> $output += $rv) } else if ($col >= 3 && $col <= 5){ checkEnnerant(5,$checkNum,$checkArr,($rv)=> $output += $rv) } else if ($col >= 6 && $col <= 8){ checkEnnerant(6,$checkNum,$checkArr,($rv)=> $output += $rv) }; } else if ($row == \"g\" || $row == \"h\" || $row == \"i\"){ if ($col >= 0 && $col <= 2){ checkEnnerant(7,$checkNum,$checkArr,($rv)=> $output += $rv) } else if ($col >= 3 && $col <= 5){ checkEnnerant(8,$checkNum,$checkArr,($rv)=> $output += $rv) } else if ($col >= 6 && $col <= 8){ checkEnnerant(9,$checkNum,$checkArr,($rv)=> $output += $rv) }; }; $o[\"output\"] = $output; return $returnVar($o); }; function finder($checkArr) { var $r,$c,$n,$ret,$out=[]; var $cr = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\"]; for ($r = 0; $r < 9; $r++) { ; for ($c = 0; $c < 9; $c++) { ; if ($checkArr[$cr[$r] + $c] == null) { var $out=[]; for ($n = 1; $n < 10; $n++) { ; check($cr[$r],$c,$n,$checkArr,($rv)=>$ret=$rv); if (($ret.col+$ret.row+$ret.output)== \"\") {  $out[$out.length] = $n; } else { }; }; if ($out.length==1) { console.log($cr[$r] + $c + \" value is \"+ $out[$out.length-1]); $checkArr[$cr[$r] + $c] = $out[$out.length-1]; } else { console.log(\"Possible values for cell \"+$cr[$r] + $c+\" are \"+ $out); }; }; }; }; };"
+        },
+        {
+          "elementParent": "bodyWrapper",
+          "elementType": "button",
+          "innerText": "Calculate!",
+          "onClick": "finder($arr);addToGrid($arr);"
+        },
+        {
+          "elementParent": "bodyWrapper",
+          "elementType": "button",
+          "innerText": "Update!",
+          "onClick": "readFromGrid($arr);finder($arr);addToGrid($arr);"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1298 @@
+{
+  "jmlVersion": "23JAN2018",
+  "applicationName": "root",
+  "applicationTitle": "SPArational",
+  "applicationVersion": 1014,
+  "startingPage": "main",
+  "apiVersion": "null",
+  "googleApiKey": "aSecretToEverybody",
+  "errgoLogic": "",
+  "pageSettingsJson": "https://s3.amazonaws.com/gilpublic/root/root.spa",
+  "serverSettingsJson": "https://gil-api.herokuapp.com/settings.json",
+  "currentPage": "main",
+  "wrapperVar": {
+    "elements": [
+      {
+        "elementParent": "body",
+        "id": "headWrapper"
+      },
+      {
+        "elementParent": "body",
+        "id": "bodyWrapper"
+      },
+      {
+        "elementParent": "body",
+        "id": "footWrapper"
+      },
+      {
+        "elementParent": "nav3dd",
+        "elementClass": "$_.classes.DdownContent",
+        "id": "NavDDWrapper"
+      }
+    ]
+  },
+  "classes": {
+    "Container": "container ",
+    "ContentItems": "contentItems ",
+    "ContentTitle": "contentTitles ",
+    "DdownContent": "dropdown-content ",
+    "Dropdown": "dropdown ",
+    "FullDesktopFullMobile": "col-md-12 col-xs-12 ",
+    "HalfWidth": "col-md-6 col-xs-6 ",
+    "ImgRnd": "img-rounded ",
+    "MediumQuarterXsmallQuarter": "col-md-3 col-xs-3 ",
+    "MediumHiddenLargeHidden": "hidden-md hidden-lg ",
+    "NavbarRight": "navbar-right ",
+    "NarrowCol": "col-md-2 col-xs-2 ",
+    "Row": "row img-rounded ",
+    "NavBar": "nav navbar-nav ",
+    "SmallHiddenXsmallHidden": "hidden-sm hidden-xs ",
+    "SmallHiddenLargeQuarter": "col-md-3 hidden-xs ",
+    "SmallFullLargeHalf": "col-md-6 col-xs-12 ",
+    "ThirdWidth": "col-md-4 col-xs-4 ",
+    "Top": "top "
+  },
+  "style": {
+    "BlackText": "color: #000; ",
+    "WhiteText": "color: #fff; ",
+    "WhiteBack": "background-color: #fff; ",
+    "BlackBack": "background-color: #000; ",
+    "RedField": "background-color: #833; ",
+    "GreenField": "background-color: #383; ",
+    "BlueField": "background-color: #338; ",
+    "QuarterHeight": "height: 25vh; ",
+    "ContentDisplay": "text-align: center; font-size: x-large; color:#000; border:white;",
+    "ThreeQuarterHeight": "height: 75vh; "
+  },
+  "pages": {
+    "main": {
+      "pageTitle": "Product Page",
+      "pageDesc": "This page is for tiers & pricing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "jumbotron text-center",
+          "id": "jumbotron",
+          "elementStyle": "background: #532F8C"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementClass": "container"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "h1",
+          "innerText": "SPArational - Simple, lightweight, fast, easy single page application framework."
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "p",
+          "innerText": "Build your custom single-page application on a lightning-fast, modern framework and hosting. Or run your site through our site converter.",
+          "elementStyle": "color: #fff;"
+        },
+        {
+          "id": "container",
+          "elementParent": "parentElement",
+          "elementClass": "container"
+        },
+        {
+          "id": "cBanner",
+          "elementParent": "container",
+          "elementClass": "alert alert-info text-center",
+          "innerText": " To deploy your own copy, and learn the fundamentals of the SPArational (spa-Ray-shun-al) platform, head over to the "
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs",
+          "elementClass": "alert-link",
+          "innerText": "Getting Started with SPArational on Heroku tutorial. "
+        },
+        {
+          "elementParent": "container",
+          "elementType": "hr"
+        },
+        {
+          "id": "cRow",
+          "elementParent": "container",
+          "elementClass": "row"
+        },
+        {
+          "id": "sqRow",
+          "elementParent": "cRow",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "sqRow",
+          "elementType": "h3",
+          "innerText": " Mobile First"
+        },
+        {
+          "id": "sqRowUl",
+          "elementParent": "sqRow",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "sqRowUl",
+          "elementType": "li",
+          "innerText": "Lightweight page engine uses less memory and bandwidth than most pages."
+        },
+        {
+          "elementParent": "sqRowUl",
+          "elementType": "li",
+          "innerText": "Most sites can be written to operate entirely without network, only needing network access to get data from another location, or write data to a storage or database."
+        },
+        {
+          "id": "pgRow",
+          "elementParent": "cRow",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "pgRow",
+          "elementType": "h3",
+          "innerText": " Serverless design"
+        },
+        {
+          "id": "pgRowUl",
+          "elementParent": "pgRow",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "pgRowUl",
+          "elementType": "li",
+          "innerText": "Can run from S3, IPFS, local storage, internal hosting, or a number of other locations."
+        },
+        {
+          "elementParent": "pgRowUl",
+          "elementType": "li",
+          "innerText": "The server redirects requests to storage (S3 in this case) and supplies URLs for updating."
+        },
+        {
+          "id": "adRow",
+          "elementParent": "cRow",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "adRow",
+          "elementType": "h3",
+          "innerText": "High Flexibility"
+        },
+        {
+          "id": "adRowUl",
+          "elementParent": "adRow",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "adRowUl",
+          "elementType": "li",
+          "innerText": "Sites are running standard Node and Javascript, and data is standard JSON, ready for your additions."
+        },
+        {
+          "elementParent": "adRowUl",
+          "elementType": "li",
+          "innerText": "The SPArational Server Engine is built on standard Javascript."
+        },
+        {
+          "elementParent": "adRowUl",
+          "elementType": "li",
+          "innerText": "CSS styles can be specified in several ways:"
+        },
+        {
+          "id": "adRowUlx2",
+          "elementParent": "adRowUl",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "adRowUlx2",
+          "elementType": "li",
+          "innerText": "Declare styles directly, with the elementStyle attribute."
+        },
+        {
+          "elementParent": "adRowUlx2",
+          "elementType": "li",
+          "innerText": "Declared as a Style Variable, which combines declared Styles. These are also called with the elementStyle attribute. (Currently Style Variables must call declared Styles; if they call other Style Variables, they will be ignored. Nested Styles are a to-do item.)"
+        },
+        {
+          "elementParent": "adRowUlx2",
+          "elementType": "li",
+          "innerText": "In your own CSS file or a 3rd-party (i.e. Bootstrap), and declared with the elementClass attribute."
+        },
+        {
+          "elementParent": "adRowUlx2",
+          "elementType": "li",
+          "innerText": "As a Class Variable, which combines other classes. (Same caveat as with Style Variables. Marx wouldn't understand.)"
+        },
+        {
+          "elementParent": "adRowUlx2",
+          "elementType": "li",
+          "innerText": "Styles can also be declared as any mix-and-match of the above methods. If one fails, the others will still appear normally."
+        },
+        {
+          "id": "ftRow",
+          "elementParent": "cRow",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "ftRow",
+          "elementType": "h3",
+          "innerText": "Full Transparency"
+        },
+        {
+          "id": "ftRowUl",
+          "elementParent": "ftRow",
+          "elementType": "ul"
+        },
+        {
+          "id": "ftRowLine",
+          "elementParent": "ftRowUl",
+          "elementType": "li",
+          "innerText": "Have a look at the "
+        },
+        {
+          "elementParent": "ftRowLine",
+          "elementType": "a",
+          "href": "https://s3.amazonaws.com/gilpublic/root/root.spa",
+          "elementClass": "alert-link",
+          "innerText": "S3 data file"
+        },
+        {
+          "elementParent": "ftRowLine",
+          "elementType": "notype",
+          "innerText": " supplying this site, the "
+        },
+        {
+          "elementParent": "ftRowLine",
+          "elementType": "a",
+          "href": "https://s3.amazonaws.com/gilpublic/Gilgamech.js",
+          "elementClass": "alert-link",
+          "innerText": "SPArational Browser Engine"
+        },
+        {
+          "elementParent": "ftRowLine",
+          "elementType": "notype",
+          "innerText": ", and the "
+        },
+        {
+          "elementParent": "ftRowLine",
+          "elementType": "a",
+          "href": "https://github.com/Gilgamech/GilAPI",
+          "elementClass": "alert-link",
+          "innerText": "SPArational Server Engine on Github."
+        },
+        {
+          "elementParent": "ftRowUl",
+          "elementType": "li",
+          "innerText": "Small file sizes means you can trust it because there's nowhere for anything to hide."
+        },
+        {
+          "id": "sampleRow",
+          "elementParent": "cRow",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "sampleRow",
+          "elementType": "h3",
+          "innerText": "How this sample app works"
+        },
+        {
+          "id": "sampleRowUl",
+          "elementParent": "sampleRow",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "sampleRowUl",
+          "elementType": "li",
+          "innerText": "This SPArational Node Engine was committed to Github, passed Travis testing, and was deployed to Heroku."
+        },
+        {
+          "elementParent": "sampleRowUl",
+          "elementType": "li",
+          "innerText": "When you loaded the page, it requested a single Javascript file, the SPArational browser engine."
+        },
+        {
+          "elementParent": "sampleRowUl",
+          "elementType": "li",
+          "innerText": "Using another filename in the first file, the Javascript engine requested the data file from S3, and built the page."
+        },
+        {
+          "elementParent": "sampleRowUl",
+          "elementType": "li",
+          "innerText": "When you click on another page, the SPArational engine is deleting all elements on the page, and building those for the new page, no network required!"
+        },
+        {
+          "elementParent": "sampleRowUl",
+          "elementType": "li",
+          "innerText": "You can test this by going into Airplane Mode, and visiting other pages in the Menu link above."
+        },
+        {
+          "id": "nextStepsRow",
+          "elementParent": "cRow",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "nextStepsRow",
+          "elementType": "h3",
+          "innerText": " Next Steps"
+        },
+        {
+          "id": "nextStepsRowUl",
+          "elementParent": "nextStepsRow",
+          "elementType": "ul"
+        },
+        {
+          "id": "nsli1",
+          "elementParent": "nextStepsRowUl",
+          "elementType": "li",
+          "innerText": "To deploy your own page on this site,"
+        },
+        {
+          "elementParent": "nsli1",
+          "elementType": "a",
+          "innerText": "head on over to the S3 page",
+          "onClick": "rbp('s3');"
+        },
+        {
+          "elementParent": "nsli1",
+          "elementType": "notype",
+          "innerText": " to get started,"
+        },
+        {
+          "elementParent": "nsli1",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs",
+          "innerText": "or check out our quick tutorial."
+        },
+        {
+          "id": "nsli2",
+          "elementParent": "nextStepsRowUl",
+          "elementType": "li",
+          "innerText": "To deploy your own site,"
+        },
+        {
+          "elementParent": "nsli2",
+          "elementType": "a",
+          "href": "https://github.com/Gilgamech/GilAPI",
+          "innerText": "clone the page on Github,"
+        },
+        {
+          "elementParent": "nsli2",
+          "elementType": "notype",
+          "innerText": " then "
+        },
+        {
+          "elementParent": "nsli2",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs",
+          "innerText": "visit the Heroku Node tutorial to deploy on their platform"
+        },
+        {
+          "elementParent": "nsli2",
+          "elementType": "notype",
+          "innerText": ", or feel free to host on Node locally, on AWS Lambda, or on any other Node provider."
+        },
+        {
+          "id": "nsli3",
+          "elementParent": "nextStepsRowUl",
+          "elementType": "li",
+          "innerText": "If you just want to host the Javascript engine and data file on your local drive or network,"
+        },
+        {
+          "elementParent": "nsli3",
+          "elementType": "a",
+          "href": "https://s3.amazonaws.com/gilpublic/Gilgamech.js",
+          "innerText": "download the server engine"
+        },
+        {
+          "elementParent": "nsli3",
+          "elementType": "notype",
+          "innerText": " and "
+        },
+        {
+          "elementParent": "nsli3",
+          "elementType": "a",
+          "href": "https://s3.amazonaws.com/gilpublic/root/root.spa",
+          "innerText": "this site's data file"
+        },
+        {
+          "elementParent": "nsli3",
+          "elementType": "notype",
+          "innerText": ", along with "
+        },
+        {
+          "elementParent": "nsli3",
+          "elementType": "a",
+          "href": "https://s3.amazonaws.com/gilpublic/root/root.spa",
+          "innerText": "this page's source code"
+        },
+        {
+          "elementParent": "nsli3",
+          "elementType": "notype",
+          "innerText": " - you'll have to modify the links inside to point to their local locations. (Operation from local storage on mobile is untested and experimental.)"
+        },
+        {
+          "id": "linksRow",
+          "elementParent": "cRow",
+          "elementClass": "col-md-6"
+        },
+        {
+          "elementParent": "linksRow",
+          "elementType": "h3",
+          "innerText": " Helpful Links"
+        },
+        {
+          "id": "linksRowUl",
+          "elementParent": "linksRow",
+          "elementType": "ul"
+        },
+        {
+          "id": "linksRowA",
+          "elementParent": "linksRowUl",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "linksRowA",
+          "elementType": "a",
+          "href": "https://www.heroku.com/home",
+          "innerText": "Heroku"
+        },
+        {
+          "id": "linksRowB",
+          "elementParent": "linksRowUl",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "linksRowB",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/",
+          "innerText": "Heroku Dev Center"
+        },
+        {
+          "id": "linksRowC",
+          "elementParent": "linksRowUl",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "linksRowC",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs",
+          "innerText": "Getting Started with Node on Heroku"
+        },
+        {
+          "id": "linksRowD",
+          "elementParent": "linksRowUl",
+          "elementType": "li"
+        },
+        {
+          "elementParent": "linksRowD",
+          "elementType": "a",
+          "href": "https://devcenter.heroku.com/articles/deploying-nodejs",
+          "innerText": "Deploying Node Apps on Heroku"
+        },
+        {
+          "elementParent": "container",
+          "elementClass": "alert alert-info text-center",
+          "innerText": " Please do read through the Getting Started guide, even if you do know how to build such an application. The guide covers the basics of working with SPArational, and will familiarize you with all the concepts you need in order to build and deploy your own site. "
+        }
+      ],
+      "rows": [
+        {
+          "elementParent": "jumbotron",
+          "firstName": "Get started with your own site now!",
+          "firstClass": "btn btn-lg btn-default",
+          "firstOnclick": "rbp('s3')",
+          "secondName": "Source on GitHub",
+          "secondClass": "btn btn-lg btn-primary",
+          "secondOnclick": "https://github.com/Gilgamech/GilAPI"
+        }
+      ]
+    },
+    "s3": {
+      "pageTitle": "S3 Page",
+      "pageDesc": "This page is for S3'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "sidebar $_.classes.ImgRnd $_.classes.HalfDesktopFullMobile",
+          "elementStyle": "border:1px solid #333;overflow:scroll;resize:horizontal; height: 50vh",
+          "id": "sidebar"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile",
+          "elementStyle": "border:1px solid #333;overflow:scroll;resize:horizontal; height: 50vh",
+          "id": "contentInner"
+        },
+        {
+          "elementParent": "contentInner",
+          "id": "htmlDiv"
+        },
+        {
+          "elementParent": "sidebar",
+          "id": "currentPageDiv"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Current Site",
+          "id": "currentSiteDiv"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementType": "select",
+          "onChange": "$fileName = readElement('currentSiteSel');$fileName = readElement('currentSiteSel');xhrRequest('GET','https://s3.amazonaws.com/gilpublic/'+$fileName+'/'+$fileName+'.spa',function(cb){$pageVar = cb; if ($pageVar.length){appendElement('errDiv',$pageVar)}else{$pageVar.currentPage = $pageVar.startingPage; removeElement('treeDiv');cje('currentPageDiv',{'elements':[{'elementParent':'currentPageDiv','id':'treeDiv','elementClass':'img-rounded col-md-12 col-xs-12'}]});writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$pageVar.currentPage]));writeElement('currentSiteDiv',$pageVar.applicationTitle); for ($page in $pageVar.pages){cje('delPageSel',{'elements':[{'elementParent':'delPageSel','elementType':'option','attributeType':'value','attributeValue':$page,'innerText':$page}, {'elementParent':'treeDiv','id':'li'+$page}, {'elementParent':'li'+$page,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':$page,'onClick':'buildHighlightedPage(\"'+$page+'\")'}]})}; prettyPrint('jmlTextArea');$pageVar.currentPage = $pageVar.startingPage; removeElement('treeDiv');cje('currentPageDiv',{'elements':[{'elementParent':'currentPageDiv','id':'treeDiv','elementClass':'img-rounded col-md-12 col-xs-12'}]});writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$pageVar.currentPage])); for ($page in $pageVar.pages){cje('delPageSel',{'elements':[{'elementParent':'delPageSel','elementType':'option','attributeType':'value','attributeValue':$page,'innerText':$page}, {'elementParent':'treeDiv','id':'li'+$page}, {'elementParent':'li'+$page,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':$page,'onClick':'buildHighlightedPage(\"'+$page+'\")'}]})}; prettyPrint('jmlTextArea')}},'JSON');",
+          "id": "currentSiteSel"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "advDD"
+        },
+        {
+          "elementParent": "advDD",
+          "innerText": "Advanced",
+          "elementClass": "btn btn-primary",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "advDD",
+          "elementClass": "$_.classes.DdownContent",
+          "id": "advancedPageDiv",
+          "innerText": "Version:"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementType": "input",
+          "id": "pageVerNum"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Refresh",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "$site=readElement('currentSiteSel');xhrRequest('GET','https://s3.amazonaws.com/gilpublic/'+$site+'/'+$site+'.spa',function(cb){writeElement('pageVerNum',cb.applicationVersion)},'JSON');"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "id": "newPageDiv"
+        },
+        {
+          "elementParent": "newPageDiv",
+          "innerText": "Add Page:"
+        },
+        {
+          "elementParent": "newPageDiv",
+          "elementType": "input",
+          "id": "newPageName"
+        },
+        {
+          "elementParent": "newPageDiv",
+          "innerText": "Add Page",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "$page=(readElement('newPageName'));$pageVar.pages[$page]=$pageVar.pages.login;"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Delete Page",
+          "id": "delPageDiv"
+        },
+        {
+          "elementParent": "delPageDiv",
+          "elementType": "select",
+          "id": "delPageSel"
+        },
+        {
+          "elementParent": "delPageDiv",
+          "innerText": "Delete Page",
+          "elementClass": "btn btn-danger",
+          "elementType": "button",
+          "attributeType": "disabled",
+          "attributeValue": "true",
+          "onClick": "if(confirm('Do you want to delete page '+readElement('delPageSel')+'?')){delete $pageVar.pages[(readElement('delPageSel'))]};",
+          "id": "delBtn"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "JSON",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "outputRow"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "outputRowJmlDiv"
+        },
+        {
+          "elementParent": "outputRowJmlDiv",
+          "innerText": "JSON goes here",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea",
+          "onChange": "prettyPrint('jmlTextArea');",
+          "id": "jmlTextArea"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "outputRowHtmlDiv"
+        },
+        {
+          "elementParent": "outputRowHtmlDiv",
+          "innerText": "HtmlTxtArea",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea",
+          "id": "htmlTextArea"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Build Page from HTML",
+          "elementClass": "btn btn-warning",
+          "elementType": "button",
+          "onClick": "document.getElementById('htmlDiv').innerHTML = document.getElementById('htmlTextArea').value;"
+        },
+        {
+          "elementParent": "advancedPageDiv",
+          "innerText": "Convert HTML to JSON",
+          "elementClass": "btn btn-warning",
+          "elementType": "button",
+          "onClick": "parseHtml('htmlTextArea','jmlTextArea');"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.BlackText;",
+          "id": "treeDiv"
+        },
+        {
+          "elementParent": "currentPageDiv",
+          "innerText": "Upload to S3",
+          "elementClass": "btn btn-success",
+          "elementType": "button",
+          "onClick": "s3UrlUpload();"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "innerText": "function s3UrlUpload(){ xhrRequest('POST','/s3url?siteName='+readElement('currentSiteSel'),function(key){$pageVar.applicationVersion++; $pageVar.pages[$pageVar.currentPage] = JSON.parse(readElement('jmlTextArea')); xhrRequest('PUT',JSON.parse(key),function(e){writeElement('errDiv',e)},'',JSON.stringify($pageVar))})}; function renameEItem($element,$current,$new){$pageVar.pages[$pageVar.currentPage].elements[$element][$new]=$pageVar.pages[$pageVar.currentPage].elements[$element][$current];$pageVar.pages[$pageVar.currentPage].elements[$element].splice($current,1)}; function updateEitem($page,$element,$eItem){ $pageVar.pages[$page].elements[$element][$eItem]=readElement('ulPage'+$page+'Element'+$element+'eItem'+$eItem)}; var $pageItemList = ['pageTitle','pageDesc','elements']; var $elementItemList = ['elementParent','elementType','elementClass','innerText','id','elementStyle','elementType','onClick','onChange','attributeType','attributeAction','href']; var $elementTypeList = ['a','button','canvas','p','textarea','img','li','ul','hr','h1','h2','h3','h4','h5','h6','div','image','input','script','code','link','option','title','datalist','style','select','td','th','tr','abbr','acronym','address','applet','area','article','aside','audio','b','base','basefont','bdi','bdo','bgsound','big','blink','blockquote','body','br','caption','center','cite','col','colgroup','command','content','data','dd','del','details','dfn','dialog','dir','dl','dt','element','em','embed','fieldset','figcaption','figure','font','footer','form','frame','frameset','head','header','hgroup','html','i','iframe','ins','isindex','kbd','keygen','label','legend','listing','main','map','mark','marquee','menu','menuitem','meta','meter','multicol','nav','nextid','nobr','noembed','noframes','noscript','object','ol','optgroup','output','param','picture','plaintext','pre','progress','q','rp','rt','rtc','ruby','s','samp','section','shadow','slot','small','source','spacer','span','strike','strong','sub','summary','sup','table','tbody','template','tfoot','thead','time','track','tt','u','var','video','wbr','xmp']; function addOption($inputItem,$elementParent){ for ($option in $inputItem){cje($elementParent,{'elements':[{'elementParent':$elementParent,'elementType':'option','innerText':$inputItem[$option]}]})}}; function buildHighlightedElement($element){ removeElement('highlighterDiv'); removeElement('ulPageRow'); cje('headWrapper',{'elements':[{'elementParent':'headWrapper','id':'highlighterDiv','elementType':'style','innerText':'.Element' + $element + ' { background-color: lightblue;}'},{'elementParent':'ulPage'+$pageVar.currentPage+'Element'+$element,'id':'ulPageRow'}]}); buildElementRow('ulPageRow','',$element,$elementItemList,'add'); buildElementRow('ulPageRow',$pageVar.pages[$pageVar.currentPage].elements[$element],$element,$elementItemList,'delItem'); cje('ulPageRow',{'elements':[{'elementParent':'ulPageRow','elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'X','onClick':'if (confirm(\"Do you want to delete element '+$element+'?\")){$pageVar.pages[$pageVar.currentPage].elements.splice('+$element+',1)}'}]});}; function buildHighlightedPage($page){ $pageVar.currentPage = $page; writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$page])); removeElement('ulPage'); cje('li'+$page,{'elements':[{'elementParent':'li'+$page,'elementType':'ul','id':'ulPage'}]}); buildElementRow('ulPage','','',$pageItemList,'add'); buildElementRow('ulPage',$pageVar.pages[$page],'',$pageItemList,'delPage'); cje('ulPage',{'elements':[{ 'elementParent':'ulPage','elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':'new','onClick':'$pageVar.pages[$pageVar.currentPage].elements[$pageVar.pages[$pageVar.currentPage].elements.length] = {\"elementParent\":\"parentElement\"}'}, { 'elementParent':'ulPage','elementType':'ul','id':'ulPage'+$page+'New'}]}); for ($element in $pageVar.pages[$page].elements){ cje('ulPage',{'elements':[{ 'elementParent':'ulPage','elementType':'button','elementClass':'btn btn-primary btn-xs Element'+$element,'innerText':$element,'onClick':'buildHighlightedElement('+$element+');'}, { 'elementParent':'ulPage','elementType':'ul','id':'ulPage'+$page+'Element'+$element }]})}; writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$page])); prettyPrint('jmlTextArea'); rebuildElement('htmlDiv'); var $s = JSON.parse(readElement('jmlTextArea')); for ($element in $s.elements){ $s.elements[$element].elementClass += ' highlightDiv Element' + $element; $s.elements[$element].onClick = 'buildHighlightedElement('+$element+');'}; cje('htmlDiv',$s)}; function buildElementRow($parentElement,$itemArray,$element,$inputItem,$errLocype){var $itemType = 'input'; switch ($errLocype){ case 'add': $parentWrapper = 'wrapper'+$parentElement; cje($parentElement,{'elements':[{'elementParent':$parentElement,'id':$parentWrapper},{'elementParent':$parentWrapper,'elementType':'select','id':'selectAdd'+ $parentWrapper}, {'elementParent':$parentWrapper,'elementType':'input','id':'inputAdd'+ $parentWrapper}, {'elementParent':$parentWrapper,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':'add','onClick':'renameEItem('+$element+',\"\",readElement(\"selectAdd'+ $parentWrapper+'\"))'}]}); addOption($inputItem,'selectAdd'+ $parentWrapper); break; case 'delItem': var $styleHolder='$_.style.QuarterHeight';var $classHolder='div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile';for ($item in $itemArray){var $itemClass = '';var $itemStyle = '';switch ($item){ case 'elementParent': $itemType = 'select'; break; case 'elementType': $itemType = 'select'; break; case 'innerText': $itemType = 'textarea'; $itemClass=$classHolder;$itemStyle=$styleHolder;break; case 'onClick': $itemType = 'textarea'; $itemClass=$classHolder;$itemStyle=$styleHolder;break; case 'onChange': $itemType = 'textarea'; $itemClass=$classHolder;$itemStyle=$styleHolder;break; default: $itemType = 'input'; break;}; $currentParentElementName = 'ulPage'+$pageVar.currentPage+'Element'+$element+'item'+$item; $selectItem = 'select'+$item; $parentWrapper = 'wrapper'+$item; cje($parentElement,{'elements':[{'elementParent':$parentElement,'id':$parentWrapper},{'elementParent':$parentWrapper,'elementType':'select','innerText':$item,'id':$selectItem,'onChange':'renameEItem('+$element+',\"'+$item+'\",readElement(\"select'+$item+'\"))'}, {'elementParent':$parentWrapper,'elementType':$itemType,'innerText':$itemArray[$item],'elementClass':$itemClass,'elementStyle':$itemStyle,'id':$currentParentElementName,'onChange':'$pageVar.pages[\"'+$pageVar.currentPage+'\"].elements[\"'+$element+'\"][\"'+$item+'\"]=readElement(\"'+$currentParentElementName+'\")'}, {'elementParent':$parentWrapper,'elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'X','onClick':'if (confirm(\"Do you want to delete element item '+$item+'?\")){delete $pageVar.pages[$pageVar.currentPage].elements['+$element+'][\"'+$item+'\"]}'}]}); addOption($inputItem,$selectItem); writeElement($selectItem,$item); switch ($item){ case 'elementParent': var $elementIdList=['parent'+'Element','headWrapper','bodyWrapper','footWrapper','NavDDWrapper']; var $eLen = $elementIdList.length; for($e2=0;$e2<$pageVar.pages[$pageVar.currentPage].elements.length;$e2++){try{$pv = $pageVar.pages[$pageVar.currentPage].elements[$e2].id}catch{};if($pv){$elementIdList[$eLen]=$pv;$eLen++}}; addOption($elementIdList,$currentParentElementName); console.log($element+','+$item+','+$pageVar.currentPage); writeElement($currentParentElementName,$pageVar.pages[$pageVar.currentPage].elements[$element].elementParent); break; case 'elementType': addOption($elementTypeList,$currentParentElementName); console.log($element+','+$item+','+$pageVar.currentPage); writeElement($currentParentElementName,$pageVar.pages[$pageVar.currentPage].elements[$element].elementType); break; default: break;}}; break; case 'delPage': for ($item in $itemArray){ $selectItem = 'select'+$item; $parentWrapper = 'wrapper'+$item; switch ($item){ case 'pageDesc': $itemType = 'textarea';break; case 'elements': $itemType = 'select'; break; default: $itemType = 'input'; break;}; cje($parentElement,{'elements':[{'elementParent':$parentElement,'id':$parentWrapper},{'elementParent':$parentWrapper,'elementType':'select','innerText':$item,'id':$selectItem,'onChange':'renameEItem('+$element+',\"'+$item+'\",readElement(\"'+$selectItem+'\"))'}, {'elementParent':$parentWrapper,'elementType':'input','innerText':$itemArray[$item],'id':$parentWrapper+$pageVar.currentPage+'item'+$item,'onChange':'$pageVar.pages[\"'+$pageVar.currentPage+'\"][\"'+$item+'\"]=readElement(\"'+$parentWrapper+$pageVar.currentPage+'item'+$item+'\")'}, {'elementParent':$parentWrapper,'elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'X','onClick':'if (confirm(\"Do you want to delete item '+$item+'?\")){delete $pageVar.pages[$pageVar.currentPage][\"'+$item+'\"]}'}]}); addOption($inputItem,$selectItem); writeElement($selectItem,$item)}; break; default: break;}};xhrRequest('GET','https://s3.amazonaws.com/gilpublic/giltech/giltech.spa',function(cb){$pageVar = JSON.parse(cb); if ($settingsVar.userACLTable.length>25){$settingsVar.userACLTable =$settingsVar.userACLTable.split(',')}; addOption($settingsVar.userACLTable,'currentSiteSel');$pageVar.currentPage = 's3'; writeElement('jmlTextArea',JSON.stringify($pageVar.pages[$pageVar.currentPage])); for ($page in $pageVar.pages){cje('delPageSel',{'elements':[{'elementParent':'delPageSel','elementType':'option','attributeType':'value','attributeValue':$page,'innerText':$page},{'elementParent':'treeDiv','id':'li'+$page}, {'elementParent':'li'+$page,'elementType':'button','elementClass':'btn btn-primary btn-xs','innerText':$page,'onClick':'buildHighlightedPage(\"'+$page+'\")'}]})};buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage'); prettyPrint('jmlTextArea')});"
+        }
+      ]
+    },
+    "login": {
+      "pageTitle": "login",
+      "pageDesc": "This page is for logout'ing.",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "login",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "id": "username",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "password",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        },
+        {
+          "elementParent": "btnRow",
+          "innerText": "Submit",
+          "elementClass": "btn btn-primary",
+          "elementType": "button",
+          "onClick": "xhrRequest('POST','/login?username=' + readElement('username') + '&password=' + readElement('password'),function(cb){$settingsVar=JSON.parse(cb)});if (!$pageVar){xhrRequest('GET','$_.pageSettingsJson',function(cb){$pageVar = JSON.parse(cb);rbp('s3')})};"
+        }
+      ]
+    },
+    "legal": {
+      "pageName": "legal",
+      "pageTitle": "legal",
+      "pageDesc": "This page is for legal'ing.",
+      "onload": "",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.SmallHiddenLargeQuarter",
+          "id": "contentOuter"
+        },
+        {
+          "elementParent": "contentOuter",
+          "elementClass": "$_.classes.ImgRnd $_.classes.HalfDesktopFullMobile"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whoArea"
+        },
+        {
+          "elementParent": "whoArea",
+          "innerText": "Rights and responsibilities",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whoArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "innerText": "Rights and responsibilities",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whatArea"
+        },
+        {
+          "elementParent": "whatArea",
+          "innerText": "Terms",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whatArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whenArea"
+        },
+        {
+          "elementParent": "whenArea",
+          "innerText": "Site-pull conditions",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whenArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whereArea"
+        },
+        {
+          "elementParent": "whereArea",
+          "innerText": "Disclaimers",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whereArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "whyArea"
+        },
+        {
+          "elementParent": "whyArea",
+          "innerText": "Site use etc",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "whyArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "howArea"
+        },
+        {
+          "elementParent": "howArea",
+          "innerText": "Spamming, bots, blocking.",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "howArea",
+          "elementClass": "div_textarea $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "elementStyle": "$_.style.QuarterHeight $_.style.BlackText",
+          "elementType": "textarea"
+        }
+      ]
+    },
+    "testBlogVar": {
+      "pageTitle": "Hello World!",
+      "onload": "",
+      "pageDesc": "This page is for min'ing.",
+      "elementClass": "",
+      "href": "",
+      "headerText": "This is a test blog",
+      "bodyText": "Testing out how this goes. Let me know what you think!"
+    },
+    "header": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementType": "title",
+          "innerText": "$_.applicationTitle"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "href": "https://s3.amazonaws.com/gilpublic/root/thirdparty/jquery.min.js"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "link",
+          "href": "https://s3.amazonaws.com/gilpublic/root/thirdparty/bootstrap.min.css"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "link",
+          "href": "https://s3.amazonaws.com/gilpublic/root/thirdparty/normalize.css"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "link",
+          "href": "https://s3.amazonaws.com/gilpublic/root/root.css",
+          "innerText": "html,body { width: auto !important; overflow-x: hidden !important;} html { } body { background-color:#fff;} .deleteme { visibility: visible;}  .jumbotron { background: #532F8C; color: white; padding-bottom: 80px;} .jumbotron .btn-primary { background: #845ac7; border-color: #845ac7;} .jumbotron .btn-primary:hover { background: #7646c1;} .jumbotron p { color: #fff; max-width: 75%; margin: 1em auto 2em;} .navbar + .jumbotron { margin-top: -20px;} .jumbotron .lang-logo { display: block; background: #B01302; border-radius: 50%; overflow: hidden; width: 100px; height: 100px; margin: auto; border: 2px solid white;} .jumbotron .lang-logo img { max-width: 100%;}  .dropdown { position: relative; display: inline-block; color: #9d9d9d; padding-top: 15px; padding-left: 15px;}  .dropdown-content { color: #9d9d9d; background-color: #010101; display: none; position: absolute; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); padding: 12px 16px; z-index: 1;}  .dropdown:hover .dropdown-content { display: block;} div.dropdown-content a:link{ text-decoration:none; color:#9d9d9d;} div.dropdown-content a:visited{ text-decoration:none; color:#7f7f7f;}  nav { color: #A3C7B2; margin:0; padding:0; border:0; text-align:left; background-color:#000; position: fixed; margin-top: 3em; width: 100%;} div.content { padding-top: 3em; /* top 5px plus height 30px */ margin: 2px 1em 0 5px;}  div.top { top:0; margin:0; padding:0; font-variant: small-caps; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight:bold; text-align:left; position: fixed; width: 100%;} div.top a:link{ text-decoration:none; color:#000;} div.top a:visited { color:#000;} .contentItems { font-size: initial; background-color:#fff;} .contentTitles { text-align: center; font-size: xx-large; background-color:#337AB7; color:#fff;}  /* Let's get this party started https://css-tricks.com/custom-scrollbars-in-webkit */ ::-webkit-scrollbar { width: 12px;}  /* Track */ ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); -webkit-border-radius: 10px; border-radius: 10px;}  /* Handle */ ::-webkit-scrollbar-thumb { -webkit-border-radius: 10px; border-radius: 10px; background: rgba(200,200,200,0.8); -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);}::-webkit-scrollbar-thumb:window-inactive { background: rgba(255,0,0,0.4);}input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0;}"
+        }
+      ]
+    },
+    "nav": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Container",
+          "id": "titleParent"
+        },
+        {
+          "elementParent": "titleParent",
+          "innerText": "$_.applicationTitle",
+          "elementClass": "$_.classes.ImgRnd $_.classes.Top $_.classes.SmallHiddenXsmallHidden",
+          "elementType": "a",
+          "elementStyle": "font-size: 7ex; color: #000; text-decoration: none",
+          "href": "/"
+        },
+        {
+          "elementParent": "titleParent",
+          "innerText": "$_.applicationTitle",
+          "elementClass": "$_.classes.ImgRnd $_.classes.Top $_.classes.MediumHiddenLargeHidden",
+          "elementType": "a",
+          "elementStyle": "font-size: 4ex; color: #000; text-decoration: none",
+          "href": "/"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "navbar navbar-static-top navbar-inverse",
+          "id": "navBar"
+        },
+        {
+          "elementParent": "navBar",
+          "elementClass": "$_.classes.Container",
+          "id": "NavDDOuter"
+        },
+        {
+          "elementParent": "NavDDOuter",
+          "elementClass": "$_.classes.NavBar col-md-6 col-xs-6",
+          "elementType": "ul",
+          "id": "nav2"
+        },
+        {
+          "elementParent": "nav2",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "nav2dd"
+        },
+        {
+          "elementParent": "nav2dd",
+          "innerText": "Menu",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "nav2dd",
+          "elementClass": "$_.classes.DdownContent",
+          "id": "nav2ddc"
+        },
+        {
+          "elementParent": "NavDDOuter",
+          "elementClass": "$_.classes.NavBar $_.classes.HalfWidth $_.classes.NavbarRight",
+          "elementType": "ul",
+          "id": "nav3"
+        },
+        {
+          "elementParent": "nav3",
+          "elementClass": "$_.classes.Dropdown",
+          "id": "nav3dd"
+        },
+        {
+          "elementParent": "nav3dd",
+          "innerText": "Login",
+          "elementType": "p"
+        }
+      ]
+    },
+    "footer": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "container-fluid"
+        },
+        {
+          "elementParent": "parentElement",
+          "id": "spacerName"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        },
+        {
+          "elementParent": "spacerName",
+          "elementType": "br"
+        },
+        {
+          "elementParent": "footWrapper",
+          "elementClass": "$_.classes.Row $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+          "id": "errDiv"
+        },
+        {
+          "elementParent": "footWrapper",
+          "elementClass": "navbar-static-bottom",
+          "elementStyle": "text-align: center;",
+          "id": "footerStatic"
+        },
+        {
+          "elementParent": "footerStatic",
+          "elementType": "p",
+          "elementStyle": "width: 100%;text-align: center;",
+          "id": "footerBanner"
+        },
+        {
+          "elementParent": "footerBanner",
+          "elementType": "a",
+          "href": "https://www.duckduckgo.com",
+          "id": "footerLink"
+        },
+        {
+          "elementParent": "footerLink",
+          "elementType": "img",
+          "innerText": "C1ick h34r ph0r m04r inph0",
+          "href": "https://gilpublic.s3.amazonaws.com/images/BannerImage.gif",
+          "elementStyle": "height: 150px",
+          "elementClass": "$_.classes.ImgRnd"
+        },
+        {
+          "elementParent": "footerStatic",
+          "innerText": "SPArational site version: $_.applicationVersion",
+          "elementStyle": "font-weight:bold;text-align:center;",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "footerStatic",
+          "innerText": "(c) 2013-2018 Gilgamech Technologies - We are the gears that make our world go around.",
+          "elementStyle": "font-weight:bold;text-align:center;",
+          "elementType": "p"
+        },
+        {
+          "elementParent": "footerStatic",
+          "elementType": "script",
+          "innerText": "overlayOff();"
+        }
+      ]
+    },
+    "TemplateGallery": {
+      "pageName": "Templates",
+      "pageTitle": "Templates",
+      "pageDesc": "This page is for login'ing.",
+      "onload": "",
+      "elements": [
+        {
+          "id": "wrapper",
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ContentRow",
+          "innerText": "login",
+          "attributeType": "method",
+          "attributeAction": "post"
+        },
+        {
+          "id": "username",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "password",
+          "elementParent": "wrapper",
+          "elementClass": "$_.classes.InputField $_.classes.FullDesktopFullMobile",
+          "elementType": "input",
+          "attributeType": "type",
+          "attributeAction": "text"
+        },
+        {
+          "id": "btnRow",
+          "elementParent": "wrapper"
+        }
+      ],
+      "rows": [
+        {
+          "elementParent": "btnRow",
+          "firstName": "Submit",
+          "firstOnclick": "xhrRequest('POST','/login?username=' + readElement('username') + '&password=' + readElement('password'),function(cb){$settingsVar=JSON.parse(cb)});"
+        }
+      ]
+    },
+    "admin": {
+      "pageTitle": "Admin Page",
+      "pageDesc": "This page is for admin'ing.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.ImgRnd",
+          "id": "outerWrapper"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "innerText": "Admin Page",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "elementClass": "$_.classes.ImgRnd $_.classes.FullDesktopFullMobile $_.classes.ColorRow",
+          "id": "innerWrapper"
+        },
+        {
+          "elementParent": "headWrapper",
+          "elementType": "script",
+          "innerText": "function s3FileUpload($siteName,$fileDiv){ var $file = document.getElementById($fileDiv).files[0]; xhrRequest('POST','/s3url?siteName='+$siteName+'&fileName='+$file.name+'&contentType='+$file.type,function(key){ xhrRequest('PUT',key,function(e){ writeElement('errDiv',e)},'',$file )},'JSON')}; var $siteNo=0; var $currentSiteVar=[]; function addSitePane($inputList,$elementParent){for ($site in $inputList){console.log($site); cje($elementParent,{'elements':[{'elementParent':$elementParent, 'elementClass':'$_.classes.ImgRnd $_.classes.FullDesktopFullHMobile','elementStyle':'$_.style.QuarterHeight $_.style.BlackText','id':'site'+$site+'parent'+$elementParent },{'elementParent':'site'+$site+'parent'+$elementParent, 'elementClass':'$_.classes.ImgRnd col-md-9 col-xs-9','elementStyle':'$_.style.QuarterHeight $_.style.BlackText','id':'site'+$site+'infoDiv'},{'elementParent':'site'+$site+'infoDiv','elementClass':'$_.classes.Row $_.classes.ContentTitle','innerText':$inputList[$site]},{'elementParent':'site'+$site+'infoDiv','innerText':'Public website URL','elementType':'a','href':'https://www.sparational.com/'+$inputList[$site]},{'elementParent':'site'+$site+'infoDiv','elementType':'br'},{'elementParent':'site'+$site+'infoDiv','innerText':'Site in S3','elementType':'a','href':'https://s3.amazonaws.com/gilpublic/'+$inputList[$site]+'/'+$inputList[$site]+'.spa'},{'elementParent':'site'+$site+'infoDiv','id':'site'+$site+'uploadRow'},{'elementParent':'site'+$site+'uploadRow','elementType':'input','elementClass':'col-md-6 col-sm-6','attributeType':'type','attributeAction':'file','id':'site'+$site+'file'},{'elementParent':'site'+$site+'uploadRow','elementType':'button','elementClass':'btn btn-primary','innerText':'Upload','onClick':'s3FileUpload(\\\"'+$inputList[$site]+'\\\",\\\"site'+$site+'file\\\")'},{'elementParent':'site'+$site+'infoDiv','elementType':'button','elementClass':'btn btn-primary','onClick':'$pageVar.currentPage=$site;rbp(\\\"s3\\\");','innerText':'Edit site'},{'elementParent':'site'+$site+'infoDiv','elementType':'button','elementClass':'btn btn-danger btn-xs','innerText':'Delete Site'},{'elementParent':'site'+$site+'parent'+$elementParent, 'elementClass':'$_.classes.ImgRnd col-md-3 col-xs-3','elementStyle':'$_.style.QuarterHeight $_.style.BlackText','id':'site'+$site+'htmlDiv'},{'elementParent':'site'+$site+'htmlDiv','elementClass':'$_.classes.ImgRnd','elementType':'iframe','href':'https://www.sparational.com/'+$inputList[$site],'elementStyle':'zoom: 4.0; -moz-transform:scale(0.15); -moz-transform-origin: 0 0; -o-transform: scale(0.15); -o-transform-origin: 0 0; -webkit-transform: scale(0.15); -webkit-transform-origin: 0 0;height: 40vh; width: 40vh;$_.style.BlackText','id':'site'+$site+'innerHtmlDiv'}]}); $siteNo++;}}; addSitePane($settingsVar.userACLTable,'outerWrapper');"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "innerText": "New Site",
+          "elementType": "button",
+          "elementClass": "btn btn-primary",
+          "onClick": "xhrRequest('POST','/newSite',function(cb){console.log(cb)});"
+        },
+        {
+          "elementParent": "outerWrapper",
+          "innerText": "Delete Account",
+          "elementType": "button",
+          "elementClass": "btn btn-danger btn-xs",
+          "onClick": "if(confirm(\"Do you want to delete your account?\")){alert(\"Account would be deleted. Contact support.\")};"
+        }
+      ]
+    },
+    "addpage": {
+      "pageTitle": "FAQs (How to add a page)",
+      "pageDesc": "This page is for adding pages.",
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Login and \"warm up\" the uploader."
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "(This is necessary during site beta. It will be fixed before gold status.)\n1. Login.\n2. Refresh page\n3. Goto the S3 page, perform a sample change, check S3. (This usually fails)\n4. Refresh page.\n5. Goto the S3 page, perform a sample change, check S3. (This usually works).\n6. You are now ready to upload to S3."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Add new element to your page"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login and \"warm up\" the uploader.\n2. Goto the S3 page, click the page where you want the new element to be.\n3. Click blue the \"new\" button, at the top of the list of elements.\n4. Click the page button again. The new element will appear at the bottom.\n5. Use the red X buttons to remove element items, \n- Use the blue \"add\" buttons to add new element items to elements. \n6. Click the element button to confirm items have been added to the element. \n- Select an elementType and elementClass to change the appearance, and innerText to give it a display value.\n7. Click the page name button to update the page view in the htmlDiv pane and in the global variable which is uploaded. If this isn't done, the changes won't be uploaded to S3.\n8. Click the \"Upload to S3\" button early and often, to store your work. \n9. Either use the Admin page to monitor your files on S3, or view the file directly in your browser."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Rearrange elements on page"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login.\n2. Goto the S3 page.\nComing soon: A button to enter \"rearrange\" mode."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Upload files to your site"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login.\n2. Goto the S3 page.\n3. Goto the Admin page.\n4. Scroll to the page where you want to upload..\n5. Click the \"Choose File\" button to select the file to upload. \n6. Click the blue \"Upload\" button."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Modify pages on S3 page"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login and \"warm up\" the uploader.\n2. Goto the S3 page, click the page where you want the new element to be.\n3. Click blue the \"new\" button, at the top of the list of elements.\n4. Click the page button again. The new element will appear at the bottom.\n5. Use the red X buttons to remove elements and element items.\n- Use the blue \"new\" buttons to add new elements to the page. \n- Use the blue \"add\" buttons to add new element items to elements. \n6. Click the element button to confirm items have been added to the element. \n- Select an elementType and elementClass to change the appearance, and innerText to give it a display value.\n7. Click the page name button to update the page view in the htmlDiv pane and in the global variable which is uploaded. If this isn't done, the changes won't be uploaded to S3.\n8. Click the \"Upload to S3\" button early and often, to store your work. \n9. Either use the Admin page to monitor your files on S3, or view the file directly in your browser."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "View sites on Admin page"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login.\n2. Goto the Admin page.\n3. Scroll to the page where you want to view..\n- Use the links to view the site in your browser, or on S3.\nComing soon: Live preview of site's main page."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Add new site"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login.\n2. Goto the S3 page.\n3. Goto the Admin page.\n4. Click the \"New Site\" button.\n5. Reload the page.\n6. Goto the S3 page.\n7. Goto the Admin page to upload files to your new site."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Convert page from HTML"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login.\n2. Goto the S3 page.\n3. Mouseover the Advanced button.\n4. Scroll down a little bit, to the 2nd textarea. Paste your HTML here.\n5. (Optional) Click the \"Build Page from HTML\" button to view the page in the HTML pane.\n6 Click the \"Convert HTML to JSON\" button to fill the JML textarea with JSON converted from the site. \nComing soon: Additional support for rare HTML element types and parsing support."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Change the background color"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. Login.\n2. Goto the S3 page.\n3. Click the page named \"header\".\n4. Locate the element with elementType \"style\", and modify the CSS located within the tag.\n"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Rearrange elements on a page"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. From the S3 page,\n- Coming soon: rearrange element mode."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Rearrange pages on a site? "
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. From the S3 page,\n- Coming soon: rearrange page mode."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Dealing with errors"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Errors will be shown in the errDiv at the bottom of the page.\n\nThere are a few types of errors that will be shown on the S3 page:\n- JSON parsing errors\n- S3 uploading errors\n- Page construction (cje) errors"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Optimize pages"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Declare local Styles and Classes in the header, and local Javascript in Script tags."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Nav bars and drop downs"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. From the S3 page, click the \"nav\" page.\n- Use this to modify the Nav bar to meet your needs.\n\n2. Default drop-down \"hookDivs\":\n- \"NavDDWrapper\" - For small pages, element groups, or drop-down links.\n- \"nav2ddc\" - For menu items."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Copy JSON from S3 page for easy backups"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "To backup or copy a page from a site.\n1. From the S3 page, select the site and page to backup.\n2. Mouseover or tap the Advanced button, and go down to the JSON window.\n3. Copy the page data. \n4. Return here and paste to restore the page.\n- Change the site and/or page to copy instead of restoring.\n- Do this after using Add Page to quickly copy a page to your site.\n\nTo backup or copy a site:\n1. From the Admin page, scroll down to the site you want to back up.\n2. Click the \"Site on S3\" link.\n3. Save or copy this site data.\n4. Coming soon: Upload to  S3 to restore site."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Copy site from template"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. From the Templates page, \n- Coming soon: Templates page with copy button.\n\nAlternate:\n1. Find the site data file on S3.\n2. Save or copy this site data.\n3. Coming soon: Upload to  S3 to restore site."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "How to sign in"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. From the login page, enter your username and password, then click the sign in button. \n- Refresh the page to reload the settingsVar data from the server.\n- Goto the S3 page and verify your sites have loaded into the site selector.\n\nHow to register for a new account:\n1. From the login page, enter your desired username and password, then click the sign in button. \n- If the username is not in use, your account will be created."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "How to reset my password"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "How to reset your password: \n1. From the login page, enter your username and desired new password, then click the sign in button. \n- Coming soon: Password will be updated to desired new password."
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "How to transfer site ownership"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. From the Admin page,\n- Coming soon, transfer site ownership options. "
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "Pricing"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "Membership:\nFree Membership: $0/month\n- Full access to demo sites.\n- Limited access to early access and beta sites.\n\nPatreon Membership: $1/month\n- Free Membership\n- Full access to early access and beta sites.\n- Limited access to general access sites\n\nBronze Membership: $5/month\n- Patreon Membership\n- Full access to general access sites\n- Limited access to limited access sites\n\nSilver Membership: $10/month\n- Bronze Membership\n- Full access to limited access sites\n- Limited access to VIP \n- 10 \"1 hour demo\" sites\n- 1 long-term site\n\nGold Membership: $25/month\n- Silver Membership\n- Full access to VIP and all sites.\n- 25 \"1 hour demo\" sites\n- 3 long-term sites\n- 1 Vanity URLs\n\nHosting:\nFree tier: $0/month/user\n- Up to 7 \"1 hour demo\" sites at one time.\n\nStartup tier: $1/month/user\n- 21 \"1 hour demo\" sites \n- 3 long-term sites\n\nPremium tier: $7/month/user\n- Unlimited \"1 hour demo\" sites\n- 10 long-term sites\n- 1 Vanity URLs\n\nEnterprise tier: $25/month/user\n- Unlimited \"1 hour demo\" and long-term sites\n- 1 Vanity URL per user\n- Invoice billing\n- Email support\n"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "$_.classes.Row $_.classes.ContentTitle",
+          "innerText": "How to pay"
+        },
+        {
+          "elementParent": "parentElement",
+          "innerText": "1. From the Admin page,\n- Coming soon: Stripe link."
+        }
+      ]
+    }
+  }
+}
