@@ -1,0 +1,154 @@
+{
+"pageTitle":"Fruitbot!",
+"pageDesc":"This page is for Fruitbot'ing.",
+"elementClass":"",
+"elements":[{
+"elementParent":"parentElement",
+"elementClass":"$_.classes.Row",
+"elementStyle":"$_.style.WhiteText $_.style.BlackBack"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"https:s3.amazonaws.com/gilpublic/giltech/fruitbot/seedrandom.js"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"https:s3.amazonaws.com/gilpublic/giltech/fruitbot/board.js"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"https:s3.amazonaws.com/gilpublic/giltech/fruitbot/grid.js"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"https:s3.amazonaws.com/gilpublic/giltech/fruitbot/mybot.js"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"https:s3.amazonaws.com/gilpublic/giltech/fruitbot/simplebot.js"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"https:s3.amazonaws.com/gilpublic/giltech/fruitbot/player.js"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"https:s3.amazonaws.com/gilpublic/giltech/thirdparty/jquery.min.js"
+},
+{
+"elementParent":"parentElement",
+"innerText":"Fruitbot",
+"elementClass":"$_.classes.Row $_.classes.ContentTitle"
+},
+{
+"elementParent":"parentElement",
+"elementClass":"$_.classes.Row $_.classes.ContentTitle",
+"elementType":"canvas",
+"elementStyle":"display: block;margin: 0px auto;border: 1px solid black;",
+"id":"game_view"
+},
+{
+"elementParent":"parentElement",
+"elementClass":"$_.classes.Row $_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+"id":"myBoardRow"
+},
+{
+"elementParent":"myBoardRow",
+"innerText":"Board number",
+"elementClass":"$_.classes.Row $_.classes.ContentTitle"
+},
+{
+"elementParent":"myBoardRow",
+"innerText":"0",
+"elementClass":"$_.classes.ImgRnd $_.classes.FullDesktopFullMobile",
+"elementType":"input",
+"attributeType":"type",
+"attributeAction":"number"
+},
+{
+"elementParent":"parentElement",
+"elementClass":"$_.classes.Row $_.classes.ImgRnd col-md-4 col-xs-6",
+"id":"myScoreRow"
+},
+{
+"elementClass":"btn btn-primary",
+"elementType":"button",
+"elementParent":"parentElement",
+"innerText":"Start!",
+"onClick":"GamePlay.init();"
+},
+{
+"elementClass":"btn btn-primary",
+"elementType":"button",
+"elementParent":"parentElement",
+"innerText":"new",
+"onClick":"onClick"
+},
+{
+"elementClass":"btn btn-primary",
+"elementType":"button",
+"elementParent":"parentElement",
+"innerText":"reset",
+"onClick":"onClick"
+},
+{
+"elementClass":"btn btn-primary",
+"elementType":"button",
+"elementParent":"parentElement",
+"innerText":"pause",
+"onClick":"onClick"
+},
+{
+"elementClass":"btn btn-primary",
+"elementType":"button",
+"elementParent":"parentElement",
+"innerText":"forward",
+"onClick":"onClick"
+},
+{
+"elementClass":"btn btn-primary",
+"elementType":"button",
+"elementParent":"parentElement",
+"innerText":"innerText",
+"onClick":"onClick"
+},
+{
+"elementParent":"myScoreRow",
+"innerText":"Wins"
+},
+{
+"elementParent":"myScoreRow",
+"innerText":"0",
+"id":"scoreWins"
+},
+{
+"elementParent":"myScoreRow",
+"innerText":"Losses"
+},
+{
+"elementParent":"myScoreRow",
+"innerText":"0",
+"id":"scoreLoss"
+},
+{
+"elementParent":"myScoreRow",
+"innerText":"Ties"
+},
+{
+"elementParent":"myScoreRow",
+"innerText":"0",
+"id":"scoreTies"
+},
+{
+"elementParent":"headWrapper",
+"elementType":"script",
+"href":"GamePlay.init();"
+}]}
+   
