@@ -5,11 +5,11 @@
       "elements": [
         {"elementParent": "parentElement","elementClass": "jumbotron text-center","id": "jumbotron","elementStyle": "background: #532F8C"},
         {"elementParent": "jumbotron","elementClass": "container"},
-        {"elementParent": "jumbotron","elementType": "h1","innerText": "SPArationalJS - Simple, lightweight, fast, easy single page application framework."},
-        {"elementParent": "jumbotron","elementType": "p","innerText": "Choose one of many prebuilt templates. Or build your custom single-page application on a lightning-fast, modern framework.","elementStyle": "color: #fff;"},
+        {"elementParent": "jumbotron","elementType": "h1","innerText": "Sparational.js - a simple serverless framework."}, 
+        {"elementParent": "jumbotron","elementType": "p","innerText": "Choose a prebuilt template. Or build your single-page application on a lightning-fast, modern framework.","elementStyle": "color: #fff;"},
         {"id": "container","elementParent": "parentElement","elementClass": "container"},
         {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the Sparational (spa-Ray-shun-al) platform, head over to the "},
-        {"elementParent": "cBanner","elementType": "a","href": "http://sparational.s3-website-us-west-2.amazonaws.com/","elementClass": "alert-link","innerText": "Getting Started with SPArationalJS tutorial. "},
+        {"elementParent": "cBanner","elementType": "a","href": "http://sparational.s3-website-us-west-2.amazonaws.com/","elementClass": "alert-link","innerText": "Getting Started with Sparational.js tutorial. "},
         {"elementParent": "container","elementType": "hr"},
         {"id": "cRow","elementParent": "container","elementClass": "row"},
         {"id": "mobileFirstArea","elementParent": "cRow","elementClass": "col-md-6"},
@@ -36,7 +36,7 @@
         {"elementParent": "howPageWorksArea","elementType": "h3","innerText": "How this page works"},
         {"id": "howPageWorksAreaUl","elementParent": "howPageWorksArea","elementType": "ul"},
         {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "The HTML page has a Div with id='content'. It calls an index.js file, which uses webRequest to call the index.spa file. The file index.spa has a JSON representation of this site."},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the SPArationalJS browser engine converted the JSON into the page you're looking at."},
+        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the Sparational.js browser engine converted the JSON into the page you're looking at."},
         {"id": "nextStepsRow","elementParent": "cRow","elementClass": "col-md-6"},
         {"elementParent": "nextStepsRow","elementType": "h3","innerText": " Next Steps"},
         {"id": "nextStepsRowUl","elementParent": "nextStepsRow","elementType": "ul"},
@@ -48,18 +48,18 @@
         {"id": "linksRowUl","elementParent": "linksRow","elementType": "ul"},
         {"id": "linksRowA","elementParent": "linksRowUl","elementType": "li"},
         {"elementParent": "linksRowA","elementType": "a","href": "","innerText": ""},
-        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with SPArationalJS, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
+        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with Sparational.js, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
       ]
     },
     "howTo": {
       "elements": [
         {"elementParent": "parentElement","elementClass": "jumbotron text-center","id": "jumbotron","elementStyle": "background: #532F8C"},
         {"elementParent": "jumbotron","elementClass": "container"},
-        {"elementParent": "jumbotron","elementType": "h1","innerText": "SPArationalJS - Simple, lightweight, fast, easy single page application framework."},
+        {"elementParent": "jumbotron","elementType": "h1","innerText": "Sparational.js - Simple, lightweight, fast, easy single page application framework."},
         {"elementParent": "jumbotron","elementType": "p","innerText": "Choose one of many prebuilt templates. Or build your custom single-page application on a lightning-fast, modern framework.","elementStyle": "color: #fff;"},
         {"id": "container","elementParent": "parentElement","elementClass": "container"},
-        {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the SPArationalJS (spa-Ray-shun-al) platform, head over to the "},
-        {"elementParent": "cBanner","elementType": "a","href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs","elementClass": "alert-link","innerText": "Getting Started with SPArationalJS tutorial. "},
+        {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the Sparational.js (spa-Ray-shun-al) platform, head over to the "},
+        {"elementParent": "cBanner","elementType": "a","href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs","elementClass": "alert-link","innerText": "Getting Started with Sparational.js tutorial. "},
         {"elementParent": "container","elementType": "hr"},
         {"id": "cRow","elementParent": "container","elementClass": "row"},
         {"id": "mobileFirstArea","elementParent": "cRow","elementClass": "col-md-6"},
@@ -86,7 +86,7 @@
         {"elementParent": "howPageWorksArea","elementType": "h3","innerText": "How this page works"},
         {"id": "howPageWorksAreaUl","elementParent": "howPageWorksArea","elementType": "ul"},
         {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "The HTML page has a Div with id='content'. It calls an index.js file, which uses webRequest to call the index.spa file. The file index.spa has a JSON representation of this site."},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the SPArationalJS browser engine converted the JSON into the page you're looking at."},
+        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the Sparational.js browser engine converted the JSON into the page you're looking at."},
         {"id": "nextStepsRow","elementParent": "cRow","elementClass": "col-md-6"},
         {"elementParent": "nextStepsRow","elementType": "h3","innerText": " Next Steps"},
         {"id": "nextStepsRowUl","elementParent": "nextStepsRow","elementType": "ul"},
@@ -98,18 +98,18 @@
         {"id": "linksRowUl","elementParent": "linksRow","elementType": "ul"},
         {"id": "linksRowA","elementParent": "linksRowUl","elementType": "li"},
         {"elementParent": "linksRowA","elementType": "a","href": "","innerText": ""},
-        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with SPArationalJS, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
+        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with Sparational.js, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
       ]
     },
     "commandIndex": {
       "elements": [
         {"elementParent": "parentElement","elementClass": "jumbotron text-center","id": "jumbotron","elementStyle": "background: #532F8C"},
         {"elementParent": "jumbotron","elementClass": "container"},
-        {"elementParent": "jumbotron","elementType": "h1","innerText": "SPArationalJS - Simple, lightweight, fast, easy single page application framework."},
+        {"elementParent": "jumbotron","elementType": "h1","innerText": "Sparational.js - Simple, lightweight, fast, easy single page application framework."},
         {"elementParent": "jumbotron","elementType": "p","innerText": "Choose one of many prebuilt templates. Or build your custom single-page application on a lightning-fast, modern framework.","elementStyle": "color: #fff;"},
         {"id": "container","elementParent": "parentElement","elementClass": "container"},
-        {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the SPArationalJS (spa-Ray-shun-al) platform, head over to the "},
-        {"elementParent": "cBanner","elementType": "a","href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs","elementClass": "alert-link","innerText": "Getting Started with SPArationalJS tutorial. "},
+        {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the Sparational.js (spa-Ray-shun-al) platform, head over to the "},
+        {"elementParent": "cBanner","elementType": "a","href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs","elementClass": "alert-link","innerText": "Getting Started with Sparational.js tutorial. "},
         {"elementParent": "container","elementType": "hr"},
         {"id": "cRow","elementParent": "container","elementClass": "row"},
         {"id": "mobileFirstArea","elementParent": "cRow","elementClass": "col-md-6"},
@@ -136,7 +136,7 @@
         {"elementParent": "howPageWorksArea","elementType": "h3","innerText": "How this page works"},
         {"id": "howPageWorksAreaUl","elementParent": "howPageWorksArea","elementType": "ul"},
         {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "The HTML page has a Div with id='content'. It calls an index.js file, which uses webRequest to call the index.spa file. The file index.spa has a JSON representation of this site."},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the SPArationalJS browser engine converted the JSON into the page you're looking at."},
+        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the Sparational.js browser engine converted the JSON into the page you're looking at."},
         {"id": "nextStepsRow","elementParent": "cRow","elementClass": "col-md-6"},
         {"elementParent": "nextStepsRow","elementType": "h3","innerText": " Next Steps"},
         {"id": "nextStepsRowUl","elementParent": "nextStepsRow","elementType": "ul"},
@@ -148,7 +148,7 @@
         {"id": "linksRowUl","elementParent": "linksRow","elementType": "ul"},
         {"id": "linksRowA","elementParent": "linksRowUl","elementType": "li"},
         {"elementParent": "linksRowA","elementType": "a","href": "","innerText": ""},
-        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with SPArationalJS, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
+        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with Sparational.js, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
       ]
     }
 	}
