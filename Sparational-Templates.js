@@ -1,15 +1,15 @@
-function buildGridPage(sites) {
+function buildGridPage(parentElement,sites) {
 	if (name == "") {
 		for (let site of sites) {
-			var outerHref = addElement("wrapper","","","a","",site.name);
+			var outerHref = addElement(parentElement,"","","a","",site.name);
 			addElement(outerHref,site.name,('grid grid-item '+site.Type));
 		}
 	}
 }
 
-function buildInfoPage(currentSite) {
-	addElement("wrapper","","grid-item "+currentSite.Type+"Page","","","","","","","","","innerWrapper");
-	addElement("innerWrapper",name,"","h1","text-align: center");
+function buildInfoPage(parentElement,currentSite) {
+	addElement(parentElement,"","grid-item "+currentSite.Type+"Page","","","","","","","","","innerWrapper");
+	addElement("innerWrapper",currentSite.name,"","h1","text-align: center");
 	if (currentSite.useCase) {
 		addElement("innerWrapper",currentSite.useCase,"","h3","text-align: center");
 	}; //end if currentSite
