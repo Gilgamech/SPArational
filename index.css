@@ -43,7 +43,21 @@ body {
 .jumbotron .lang-logo img {
 		max-width: 100%;
 }
-	
+
+.grid-container {
+	display: grid;
+	gap: 10px;
+	padding: 10px;
+	grid-template-columns: 20vw 20vw 20vw;
+}
+.grid {
+	text-align: center;
+	background: #eee;
+}
+.grid:hover {
+  background: #bbb;
+}
+
 .dropdown {
 	position: relative;
 	display: inline-block;
@@ -51,7 +65,6 @@ body {
 	padding-top: 15px;
 	padding-left: 15px;
 }
-
 .dropdown-content {
 	color: #9d9d9d;
 	background-color: #010101;
@@ -62,7 +75,6 @@ body {
 	padding: 12px 16px;
 	z-index: 1;
 }
-
 .dropdown:hover .dropdown-content {
 	display: block;
 }
@@ -89,6 +101,10 @@ nav {
 div.content {
 	padding-top: 3em; /* top 5px plus height 30px */
 	margin: 2px 1em 0 5px;
+}
+.copyright {
+	font-weight:bold;
+	text-align:center;
 }
 
 div.top {
