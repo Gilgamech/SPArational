@@ -14,7 +14,7 @@ window.onload = function(){
 	webRequest("get","http://sparational.s3-website-us-west-2.amazonaws.com/index.spa",function(data){
 		sites = data;
 		//console.log(data.pages.main.elements)
-		cje2("content",sites.pages.main.elements);
+		cje2("content",sites.pages.howTo.elements);
 	},"JSON"); //end webRequest
 }; //end window.onload
 </script>

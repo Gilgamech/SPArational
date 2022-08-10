@@ -1,155 +1,862 @@
 {
-  "jmlVersion": "23JAN2018",
+  "jmlVersion": "08AUG2022",
   "pages": {
-    "main": {
-      "elements": [
-        {"elementParent": "parentElement","elementClass": "jumbotron text-center","id": "jumbotron","elementStyle": "background: #532F8C"},
-        {"elementParent": "jumbotron","elementClass": "container"},
-        {"elementParent": "jumbotron","elementType": "h1","innerText": "Sparational.js - a simple serverless framework."}, 
-        {"elementParent": "jumbotron","elementType": "p","innerText": "Choose a prebuilt template. Or build your single-page application on a lightning-fast, modern framework.","elementStyle": "color: #fff;"},
-        {"id": "container","elementParent": "parentElement","elementClass": "container"},
-        {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the Sparational (spa-Ray-shun-al) platform, head over to the "},
-        {"elementParent": "cBanner","elementType": "a","href": "http://sparational.s3-website-us-west-2.amazonaws.com/","elementClass": "alert-link","innerText": "Getting Started with Sparational.js tutorial. "},
-        {"elementParent": "container","elementType": "hr"},
-        {"id": "cRow","elementParent": "container","elementClass": "row"},
-        {"id": "mobileFirstArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "mobileFirstArea","elementType": "h3","innerText": " Mobile First"},
-        {"id": "mobileFirstAreaUl","elementParent": "mobileFirstArea","elementType": "ul"},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Can run from local storage, S3, IPFS, IIS, Apache, container, CDN, or any number of other sources."},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Lightweight page engine uses less memory and bandwidth than most frameworks."},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Most sites can be written to operate entirely without network, only needing network access to get data on first load. "},
-        {"id": "serverlessDesignArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "serverlessDesignArea","elementType": "h3","innerText": " Serverless design"},
-        {"id": "serverlessDesignAreaUl","elementParent": "serverlessDesignArea","elementType": "ul"},
-        {"elementParent": "serverlessDesignArea","elementType": "li","innerText": "Build sites entirely within the browser. Use addElement, readElement, writeElement, and more to programmatically create sites from a data source and browser window location. This is how ",
-		  "id": "liBuildSites"},
-        {"elementParent": "liBuildSites","elementType": "a","innerText": "OfferingOverview","href": "http://offeringoverview.s3-website-us-west-2.amazonaws.com/"},
-        {"elementParent": "liBuildSites","elementType": "span","innerText": " operates."},
-        {"elementParent": "serverlessDesignArea","elementType": "li","innerText": "Or build a static site entirely in a SPA file, use webRequest to load it, and let CJE2 (Convert JSON to html Elements 2) to convert this into your site - which is how this site operates."},
-        {"id": "highFlexibilityArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "highFlexibilityArea","elementType": "h3","innerText": "High Flexibility"},
-        {"id": "highFlexibilityAreaUl","elementParent": "highFlexibilityArea","elementType": "ul"},
-        {"elementParent": "highFlexibilityAreaUl","elementType": "li","innerText": "Functional design streamlines building small functions directly in HTML onclick and other element parameters."},
-        {"elementParent": "highFlexibilityAreaUl","elementType": "li","innerText": "Sites are running standard Javascript, and data is standard JSON, ready for your additions."},
-        {"elementParent": "highFlexibilityAreaUl","elementType": "li","innerText": "CSS styles can be specified normally, as classes declared in your own CSS file or a 3rd-party (i.e. Bootstrap), and declared with the elementClass attribute. Or they can be declared directly in the elementStyle field."},
-        {"id": "howPageWorksArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "howPageWorksArea","elementType": "h3","innerText": "How this page works"},
-        {"id": "howPageWorksAreaUl","elementParent": "howPageWorksArea","elementType": "ul"},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "The HTML page has a Div with id='content'. It calls an index.js file, which uses webRequest to call the index.spa file. The file index.spa has a JSON representation of this site."},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the Sparational.js browser engine converted the JSON into the page you're looking at."},
-        {"id": "nextStepsRow","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "nextStepsRow","elementType": "h3","innerText": " Next Steps"},
-        {"id": "nextStepsRowUl","elementParent": "nextStepsRow","elementType": "ul"},
-        {"id": "nextStepsRowLi","elementParent": "nextStepsRowUl","elementType": "li","innerText": "To try this with your own page, add "},
-        {"elementParent": "nextStepsRowLi","elementType": "a","innerText": "Sparational.js","href": "http://sparational.s3-website-us-west-2.amazonaws.com/Sparational.js"},
-        {"elementParent": "nextStepsRowLi","elementType": "span","innerText": " to your page as a script link. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');"},
-        {"id": "linksRow","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "linksRow","elementType": "h3","innerText": " Helpful Links"},
-        {"id": "linksRowUl","elementParent": "linksRow","elementType": "ul"},
-        {"id": "linksRowA","elementParent": "linksRowUl","elementType": "li"},
-        {"elementParent": "linksRowA","elementType": "a","href": "","innerText": ""},
-        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with Sparational.js, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
-      ]
-    },
     "howTo": {
       "elements": [
-        {"elementParent": "parentElement","elementClass": "jumbotron text-center","id": "jumbotron","elementStyle": "background: #532F8C"},
-        {"elementParent": "jumbotron","elementClass": "container"},
-        {"elementParent": "jumbotron","elementType": "h1","innerText": "Sparational.js - Simple, lightweight, fast, easy single page application framework."},
-        {"elementParent": "jumbotron","elementType": "p","innerText": "Choose one of many prebuilt templates. Or build your custom single-page application on a lightning-fast, modern framework.","elementStyle": "color: #fff;"},
-        {"id": "container","elementParent": "parentElement","elementClass": "container"},
-        {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the Sparational.js (spa-Ray-shun-al) platform, head over to the "},
-        {"elementParent": "cBanner","elementType": "a","href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs","elementClass": "alert-link","innerText": "Getting Started with Sparational.js tutorial. "},
-        {"elementParent": "container","elementType": "hr"},
-        {"id": "cRow","elementParent": "container","elementClass": "row"},
-        {"id": "mobileFirstArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "mobileFirstArea","elementType": "h3","innerText": " Mobile First"},
-        {"id": "mobileFirstAreaUl","elementParent": "mobileFirstArea","elementType": "ul"},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Build sites entirely within the browser. Use addElement, readElement, writeElement, and more to programmatically create sites from a data source and browser window location. This is how ",
-		  "id": "liBuildSites"},
-        {"elementParent": "liBuildSites","elementType": "a","innerText": "OfferingOverview","href": "http://offeringoverview.s3-website-us-west-2.amazonaws.com/"},
-        {"elementParent": "liBuildSites","elementType": "span","innerText": " operates."},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Or build a static site entirely in a SPA file, use webRequest to load it, and let CJE2 (Convert Json to html Elements 2) convert it into your website - which is how this page operates."},
-        {"id": "serverlessDesignArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "serverlessDesignArea","elementType": "h3","innerText": " Serverless design"},
-        {"id": "serverlessDesignAreaUl","elementParent": "serverlessDesignArea","elementType": "ul"},
-        {"elementParent": "serverlessDesignAreaUl","elementType": "li","innerText": "Can run from local storage, S3, IPFS, IIS, Apache, container, CDN, or any number of other sources."},
-        {"elementParent": "serverlessDesignAreaUl","elementType": "li","innerText": "Lightweight page engine uses less memory and bandwidth than most frameworks."},
-        {"elementParent": "serverlessDesignAreaUl","elementType": "li","innerText": "Most sites can be written to operate entirely without network, only needing network access to get data on first load. "},
-        {"id": "highFlexibilityArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "highFlexibilityArea","elementType": "h3","innerText": "High Flexibility"},
-        {"id": "highFlexibilityAreaUl","elementParent": "highFlexibilityArea","elementType": "ul"},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Functional design streamlines building small functions directly in HTML onclick and other element parameters."},
-        {"elementParent": "highFlexibilityAreaUl","elementType": "li","innerText": "Sites are running standard Javascript, and data is standard JSON, ready for your additions."},
-        {"elementParent": "highFlexibilityAreaUl","elementType": "li","innerText": "CSS styles can be specified normally, as classes declared in your own CSS file or a 3rd-party (i.e. Bootstrap), and declared with the elementClass attribute. Or they can be declared directly in the elementStyle field."},
-        {"id": "howPageWorksArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "howPageWorksArea","elementType": "h3","innerText": "How this page works"},
-        {"id": "howPageWorksAreaUl","elementParent": "howPageWorksArea","elementType": "ul"},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "The HTML page has a Div with id='content'. It calls an index.js file, which uses webRequest to call the index.spa file. The file index.spa has a JSON representation of this site."},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the Sparational.js browser engine converted the JSON into the page you're looking at."},
-        {"id": "nextStepsRow","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "nextStepsRow","elementType": "h3","innerText": " Next Steps"},
-        {"id": "nextStepsRowUl","elementParent": "nextStepsRow","elementType": "ul"},
-        {"id": "nextStepsRowLi","elementParent": "nextStepsRowUl","elementType": "li","innerText": "To try this with your own page, add "},
-        {"elementParent": "nextStepsRowLi","elementType": "a","innerText": "Sparational.js","href": "http://sparational.s3-website-us-west-2.amazonaws.com/Sparational.js"},
-        {"elementParent": "nextStepsRowLi","elementType": "span","innerText": " to your page as a script link. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');"},
-        {"id": "linksRow","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "linksRow","elementType": "h3","innerText": " Helpful Links"},
-        {"id": "linksRowUl","elementParent": "linksRow","elementType": "ul"},
-        {"id": "linksRowA","elementParent": "linksRowUl","elementType": "li"},
-        {"elementParent": "linksRowA","elementType": "a","href": "","innerText": ""},
-        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with Sparational.js, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
+        {
+          "elementParent": "parentElement",
+          "elementClass": "jumbotron text-center",
+          "id": "jumbotron",
+          "elementStyle": "background: #532F8C"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementClass": "container"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "h1",
+          "innerText": "Sparational.js - a simple serverless front-end framework."
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "p",
+          "innerText": "Write your own single page engine in browser-side Javascript, build a SPA file, or just choose a pre-built site template.",
+          "elementStyle": "color: #fff;"
+        },
+{ "id": "container", "elementParent": "parentElement", "elementClass": "container" 
+		},
+        {
+          "id": "cBanner",
+          "elementParent": "container",
+          "elementClass": "grid-container grid-nav text-center"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);",
+          "innerText": "How-To Page"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.info.elements);",
+          "innerText": "Info Page"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.functionIndex.elements);",
+          "innerText": "Function Index"
+
+		},
+		{
+          "id": "cRow",
+          "elementParent": "container",
+          "elementClass": "grid-container grid-info"
+        },
+        {
+          "id": "usingTemplateArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "usingTemplateArea",
+          "elementType": "h3",
+          "innerText": "Build a page using a template:"
+        },
+        {
+          "id": "usingTemplateAreaUl",
+          "elementParent": "usingTemplateArea",
+          "elementType": "ul"
+        },
+        {
+          "id": "usingTemplateAreaUlLi",
+          "elementParent": "usingTemplateAreaUl",
+          "elementType": "li",
+          "innerText": "Templates are located at "
+        },
+        {
+          "elementParent": "usingTemplateAreaUlLi",
+          "elementType": "a",
+          "innerText": "http://sparational.s3-website-us-west-2.amazonaws.com/Sparational-Templates.js",
+          "href": "http://sparational.s3-website-us-west-2.amazonaws.com/Sparational-Templates.js"
+        },
+        {
+          "elementParent": "usingTemplateAreaUl",
+          "elementType": "li",
+          "innerText": "Commented above the template are the data types used by the function parameters. If given the correct data types (including the ID of the location where it should be located), the page will display. As a troubleshooting aid, element IDs are logged to console as they are written to the browser's Document variable."
+        },
+        {
+          "elementParent": "usingTemplateAreaUl",
+          "elementType": "li",
+          "innerText": "List of addElement parameters: elementParent, innerText, elementClass, elementType, elementStyle, href, onChange, onClick, contentEditable, attributeType, attributeAction, elementId."
+        },
+        {
+          "id": "usingCJE2Area",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "usingCJE2Area",
+          "elementType": "h3",
+          "innerText": "Build a page using a CJE2:"
+        },
+        {
+          "id": "usingCJE2AreaUl",
+          "elementParent": "usingCJE2Area",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "usingCJE2AreaUl",
+          "elementType": "li",
+          "innerText": "CJE2 (Convert Json to html Element 2) takes an element ID and a SPA file. HTML is described in a SPA file as JSON. Each object has the same addElement parameters shown in the Using a Template section. CJE2 does use addElement to do the heavy DOM lifting."
+        },
+        {
+          "elementParent": "usingCJE2AreaUl",
+          "elementType": "li",
+          "innerText": "Instead of specifying parameters within and between HTML tags, declare them in JSON. Use the 'id' property to give your element an ID that can be used elsewhere, or leave it blank for a randomized ID. Specifying this ID as another element's elementParent will cause that other element to be nested within this element, and SPA files generally describe HTML pages and sections as an element with an ID followed by the elements nested within it."
+        },
+        {
+          "elementParent": "usingCJE2AreaUl",
+          "elementType": "li",
+          "innerText": "Just as with Templates, element IDs are logged to console for troubleshooting."
+        },
+        {
+          "id": "usingJavascript",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "usingJavascript",
+          "elementType": "h3",
+          "innerText": "Build a programmatic page using Javascript:"
+        },
+        {
+          "id": "usingJavascriptUl",
+          "elementParent": "usingJavascript",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "usingJavascriptUl",
+          "elementType": "li",
+          "innerText": "Use addElement to make pages, readElement to pull data from divs and other elements, normal JS to transform,  functions including writeElement and mdArrayToTable to display, and webRequest to make remote API and other data calls."
+        },
+        {
+          "elementParent": "usingJavascriptUl",
+          "elementType": "li",
+          "innerText": "These functions can easily be incorporated directly into the onclick or onchange properties of a button, link, or other element. And they can also be easily used alongside normal JS as synchronous functional commands. (Except webRequest for obvious reasons.)"
+
+        },
+        {
+          "id": "nextStepsRow",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "nextStepsRow",
+          "elementType": "h3",
+          "innerText": "Next Steps"
+        },
+        {
+          "id": "nextStepsRowUl",
+          "elementParent": "nextStepsRow",
+          "elementType": "ul"
+        },
+        {
+          "id": "nextStepsRowLi",
+          "elementParent": "nextStepsRowUl",
+          "elementType": "li",
+          "innerText": "Head on over to the "
+
+        },
+        {
+          "elementParent": "nextStepsRowLi",
+          "elementType": "a",
+          "elementClass": "link",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.info.elements);",
+          "innerText": "Info Page"
+        },
+        {
+          "elementParent": "nextStepsRowLi",
+          "innerText": " to get started."
+        },
+        {
+          "elementParent": "container",
+          "elementType": "p",
+          "elementClass": "copyright",
+          "innerText": "© 2013-2022 Gilgamech Technologies - Powered by SPArational."
+       }
       ]
     },
-    "commandIndex": {
+    "info": {
       "elements": [
-        {"elementParent": "parentElement","elementClass": "jumbotron text-center","id": "jumbotron","elementStyle": "background: #532F8C"},
-        {"elementParent": "jumbotron","elementClass": "container"},
-        {"elementParent": "jumbotron","elementType": "h1","innerText": "Sparational.js - Simple, lightweight, fast, easy single page application framework."},
-        {"elementParent": "jumbotron","elementType": "p","innerText": "Choose one of many prebuilt templates. Or build your custom single-page application on a lightning-fast, modern framework.","elementStyle": "color: #fff;"},
-        {"id": "container","elementParent": "parentElement","elementClass": "container"},
-        {"id": "cBanner","elementParent": "container","elementClass": "alert alert-info text-center","innerText": " To deploy your own copy, and learn the fundamentals of the Sparational.js (spa-Ray-shun-al) platform, head over to the "},
-        {"elementParent": "cBanner","elementType": "a","href": "https://devcenter.heroku.com/articles/getting-started-with-nodejs","elementClass": "alert-link","innerText": "Getting Started with Sparational.js tutorial. "},
-        {"elementParent": "container","elementType": "hr"},
-        {"id": "cRow","elementParent": "container","elementClass": "row"},
-        {"id": "mobileFirstArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "mobileFirstArea","elementType": "h3","innerText": " Mobile First"},
-        {"id": "mobileFirstAreaUl","elementParent": "mobileFirstArea","elementType": "ul"},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Build sites entirely within the browser. Use addElement, readElement, writeElement, and more to programmatically create sites from a data source and browser window location. This is how ",
-		  "id": "liBuildSites"},
-        {"elementParent": "liBuildSites","elementType": "a","innerText": "OfferingOverview","href": "http://offeringoverview.s3-website-us-west-2.amazonaws.com/"},
-        {"elementParent": "liBuildSites","elementType": "span","innerText": " operates."},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Or build a static site entirely in a SPA file, use webRequest to load it, and let CJE2 (Convert Json to html Elements 2) convert it into your website - which is how this page operates."},
-        {"id": "serverlessDesignArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "serverlessDesignArea","elementType": "h3","innerText": " Serverless design"},
-        {"id": "serverlessDesignAreaUl","elementParent": "serverlessDesignArea","elementType": "ul"},
-        {"elementParent": "serverlessDesignAreaUl","elementType": "li","innerText": "Can run from local storage, S3, IPFS, IIS, Apache, container, CDN, or any number of other sources."},
-        {"elementParent": "serverlessDesignAreaUl","elementType": "li","innerText": "Lightweight page engine uses less memory and bandwidth than most frameworks."},
-        {"elementParent": "serverlessDesignAreaUl","elementType": "li","innerText": "Most sites can be written to operate entirely without network, only needing network access to get data on first load. "},
-        {"id": "highFlexibilityArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "highFlexibilityArea","elementType": "h3","innerText": "High Flexibility"},
-        {"id": "highFlexibilityAreaUl","elementParent": "highFlexibilityArea","elementType": "ul"},
-        {"elementParent": "mobileFirstAreaUl","elementType": "li","innerText": "Functional design streamlines building small functions directly in HTML onclick and other element parameters."},
-        {"elementParent": "highFlexibilityAreaUl","elementType": "li","innerText": "Sites are running standard Javascript, and data is standard JSON, ready for your additions."},
-        {"elementParent": "highFlexibilityAreaUl","elementType": "li","innerText": "CSS styles can be specified normally, as classes declared in your own CSS file or a 3rd-party (i.e. Bootstrap), and declared with the elementClass attribute. Or they can be declared directly in the elementStyle field."},
-        {"id": "howPageWorksArea","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "howPageWorksArea","elementType": "h3","innerText": "How this page works"},
-        {"id": "howPageWorksAreaUl","elementParent": "howPageWorksArea","elementType": "ul"},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "The HTML page has a Div with id='content'. It calls an index.js file, which uses webRequest to call the index.spa file. The file index.spa has a JSON representation of this site."},
-        {"elementParent": "howPageWorksAreaUl","elementType": "li","innerText": "When you loaded the page, the Sparational.js browser engine converted the JSON into the page you're looking at."},
-        {"id": "nextStepsRow","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "nextStepsRow","elementType": "h3","innerText": " Next Steps"},
-        {"id": "nextStepsRowUl","elementParent": "nextStepsRow","elementType": "ul"},
-        {"id": "nextStepsRowLi","elementParent": "nextStepsRowUl","elementType": "li","innerText": "To try this with your own page, add "},
-        {"elementParent": "nextStepsRowLi","elementType": "a","innerText": "Sparational.js","href": "http://sparational.s3-website-us-west-2.amazonaws.com/Sparational.js"},
-        {"elementParent": "nextStepsRowLi","elementType": "span","innerText": " to your page as a script link. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');"},
-        {"id": "linksRow","elementParent": "cRow","elementClass": "col-md-6"},
-        {"elementParent": "linksRow","elementType": "h3","innerText": " Helpful Links"},
-        {"id": "linksRowUl","elementParent": "linksRow","elementType": "ul"},
-        {"id": "linksRowA","elementParent": "linksRowUl","elementType": "li"},
-        {"elementParent": "linksRowA","elementType": "a","href": "","innerText": ""},
-        {"elementParent": "container","elementClass": "alert alert-info text-center","innerText": " Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with Sparational.js, and will familiarize you with all the concepts you need in order to build and deploy your own site. "}
+        {
+          "elementParent": "parentElement",
+          "elementClass": "jumbotron text-center",
+          "id": "jumbotron",
+          "elementStyle": "background: #532F8C"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementClass": "container"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "h1",
+          "innerText": "Sparational.js - a simple serverless front-end framework."
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "p",
+          "innerText": "Write less HTML by writing Javascript instead, and also write less Javascript.",
+          "elementStyle": "color: #fff;"
+        },
+{ "id": "container", "elementParent": "parentElement", "elementClass": "container" 
+		},
+        {
+          "id": "cBanner",
+          "elementParent": "container",
+          "elementClass": "grid-container grid-nav text-center"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);",
+          "innerText": "How-To Page"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.info.elements);",
+          "innerText": "Info Page"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.functionIndex.elements);",
+          "innerText": "Function Index"
+		  
+        },
+        {
+          "elementParent": "container",
+          "elementType": "hr"
+        },
+        {
+          "id": "cRow",
+          "elementParent": "container",
+          "elementClass": "grid-container grid-info"
+        },
+        {
+          "id": "mobileFirstArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "mobileFirstArea",
+          "elementType": "h3",
+          "innerText": "Mobile First"
+        },
+        {
+          "id": "mobileFirstAreaUl",
+          "elementParent": "mobileFirstArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "mobileFirstAreaUl",
+          "elementType": "li",
+          "innerText": "Can run from local storage, S3, IPFS, IIS, Apache, container, CDN, or any number of other sources."
+        },
+        {
+          "elementParent": "mobileFirstAreaUl",
+          "elementType": "li",
+          "innerText": "Lightweight page engine uses less memory and bandwidth than most frameworks."
+        },
+        {
+          "elementParent": "mobileFirstAreaUl",
+          "elementType": "li",
+          "innerText": "Most sites can be written to operate entirely without network, only needing network access to get data on first load."
+
+
+        },
+        {
+          "id": "philosophyArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "philosophyArea",
+          "elementType": "h3",
+          "innerText": "Philosophy"
+        },
+        {
+          "id": "philosophyAreaUl",
+          "elementParent": "philosophyArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "philosophyAreaUl",
+          "elementType": "li",
+          "innerText": "Faster - make the process of making websites simpler by abstracting away the boilerplate. The lack of network overhead and latency, and resulting page speed, are a nice side effect."
+        },
+        {
+          "elementParent": "philosophyAreaUl",
+          "elementType": "li",
+          "innerText": "If architected with care and well-scoped variables, these functions can sensibly fit within a button or anchor onclick. Adding small functions as an onclick or onchange property is made easy through the $onClick and $onChange parameters of addElement, or adding e.g. 'onClick': 'writeElement(\"divName\",\"Hello, World!\")'. "
+
+
+        },
+        {
+          "id": "serverlessDesignArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "serverlessDesignArea",
+          "elementType": "h3",
+          "innerText": "Serverless design"
+        },
+        {
+          "id": "serverlessDesignAreaUl",
+          "elementParent": "serverlessDesignArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "serverlessDesignAreaUl",
+          "elementType": "li",
+          "innerText": "Build sites entirely within the browser. Use addElement, readElement, writeElement, and more to programmatically create sites from a data source and browser window location. This is how ",
+          "id": "liBuildSites"
+        },
+        {
+          "elementParent": "liBuildSites",
+          "elementType": "a",
+          "innerText": "OfferingOverview",
+          "href": "http://offeringoverview.s3-website-us-west-2.amazonaws.com/"
+        },
+        {
+          "elementParent": "liBuildSites",
+          "elementType": "span",
+          "innerText": " operates."
+        },
+        {
+          "elementParent": "serverlessDesignAreaUl",
+          "elementType": "li",
+          "innerText": "Or build a static site entirely in a SPA file, use webRequest to load it, and let CJE2 (Convert JSON to html Elements 2) to convert this into your site - which is how this site operates."
+        },
+        {
+          "id": "serverlessDesignAreaUlLi",
+          "elementParent": "serverlessDesignAreaUl",
+          "elementType": "li",
+          "innerText": "Or have a traditional site that uses Sparational.js only in certain situations. "
+        },
+        {
+          "elementParent": "serverlessDesignAreaUlLi",
+          "elementType": "a",
+          "href": "https://www.gilgamech.com/",
+          "innerText": "Gilgamech Technologies"
+        },
+        {
+          "elementParent": "serverlessDesignAreaUlLi",
+          "elementType": "span",
+          "innerText": " main site is still using this legacy architecture."
+
+        },
+        {
+          "id": "highFlexibilityArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "highFlexibilityArea",
+          "elementType": "h3",
+          "innerText": "High Flexibility"
+        },
+        {
+          "id": "highFlexibilityAreaUl",
+          "elementParent": "highFlexibilityArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "highFlexibilityAreaUl",
+          "elementType": "li",
+          "innerText": "Functional design streamlines building small functions directly in HTML onclick and other element parameters."
+        },
+        {
+          "elementParent": "highFlexibilityAreaUl",
+          "elementType": "li",
+          "innerText": "Sites are running standard Javascript, and data is standard JSON, ready for your additions."
+        },
+        {
+          "elementParent": "highFlexibilityAreaUl",
+          "elementType": "li",
+          "innerText": "CSS styles can be specified normally, as classes declared in your own CSS file or a 3rd-party (i.e. Bootstrap), and declared with the elementClass attribute. Or they can be declared directly in the elementStyle field."
+        },
+        {
+          "elementParent": "highFlexibilityAreaUl",
+          "elementType": "li",
+          "innerText": "Feel free to call external CSS and Javascript files to extend your site beyond the basics, or define & call styles and functions within the JSON data that generates the site. Or use a mix of inline and external site styles and functions. Sparational.js lets you build your serverless site however you want."
+        },
+        {
+          "id": "nextStepsRow",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "nextStepsRow",
+          "elementType": "h3",
+          "innerText": "Next Steps"
+        },
+        {
+          "id": "nextStepsRowUl",
+          "elementParent": "nextStepsRow",
+          "elementType": "ul"
+        },
+        {
+          "id": "nextStepsRowLi",
+          "elementParent": "nextStepsRowUl",
+          "elementType": "li",
+          "innerText": "To try this with your own page, add "
+        },
+        {
+          "elementParent": "nextStepsRowLi",
+          "elementType": "a",
+          "innerText": "Sparational.js",
+          "href": "http://sparational.s3-website-us-west-2.amazonaws.com/Sparational.js"
+        },
+        {
+          "elementParent": "nextStepsRowLi",
+          "elementType": "span",
+          "innerText": " to your page as a script link. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');"
+        },
+        {
+          "elementParent": "container",
+          "elementClass": "alert alert-info text-center",
+          "innerText": "Please do read through the Getting Started guide, even if you are familiar with front-end web frameworks. The guide covers the basics of working with Sparational.js, and will familiarize you with all the concepts you need in order to build and deploy your own site. "
+        },
+        {
+          "elementParent": "container",
+          "elementType": "p",
+          "elementClass": "copyright",
+          "innerText": "© 2013-2022 Gilgamech Technologies - Powered by SPArational."
+        }
+      ]
+    },
+    "functionIndex": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "jumbotron text-center",
+          "id": "jumbotron",
+          "elementStyle": "background: #532F8C"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementClass": "container"
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "h1",
+          "innerText": "Sparational.js - a simple serverless front-end framework."
+        },
+        {
+          "elementParent": "jumbotron",
+          "elementType": "p",
+          "innerText": "Here is an index of functions.",
+          "elementStyle": "color: #fff;"
+        },
+{ "id": "container", "elementParent": "parentElement", "elementClass": "container" 
+		},
+        {
+          "id": "cBanner",
+          "elementParent": "container",
+          "elementClass": "grid-container grid-nav text-center"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);",
+          "innerText": "How-To Page"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.info.elements);",
+          "innerText": "Info Page"
+        },
+        {
+          "elementParent": "cBanner",
+          "elementType": "a",
+          "elementClass": "grid",
+          "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.functionIndex.elements);",
+          "innerText": "Function Index"
+
+        },
+        {
+          "id": "cRow",
+          "elementParent": "container",
+          "elementClass": "grid-container grid-info"
+        },
+        {
+          "id": "elementToolsArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "elementToolsArea",
+          "elementType": "h2",
+          "innerText": "Element tools"
+
+
+        },
+        {
+          "id": "addElementArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "addElementArea",
+          "elementType": "h4",
+          "innerText": "addElement"
+        },
+        {
+          "id": "addElementAreaUl",
+          "elementParent": "addElementArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$elementParent - The ID of the parent element for this section. Usually a whole-page wrapper div."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "innerText - String to be displayed on the element. Auto-selects innerText, value, or other attribute."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$elementClass - CSS classes that apply to the element."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$elementType - HTML element type, such as div, a(nchor), span, h1, h2, h3, p(aragraph), etc."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$elementStyle - CSS styles that are declared directly in the element."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$href - The URI where the element should redirect. Almost always used with a(nchor) elements."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$onChange - Javascript to perform when the element value changes. Used with input, textarea, and contenteditable elements."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$onClick - Just like $onChange, the Javascript to perform when the element is clicked. Often used to dynamically rebuild a page with Sparational.js, and in this case it's best paired with the style='cursor: pointer;' to give the illusion of a normal link."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$contentEditable - Makes the element editable. Added in an earlier version for a project that required a lot of contenteditable sections. May be depreciated in a future full version."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$attributeType - Allows specifying an arbitrary attribute, such as placeholder on inputs and textareas."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$attributeAction - Allows specifying a value for the attribute specified in the previous bullet point, such as the placeholder text."
+        },
+        {
+          "elementParent": "addElementAreaUl",
+          "elementType": "li",
+          "innerText": "$elementId - ID of the element. Useful for parenting other elements under this one, interacting with other scripts and CSS, and linking directly to a location on a page."
+
+
+        },
+        {
+          "id": "cje2AreaUl",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "cje2AreaUl",
+          "elementType": "h4",
+          "innerText": "cje2"
+        },
+        {
+          "elementParent": "cje2AreaUl",
+          "elementType": "li",
+          "innerText": "parentElement - The ID of the parent element for this section. Usually a whole-page wrapper div."
+        },
+        {
+          "elementParent": "cje2AreaUl",
+          "elementType": "li",
+          "innerText": "$elements - Contents of a SPA file, which consists of a JSON object, with elements organized into pages."
+		  
+		  
+		  
+        },
+        {
+          "id": "elementToolsAreaUl",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "writeElement($elementId, data)"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "$attributeAction - "
+
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "readElement($elementId)"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "getNumberFromDiv($numericDiv)"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "deleteElement($elementId)"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "appendElement($elementId, data)"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "toggleElement($elementId, $state)"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "hideElement($elementId)"
+        },
+        {
+          "elementParent": "elementToolsAreaUl",
+          "elementType": "li",
+          "innerText": "showElement($elementId)"
+        },
+        {
+          "id": "textToolsArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "textToolsArea",
+          "elementType": "h2",
+          "innerText": "Text tools"
+        },
+        {
+          "id": "textToolsAreaUl",
+          "elementParent": "textToolsArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "textToolsAreaUl",
+          "elementType": "li",
+          "innerText": "colorifyWords(divid, replaceWord, replaceClass)"
+        },
+        {
+          "elementParent": "textToolsAreaUl",
+          "elementType": "li",
+          "innerText": "colorifyMultipleWords (divList, wordList, replaceClass)"
+        },
+        {
+          "elementParent": "textToolsAreaUl",
+          "elementType": "li",
+          "innerText": "addPopupToWord(divid, replaceWord, popupText, outputClasses)"
+        },
+        {
+          "elementParent": "textToolsAreaUl",
+          "elementType": "li",
+          "innerText": "addLinkToWord(divid, replaceWord, URI)"
+        },
+        {
+          "id": "supportingToolsArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "supportingToolsArea",
+          "elementType": "h2",
+          "innerText": "Supporting tools"
+        },
+        {
+          "id": "supportingToolsAreaUl",
+          "elementParent": "supportingToolsArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "webRequest($verb, $URI, $callback, $JSON, $file, $cached)"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "getBadPW()"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "getKeys(obj)"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "onlyUnique(value, index, self)"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "textToNumNotation($inputObject)"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "numToTextNotation($inputObject, round)"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "detectEnter($keypress, $callback)"
+        },
+        {
+          "elementParent": "supportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "getRoundedNumber(number, digits)"
+        },
+        {
+          "id": "tableToolsArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "tableToolsArea",
+          "elementType": "h2",
+          "innerText": "Table tools"
+        },
+        {
+          "id": "tableToolsAreaUl",
+          "elementParent": "tableToolsArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "tableToolsAreaUl",
+          "elementType": "li",
+          "innerText": "mdArrayToTable(parentDivID, newTableID, array)"
+        },
+        {
+          "elementParent": "tableToolsAreaUl",
+          "elementType": "li",
+          "innerText": "columnMath(TableAid, inputACol, TableBid, inputBCol, rowBAdj, TableOutid, outputCol, mathOperation, roundDigits, formatMaxOutput, newOutColumnName)"
+        },
+        {
+          "elementParent": "tableToolsAreaUl",
+          "elementType": "li",
+          "innerText": "addTable(parentDivID, newTableID, columnData, divClass)"
+        },
+        {
+          "elementParent": "tableToolsAreaUl",
+          "elementType": "li",
+          "innerText": "addColumn(tableid, columnData, headLess)"
+        },
+        {
+          "elementParent": "tableToolsAreaUl",
+          "elementType": "li",
+          "innerText": "deleteColumn(tableid)"
+        },
+        {
+          "id": "tableSupportingToolsArea",
+          "elementParent": "cRow"
+        },
+        {
+          "elementParent": "tableSupportingToolsArea",
+          "elementType": "h2",
+          "innerText": "Table supporting tools"
+        },
+        {
+          "id": "tableSupportingToolsAreaUl",
+          "elementParent": "tableSupportingToolsArea",
+          "elementType": "ul"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "sortAlphaTable(currentColumn, tableid)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "sortNumTable(currentColumn, tableid)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "rotateArray(inArray, num)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "groupArray(arrayToGroup)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "returnAllValues(col, tableid)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "getMaxOfArray(array)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "getMinOfArray(array)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "formatMax(targetColumn, tableid)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "addRowHandlers(col, tableid)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "returnTablePart(tableid, tablePart)"
+        },
+        {
+          "elementParent": "tableSupportingToolsAreaUl",
+          "elementType": "li",
+          "innerText": "createClickHandler(col, table)"
+        },
+        {
+          "elementParent": "container",
+          "elementType": "p",
+          "elementClass": "copyright",
+          "innerText": "© 2013-2022 Gilgamech Technologies - Powered by SPArational."
+        }
       ]
     }
-	}
+  }
 }
