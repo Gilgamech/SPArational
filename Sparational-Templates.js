@@ -1,3 +1,5 @@
+//parentElement - string 
+//sites - array of objects, with at least a name parameter on each one.  (i.e. sites[0].name)
 function buildGridPage(parentElement,sites) {
 	if (name == "") {
 		for (let site of sites) {
@@ -7,6 +9,8 @@ function buildGridPage(parentElement,sites) {
 	}
 }
 
+//parentElement - string 
+//sites - object with parameters from addElement.
 function buildInfoPage(parentElement,currentSite) {
 	addElement(parentElement,"","grid-item "+currentSite.Type+"Page","","","","","","","","","innerWrapper");
 	addElement("innerWrapper",currentSite.name,"","h1","text-align: center");
