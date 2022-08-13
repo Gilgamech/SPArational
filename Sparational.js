@@ -96,7 +96,7 @@ function appendElement($elementId,data) {
 	writeElement($elementId,readElement($elementId) + data)
 }; // end appendElement
 
-function toggleElement($elementId,$state) {
+function toggleElement($elementId) {
 	if (document.getElementById($elementId).style.visibility == "visible") {
 		document.getElementById($elementId).style.visibility="hidden";
 	} else { 
@@ -112,13 +112,32 @@ function showElement($elementId) {
 	document.getElementById($elementId).style.visibility="visible";
 }; // end toggleElement
 
-function cje2(parentElement,elements) {
-	//Convert JSON to Element 2 - full rebuild.
-	var eParent = elements[0].elementParent
-	elements = JSON.stringify(elements)
-	elements = elements.replaceAll(eParent,parentElement)
-	elements = JSON.parse(elements)
+function rwjs($JSON) {
+	//Rewrite $JSON
+	for (var p = 0; p < getKeys($JSON.pages).length; p++) {
+		var page = $JSON.pages[getKeys($JSON.pages)[p]]
+		for (var e = 0; e < page.elements.length; e++) {
+			if (typeof page.elements[e] == "string") {
+/* 			if (page.elements[e].substr(0,4) == "http") {
+					webRequest("get",page.elements[e], function(data) {$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = data},"JSON");
+					return $JSON;
+				} else  */
+				if (page.elements[e].substr(0,2) == "$_") {
+					$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = eval(page.elements[e].replace("$_","$JSON"))
+				}; // end if elements
+			}//end if typeof
+		}; // end for elements
+	}; // end for pages
+				return $JSON;
+}; // end function
 
+function cje2(parentElement,elements) {
+	//Convert $JSON to Element 2 - full rebuild.
+	var eParent = elements[0].elementParent;
+	elements = JSON.stringify(elements);
+	elements = elements.replaceAll(eParent,parentElement);
+	elements = JSON.parse(elements);
+	
 	for (let element of elements) {
 		if (!element.elementParent) {
 			element.elementParent = parentElement;
@@ -162,10 +181,19 @@ function addLinkToWord(divid, replaceWord, URI) {
 }; // end colorifyDiv
 
 //Supporting functions
+var spaRationalCachingVar = [];
 function webRequest($verb,$URI,$callback,$JSON,$file,$cached) {
+//if now is smaller than duration, read from cache.
+	if (spaRationalCachingVar[$URI] && Date.now() < spaRationalCachingVar[$URI+":duration"]) {
+		console.log($URI+" cached for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+		$status = "304";
+		returnVar = spaRationalCachingVar[$URI];
+		$callback(returnVar,$status);
+		return;
+	}; //end if spaRationalCachingVar
+
 	var $status;
 	var xhRequest = new XMLHttpRequest();
-	//var $URICache = $URI.replace(/\//g,"").replace(/\./g,"").replace(/\:/g,"");
 	var returnVar;
 	if ($verb == "POST") {
 		xhRequest.overrideMimeType("text/plain");
@@ -182,24 +210,18 @@ function webRequest($verb,$URI,$callback,$JSON,$file,$cached) {
 			$status = xhRequest.status;
 			if ($status == "200") {
 				if (xhRequest.readyState == 4) {
-						returnVar = xhRequest.responseText;
+					returnVar = xhRequest.responseText;
 					if ($JSON) {
 						returnVar = JSON.parse(returnVar);
 					}; // end if $JSON
-						
-	/*Caching section needs testing.
-	if ($cached) {
-		$status = "304";
-		returnVar = cachingVar[$URICache];
-		$callback(returnVar,$status);
-		} else {
-	}; //end if cached
-	*/
-						//cachingVar[$URICache] = returnVar;
-						$callback(returnVar,$status);
-
-					}; // end xhRequest.readyState
-				} else {
+					if ($cached) {
+						spaRationalCachingVar[$URI] = returnVar;
+						spaRationalCachingVar[$URI+":duration"] = ($cached * 1000) + Date.now();
+						console.log("Caching "+$URI+" for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+					}; //end if cached
+					$callback(returnVar,$status);
+				}; // end xhRequest.readyState
+			} else {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
 		} catch {}; // end try
