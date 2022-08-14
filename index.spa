@@ -31,7 +31,7 @@
     "howTo": {
       "elements": [
 		  "$_.sections.jumboParent", "$_.sections.jumboContainer", "$_.sections.titleBanner",
-		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Write your own single page engine in browser-side Javascript, build a SPA file, or just choose a pre-built site template.", "elementStyle": "color: #fff;"},
+		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Write your own single page engine in browser-side Javascript, add a sitelet to your site, build your site as a SPA file, or just choose a pre-built site template.", "elementStyle": "color: #fff;"},
 { "id": "container", "elementParent": "parentElement"},
 		{"id": "cBanner", "elementParent": "container", "elementClass": "grid-container grid-nav text-center"},
 		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
@@ -49,27 +49,33 @@
 		{"elementParent": "usingTemplateAreaList", "elementType": "li", "innerText": "Currently there are 2 templates available: Grid page and Info page."},
 		{"elementParent": "usingTemplateAreaList", "elementType": "li", "innerText": "Commented above the template are the data types used by the function parameters. If given the correct data types (including the ID of the location where it should be located), the page will display. As a troubleshooting aid, element IDs are logged to console as they are written to the browser's Document variable."},
 
+		{"id": "usingSitelet", "elementParent": "cRow"},
+		{"elementParent": "usingSitelet", "elementType": "h3", "innerText": "Add a sitelet to your site:"},
+		{"id": "usingSiteletList", "elementParent": "usingSitelet", "elementType": "ul"},
+		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "There is 1 sitelet currently available, the RGB Calculator, which gives a new perspective on HTML colors."},
+		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "To use it, add the script to your page with this script link: <script src='https://www.Sparational.com/sitelets/rgb.js'></script>."},
+		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "Then just run 'buildRgbSitelet(\"divToUse\")' and the RGB calculator will show up within the div specified. Can be other element types (span, p, etc) but may not work within textareas, inputs, buttons, etc."},
+
 		{"id": "usingCJE2Area", "elementParent": "cRow"},
 		{"elementParent": "usingCJE2Area", "elementType": "h3", "innerText": "Build a page using CJE2:"},
 		{"id": "usingCJE2AreaList", "elementParent": "usingCJE2Area", "elementType": "ul"},
-		{"elementParent": "usingCJE2AreaList", "elementType": "li", "innerText": "CJE2 (Convert Json to html Element 2) takes an element ID and a SPA file. HTML is described in a SPA file as JSON. Each object has the following parameters:"},
-		{"elementParent": "usingTemplateAreaList", "elementType": "li", "innerText": "elementParent, innerText, elementClass, elementType, elementStyle, href, onChange, onClick, contentEditable, attributeType, attributeAction, elementId."},
-		{"elementParent": "usingCJE2AreaList", "elementType": "li", "innerText": "Instead of specifying parameters within and between HTML tags, declare them in JSON. Use the 'id' property to give your element an ID that can be used elsewhere, or leave it blank for a randomized ID. Specifying this ID as another element's elementParent will cause that other element to be nested within this element, and SPA files generally describe HTML pages and sections as an element with an ID followed by the elements nested within it. The only mandatory parameter is elementParent, which specifies where the element will live."},
+		{"elementParent": "usingCJE2AreaList", "elementType": "li", "innerText": "CJE2 (Convert Json to html Element 2) takes an element ID and a SPA file. HTML is described in a SPA file as JSON. The only mandatory parameter is elementParent, which specifies where the element will live. Each object has the following parameters:"},
+		{"elementParent": "usingCJE2AreaList", "elementType": "li", "innerText": "elementParent, innerText, elementClass, elementType, elementStyle, href, onChange, onClick, contentEditable, attributeType, attributeAction, elementId."},
+		{"elementParent": "usingCJE2AreaList", "elementType": "li", "innerText": "Instead of specifying parameters within and between HTML tags, declare them in JSON. Use the 'id' property to give your element an ID that can be used elsewhere, or leave it blank for a randomized ID. Specifying this ID as another element's elementParent will cause that other element to be nested within this element, and SPA files generally describe HTML pages and sections as an element with an ID followed by the elements nested within it."},
 		{"elementParent": "usingCJE2AreaList", "elementType": "li", "innerText": "Just as with Templates, element IDs are logged to console for troubleshooting."},
 		{"id": "usingJavascript", "elementParent": "cRow"},
 
 		{"elementParent": "usingJavascript", "elementType": "h3", "innerText": "Build a programmatic page using Javascript:"},
 		{"id": "usingJavascriptList", "elementParent": "usingJavascript", "elementType": "ul"},
 		{"elementParent": "usingJavascriptList", "elementType": "li", "innerText": "Use addElement to make pages, readElement to pull data from divs and other elements, normal JS to transform,  functions including writeElement and mdArrayToTable to display, and webRequest to make remote API and other data calls."},
-		{"elementParent": "usingJavascriptList", "elementType": "li", "innerText": "These functions can easily be incorporated directly into the onclick or onchange properties of a button, link, or other element. And they can also be easily used alongside normal JS as synchronous functional commands. (Except webRequest for obvious reasons.)"},
-
+		{"elementParent": "usingJavascriptList", "elementType": "li", "innerText": "These functions can easily be incorporated directly into the onclick or onchange properties of a button, link, or other element. And they can also be easily used alongside normal JS as synchronous functional commands."},
 
 		{"id": "nextStepsRow", "elementParent": "cRow"},
 		{"elementParent": "nextStepsRow", "elementType": "h3", "innerText": "Next Steps"},
 		{"id": "nextStepsRowList", "elementParent": "nextStepsRow", "elementType": "ul"},
 		{"id": "nextStepsRowItem", "elementParent": "nextStepsRowList", "elementType": "li", "innerText": "To try this with your own page, add "},
 		{"elementParent": "nextStepsRowItem", "elementType": "a", "innerText": "Sparational.js", "href": "https://www.Sparational.com/Sparational.js"},
-		{"elementParent": "nextStepsRowItem", "elementType": "span", "innerText": " to your page as a script link: <script src='https://www.Sparational.com/Sparational.js'></script> Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');"},
+		{"elementParent": "nextStepsRowItem", "elementType": "span", "innerText": " to your page as a script link: <script src='https://www.Sparational.com/Sparational.js'></script>. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');"},
 		"$_.sections.copyright"
       ]
     },
@@ -106,13 +112,17 @@
 		{"id": "serverlessDesignArea", "elementParent": "cRow"},
 		{"elementParent": "serverlessDesignArea", "elementType": "h3", "innerText": "Serverless design"},
 		{"id": "serverlessDesignAreaList", "elementParent": "serverlessDesignArea", "elementType": "ul"},
-		{"elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Build sites entirely within the browser. Use addElement, readElement, writeElement, and more to programmatically create sites from a data source and browser window location. This is how ", "id": "liBuildSites"},
+		{"elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Build sites entirely within the browser. Use addElement, readElement, writeElement, and more to create a page engine which programmatically creates sites from a data source and browser window location. Or choose one of our template page engines.This is how ", "id": "liBuildSites"},
 		{"elementParent": "liBuildSites", "elementType": "a", "innerText": "OfferingOverview", "href": "https://offeringoverview.s3-website-us-west-2.amazonaws.com/"},
 		{"elementParent": "liBuildSites", "elementType": "span", "innerText": " operates."},
-		{"elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Or build a static site entirely in a SPA file, use webRequest to load it, and let CJE2 (Convert JSON to html Elements 2) to convert this into your site - which is how this site operates."},
-		{"id": "serverlessDesignAreaListItem", "elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Or have a traditional site that uses Sparational.js only in certain situations. "},
+		{"elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Build a static site entirely in a SPA file, use webRequest to load it, and let CJE2 (Convert JSON to html Elements 2) to convert this into your site - which is how this site operates."},
+		{"id": "serverlessDesignAreaListItem", "elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Have a traditional site that uses Sparational.js only in certain situations. "},
 		{"elementParent": "serverlessDesignAreaListItem", "elementType": "a", "href": "https://www.gilgamech.com/", "innerText": "Gilgamech Technologies"},
 		{"elementParent": "serverlessDesignAreaListItem", "elementType": "span", "innerText": " main site is still using this legacy architecture."},
+
+		{"id": "serverlessDesignAreaListItem2", "elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Make sitelets in the same way as making a page engine described above - but scoped to tools or applications. Our first sitelet, the RGB Calculator, can be found "},
+		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "a", "href": "https://www.Sparational.com/sitelets/rgb.js", "innerText": "here"},
+		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "span", "innerText": ". It converts HTML hex color codes into red, blue, and green values and back - while updating the input and title box colors with their value."},
 
 
 		{"id": "highFlexibilityArea", "elementParent": "cRow"},
