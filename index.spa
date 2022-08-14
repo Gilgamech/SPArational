@@ -18,12 +18,12 @@
 		"elementParent": "container",
 		"elementType": "p",
 		"elementClass": "copyright",
-		"innerText": "© 2013-2022 Gilgamech Technologies - Powered by SPArational."
+		"innerText": "© 2013-2022 Gilgamech Technologies - Powered by Sparational.js."
 	},
 	"titleBanner": {
 	  "elementParent": "jumbotron",
 	  "elementType": "h1",
-	  "innerText": "Sparational.js - a simple serverless framework to make faster websites faster."
+	  "innerText": "Sparational.js - make faster websites faster."
    }
   },
   "pages": {

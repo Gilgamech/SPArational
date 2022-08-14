@@ -2,7 +2,7 @@
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 8/8/2022
-//Notes: A simple serverless front-end website framework. Build sites entirely in the browser.
+//Notes: Make faster websites faster.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
