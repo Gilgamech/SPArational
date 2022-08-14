@@ -43,6 +43,11 @@ body {
 .jumbotron .lang-logo img {
 		max-width: 100%;
 }
+#cBanner {
+	background: #fff;
+  position: sticky;
+  top: 0px;
+}
 
 .grid-container {
 	display: grid;
