@@ -55,10 +55,10 @@ body {
 	padding: 10px;
 }
 .grid-nav {
-	grid-template-columns: 25vw 25vw 25vw;
+	grid-template-columns: repeat( auto-fit, minmax(100px, 1fr ));
 }
 .grid-info {
-	grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+	grid-template-columns: repeat( auto-fit, minmax(min(600px, 100%), 1fr ));
 }
 .grid {
 	border-radius: 15px;
