@@ -112,6 +112,29 @@ function showElement($elementId) {
 	document.getElementById($elementId).style.visibility="visible";
 }; // end toggleElement
 
+//buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage');
+function rebuildElement(elementId) {
+	var oldElement = document.getElementById(elementId);
+	var newElement = {};
+	newElement.elements = [];
+	newElement.elements[0] = {};
+	newElement.elements[0].id = elementId
+	if (oldElement.parentNode.id) {newElement.elements[0].elementParent = oldElement.parentNode.id}else(newElement.elements[0].elementParent = "body");
+	if (oldElement.type) {newElement.elements[0].elementType = oldElement.type};
+	if (oldElement.class) {newElement.elements[0].elementClass = oldElement.class};
+	//if (oldElement.style) {newElement.elements[0].elementStyle = oldElement.style};
+	//if (oldElement.href) {newElement.elements[0].href = oldElement.href};
+	//if (oldElement.onchange) {newElement.elements[0].onChange = oldElement.onchange};
+	//if (oldElement.onclick) {newElement.elements[0].onClick = oldElement.onclick};
+	//if (oldElement.contentEditable) {newElement.elements[0].contentEditable = oldElement.contentEditable};
+
+	console.log(JSON.stringify(newElement));
+	removeElement(elementId)
+	//cje(oldElement.parentNode,newElement);
+	cje(newElement.elements[0].elementParent,newElement);
+}
+
+//Format transformations
 function rwjs($JSON) {
 	//Rewrite $JSON
 	for (var p = 0; p < getKeys($JSON.pages).length; p++) {
@@ -146,6 +169,51 @@ function cje2(parentElement,elements) {
 		addElement(element.elementParent, element.innerText, element.elementClass, element.elementType, element.elementStyle, element.href, element.onChange, element.onClick, element.contentEditable, element.attributeType, element.attributeAction, element.id)
 	}
 }
+
+function convertMarkdownToSpa($cell) {
+
+}
+
+function convertJupyterToSpa($cell) {
+	var $out
+				console.log($cell);
+	var $stringVar = JSON.stringify($cell);
+				console.log($stringVar);
+	$stringVar = $stringVar.replace(/\["/g,'');
+	$stringVar = $stringVar.replace(/"\]/g,'');
+				console.log($stringVar);
+	
+	if ($stringVar.indexOf('#### ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h4"}]}
+	} else if ($stringVar.indexOf('### ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h3"}]}
+	} else if ($stringVar.indexOf('## ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h2"}]}
+	} else if ($stringVar.indexOf('# ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h1"}]}
+	} else if ($stringVar.indexOf('\**') > -1 ) {
+		$stringVar = $stringVar.replace(/\**/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
+	} else if ($stringVar.indexOf('__') > -1 ) {
+		$stringVar = $stringVar.replace(/__/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
+	} else if ($stringVar.indexOf('\*') > -1 ) {
+		$stringVar = $stringVar.replace(/\*/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
+	} else if ($stringVar.indexOf('_') > -1 ) {
+		$stringVar = $stringVar.replace(/_/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
+	} else {
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar}]}
+	}; // end if cell
+			console.log($out);
+	return $out;
+}; 
+
 
 //Text tools
 function colorifyWords(divid, replaceWord, replaceClass) {
