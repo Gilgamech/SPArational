@@ -1,43 +1,48 @@
-//Requires <script src="https://www.gilgamech.com/js/Sparational.js"></script> above this script in the HTML page.
-//<script>addPage('divid');</script>
+//Author: Stephen Gillie
+//Created: 8/14/2022
+//Updated: 8/14/2022
+//Notes: Add all 3 of the following lines to your index.html. The calculator should show up at the bottom of the page.
+//<script src="https://www.Sparational.com/Sparational.js"></script>
+//<script src='https://www.Sparational.com/sitelets/rgb.js'></script>
+//<script>buildRgbSitelet('body');</script>
 
-function buildRgbPage(parentElement) {
+function buildRgbSitelet(parentElement) {
 	$inputClasses = "img-rounded col-md-12 col-xs-12 "
 	$inputStyles = "font-size: 4vw; width: 50vw;"
 	//addElement($elementParent,$innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId)	
-	addElement(parentElement,"","","","container img-rounded","","","","","","","wrapper")
-	addElement('wrapper',"","","","img-rounded col-md-3 hidden-xs","","","","","","","spacer")
-	addElement('wrapper',"","","","img-rounded col-md-6 col-xs-12","","","","","","","RGBCalc")
+	addElement(parentElement,"","","","container img-rounded","","","","","","","rgbSiteletWrapper")
+	addElement('rgbSiteletWrapper',"","","","img-rounded col-md-3 hidden-xs","","","","","","","rgbSiteletspacer")
+	addElement('rgbSiteletWrapper',"","","","img-rounded col-md-6 col-xs-12","","","","","","","rgbSiteletCalc")
 
-	addElement('RGBCalc',"RGB Calculator","contentTitles img-rounded ","",$inputStyles,"","","","","","","RGBCalcLabel")
-	addElement('RGBCalc',"","","","","","","","","","","calcArea")
+	addElement('rgbSiteletCalc',"RGB Calculator","contentTitles img-rounded ","",$inputStyles,"","","","","","","rgbSiteletCalcLabel")
+	var rgbSiteletCalcArea = addElement('rgbSiteletCalc')
 
-	addElement('calcArea',"","","","","","","","","","","htmlColorRow")
-	addElement('htmlColorRow',"",$inputClasses,"input","color: #000;"+$inputStyles,"","updateRgbColor()","","","maxlength",  "7","htmlRow")
+	var rgbSiteletHtmlRow = addElement(rgbSiteletCalcArea)
+	addElement(rgbSiteletHtmlRow,"",$inputClasses,"input","color: #000;"+$inputStyles,"","updateRgbColor()","","","maxlength",  "7","rgbSiteletHtmlInput")
 
-	addElement('calcArea',"","","","","","","","","","","redCRow")
-	addElement('redCRow',171,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('redRow');","","","type","number","redRow")
+	var rgbSiteletRedRow = addElement(rgbSiteletCalcArea)
+	addElement(rgbSiteletRedRow,171,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletRedInput');","","","type","number","rgbSiteletRedInput")
 
-	addElement('calcArea',"","","","","","","","","","","greenCRow")
-	addElement('greenCRow',205,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('greenRow');","","","type","number","greenRow")	
+	addElement(rgbSiteletCalcArea,"","","","","","","","","","","rgbSiteletGreenRow")
+	addElement('rgbSiteletGreenRow',205,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletGreenInput');","","","type","number","rgbSiteletGreenInput")	
 	
-	addElement('calcArea',"","","","","","","","","","","blueCRow")
-	addElement('blueCRow',239,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('blueRow');","","","type","number","blueRow")
+	addElement(rgbSiteletCalcArea,"","","","","","","","","","","rgbSiteletBlueRow")
+	addElement('rgbSiteletBlueRow',239,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletBlueInput');","","","type","number","rgbSiteletBlueInput")
 	
-	updateRgbDivColor('redRow');
-	updateRgbDivColor('greenRow');
-	updateRgbDivColor('blueRow');
+	updateRgbDivColor('rgbSiteletRedInput');
+	updateRgbDivColor('rgbSiteletGreenInput');
+	updateRgbDivColor('rgbSiteletBlueInput');
 }; // end addPage
 
 function updateRgbColor() { 
 	
-	$hex = hexToRgb(readElement("htmlRow"));
-	writeElement("redRow",$hex.r);
-	writeElement("greenRow",$hex.g);
-	writeElement("blueRow",$hex.b);
+	$hex = hexToRgb(readElement("rgbSiteletHtmlInput"));
+	writeElement("rgbSiteletRedInput",$hex.r);
+	writeElement("rgbSiteletGreenInput",$hex.g);
+	writeElement("rgbSiteletBlueInput",$hex.b);
 	
 	document.getElementById("contentLabel").style.backgroundColor
-	= readElement("htmlRow");
+	= readElement("rgbSiteletHtmlInput");
 }; // end updateRgbColor
 
 function updateRgbDivColor($divId) { 
@@ -54,30 +59,30 @@ function updateRgbDivColor($divId) {
 	$Color2 = Math.round(($Color) * $colorRatio);
 	
 	switch ($divId) {
-		case "redRow": 
+		case "rgbSiteletRedInput": 
 			document.getElementById($divId).style.backgroundColor = rgbToHex(
 				$Color,$Color2,$Color2
 			); // end document.getElementById
 		break;
-		case "greenRow": 
+		case "rgbSiteletGreenInput": 
 			document.getElementById($divId).style.backgroundColor = rgbToHex(
 				$Color2,$Color,$Color2
 			); // end document.getElementById
 		break;
-		case "blueRow": 
+		case "rgbSiteletBlueInput": 
 			document.getElementById($divId).style.backgroundColor = rgbToHex(
 				$Color2,$Color2,$Color
 			); // end document.getElementById
 		break;
 	}; // end switch divColor
 
-	writeElement("htmlRow",rgbToHex(
-		getNumberFromDiv("redRow"),
-		getNumberFromDiv("greenRow"),
-		getNumberFromDiv("blueRow")
+	writeElement("rgbSiteletHtmlInput",rgbToHex(
+		getNumberFromDiv("rgbSiteletRedInput"),
+		getNumberFromDiv("rgbSiteletGreenInput"),
+		getNumberFromDiv("rgbSiteletBlueInput")
 	));
 	
-	document.getElementById("RGBCalcLabel").style.backgroundColor = readElement("htmlRow");
+	document.getElementById("rgbSiteletCalcLabel").style.backgroundColor = readElement("rgbSiteletHtmlInput");
 
 }; // end updateRedDivColor
 
