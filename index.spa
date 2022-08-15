@@ -46,9 +46,16 @@
 		{"id": "usingSitelet", "elementParent": "cRow"},
 		{"elementParent": "usingSitelet", "elementType": "h3", "innerText": "Add a sitelet to your site:"},
 		{"id": "usingSiteletList", "elementParent": "usingSitelet", "elementType": "ul"},
-		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "There is 1 sitelet currently available, the RGB Calculator, which gives a new perspective on HTML colors."},
-		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "To use it, add the script to your page with this script link: <script src='https://www.Sparational.com/sitelets/rgbSitelet.js'></script>."},
-		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "Then just run 'buildRgbSitelet(\"divToUse\")' and the RGB calculator will show up within the div specified. Can be other element types (span, p, etc) but may not work within textareas, inputs, buttons, etc."},
+
+		{"id": "usingSiteletListItem", "elementParent": "usingSiteletList", "elementType": "li", "innerText": "There is 1 sitelet currently available, the "},
+		{"elementParent": "usingSiteletListItem", "elementType": "a", "innerText": "RGB Calculator", "href": "https://www.Sparational.com/sitelets/rgb.js"},
+		{"elementParent": "usingSiteletListItem", "elementType": "span", "innerText": " which gives a new perspective on HTML colors:"},
+		{"id": "usingSiteletListRgb", "elementParent": "usingSiteletListItem"},
+		{"elementParent": "usingSiteletListItem", "elementType": "script", "innerText": "buildRgbSitelet('usingSiteletListRgb');"},
+		
+		
+		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "To use it, add the script to your page with this script link: <script src='https://www.Sparational.com/sitelets/rgb.js'></script>."},
+		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "Then just run 'buildRgbSitelet(\"body\")' and the RGB calculator will show up within the div specified. Can be other element types (span, p, etc) but may not work within textareas, inputs, buttons, etc."},
 
 		{"id": "usingCJE2Area", "elementParent": "cRow"},
 		{"elementParent": "usingCJE2Area", "elementType": "h3", "innerText": "Build a page using CJE2:"},
@@ -110,7 +117,7 @@
 		{"elementParent": "serverlessDesignAreaListItem", "elementType": "span", "innerText": " main site is still using this legacy architecture."},
 
 		{"id": "serverlessDesignAreaListItem2", "elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Make sitelets in the same way as making a page engine described above - but scoped to tools or applications. Our first sitelet, the RGB Calculator, can be found "},
-		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "a", "href": "https://www.Sparational.com/sitelets/rgbSitelet.js", "innerText": "here"},
+		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "a", "href": "https://www.Sparational.com/sitelets/rgb.js", "innerText": "here"},
 		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "span", "innerText": ". It converts HTML hex color codes into red, blue, and green values and back - while updating the input and title box colors with their value."},
 
 
