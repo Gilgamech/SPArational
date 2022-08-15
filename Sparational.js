@@ -115,23 +115,22 @@ function showElement($elementId) {
 //buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage');
 function rebuildElement(elementId) {
 	var oldElement = document.getElementById(elementId);
-	var newElement = {};
-	newElement.elements = [];
-	newElement.elements[0] = {};
-	newElement.elements[0].id = elementId
-	if (oldElement.parentNode.id) {newElement.elements[0].elementParent = oldElement.parentNode.id}else(newElement.elements[0].elementParent = "body");
-	if (oldElement.type) {newElement.elements[0].elementType = oldElement.type};
-	if (oldElement.class) {newElement.elements[0].elementClass = oldElement.class};
-	//if (oldElement.style) {newElement.elements[0].elementStyle = oldElement.style};
-	//if (oldElement.href) {newElement.elements[0].href = oldElement.href};
-	//if (oldElement.onchange) {newElement.elements[0].onChange = oldElement.onchange};
-	//if (oldElement.onclick) {newElement.elements[0].onClick = oldElement.onclick};
-	//if (oldElement.contentEditable) {newElement.elements[0].contentEditable = oldElement.contentEditable};
+	var newElement = [];
+	newElement[0] = {};
+	newElement[0].id = elementId
+	if (oldElement.parentNode.id) {newElement[0].elementParent = oldElement.parentNode.id}else(newElement[0].elementParent = "body");
+	if (oldElement.type) {newElement[0].elementType = oldElement.type};
+	if (oldElement.class) {newElement[0].elementClass = oldElement.class};
+	//if (oldElement.style) {newElement[0].elementStyle = oldElement.style};
+	//if (oldElement.href) {newElement[0].href = oldElement.href};
+	//if (oldElement.onchange) {newElement[0].onChange = oldElement.onchange};
+	//if (oldElement.onclick) {newElement[0].onClick = oldElement.onclick};
+	//if (oldElement.contentEditable) {newElement[0].contentEditable = oldElement.contentEditable};
 
 	console.log(JSON.stringify(newElement));
-	removeElement(elementId)
-	//cje(oldElement.parentNode,newElement);
-	cje(newElement.elements[0].elementParent,newElement);
+	deleteElement(elementId)
+	//cje2(oldElement.parentNode,newElement);
+	cje2(newElement[0].elementParent,newElement);
 }
 
 //Format transformations
