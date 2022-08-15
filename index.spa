@@ -3,57 +3,51 @@
   "styles": {
 	"white": "color: #fff;"
   },
+  "classes": {
+	"gridInfo": "grid-container grid-info "
+  },
   "sections": {
-	"jumboParent": {
-		"elementParent": "parentElement",
-		"elementClass": "jumbotron text-center",
-		"id": "jumbotron",
-		"elementStyle": "background: #532F8C"
-	},
-	"jumboContainer": {
-		"elementParent": "jumbotron",
-		"elementClass": "container"
-	},
-	"copyright": {
-		"elementParent": "container",
-		"elementType": "p",
-		"elementClass": "copyright",
-		"innerText": "© 2013-2022 Gilgamech Technologies - Powered by Sparational.js."
-	},
-	"titleBanner": {
-	  "elementParent": "jumbotron",
-	  "elementType": "h1",
-	  "innerText": "Sparational.js - make faster websites faster."
-   }
+	"jumboParent": {"elementParent": "parentElement", "elementClass": "jumbotron text-center", "id": "jumbotron", "elementStyle": "background: #532F8C"},
+	"jumboContainer": {"elementParent": "jumbotron","elementClass": "container"},
+	"titleBanner": {"elementParent": "jumbotron", "elementType": "h1", "innerText": "Sparational.js - make faster websites faster."},
+	"container":{ "id": "container", "elementParent": "parentElement"},
+	"cBanner": {"id": "cBanner", "elementParent": "container", "elementClass": "grid-container grid-nav text-center"},
 
+	"howTo":{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "rebuildElement('content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
+	"info":{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "rebuildElement('content');cje2('content',sites.pages.info.elements);", "innerText": "Information"},
+	"functionIndex":{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "rebuildElement('content');cje2('content',sites.pages.functionIndex.elements);", "innerText": "Function Index"},
+	"hr":{"elementParent": "container", "elementType": "hr"},
+
+	"gridDiv": {"id": "cRow", "elementParent": "container", "elementClass": "$_.classes.gridInfo"},
+
+	"copyright": {"elementParent": "container", "elementType": "p", "elementClass": "copyright", "innerText": "© 2013-2022 Gilgamech Technologies - Powered by Sparational.js."}
   },
   "pages": {
     "howTo": {
       "elements": [
 		  "$_.sections.jumboParent", "$_.sections.jumboContainer", "$_.sections.titleBanner",
-		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Write your own single page engine in browser-side Javascript, add a sitelet to your site, build your site as a SPA file, or just choose a pre-built site template.", "elementStyle": "color: #fff;"},
-{ "id": "container", "elementParent": "parentElement"},
-		{"id": "cBanner", "elementParent": "container", "elementClass": "grid-container grid-nav text-center"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.info.elements);", "innerText": "Info Page"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.functionIndex.elements);", "innerText": "Function Index"},
+		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Write your own single page engine in browser-side Javascript, add a sitelet to your site, build your site as a SPA file, or just choose a pre-built site template.", "elementStyle": "$_.styles.white"},
+		"$_.sections.container", "$_.sections.cBanner", 
+		"$_.sections.howTo", "$_.sections.info", "$_.sections.functionIndex", 
+		"$_.sections.hr", 
 
-
-		{"id": "cRow", "elementParent": "container", "elementClass": "grid-container grid-info"},
+		"$_.sections.gridDiv", 
 		{"id": "usingTemplateArea", "elementParent": "cRow"},
 
 		{"elementParent": "usingTemplateArea", "elementType": "h3", "innerText": "Build a page using a template:"},
 		{"id": "usingTemplateAreaList", "elementParent": "usingTemplateArea", "elementType": "ul"},
-		{"id": "usingTemplateAreaListItem", "elementParent": "usingTemplateAreaList", "elementType": "li", "innerText": "Templates are located at "},
-		{"elementParent": "usingTemplateAreaListItem", "elementType": "a", "innerText": "https://www.Sparational.com/Sparational-Templates.js", "href": "https://www.Sparational.com/Sparational-Templates.js"},
 		{"elementParent": "usingTemplateAreaList", "elementType": "li", "innerText": "Currently there are 2 templates available: Grid page and Info page."},
+		{"id": "usingTemplateAreaListItem", "elementParent": "usingTemplateAreaList", "elementType": "li", "innerText": "Templates are located here: "},
+		{"elementParent": "usingTemplateAreaListItem", "elementType": "a", "innerText": "Grid Page", "href": "https://www.Sparational.com/templates/gridPage.js"},
+		{"elementParent": "usingTemplateAreaListItem", "elementType": "span", "innerText": " and "},
+		{"elementParent": "usingTemplateAreaListItem", "elementType": "a", "innerText": "Info Page", "href": "https://www.Sparational.com/templates/infoPage.js"},
 		{"elementParent": "usingTemplateAreaList", "elementType": "li", "innerText": "Commented above the template are the data types used by the function parameters. If given the correct data types (including the ID of the location where it should be located), the page will display. As a troubleshooting aid, element IDs are logged to console as they are written to the browser's Document variable."},
 
 		{"id": "usingSitelet", "elementParent": "cRow"},
 		{"elementParent": "usingSitelet", "elementType": "h3", "innerText": "Add a sitelet to your site:"},
 		{"id": "usingSiteletList", "elementParent": "usingSitelet", "elementType": "ul"},
 		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "There is 1 sitelet currently available, the RGB Calculator, which gives a new perspective on HTML colors."},
-		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "To use it, add the script to your page with this script link: <script src='https://www.Sparational.com/sitelets/rgb.js'></script>."},
+		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "To use it, add the script to your page with this script link: <script src='https://www.Sparational.com/sitelets/rgbSitelet.js'></script>."},
 		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "Then just run 'buildRgbSitelet(\"divToUse\")' and the RGB calculator will show up within the div specified. Can be other element types (span, p, etc) but may not work within textareas, inputs, buttons, etc."},
 
 		{"id": "usingCJE2Area", "elementParent": "cRow"},
@@ -81,18 +75,13 @@
     },
     "info": {
       "elements": [
-		  "$_.sections.jumboParent", "$_.sections.jumboContainer", "$_.sections.titleBanner",
+		"$_.sections.jumboParent", "$_.sections.jumboContainer", "$_.sections.titleBanner",
 		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Write less HTML by writing Javascript instead, and also write less Javascript.", "elementStyle": "$_.styles.white"},
+		"$_.sections.container", "$_.sections.cBanner", 
+		"$_.sections.howTo", "$_.sections.info", "$_.sections.functionIndex", 
+		"$_.sections.hr", 
 
-
-{ "id": "container", "elementParent": "parentElement"},
-		{"id": "cBanner", "elementParent": "container", "elementClass": "grid-container grid-nav text-center"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.info.elements);", "innerText": "Info Page"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.functionIndex.elements);", "innerText": "Function Index"},
-
-		{"elementParent": "container", "elementType": "hr"},
-		{"id": "cRow", "elementParent": "container", "elementClass": "grid-container grid-info"},
+		"$_.sections.gridDiv", 
 
 		{"id": "philosophyArea", "elementParent": "cRow"},
 		{"elementParent": "philosophyArea", "elementType": "h3", "innerText": "Philosophy"},
@@ -121,7 +110,7 @@
 		{"elementParent": "serverlessDesignAreaListItem", "elementType": "span", "innerText": " main site is still using this legacy architecture."},
 
 		{"id": "serverlessDesignAreaListItem2", "elementParent": "serverlessDesignAreaList", "elementType": "li", "innerText": "Make sitelets in the same way as making a page engine described above - but scoped to tools or applications. Our first sitelet, the RGB Calculator, can be found "},
-		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "a", "href": "https://www.Sparational.com/sitelets/rgb.js", "innerText": "here"},
+		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "a", "href": "https://www.Sparational.com/sitelets/rgbSitelet.js", "innerText": "here"},
 		{"elementParent": "serverlessDesignAreaListItem2", "elementType": "span", "innerText": ". It converts HTML hex color codes into red, blue, and green values and back - while updating the input and title box colors with their value."},
 
 
@@ -145,7 +134,7 @@
 		{"elementParent": "nextStepsRow", "elementType": "h3", "innerText": "Next Steps"},
 		{"id": "nextStepsRowList", "elementParent": "nextStepsRow", "elementType": "ul"},
 		{"id": "nextStepsRowItem", "elementParent": "nextStepsRowList", "elementType": "li", "innerText": "Head on over to the "},
-		{"elementParent": "nextStepsRowItem", "elementType": "a", "elementClass": "link", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
+		{"elementParent": "nextStepsRowItem", "elementType": "a", "elementClass": "link", "onClick": "rebuildElement('content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
 		{"elementParent": "nextStepsRowItem", "innerText": " to get started.","elementType":"span"},
 		"$_.sections.copyright"
       ]
@@ -153,17 +142,15 @@
     "functionIndex": {
       "elements": [
 		  "$_.sections.jumboParent", "$_.sections.jumboContainer", "$_.sections.titleBanner",
-		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Learn how much faster you can make your site faster.", "elementStyle": "color: #fff;"},
-{ "id": "container", "elementParent": "parentElement"},
-		{"id": "cBanner", "elementParent": "container", "elementClass": "grid-container grid-nav text-center"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.info.elements);", "innerText": "Info Page"},
-		{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "deleteElement('content');addElement('body','','','','','','','','','','','content');cje2('content',sites.pages.functionIndex.elements);", "innerText": "Function Index"},
+		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Learn how much faster you can make your site faster.", "elementStyle": "$_.styles.white"},
+		"$_.sections.container", "$_.sections.cBanner", 
+		"$_.sections.howTo", "$_.sections.info", "$_.sections.functionIndex", 
+		"$_.sections.hr", 
 
 
 		{"id": "cRow", "elementParent": "container"},
 		{"elementParent": "cRow", "elementType": "h1", "innerText": "Element tools"},
-		{"id": "elementToolsArea", "elementParent": "cRow", "elementClass": "grid-container grid-info"},
+		{"id": "elementToolsArea", "elementParent": "cRow", "elementClass": "$_.classes.gridInfo"},
 
 
 		{"id": "addElementArea", "elementParent": "elementToolsArea"},
@@ -291,7 +278,7 @@
 
 
 		{"elementParent": "cRow", "elementType": "h1", "innerText": "Text tools"},
-		{"id": "textToolsArea", "elementParent": "cRow", "elementClass": "grid-container grid-info"},
+		{"id": "textToolsArea", "elementParent": "cRow", "elementClass": "$_.classes.gridInfo"},
 
 		{"id": "colorifyWordsArea", "elementParent": "textToolsArea"},
 		{"elementParent": "colorifyWordsArea", "elementType": "h3", "innerText": "colorifyWords"},
@@ -341,7 +328,7 @@
 
 
 		{"elementParent": "cRow", "elementType": "h1", "innerText": "Supporting tools"},
-		{"id": "supportingToolsArea", "elementParent": "cRow", "elementClass": "grid-container grid-info"},
+		{"id": "supportingToolsArea", "elementParent": "cRow", "elementClass": "$_.classes.gridInfo"},
 
 		{"id": "webRequestArea", "elementParent": "supportingToolsArea"},
 		{"elementParent": "webRequestArea", "elementType": "h3", "innerText": "webRequest"},
@@ -426,7 +413,7 @@
 
 
 		{"elementParent": "cRow", "elementType": "h1", "innerText": "Table building tools"},
-		{"id": "tableToolsArea", "elementParent": "cRow", "elementClass": "grid-container grid-info"},
+		{"id": "tableToolsArea", "elementParent": "cRow", "elementClass": "$_.classes.gridInfo"},
 
 		{"id": "mdArrayArea", "elementParent": "tableToolsArea"},
 		{"elementParent": "mdArrayArea", "elementType": "h3", "innerText": "mdArrayToTable"},
@@ -492,7 +479,7 @@
 
 
 		{"elementParent": "cRow", "elementType": "h1", "innerText": "Table supporting tools"},
-		{"id": "tableSupportingToolsArea", "elementParent": "cRow", "elementClass": "grid-container grid-info"},
+		{"id": "tableSupportingToolsArea", "elementParent": "cRow", "elementClass": "$_.classes.gridInfo"},
 
 		{"id": "sortAlphaArea", "elementParent": "tableSupportingToolsArea"},
 		{"elementParent": "sortAlphaArea", "elementType": "h3", "innerText": "sortAlphaTable"},
