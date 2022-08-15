@@ -33,7 +33,9 @@ function buildInfoPage(parentElement,currentSite) {
 		}; //end if currentSite
 	}; //end for let key
 	if (currentSite.video) {
-		document.getElementById("innerWrapper").innerHTML += currentSite.video;
+		var videoWrapper = addElement("innerWrapper");
+		var video = addElement(videoWrapper,"","iframe-container");
+		document.getElementById(video).innerHTML += currentSite.video;
 	}; //end if currentSite
 }
 
