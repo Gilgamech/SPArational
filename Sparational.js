@@ -169,14 +169,13 @@ function cje2(parentElement,elements) {
 	}
 }
 
-function convertMarkdownToSpa($cell) {
-
+function convertMarkdownToSpa($inputString) {
 }
 
-function convertJupyterToSpa($cell) {
+function convertJupyterToSpa($inputString) {
 	var $out
-				console.log($cell);
-	var $stringVar = JSON.stringify($cell);
+				console.log($inputString);
+	var $stringVar = JSON.stringify($inputString);
 				console.log($stringVar);
 	$stringVar = $stringVar.replace(/\["/g,'');
 	$stringVar = $stringVar.replace(/"\]/g,'');
