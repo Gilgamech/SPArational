@@ -16,11 +16,11 @@
 	"howTo":{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "rebuildElement('content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
 	"info":{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "rebuildElement('content');cje2('content',sites.pages.info.elements);", "innerText": "Information"},
 	"functionIndex":{"elementParent": "cBanner", "elementType": "a", "elementClass": "grid", "onClick": "rebuildElement('content');cje2('content',sites.pages.functionIndex.elements);", "innerText": "Function Index"},
-	"hr":{"elementParent": "container", "elementType": "hr"},
 
 	"gridDiv": {"id": "cRow", "elementParent": "container", "elementClass": "$_.classes.gridInfo"},
 
-	"copyright": {"elementParent": "container", "elementType": "p", "elementClass": "copyright", "innerText": "© 2013-2022 Gilgamech Technologies - Powered by Sparational.js."}
+	"copyright": {"id": "copyright", "elementParent": "container", "elementType": "p", "elementClass": "copyright", "innerText": "© 2013-2022 Gilgamech Technologies - Powered by "},
+	"copyright2": {"elementParent": "copyright", "elementType": "a", "href": "https://www.Sparational.com/", "innerText": " Sparational.js."}
   },
   "pages": {
     "howTo": {
@@ -29,7 +29,6 @@
 		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Write your own single page engine in browser-side Javascript, add a sitelet to your site, build your site as a SPA file, or just choose a pre-built site template.", "elementStyle": "$_.styles.white"},
 		"$_.sections.container", "$_.sections.cBanner", 
 		"$_.sections.howTo", "$_.sections.info", "$_.sections.functionIndex", 
-		"$_.sections.hr", 
 
 		"$_.sections.gridDiv", 
 		{"id": "usingTemplateArea", "elementParent": "cRow"},
@@ -77,7 +76,7 @@
 		{"id": "nextStepsRowItem", "elementParent": "nextStepsRowList", "elementType": "li", "innerText": "To try this with your own page, add "},
 		{"elementParent": "nextStepsRowItem", "elementType": "a", "innerText": "Sparational.js", "href": "https://www.Sparational.com/Sparational.js"},
 		{"elementParent": "nextStepsRowItem", "elementType": "span", "innerText": " to your page as a script link: <script src='https://www.Sparational.com/Sparational.js'></script>. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');"},
-		"$_.sections.copyright"
+		"$_.sections.copyright", "$_.sections.copyright2"
       ]
     },
     "info": {
@@ -86,12 +85,11 @@
 		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Write less HTML by writing Javascript instead, and also write less Javascript.", "elementStyle": "$_.styles.white"},
 		"$_.sections.container", "$_.sections.cBanner", 
 		"$_.sections.howTo", "$_.sections.info", "$_.sections.functionIndex", 
-		"$_.sections.hr", 
 
 		"$_.sections.gridDiv", 
 
 		{"id": "philosophyArea", "elementParent": "cRow"},
-		{"elementParent": "philosophyArea", "elementType": "h3", "innerText": "Philosophy"},
+		{"elementParent": "philosophyArea", "elementType": "h3", "innerText": "Make faster websites faster"},
 		{"id": "philosophyAreaList", "elementParent": "philosophyArea", "elementType": "ul"},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Make faster websites faster - reduce development and loading time by moving more into the browser. Synchronous and functional framework works great with standard Javascript. Serverless design accelerates through CDN very well."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "If architected with care and well-scoped variables, these functions can sensibly fit within a button or anchor onclick. Adding small functions as an onclick or onchange property is made easy through the $onClick and $onChange parameters of addElement, or adding e.g. 'onClick': 'writeElement(\"divName\",\"Hello, World!\")'. Functions including readElement and writeElement simplify and encourage using the DOM for data storage."},
@@ -143,7 +141,7 @@
 		{"id": "nextStepsRowItem", "elementParent": "nextStepsRowList", "elementType": "li", "innerText": "Head on over to the "},
 		{"elementParent": "nextStepsRowItem", "elementType": "a", "elementClass": "link", "onClick": "rebuildElement('content');cje2('content',sites.pages.howTo.elements);", "innerText": "How-To Page"},
 		{"elementParent": "nextStepsRowItem", "innerText": " to get started.","elementType":"span"},
-		"$_.sections.copyright"
+		"$_.sections.copyright", "$_.sections.copyright2"
       ]
     },
     "functionIndex": {
@@ -152,7 +150,6 @@
 		{"elementParent": "jumbotron", "elementType": "p", "innerText": "Learn how much faster you can make your site faster.", "elementStyle": "$_.styles.white"},
 		"$_.sections.container", "$_.sections.cBanner", 
 		"$_.sections.howTo", "$_.sections.info", "$_.sections.functionIndex", 
-		"$_.sections.hr", 
 
 
 		{"id": "cRow", "elementParent": "container"},
@@ -164,27 +161,27 @@
 		{"elementParent": "addElementArea", "elementType": "h3", "innerText": "addElement"},
 		{"elementParent": "addElementArea", "elementType": "h6", "innerText": "Adds an HTML Element to the DOM."},
 		{"elementParent": "addElementArea", "elementType": "p", "innerText": "Example: addElement('content','Hello, World!'); - this adds an element with the text 'Hello, World!' to the DOM body inside the first element with id='content'."},
-		{"elementParent": "addElementArea", "elementType": "p", "innerText": "Returns: ID (string) of new element. This can be safely ignored."},
+		{"elementParent": "addElementArea", "elementType": "p", "innerText": "Returns: ID (string) of new element. Declare as a variable and use as the $elementParent of following elements. Or feel free to safely ignore."},
 		{"elementParent": "addElementArea", "elementType": "p", "innerText": "addElement($elementParent, innerText, $elementClass, $elementType, $elementStyle, $href, $onChange, $onClick, $contentEditable, $attributeType, $attributeAction, $elementId)"},
 		{"id": "addElementAreaList", "elementParent": "addElementArea", "elementType": "ul"},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementParent (string) - ID of the parent element for this section. Usually a whole-page wrapper div."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "innerText (string) - Text to be displayed on the element. Auto-selects innerText, value, or other attribute."},
-		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementClass (string) - CSS classes that apply to the element."},
-		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementType (string) - HTML element type, such as div, a(nchor), span, h1, h3, h3, p(aragraph), etc."},
+		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementClass (string) - CSS classes that apply to the element, and are declared either in a separate CSS file, in style tags, or in a style element object in the SPA file."},
+		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementType (string) - HTML element type, such as div, a(nchor), span, h1, h3, h3, p(aragraph), etc. Full HTML5 Semantic Tag support, use any tag type you want."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementStyle (string) - CSS styles that are declared directly in the element."},
-		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$href (string) - URI where the element should redirect. Almost always used with a(nchor) elements."},
+		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$href (string) - URI that the browser should load when clicked. Almost always used with a(nchor) elements."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$onChange (string) - Javascript to perform when the element value changes. Used with input, textarea, and contenteditable elements."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$onClick (string) - Just like $onChange, the Javascript to perform when the element is clicked. Often used to dynamically rebuild a page with Sparational.js, and in this case it's best paired with the style='cursor: pointer;' to give the illusion of a normal link."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$contentEditable (switch) - Makes the element editable. Added in an earlier version for a project that required a lot of content-editable sections. May be depreciated in a future full version."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$attributeType (string) - Allows specifying an arbitrary attribute, such as placeholder on inputs and textareas."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$attributeAction (string) - Allows specifying a value for the attribute specified in the previous bullet point, such as the placeholder text."},
-		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementId (string) - ID of the element. Useful for parenting other elements under this one, interacting with other scripts and CSS, and linking directly to a location on a page. This will show up in the console on every page load as a log of elements added, so name for posterity."},
+		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementId (string) - ID of the element. Useful for parenting other elements under this one, interacting with other scripts and CSS, and linking directly to a location on a page. This will show up in the console on every page load as a log of elements added, (any user might see it) so name for posterity."},
 
 
 		{"id": "cje2Area", "elementParent": "elementToolsArea"},
 		{"elementParent": "cje2Area", "elementType": "h3", "innerText": "cje2 (Full rewrite for v3)"},
 		{"elementParent": "cje2Area", "elementType": "h6", "innerText": "Convert JSON to Element 2 - uses addElement to add a list of HTML Elements to the DOM. Used with SPA pages."},
-		{"elementParent": "cje2Area", "elementType": "p", "innerText": "Example: cje2({'id': 'cje2Area', 'elementParent': 'elementToolsArea'}"},
+		{"elementParent": "cje2Area", "elementType": "p", "innerText": "Example: cje2({'id': 'cje2Area', 'elementParent': 'elementToolsArea'})"},
 		{"elementParent": "cje2Area", "elementType": "p", "innerText": "Returns: null"},
 		{"elementParent": "cje2Area", "elementType": "p", "innerText": "cje2(parentElement,$elements)"},
 		{"id": "cje2AreaList", "elementParent": "cje2Area", "elementType": "ul"},
@@ -240,7 +237,7 @@
 		{"elementParent": "deleteElementArea", "elementType": "p", "innerText": "Returns: null"},
 		{"elementParent": "deleteElementArea", "elementType": "p", "innerText": "deleteElement($elementId)"},
 		{"id": "deleteElementAreaList", "elementParent": "deleteElementArea", "elementType": "ul"},
-		{"elementParent": "deleteElementAreaList", "elementType": "li", "innerText": "$elementId (string) - ID of element to read from."},
+		{"elementParent": "deleteElementAreaList", "elementType": "li", "innerText": "$elementId (string) - ID of element to deleted."},
 
 
 		{"id": "appendElementArea", "elementParent": "elementToolsArea"},
@@ -595,7 +592,7 @@
 		{"elementParent": "cCHArea", "elementType": "li", "innerText": "col (integer) - Column number which will be formatted."},
 		{"elementParent": "cCHArea", "elementType": "li", "innerText": "tableid (string) - ID of table to format."},
 
-		"$_.sections.copyright"
+		"$_.sections.copyright", "$_.sections.copyright2"
       ]
     }
   }
