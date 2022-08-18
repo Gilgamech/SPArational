@@ -1,8 +1,12 @@
-//Name: SPArational.js v3
+//SPArational.js v3.2.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 8/8/2022
-//Notes: Make faster websites faster.
+//Last updated: 8/17/2022
+//Notes:
+//v3: Rewrite cje2 and rwjs, relaunch project.
+//v3.1: Add caching to webRequest.
+//v3.2: Add rebuildElement.
+//v3.2.1: Bugfix detectEnter.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -421,9 +425,7 @@ function numToTextNotation($inputObject,round) {
 function detectEnter($keypress,$callback){
     if($keypress.keyCode === 13){
         $keypress.preventDefault(); // Ensure it is only this code that runs
-		$outputCallback = function () {
-            $callback();
-		};
+		$callback();
     };
 }; // end detectEnter
 
