@@ -419,10 +419,10 @@
 		{"elementParent": "getKeysArea", "elementType": "h3", "innerText": "getKeys"},
 		{"elementParent": "getKeysArea", "elementType": "h6", "innerText": "Returns the keys of an object. Useful for iterating through the keys, such as the pages in a SPA file: 'for (let key of getKeys(sites.pages)'."},
 		{"elementParent": "getKeysArea", "elementType": "p", "innerText": "Example: for (let key of getKeys(sites.pages))"},
-		{"elementParent": "getKeysArea", "elementType": "p", "innerText": "Returns: null"},
+		{"elementParent": "getKeysArea", "elementType": "p", "innerText": "Returns: (array) List of keys, such as: ['howTo','info','functionIndex']"},
 		{"elementParent": "getKeysArea", "elementType": "p", "innerText": "getKeys(obj)"},
 		{"id": "getKeysAreaList", "elementParent": "getKeysArea", "elementType": "ul"},
-		{"elementParent": "getKeysAreaList", "elementType": "li", "innerText": "obj (list of key-??? pairs) - Any object with keys."},
+		{"elementParent": "getKeysAreaList", "elementType": "li", "innerText": "obj (list of key-etc pairs) - Any object with keys."},
 
 		{"id": "onlyUniqueArea", "elementParent": "supportingToolsArea"},
 		{"elementParent": "onlyUniqueArea", "elementType": "h3", "innerText": "onlyUnique"},
