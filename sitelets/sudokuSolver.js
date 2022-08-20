@@ -25,7 +25,7 @@ function buildSudokuSolverSitelet($elementId) {
 			for (var c = 0; c < 3; c++) {
 				var section = addElement(rowInner, "", "", "span", "padding: 10px");
 				for (var col = 0; col < 3; col++) {
-					addElement(section, "", "", "input", "width: 50px; text-align: center;", "", "runSudokuSolver();", "", "", "", "", "sudoku_"+(rowCounter)+"_"+(colCounter));
+					addElement(section, "", "", "input", "width: 50px; text-align: center; font-size: 4vh;", "", "runSudokuSolver();", "", "", "", "", "sudoku_"+(rowCounter)+"_"+(colCounter));
 					solverArray[rowCounter][colCounter] = [1,2,3,4,5,6,7,8,9]
 					colCounter++
 				};//end for col
