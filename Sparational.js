@@ -7,6 +7,7 @@
 //v3.1: Add caching to webRequest.
 //v3.2: Add rebuildElement.
 //v3.2.1: Bugfix detectEnter.
+//v3.3: Add identifyElements.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -115,6 +116,10 @@ function hideElement($elementId) {
 function showElement($elementId) {
 	document.getElementById($elementId).style.visibility="visible";
 }; // end toggleElement
+
+function identifyElements(parentElement) {
+	document.getElementById(parentElement).onmousedown = function(event){console.log("Element "+event.target.id+" at "+event.clientX+"," + event.clientY);}
+}
 
 //buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage');
 function rebuildElement(elementId) {
