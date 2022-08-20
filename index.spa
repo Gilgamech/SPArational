@@ -96,9 +96,9 @@
 		{"elementParent": "philosophyArea", "elementType": "h3", "innerText": "Make faster websites faster"},
 		{"id": "philosophyAreaList", "elementParent": "philosophyArea", "elementType": "ul"},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Reduce development and loading time by moving more into the browser."},
-		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Using standard Javascript and JSON enables serverless design while making the framework easier to use."},
+		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Using standard Javascript and JSON enables serverless design while making websites easier to make."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Serverless design accelerates through CDN very well."},
-		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Synchronous and functional framework streamlines and encourages using DOM elements for data storage."},
+		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Synchronous and functional library streamlines and encourages using DOM elements for data storage."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Use of JSON enables variable replacement, which is similar to how pages are built in many server-side frameworks."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Use of DOM for data storage, and caching functionality of webRequest, obviate any in-memory or server-side data structures that could become out of sync, along with most waiting for network."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Not waiting for server or network means faster, funner pages."},
@@ -108,8 +108,8 @@
 		{"elementParent": "mFA", "elementType": "h3", "innerText": "Mobile First"},
 		{"id": "mFAList", "elementParent": "mFA", "elementType": "ul"},
 		{"elementParent": "mFAList", "elementType": "li", "innerText": "Can run from local storage, S3, IPFS, IIS, Apache, container, CDN, or any number of other sources."},
-		{"elementParent": "mFAList", "elementType": "li", "innerText": "Lightweight page engine uses less memory and bandwidth than most frameworks."},
-		{"elementParent": "mFAList", "elementType": "li", "innerText": "Most sites can be written to operate entirely without network, only needing network access to get data on first load."},
+		{"elementParent": "mFAList", "elementType": "li", "innerText": "Write lightweight page engines which use less memory and bandwidth than server-side frameworks."},
+		{"elementParent": "mFAList", "elementType": "li", "innerText": "Most sites operate entirely without network, after initial page load."},
 
 
 		{"id": "sDA", "elementParent": "cRow"},
