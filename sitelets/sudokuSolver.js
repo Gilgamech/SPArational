@@ -3,7 +3,8 @@
 //Created: 8/19/2022 
 //Updated: 8/19/2022
 //Notes: 
-// v2.0: Rebuild of project from December 2018.
+//v2.0: Rebuild of project from December 2018.
+//v2.1: Add remaining digits as placeholders, format these to be much smaller than player-entered digits. Also format input boxes of found answers as light green background.
 
 //Get started: Add all 3 of the following lines to your index.html. The Sudoku Solver should show up at the bottom of the page.
 //<script src="https://www.Sparational.com/Sparational.js"></script>
@@ -12,10 +13,10 @@
 
 var solverArray = [[],[],[],   [],[],[],   [],[],[]];
 function buildSudokuSolverSitelet($elementId) {
-	//var sudokuSolverInput = getBadPW()
 	//addElement($elementId, "", "", "input", "", "", "", "", "", "", "", sudokuSolverInput)
 	var wrapper = addElement($elementId);
-	addElement(wrapper,"Enter your Sudoku puzzle below.","h3");
+	addElement(wrapper,"Enter your Sudoku puzzle below.","","h3");
+	addElement(wrapper,".sudokuInput::placeholder{font-size: 1vh}","","style");
 	var rowCounter = 0;
 	for (var r = 0; r < 3; r++) {
 		var rowOuter = addElement(wrapper);
@@ -25,7 +26,7 @@ function buildSudokuSolverSitelet($elementId) {
 			for (var c = 0; c < 3; c++) {
 				var section = addElement(rowInner, "", "", "span", "padding: 10px");
 				for (var col = 0; col < 3; col++) {
-					addElement(section, "", "", "input", "width: 50px; text-align: center; font-size: 4vh;", "", "runSudokuSolver();", "", "", "", "", "sudoku_"+(rowCounter)+"_"+(colCounter));
+					addElement(section, "", "sudokuInput", "input", "width: 50px; text-align: center; font-size: 4vh;", "", "runSudokuSolver();", "", "", "", "", "sudoku_"+(rowCounter)+"_"+(colCounter));
 					solverArray[rowCounter][colCounter] = [1,2,3,4,5,6,7,8,9]
 					colCounter++
 				};//end for col
@@ -72,22 +73,34 @@ function runSudokuSolver(){
 						checkCol = colAgain+ennerantCol*3;
 						delete solverArray[checkRow][checkCol][$num];
 					} catch {}
-				}; //end for row
-			}; //end for col
+				}; //end for rowAgain
+			}; //end for colAgain
 		}; //end if typeof
 		
 		var keys = getKeys(solverArray[row][col])
 		if (keys.length == 1) { 
 			//If any array has just 1 member, convert it into a number, which will display later.
 			solverArray[row][col] = solverArray[row][col][keys]
-			document.getElementById('sudoku_'+row+'_'+col).style.color = "red";
+			document.getElementById('sudoku_'+row+'_'+col).style.background = "lightgreen";
 			console.log("Found one at "+row+","+col)
 		}; //end if solverArray
 		
 		
 		var out = solverArray[row][col]
 		if (out == null){out = ''}
-		if (typeof out == "object"){out = ''}
+		if (typeof out == "object"){
+		//Add the remaining numbers to the placeholder.
+			var keyOut = ""
+try {
+			for (let value of out) {
+				if (value != null) {
+					keyOut += value
+				}
+			}; //end for value
+} catch {}
+			document.getElementById('sudoku_'+row+'_'+col).placeholder = keyOut;
+			out = '';
+		}; //end if typeof
 		//Write data back to the input field, if it's not blank or an array.
 		writeElement('sudoku_'+row+'_'+col,out)
 		if (keys.length == 1) { 
