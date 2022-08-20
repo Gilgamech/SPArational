@@ -1,7 +1,10 @@
 //Author: Stephen Gillie
 //Created: 8/17/2022
 //Updated: 8/17/2022
-//Notes: Add all 3 of the following lines to your index.html. The calculator should show up at the bottom of the page.
+//Notes: 
+//v1.0 - release
+
+//Get started: Add all 3 of the following lines to your index.html. The Sudoku Solver should show up at the bottom of the page.
 //<script src="https://www.Sparational.com/Sparational.js"></script>
 //<script src='https://www.Sparational.com/sitelets/calc.js'></script>
 //<script>buildCalculatorSitelet('body');</script>
