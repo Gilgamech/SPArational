@@ -46,7 +46,7 @@ function updateRgbColor() {
 	writeElement("rgbSiteletGreenInput",$hex.g);
 	writeElement("rgbSiteletBlueInput",$hex.b);
 	
-	document.getElementById("contentLabel").style.backgroundColor
+	document.getElementById("rgbSiteletCalcLabel").style.backgroundColor
 	= readElement("rgbSiteletHtmlInput");
 }; // end updateRgbColor
 
