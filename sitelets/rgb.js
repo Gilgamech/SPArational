@@ -3,10 +3,12 @@
 //Created: 8/14/2022
 //Updated: 8/17/2022
 //Notes: 
-//v1.0 - release
-//v1.1 - moved CSS styles into function, from separate CSS file.
+//v1.0 - Release
+//v1.1 - Moved CSS styles into function, from separate CSS file.
+//v1.2 - Update elements to use randomized div names where possible, to reduce possible collisions. 
+//v1.2.1 - Bugfix to updateRgbColor, replacing unused contentTitles ID with rgbSiteletCalcLabel.
 
-//To use: Add all 3 of the following lines to your index.html. The calculator should show up at the bottom of the page.
+//Get started: Add all 3 of the following lines to your index.html. The calculator should show up at the bottom of the page.
 //<script src="https://www.Sparational.com/Sparational.js"></script>
 //<script src='https://www.Sparational.com/sitelets/rgb.js'></script>
 //<script>buildRgbSitelet('body');</script>
@@ -16,24 +18,21 @@ function buildRgbSitelet(parentElement) {
 	$inputStyles = "font-size: 4vw; width: 90vw; text-align:center; border-radius: 15px;"
 	$imgRounded = "text-align:center; border-radius: 15px;"
 	
-	addElement(parentElement,"","","","container img-rounded","","","","","","","rgbSiteletWrapper")
-	addElement('rgbSiteletWrapper',"","","","col-md-3 hidden-xs","","","","","","","rgbSiteletspacer")
-	addElement('rgbSiteletWrapper',"","","","col-md-6 col-xs-12","","","","","","","rgbSiteletCalc")
+	var rgbSiteletWrapper = addElement(parentElement,"","","","container img-rounded")
+	var rgbSiteletSpacer = addElement(rgbSiteletWrapper,"","","","col-md-3 hidden-xs")
+	var rgbSiteletCalc = addElement(rgbSiteletWrapper,"","","","col-md-6 col-xs-12")
 
-	addElement('rgbSiteletCalc',"RGB Calculator","","","background-color:#eee; color:#000;"+$inputStyles,"","","","","","","rgbSiteletCalcLabel")
-	var rgbSiteletCalcArea = addElement('rgbSiteletCalc')
+	addElement(rgbSiteletCalc,"RGB Calculator","","","background-color:#eee; color:#000;"+$inputStyles,"","","","","","","rgbSiteletCalcLabel")
+	var rgbSiteletCalcArea = addElement(rgbSiteletCalc)
 
 	var rgbSiteletHtmlRow = addElement(rgbSiteletCalcArea)
 	addElement(rgbSiteletHtmlRow,"",$inputClasses,"input","color: #000;"+$inputStyles,"","updateRgbColor()","","","maxlength",  "7","rgbSiteletHtmlInput")
 
-	var rgbSiteletRedRow = addElement(rgbSiteletCalcArea)
-	addElement(rgbSiteletRedRow,171,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletRedInput');","","","type","number","rgbSiteletRedInput")
+	addElement(rgbSiteletCalcArea,171,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletRedInput');","","","type","number","rgbSiteletRedInput")
 
-	addElement(rgbSiteletCalcArea,"","","","","","","","","","","rgbSiteletGreenRow")
-	addElement('rgbSiteletGreenRow',205,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletGreenInput');","","","type","number","rgbSiteletGreenInput")	
+	addElement(rgbSiteletCalcArea,205,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletGreenInput');","","","type","number","rgbSiteletGreenInput")	
 	
-	addElement(rgbSiteletCalcArea,"","","","","","","","","","","rgbSiteletBlueRow")
-	addElement('rgbSiteletBlueRow',239,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletBlueInput');","","","type","number","rgbSiteletBlueInput")
+	addElement(rgbSiteletCalcArea,239,$inputClasses,"input","color: #fff;"+$inputStyles,"","updateRgbDivColor('rgbSiteletBlueInput');","","","type","number","rgbSiteletBlueInput")
 	
 	updateRgbDivColor('rgbSiteletRedInput');
 	updateRgbDivColor('rgbSiteletGreenInput');
