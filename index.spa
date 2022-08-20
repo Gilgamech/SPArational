@@ -46,16 +46,15 @@
 		{"elementParent": "usingSitelet", "elementType": "h3", "innerText": "Add a sitelet to your site:"},
 		{"id": "usingSiteletList", "elementParent": "usingSitelet", "elementType": "ul"},
 
-		{"id": "usingSiteletListItem", "elementParent": "usingSiteletList", "elementType": "li", "innerText": "There are 2 sitelets currently available, a "},
-		{"elementParent": "usingSiteletListItem", "elementType": "a", "innerText": "basic calculator:", "href": "https://www.Sparational.com/sitelets/calc.js"},
-		{"id": "usingSiteletListItemCalcHolder", "elementParent": "usingSiteletListItem"},
-		
-		{"id": "usingSiteletListItem2", "elementParent": "usingSiteletList", "elementType": "li", "innerText": "And the "},
-		{"elementParent": "usingSiteletListItem2", "elementType": "a", "innerText": "RGB Calculator", "href": "https://www.Sparational.com/sitelets/rgb.js"},
-		{"elementParent": "usingSiteletListItem2", "elementType": "span", "innerText": " which gives a new perspective on HTML colors:"},
-		{"id": "usingSiteletListRgb", "elementParent": "usingSiteletListItem2"},
-		{"elementParent": "usingSiteletListItem", "elementType": "script", "innerText": "buildCalculatorSitelet('usingSiteletListItemCalcHolder');"},
-		{"elementParent": "usingSiteletListItem2", "elementType": "script", "innerText": "buildRgbSitelet('usingSiteletListRgb');"},
+		{"id": "usingSiteletListItem", "elementParent": "usingSiteletList", "elementType": "li", "innerText": "There are 3 sitelets currently available, a "},
+		{"elementParent": "usingSiteletListItem", "elementType": "a", "innerText": "basic calculator", "href": "https://www.Sparational.com/sitelets/calc.js"},
+		{"elementParent": "usingSiteletListItem", "elementType": "span", "innerText": ", a "},
+		{"elementParent": "usingSiteletListItem", "elementType": "a", "innerText": "Sudoku solver", "href": "https://www.Sparational.com/sitelets/sudokuSolver.js"},
+		{"elementParent": "usingSiteletListItem", "elementType": "span", "innerText": ", and the "},
+		{"elementParent": "usingSiteletListItem", "elementType": "a", "innerText": "RGB Calculator", "href": "https://www.Sparational.com/sitelets/rgb.js"},
+		{"elementParent": "usingSiteletListItem", "elementType": "span", "innerText": " which gives a new perspective on HTML colors:"},
+		{"id": "usingSiteletListRgb", "elementParent": "usingSiteletListItem"},
+		{"elementParent": "usingSiteletListItem", "elementType": "script", "innerText": "buildRgbSitelet('usingSiteletListRgb');"},
 		
 		
 		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "To use it, add the script to your page with this script link: <script src='https://www.Sparational.com/sitelets/rgb.js'></script>."},
