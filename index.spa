@@ -197,57 +197,6 @@
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementId (string) - ID of the element. Useful for parenting other elements under this one, interacting with other scripts and CSS, and linking directly to a location on a page. This will show up in the console on every page load as a log of elements added, (any user might see it) so name for posterity."},
 
 
-		{"id": "cje2Area", "elementParent": "elementToolsArea"},
-		{"elementParent": "cje2Area", "elementType": "h3", "innerText": "cje2 (Full rewrite for v3)"},
-		{"elementParent": "cje2Area", "elementType": "h6", "innerText": "Convert JSON to Element 2 - uses addElement to add a list of HTML Elements to the DOM. Used with SPA pages."},
-		{"elementParent": "cje2Area", "elementType": "p", "innerText": "Example: cje2({'id': 'cje2Area', 'elementParent': 'elementToolsArea'})"},
-		{"elementParent": "cje2Area", "elementType": "p", "innerText": "Returns: null"},
-		{"elementParent": "cje2Area", "elementType": "p", "innerText": "cje2(parentElement,$elements)"},
-		{"id": "cje2AreaList", "elementParent": "cje2Area", "elementType": "ul"},
-		{"elementParent": "cje2AreaList", "elementType": "li", "innerText": "parentElement (string) - The ID of the parent element for this section to hang from. Usually a whole-page wrapper div. CJE2 replaces all instances of the first page's first element's elementParent with specified parentElement, so use the same elementParent for elements that should hang off the parent element - the placeholder 'parentElement' is recommended."},
-		{"elementParent": "cje2AreaList", "elementType": "li", "innerText": "$elements (list of key-object pairs) - page of elements. Usually from a SPA file's contents."},
-
-
-		{"id": "cMTSArea", "elementParent": "elementToolsArea"},
-		{"elementParent": "cMTSArea", "elementType": "h3", "innerText": "convertMarkdownToSpa(Coming Soon)"},
-		{"elementParent": "cMTSArea", "elementType": "h6", "innerText": "Converts Markdown pages to SPA format. Write your website in YAML, like a serverless Hugo."},
-		{"elementParent": "cMTSArea", "elementType": "p", "innerText": "Example: convertMarkdownToSpa(markdownFile)"},
-		{"elementParent": "cMTSArea", "elementType": "p", "innerText": "Returns: (object) Completed SPA file."},
-		{"elementParent": "cMTSArea", "elementType": "p", "innerText": "convertMarkdownToSpa($inputString)"},
-		{"id": "cMTSAreaList", "elementParent": "cMTSArea", "elementType": "ul"},
-		{"elementParent": "cMTSAreaList", "elementType": "li", "innerText": "$inputString (string) - The Markdown file data converted to SPA format."},
-
-
-		{"id": "cJTSArea", "elementParent": "elementToolsArea"},
-		{"elementParent": "cJTSArea", "elementType": "h3", "innerText": "convertJupyterToSpa(Coming Soon)"},
-		{"elementParent": "cJTSArea", "elementType": "h6", "innerText": "Converts Jupyter pages to SPA format. Display sections of your Jupyter notebooks as a website, like a serverless Ipywidgets."},
-		{"elementParent": "cJTSArea", "elementType": "p", "innerText": "Example: convertJupyterToSpa(jupyterFile)"},
-		{"elementParent": "cJTSArea", "elementType": "p", "innerText": "Returns: (object) Completed SPA file."},
-		{"elementParent": "cJTSArea", "elementType": "p", "innerText": "convertJupyterToSpa($inputString)"},
-		{"id": "cJTSAreaList", "elementParent": "cJTSArea", "elementType": "ul"},
-		{"elementParent": "cJTSAreaList", "elementType": "li", "innerText": "$inputString (string) - The Jupyter file data converted to SPA format."},
-
-
-		{"id": "cYTSArea", "elementParent": "elementToolsArea"},
-		{"elementParent": "cYTSArea", "elementType": "h3", "innerText": "convertYamlToSpa(Coming Soon)"},
-		{"elementParent": "cYTSArea", "elementType": "h6", "innerText": "Converts Yaml pages to SPA format. Write your website in YAML, like a reactive yst."},
-		{"elementParent": "cYTSArea", "elementType": "p", "innerText": "Example: convertYamlToSpa(yamlFile)"},
-		{"elementParent": "cYTSArea", "elementType": "p", "innerText": "Returns: (object) Completed SPA file."},
-		{"elementParent": "cYTSArea", "elementType": "p", "innerText": "convertYamlToSpa($inputString)"},
-		{"id": "cYTSAreaList", "elementParent": "cYTSArea", "elementType": "ul"},
-		{"elementParent": "cYTSAreaList", "elementType": "li", "innerText": "$inputString (string) - The Yaml file data converted to SPA format."},
-
-
-		{"id": "rwjsArea", "elementParent": "elementToolsArea"},
-		{"elementParent": "rwjsArea", "elementType": "h3", "innerText": "rwjs (Full rewrite for v3)"},
-		{"elementParent": "rwjsArea", "elementType": "h6", "innerText": "ReWrite JSon - Performs SPA file variable replacement. Can replace individual values and also whole elements (for a unified header, footer, and navigation across all pages.)"},
-		{"elementParent": "rwjsArea", "elementType": "p", "innerText": "Example: page contains {'styles': { 'purpleBG': 'background: #532F8C;'}} and in any element 'elementStyle':'$_.styles.purpleBG' will be replaced with the background color style."},		
-		{"elementParent": "rwjsArea", "elementType": "p", "innerText": "Returns: null"},
-		{"elementParent": "rwjsArea", "elementType": "p", "innerText": "rwjs($JSON)"},
-		{"id": "rwjsAreaList", "elementParent": "rwjsArea", "elementType": "ul"},
-		{"elementParent": "rwjsAreaList", "elementType": "li", "innerText": "$JSON (complex object) - Full SPA file contents. Variable locations are relative to the SPA file."},
-
-
 		{"id": "writeElementArea", "elementParent": "elementToolsArea"},
 		{"elementParent": "writeElementArea", "elementType": "h3", "innerText": "writeElement"},
 		{"elementParent": "writeElementArea", "elementType": "h6", "innerText": "Has the element display the data. Adds the data to the DOM, in the element's innerText in most situations, value in others, and src sparingly."},
@@ -338,6 +287,67 @@
 		{"elementParent": "showElementArea", "elementType": "p", "innerText": "showElement($elementId)"},
 		{"id": "showElementAreaList", "elementParent": "showElementArea", "elementType": "ul"},
 		{"elementParent": "showElementAreaList", "elementType": "li", "innerText": "$elementId (string) - ID of element to show. "},
+
+
+		{"id": "identifyElementsArea", "elementParent": "elementToolsArea"},
+		{"elementParent": "identifyElementsArea", "elementType": "h3", "innerText": "identifyElements"},
+		{"elementParent": "identifyElementsArea", "elementType": "h6", "innerText": "Logs the element ID and mouse location when you click Useful for finding the ID of the element you're working with, for in-browser development."},
+		{"elementParent": "identifyElementsArea", "elementType": "p", "innerText": "Example: identifyElements('menuDropDown')"},
+		{"elementParent": "identifyElementsArea", "elementType": "p", "innerText": "Returns: null"},
+		{"elementParent": "identifyElementsArea", "elementType": "p", "innerText": "identifyElements($elementId)"},
+		{"id": "identifyElementsAreaList", "elementParent": "identifyElementsArea", "elementType": "ul"},
+		{"elementParent": "identifyElementsAreaList", "elementType": "li", "innerText": "$elementId (string) - ID of parent element whose children will be identified. "},
+
+
+		{"id": "cje2Area", "elementParent": "elementToolsArea"},
+		{"elementParent": "cje2Area", "elementType": "h3", "innerText": "cje2 (Full rewrite for v3)"},
+		{"elementParent": "cje2Area", "elementType": "h6", "innerText": "Convert JSON to Element 2 - uses addElement to add a list of HTML Elements to the DOM. Used with SPA pages."},
+		{"elementParent": "cje2Area", "elementType": "p", "innerText": "Example: cje2({'id': 'cje2Area', 'elementParent': 'elementToolsArea'})"},
+		{"elementParent": "cje2Area", "elementType": "p", "innerText": "Returns: null"},
+		{"elementParent": "cje2Area", "elementType": "p", "innerText": "cje2(parentElement,$elements)"},
+		{"id": "cje2AreaList", "elementParent": "cje2Area", "elementType": "ul"},
+		{"elementParent": "cje2AreaList", "elementType": "li", "innerText": "parentElement (string) - The ID of the parent element for this section to hang from. Usually a whole-page wrapper div. CJE2 replaces all instances of the first page's first element's elementParent with specified parentElement, so use the same elementParent for elements that should hang off the parent element - the placeholder 'parentElement' is recommended."},
+		{"elementParent": "cje2AreaList", "elementType": "li", "innerText": "$elements (list of key-object pairs) - page of elements. Usually from a SPA file's contents."},
+
+
+		{"id": "cMTSArea", "elementParent": "elementToolsArea"},
+		{"elementParent": "cMTSArea", "elementType": "h3", "innerText": "convertMarkdownToSpa(Coming Soon)"},
+		{"elementParent": "cMTSArea", "elementType": "h6", "innerText": "Converts Markdown pages to SPA format. Write your website in YAML, like a serverless Hugo."},
+		{"elementParent": "cMTSArea", "elementType": "p", "innerText": "Example: convertMarkdownToSpa(markdownFile)"},
+		{"elementParent": "cMTSArea", "elementType": "p", "innerText": "Returns: (object) Completed SPA file."},
+		{"elementParent": "cMTSArea", "elementType": "p", "innerText": "convertMarkdownToSpa($inputString)"},
+		{"id": "cMTSAreaList", "elementParent": "cMTSArea", "elementType": "ul"},
+		{"elementParent": "cMTSAreaList", "elementType": "li", "innerText": "$inputString (string) - The Markdown file data converted to SPA format."},
+
+
+		{"id": "cJTSArea", "elementParent": "elementToolsArea"},
+		{"elementParent": "cJTSArea", "elementType": "h3", "innerText": "convertJupyterToSpa(Coming Soon)"},
+		{"elementParent": "cJTSArea", "elementType": "h6", "innerText": "Converts Jupyter pages to SPA format. Display sections of your Jupyter notebooks as a website, like a serverless Ipywidgets."},
+		{"elementParent": "cJTSArea", "elementType": "p", "innerText": "Example: convertJupyterToSpa(jupyterFile)"},
+		{"elementParent": "cJTSArea", "elementType": "p", "innerText": "Returns: (object) Completed SPA file."},
+		{"elementParent": "cJTSArea", "elementType": "p", "innerText": "convertJupyterToSpa($inputString)"},
+		{"id": "cJTSAreaList", "elementParent": "cJTSArea", "elementType": "ul"},
+		{"elementParent": "cJTSAreaList", "elementType": "li", "innerText": "$inputString (string) - The Jupyter file data converted to SPA format."},
+
+
+		{"id": "cYTSArea", "elementParent": "elementToolsArea"},
+		{"elementParent": "cYTSArea", "elementType": "h3", "innerText": "convertYamlToSpa(Coming Soon)"},
+		{"elementParent": "cYTSArea", "elementType": "h6", "innerText": "Converts Yaml pages to SPA format. Write your website in YAML, like a reactive yst."},
+		{"elementParent": "cYTSArea", "elementType": "p", "innerText": "Example: convertYamlToSpa(yamlFile)"},
+		{"elementParent": "cYTSArea", "elementType": "p", "innerText": "Returns: (object) Completed SPA file."},
+		{"elementParent": "cYTSArea", "elementType": "p", "innerText": "convertYamlToSpa($inputString)"},
+		{"id": "cYTSAreaList", "elementParent": "cYTSArea", "elementType": "ul"},
+		{"elementParent": "cYTSAreaList", "elementType": "li", "innerText": "$inputString (string) - The Yaml file data converted to SPA format."},
+
+
+		{"id": "rwjsArea", "elementParent": "elementToolsArea"},
+		{"elementParent": "rwjsArea", "elementType": "h3", "innerText": "rwjs (Full rewrite for v3)"},
+		{"elementParent": "rwjsArea", "elementType": "h6", "innerText": "ReWrite JSon - Performs SPA file variable replacement. Can replace individual values and also whole elements (for a unified header, footer, and navigation across all pages.)"},
+		{"elementParent": "rwjsArea", "elementType": "p", "innerText": "Example: page contains {'styles': { 'purpleBG': 'background: #532F8C;'}} and in any element 'elementStyle':'$_.styles.purpleBG' will be replaced with the background color style."},		
+		{"elementParent": "rwjsArea", "elementType": "p", "innerText": "Returns: null"},
+		{"elementParent": "rwjsArea", "elementType": "p", "innerText": "rwjs($JSON)"},
+		{"id": "rwjsAreaList", "elementParent": "rwjsArea", "elementType": "ul"},
+		{"elementParent": "rwjsAreaList", "elementType": "li", "innerText": "$JSON (complex object) - Full SPA file contents. Variable locations are relative to the SPA file."},
 
 
 		{"elementParent": "cRow", "elementType": "h1", "innerText": "Text tools"},
