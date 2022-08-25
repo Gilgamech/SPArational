@@ -451,7 +451,7 @@ function addTable(parentDivID,newTableID,columnData,divClass) {
 	var newThead = addElement(newTable,"","","thead");
 	var newTbody = addElement(newTable,"","","tbody");
 	var newTR = addElement(newThead,"","","tr");
-	addElement(newTR,columnData[0],"","th");
+	addElement(newTR,columnData[0],"","th","","","","sortAlphaTable(0,'"+newTableID+"')");
 	var rowCount = 1;
 	
 	for (var currentRow=0; currentRow<columnData.length-rowCount; currentRow++) {
@@ -466,7 +466,7 @@ function addColumn(tableid,columnData,headLess) {
 		var tableHead = returnTablePart(tableid,"THEAD");
 		for (var currentRow=0; currentRow<tableHead.rows.length; currentRow++) {
 			rowCount++
-			addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortNumTable("+(tableHead.children[0].children.length-1)+",'"+tableid+"')");
+			addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortNumTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
 		}
 	}
 
