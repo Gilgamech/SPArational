@@ -1,6 +1,6 @@
 //Author: Stephen Gillie
 //Created: 8/08/2022
-//Updated: 8/20/2022
+//Updated: 8/25/2022
 //Notes: 
 //v0.8 - Build for Offering Overview
 //v0.9 - Separate into different templates.
@@ -8,7 +8,7 @@
 //v1.1 - Reunite into one engine.
 //v1.2 - Set tables to auto overflow, so they scroll sideways on narrow browsers.
 
-//Programmatic page allows creating hundreds of website pages from a few standard website files.
+//Data-driven page engine allows creating hundreds of website pages from a few standard website files.
 //Data file is an array of sets of key-value pairs. 
 //Grid Page is a grid of sets from the Data file. If the "name" value is set, that value is used as the name in the grid cell, as the /path that loads the Info Page for that set, and as the h1 header of the Info Page.
 //Info Page is one large grid, with the set's "name" value as h1, "useCase" as an info line, any "video" links embedded at bottom of page, and remaining keys splayed out between. Links are masked for easier display, and arrays are converted into lists. Use the (table) flag at the start of a key to turn the value's multidimensional array into an HTML table.
