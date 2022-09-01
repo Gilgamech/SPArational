@@ -8,6 +8,7 @@
 //v3.2: Add rebuildElement.
 //v3.2.1: Bugfix detectEnter.
 //v3.3: Add identifyElements.
+//v3.3.1: Add dollarsign filtering to sortNumTable, so it can sort columns of dollar amounts.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -710,13 +711,13 @@ function sortNumTable(currentColumn,tableid) {
       nextCell = rows[currentRow + 1].getElementsByTagName("td")[currentColumn];
       /* Check if the two rows should switch place, based on the direction, asc or desc: */
       if (dir == "asc") {
-        if ((textToNumNotation(currentCell.innerHTML)) > (textToNumNotation(nextCell.innerHTML))) {
+        if ((textToNumNotation(currentCell.innerHTML.replace("$",""))) > (textToNumNotation(nextCell.innerHTML.replace("$","")))) {
           // If so, mark as a switch and break the loop:
           shouldSwitch = true;
           break;
         }
       } else if (dir == "desc") {
-        if ((textToNumNotation(currentCell.innerHTML)) < (textToNumNotation(nextCell.innerHTML))) {
+        if ((textToNumNotation(currentCell.innerHTML.replace("$",""))) < (textToNumNotation(nextCell.innerHTML.replace("$","")))) {
           // If so, mark as a switch and break the loop:
           shouldSwitch = true;
           break;
