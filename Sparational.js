@@ -428,8 +428,8 @@ function numToTextNotation($inputObject,round) {
 	return $outVal2 + $significand;
 }
 
-function detectEnter($keypress,$callback){
-    if($keypress.keyCode === 13){
+function detectEnter($keypress,$callback,$keycode=13){
+    if($keypress.keyCode === $keycode){
         $keypress.preventDefault(); // Ensure it is only this code that runs
 		$callback();
     };
