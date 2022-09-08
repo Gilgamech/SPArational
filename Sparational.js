@@ -1,14 +1,12 @@
-//SPArational.js v3.2.1 - Make faster websites faster.
+//Copyright 2013-2022 Gilgamech Technologies
+//SPArational.js v3.5 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 8/17/2022
+//Last updated: 9/1/2022
 //Notes:
-//v3: Rewrite cje2 and rwjs, relaunch project.
-//v3.1: Add caching to webRequest.
-//v3.2: Add rebuildElement.
-//v3.2.1: Bugfix detectEnter.
 //v3.3: Add identifyElements.
 //v3.3.1: Add dollarsign filtering to sortNumTable, so it can sort columns of dollar amounts.
+//v3.3.2: Invalidate webRequest cache by setting $cached to 0 during a request.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -290,17 +288,21 @@ function webRequest($verb,$URI,$callback,$JSON,$file,$cached) {
 					if ($JSON) {
 						returnVar = JSON.parse(returnVar);
 					}; // end if $JSON
-					if ($cached) {
+					if ($cached > 0) {
 						spaRationalCachingVar[$URI] = returnVar;
 						spaRationalCachingVar[$URI+":duration"] = ($cached * 1000) + Date.now();
 						console.log("Caching "+$URI+" for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
-					}; //end if cached
+					} else if ($cached = 0) {
+						spaRationalCachingVar[$URI] = null;
+						spaRationalCachingVar[$URI+":duration"] = Date.now();
+						console.log("Invalidating "+$URI)
+					}; //end if $cached
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
 			} else {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
-		} catch {}; // end try
+		} catch(e) {console.log(e)}; // end try
 	}; // end xhRequest.onreadystatechange
 	xhRequest.send($file);
 }; // end webRequest
