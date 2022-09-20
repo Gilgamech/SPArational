@@ -1,12 +1,12 @@
+//InfoGrid Page Engine
 //Author: Stephen Gillie
 //Created: 8/08/2022
 //Updated: 8/25/2022
 //Notes: 
-//v0.8 - Build for Offering Overview
-//v0.9 - Separate into different templates.
 //v1.0 - Release.
 //v1.1 - Reunite into one engine.
 //v1.2 - Set tables to auto overflow, so they scroll sideways on narrow browsers.
+//v1.3 - Move wrapper and innerWrapper elements from static IDs to variable IDs. Clean up closing brace end tags.
 
 //Data-driven page engine allows creating hundreds of website pages from a few standard website files.
 //Data file is an array of sets of key-value pairs. 
@@ -21,28 +21,28 @@
 
 function buildInfoGridPage(parentElement,name,sites) {
 	addElement(parentElement,"","","br");
-	addElement(parentElement,"","grid-container","","","","","","","","","wrapper");
+	var wrapper = addElement(parentElement,"","grid-container");
 	if (name == "") {
 		for (let site of sites) {
-			var outerHref = addElement("wrapper","","","a","",site.name);
+			var outerHref = addElement(wrapper,"","","a","",site.name);
 			addElement(outerHref,site.name,('grid grid-item '+site.Type));
-		}
+		}; //end for let site
 	} else {
 		var currentSite;
 		for (let site of sites) {
 			if (site.name == name) {
 				currentSite = site;
-			}
-		}
+			}; //end if site name
+		}; //end for let site
 
-		addElement("wrapper","","grid-item "+currentSite.Type+"Page","","","","","","","","","innerWrapper");
-		addElement("innerWrapper",currentSite.name,"","h1","text-align: center");
+		var innerWrapper = addElement(wrapper,"","grid-item "+currentSite.Type+"Page");
+		addElement(innerWrapper,currentSite.name,"","h1","text-align: center");
 		if (currentSite.useCase) {
-			addElement("innerWrapper",currentSite.useCase,"","h3","text-align: center");
+			addElement(innerWrapper,currentSite.useCase,"","h3","text-align: center");
 		}; //end if currentSite
 		for (let key of getKeys(currentSite)) {
 			if (currentSite[key] != "" && key != "name" && key != "useCase" && key != "video") {
-				var outerPara = addElement("innerWrapper","","","p","overflow: auto;");
+				var outerPara = addElement(innerWrapper,"","","p","overflow: auto;");
 				var keyName = addElement(outerPara,key+": ","","strong");
 
 				if (typeof currentSite[key] == "object") {
@@ -51,23 +51,22 @@ function buildInfoGridPage(parentElement,name,sites) {
 						mdArrayToTable(outerPara,"",currentSite[key]);
 					} else {
 					var innerUL = addElement(outerPara,"","","ul");
-					for (let note of currentSite[key]) {
-						addElement(innerUL,note,"","li");
-					}; //end if currentSite key
-					}
+						for (let note of currentSite[key]) {
+							addElement(innerUL,note,"","li");
+						}; //end for let note
+					}; //end if key substr
 				} else if (typeof currentSite[key] == "string") {
 					if (currentSite[key].substr(0,4) == "http") {
 						addElement(outerPara,key,"","a","",currentSite[key]);
 					} else {
 						addElement(outerPara,currentSite[key],"","span");
 					}; //end if currentSite key
-				} else {
-				}; //end if key
+				}; //end if typeof key
 
 			}; //end if currentSite
 		}; //end for let key
 		if (currentSite.video) {
-			var videoWrapper = addElement("innerWrapper");
+			var videoWrapper = addElement(innerWrapper);
 			var video = addElement(videoWrapper,"","iframe-container");
 			document.getElementById(video).innerHTML += currentSite.video;
 		}; //end if currentSite
