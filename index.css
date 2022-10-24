@@ -103,6 +103,32 @@ div.dropdown-content a:visited{
 	color:#7f7f7f;
 }
 
+.popup {
+	background: #9df;
+	border-radius: 15px;
+}
+.popup span {
+	position: absolute;
+	/*margin: top  right bottom left*/
+	margin-left: auto;
+	margin-right: auto;
+	margin: 15px 5px 0 -30px;
+	text-align: center;
+	
+	padding: 3px 3px 3px 3px;
+	border-style:solid;
+	border-color:black;
+	border-width:1px;
+	border-radius: 15px;
+	background: #fff;
+	color: #000;
+	
+	display: none;
+}
+.popup:hover span {
+	display: inherit;
+} 
+
 nav {
 	color: #A3C7B2;
 	margin:0;

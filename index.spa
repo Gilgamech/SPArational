@@ -57,7 +57,7 @@
 		
 		
 		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "To use it, add the script to your page with this script link: <script src='https://www.Sparational.com/sitelets/rgb.js'></script>."},
-		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "Then just run 'buildRgbSitelet(\"body\")' and the RGB calculator will show up within the div specified. Can be other element types (span, p, etc) but may not work within textareas, inputs, buttons, etc."},
+		{"elementParent": "usingSiteletList", "elementType": "li", "innerText": "Then just run 'buildRgbSitelet(\"body\")' and the RGB calculator will show up within the div specified. Can be other element types (span, p, et cetera) but may not work within textareas, inputs, buttons, et cetera."},
 
 		{"id": "usingCJE2Area", "elementParent": "cRow"},
 		{"elementParent": "usingCJE2Area", "elementType": "h3", "innerText": "Build a page using CJE2:"},
@@ -94,7 +94,9 @@
 		{"id": "philosophyArea", "elementParent": "cRow"},
 		{"elementParent": "philosophyArea", "elementType": "h3", "innerText": "Make faster websites faster"},
 		{"id": "philosophyAreaList", "elementParent": "philosophyArea", "elementType": "ul"},
-		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Reduce development and loading time by moving more into the browser."},
+		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Why pay for back-end compute when front-end compute is free?"},
+		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Reduce development and loading time by moving everything into the browser."},
+		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Rehydrate pages, load additional content, and even lazy-load scripts or content elements."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Using standard Javascript and JSON enables serverless design while making websites easier to make."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Serverless design accelerates through CDN very well."},
 		{"elementParent": "philosophyAreaList", "elementType": "li", "innerText": "Synchronous and functional library streamlines and encourages using DOM elements for data storage."},
@@ -122,10 +124,10 @@
 		{"elementParent": "sDAListItem", "elementType": "a", "href": "https://www.gilgamech.com/", "innerText": "Gilgamech Technologies"},
 		{"elementParent": "sDAListItem", "elementType": "span", "innerText": " main site is still using this legacy architecture."},
 
-		{"id": "sDAListItem2", "elementParent": "sDAList", "elementType": "li", "innerText": "Make sitelets in the same way as making a page engine described above - but scoped to tools or applications. Our first sitelet, the RGB Calculator, can be found "},
+		{"id": "sDAListItem2", "elementParent": "sDAList", "elementType": "li", "innerText": "Make sitelets in the same way as making a page engine described above - but scoped to tools or applications. Our first sitelet, the RGB Calculator, can be found on the front page, with code "},
 		{"elementParent": "sDAListItem2", "elementType": "a", "href": "https://www.Sparational.com/sitelets/rgb.js", "innerText": "here"},
 		{"elementParent": "sDAListItem2", "elementType": "span", "innerText": ". It converts HTML hex color codes into red, blue, and green values and back - while updating the input and title box colors with their value."},
-
+		
 
 		{"id": "hFA", "elementParent": "cRow"},
 		{"elementParent": "hFA", "elementType": "h3", "innerText": "High Flexibility"},
@@ -139,7 +141,7 @@
 		{"id": "sFF", "elementParent": "cRow"},
 		{"elementParent": "sFF", "elementType": "h3", "innerText": "SPA format"},
 		{"id": "sFFList", "elementParent": "sFF", "elementType": "ul"},
-		{"elementParent": "sFFList", "elementType": "li", "innerText": "SPA format is modified JML (JSON Markup Language) designed to work with HTML instead of XML, and is pronounced like William Shatner saying 'Spock'. (Not really - pronounce however you like, including 'GIF'.)"},
+		{"elementParent": "sFFList", "elementType": "li", "innerText": "SPA format is modified JML (JSON Markup Language) designed to work with HTML instead of XML"},
 		{"elementParent": "sFFList", "elementType": "li", "innerText": "In SPA, HTML elements are described by JSON objects, such as the one you're reading: {'elementParent': 'sFFList', 'elementType': 'li', 'innerText': 'In SPA, HTML elements are described by JSON objects, such as the one you're reading:'}"},
 		{"elementParent": "sFFList", "elementType": "li", "innerText": "SPA format supports a replacement system, using the variable '$_' (dollar sign underscore) to represent the root of the file. So instead of putting the above element in a page's elements array, it can be put as a named object in any arbitrarily-named section, such as an object named 'sFFListItemReading' under a section named 'elements'. Then putting '$_.elements.sFFListReading' into the page's elements array will make the element show up there, once the page has been fully processed and built. Find 'rwjs' in the Function Index for more info about variable replacement."},
 		{"id": "sFFListItem", "elementParent": "sFFList", "elementType": "li", "innerText": "Why JSON?"},
@@ -151,6 +153,7 @@
 		{"elementParent": "sFFListItemUList", "elementType": "li", "innerText": "Easier to write applications to write it for you."},
 		{"elementParent": "sFFListItemUList", "elementType": "li", "innerText": "JSON is a first class data citizen on today's Internet, while HTML is only a markup language."},
 		{"elementParent": "sFFList", "elementType": "li", "innerText": "Markdown, YAML, and Jupyter Notebook display support coming soon."},
+		{"elementParent": "sFFList", "elementType": "li", "innerText": "'SPA' is pronounced like William Shatner saying 'Spock'. (Not really - pronounce however you like, including 'GIF'.)"},
 		
 		
 		{"id": "nextStepsRow", "elementParent": "cRow"},
@@ -179,15 +182,15 @@
 		{"elementParent": "addElementArea", "elementType": "h3", "innerText": "addElement"},
 		{"elementParent": "addElementArea", "elementType": "h6", "innerText": "Adds an HTML Element to the DOM."},
 		{"elementParent": "addElementArea", "elementType": "p", "innerText": "Example: addElement('content','Hello, World!'); - this adds an element with the text 'Hello, World!' to the DOM body inside the first element with id='content'."},
-		{"elementParent": "addElementArea", "elementType": "p", "innerText": "Returns: ID (string) of new element. Declare as a variable and use as the $elementParent of following elements. Or feel free to safely ignore."},
+		{"elementParent": "addElementArea", "elementType": "p", "innerText": "Returns: ID (string) of new element. Declare as a variable and use as the $elementParent of following elements. Or feel free to safely ignore. This makes it possible to nest addElement within itself - addElement(addElement('content','','borderRadiusCssClass','div','background: #000;),'Hello, World!','','h1','color: #FFF;') - doing this once nicely encapsulates an element with a wrapper div without needing a variable, but more than once is an antipattern to be avoided."},
 		{"elementParent": "addElementArea", "elementType": "p", "innerText": "addElement($elementParent, innerText, $elementClass, $elementType, $elementStyle, $href, $onChange, $onClick, $contentEditable, $attributeType, $attributeAction, $elementId)"},
 		{"id": "addElementAreaList", "elementParent": "addElementArea", "elementType": "ul"},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementParent (string) - ID of the parent element for this section. Usually a whole-page wrapper div."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "innerText (string) - Text to be displayed on the element. Auto-selects innerText, value, or other attribute."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementClass (string) - CSS classes that apply to the element, and are declared either in a separate CSS file, in style tags, or in a style element object in the SPA file."},
-		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementType (string) - HTML element type, such as div, a(nchor), span, h1, h3, h3, p(aragraph), etc. Full HTML5 Semantic Tag support, use any tag type you want."},
+		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementType (string) - HTML element type, such as div, a(nchor), span, h1, h3, h3, p(aragraph), et cetera. Full HTML5 Semantic Tag support, use any tag type you want."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$elementStyle (string) - CSS styles that are declared directly in the element."},
-		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$href (string) - URI that the browser should load when clicked. Almost always used with a(nchor) elements."},
+		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$href (string) - URI that the browser should load when clicked. Almost always used with anchor elements."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$onChange (string) - Javascript to perform when the element value changes. Used with input, textarea, and contenteditable elements."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$onClick (string) - Just like $onChange, the Javascript to perform when the element is clicked. Often used to dynamically rebuild a page with Sparational.js, and in this case it's best paired with the style='cursor: pointer;' to give the illusion of a normal link."},
 		{"elementParent": "addElementAreaList", "elementType": "li", "innerText": "$contentEditable (switch) - Makes the element editable. Added in an earlier version for a project that required a lot of content-editable sections. May be depreciated in a future full version."},
@@ -430,7 +433,7 @@
 		{"elementParent": "getKeysArea", "elementType": "p", "innerText": "Returns: (array) List of keys, such as: ['howTo','info','functionIndex']"},
 		{"elementParent": "getKeysArea", "elementType": "p", "innerText": "getKeys(obj)"},
 		{"id": "getKeysAreaList", "elementParent": "getKeysArea", "elementType": "ul"},
-		{"elementParent": "getKeysAreaList", "elementType": "li", "innerText": "obj (list of key-etc pairs) - Any object with keys."},
+		{"elementParent": "getKeysAreaList", "elementType": "li", "innerText": "obj (list of key-et cetera pairs) - Any object with keys."},
 
 		{"id": "onlyUniqueArea", "elementParent": "supportingToolsArea"},
 		{"elementParent": "onlyUniqueArea", "elementType": "h3", "innerText": "onlyUnique"},

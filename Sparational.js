@@ -1,12 +1,14 @@
 //Copyright 2013-2022 Gilgamech Technologies
-//SPArational.js v3.5 - Make faster websites faster.
+//SPArational.js v3.6.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 9/1/2022
-//Notes:
-//v3.3: Add identifyElements.
-//v3.3.1: Add dollarsign filtering to sortNumTable, so it can sort columns of dollar amounts.
-//v3.3.2: Invalidate webRequest cache by setting $cached to 0 during a request.
+//Notes: Major (remove functionality) dot Minor (add functionality) dot Patch (fix functionality, or modify code without modifying functionality).
+//v3.4: Add webRequestAsync for use with the await keyword, within async functions.
+//v3.5: Add RWJS2 to be an async function (requiring the await keyword), enabling URL replacement. Adding "http" as the beginning of any section will replace it with data from the remote URL. Use with care, as this must still parse as JSON.
+//v3.6: Add transposeArray for fast array transforms.
+//v3.6.1: Fix bug in colorifyMultipleWords. Needed to update colorifyDiv to colorifyWords.
+//v3.6.2: Update addLinkToWord to use replaceAll instead of replace.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -141,18 +143,41 @@ function rebuildElement(elementId) {
 	cje2(newElement[0].elementParent,newElement);
 }
 
+//Sitelet tools
+function sideloadSitelet(siteletURI) {
+	
+}
+
 //Format transformations
 function rwjs($JSON) {
 	//Rewrite $JSON
+	//Works on any JSON, not just SPA files.
 	for (var p = 0; p < getKeys($JSON.pages).length; p++) {
 		var page = $JSON.pages[getKeys($JSON.pages)[p]]
 		for (var e = 0; e < page.elements.length; e++) {
 			if (typeof page.elements[e] == "string") {
-/* 			if (page.elements[e].substr(0,4) == "http") {
-					webRequest("get",page.elements[e], function(data) {$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = data},"JSON");
-					return $JSON;
+				/* if (page.elements[e].substr(0,4) == "http") {
+					$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = await webRequestAsync("get",page.elements[e],"JSON");
 				} else  */
-				if (page.elements[e].substr(0,2) == "$_") {
+					if (page.elements[e].substr(0,2) == "$_") {
+					$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = eval(page.elements[e].replace("$_","$JSON"))
+				}; // end if elements
+			}//end if typeof
+		}; // end for elements
+	}; // end for pages
+			return $JSON;
+	//faster: stringify, 
+	
+}; // end function
+
+async function rwjs2($JSON) {
+	for (var p = 0; p < getKeys($JSON.pages).length; p++) {
+		var page = $JSON.pages[getKeys($JSON.pages)[p]]
+		for (var e = 0; e < page.elements.length; e++) {
+			if (typeof page.elements[e] == "string") {
+				if (page.elements[e].substr(0,4) == "http") {
+					$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = await webRequestAsync("get",page.elements[e],"JSON");
+				} else if (page.elements[e].substr(0,2) == "$_") {
 					$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = eval(page.elements[e].replace("$_","$JSON"))
 				}; // end if elements
 			}//end if typeof
@@ -178,6 +203,43 @@ function cje2(parentElement,elements) {
 }
 
 function convertMarkdownToSpa($inputString) {
+	var $out
+				console.log($inputString);
+	var $stringVar = JSON.stringify($inputString);
+				console.log($stringVar);
+	$stringVar = $stringVar.replace(/\["/g,'');
+	$stringVar = $stringVar.replace(/"\]/g,'');
+				console.log($stringVar);
+	
+	if ($stringVar.indexOf('#### ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h4"}]}
+	} else if ($stringVar.indexOf('### ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h3"}]}
+	} else if ($stringVar.indexOf('## ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h2"}]}
+	} else if ($stringVar.indexOf('# ') > -1 ) {
+		$stringVar = $stringVar.replace(/#/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h1"}]}
+	} else if ($stringVar.indexOf('\**') > -1 ) {
+		$stringVar = $stringVar.replace(/\**/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
+	} else if ($stringVar.indexOf('__') > -1 ) {
+		$stringVar = $stringVar.replace(/__/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
+	} else if ($stringVar.indexOf('\*') > -1 ) {
+		$stringVar = $stringVar.replace(/\*/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
+	} else if ($stringVar.indexOf('_') > -1 ) {
+		$stringVar = $stringVar.replace(/_/g,'');
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
+	} else {
+		$out = {"elements":[{"elementParent":"body","innerText":$stringVar}]}
+	}; // end if cell
+			console.log($out);
+	return $out;
 }
 
 function convertJupyterToSpa($inputString) {
@@ -220,6 +282,12 @@ function convertJupyterToSpa($inputString) {
 	return $out;
 }; 
 
+function convertJupyterToSpa2($inputString) {
+		$stringVar = $stringVar.replace('# ','"          "elementType": "p",');
+		$stringVar = $stringVar + '</h1>"';
+		$inputString = JSON.parse($stringVar);
+		return $inputString;
+}; 
 
 //Text tools
 function colorifyWords(divid, replaceWord, replaceClass) {
@@ -228,12 +296,12 @@ function colorifyWords(divid, replaceWord, replaceClass) {
 	var str = document.getElementById(divid).innerHTML;
 	str = str.replace(replaceRegex, '<span class="' + replaceClass + '">' + replaceWord + '</span>');
 	document.getElementById(divid).innerHTML = str;
-}; // end colorifyDiv
+}; // end colorifyWords
 
 function colorifyMultipleWords (divList,wordList,replaceClass){
 	for (var wordName = 0;wordName<wordList.length;wordName++){
 		for (var divName = 0;divName<divList.length;divName++){
-			colorifyDiv(divList[divName],wordList[wordName],replaceClass);
+			colorifyWords(divList[divName],wordList[wordName],replaceClass);
 		}
 	}
 }
@@ -244,15 +312,15 @@ function addPopupToWord(divid, replaceWord, popupText,outputClasses) {
 	var str = document.getElementById(divid).innerHTML;
 	str = str.replace(replaceRegex, '<span class="popup '+outputClasses+'">' + replaceWord + '<span>' + popupText + '</span></span>');
 	document.getElementById(divid).innerHTML = str;
-}; // end colorifyDiv
+}; // end addPopupToWord
 
 function addLinkToWord(divid, replaceWord, URI) {
 	var replaceRegex = new RegExp(replaceWord, "g");
-	replaceWord = replaceWord.replace(/\\/g,"")
+	replaceWord = replaceWord.replaceAll("\\","")
 	var str = document.getElementById(divid).innerHTML;
 	str = str.replace(replaceRegex, '<a href="'+URI+'">' + replaceWord + '</a>');
 	document.getElementById(divid).innerHTML = str;
-}; // end colorifyDiv
+}; // end addLinkToWord
 
 //Supporting functions
 var spaRationalCachingVar = [];
@@ -306,6 +374,59 @@ function webRequest($verb,$URI,$callback,$JSON,$file,$cached) {
 	}; // end xhRequest.onreadystatechange
 	xhRequest.send($file);
 }; // end webRequest
+
+function webRequestAsync($verb,$URI,$JSON,$file,$cached) {
+//if now is smaller than duration, read from cache.
+	if (spaRationalCachingVar[$URI] && Date.now() < spaRationalCachingVar[$URI+":duration"]) {
+		console.log($URI+" cached for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+		$status = "304";
+		returnVar = spaRationalCachingVar[$URI];
+		$callback(returnVar,$status);
+		return;
+	}; //end if spaRationalCachingVar
+
+	return new Promise(resolve => {
+	var $status;
+	var xhRequest = new XMLHttpRequest();
+	var returnVar;
+	if ($verb == "POST") {
+		xhRequest.overrideMimeType("text/plain");
+	} else if ($verb == "GET") {
+		xhRequest.overrideMimeType("application/json");
+	} else if ($verb == "PUT") {
+		xhRequest.overrideMimeType("application/json");
+	} else {
+		xhRequest.overrideMimeType("text/plain");
+	}; // end if $verb
+	xhRequest.open($verb, $URI, true);
+	xhRequest.onreadystatechange = function () {
+		try {
+			$status = xhRequest.status;
+			if ($status == "200") {
+				if (xhRequest.readyState == 4) {
+					returnVar = xhRequest.responseText;
+					if ($JSON) {
+						returnVar = JSON.parse(returnVar);
+					}; // end if $JSON
+					if ($cached > 0) {
+						spaRationalCachingVar[$URI] = returnVar;
+						spaRationalCachingVar[$URI+":duration"] = ($cached * 1000) + Date.now();
+						console.log("Caching "+$URI+" for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+					} else if ($cached = 0) {
+						spaRationalCachingVar[$URI] = null;
+						spaRationalCachingVar[$URI+":duration"] = Date.now();
+						console.log("Invalidating "+$URI)
+					}; //end if $cached
+					resolve(returnVar,$status);
+				}; // end xhRequest.readyState
+			} else {
+				resolve(" Error: "+xhRequest.statusText,$status);
+			}; // end if $status
+		} catch(e) {console.log(e)}; // end try
+	}; // end xhRequest.onreadystatechange
+	xhRequest.send($file);
+	})
+}; // end webRequestAsync
 
 function getBadPW() {
 	return Math.random().toString(36).slice(-20);
@@ -479,6 +600,7 @@ function addColumn(tableid,columnData,headLess) {
 	}
 }
 
+//need pagination
 function mdArrayToTable(parentDivID,newTableID,array) {
 	//Inputs a multidimensional array (e.g. [["a","b"],[1,2],[3,4]]) and outputs a table.
 	if (!newTableID) {
@@ -603,7 +725,7 @@ function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,out
 			if (((InputAText *1)   /   (InputBText*1)) *100 == Infinity) {
 				childrenOfOut.children[outputCol].innerText = 0;
 			} else {
-				childrenOfOut.children[outputCol].innerText = numToTextNotation(((InputAText *1)   /   (InputBText*1))   *100   , roundDigits);
+				childrenOfOut.children[outputCol].innerText = numToTextNotation(((InputAText *1)   /   (InputBText*1))   *100, roundDigits);
 			}
 			break;
 		  default:
@@ -745,10 +867,33 @@ function sortNumTable(currentColumn,tableid) {
 function rotateArray(inArray,num){
 	//Moves the first number in the array to be the last number.
 	var outArray = inArray.slice(num, inArray.length);
-	for (n=0;n<num;n++) {
+	for (let n=0;n<num;n++) {
 		outArray.push(inArray[n]);
 	}
 	return outArray;
+}
+
+function transposeArray(arr) {
+	//inspired by (and partially written during) HackerRank Array Manipulation Challenge.
+	//https://www.hackerrank.com/challenges/crush/problem
+	//Transposes an array in linear time to the number of columns (length of the 2nd dimension).
+	//Doesn't support non-alphanumeric characters yet. 
+	
+    //Create a new array that's as long as the old one was wide.
+    var out = Array(arr[0].length); 
+    //Replace every N letters, numbers, and commas with a single plus.
+    var regex = new RegExp('(,[A-Za-z0-9]+){'+(out.length-1)+'},','g')
+    //Cycle through the array, summing arr column C to index item C.
+    var nextItemLoc = 0
+	for (let c = 0; c<out.length; c++) {
+        //Cast the array to string, slice off the first C columns in the first row, then 
+		//regex the columns you don't want, split off the array members you don't want, 
+		//and eval. Arrays are comma-separated, making this easy.
+		out[c] = eval("["+arr.toString().slice(nextItemLoc).replace(regex,"+").split(",")[0].replace("+",",")+"]")
+        //Move forward to the next item.
+        nextItemLoc = arr.toString().indexOf(",",nextItemLoc)+1
+    }
+    return out;
 }
 
 function groupArray(arrayToGroup) {
@@ -787,6 +932,14 @@ function getMaxOfArray(array) {
 
 function getMinOfArray(array) {
   return Math.min.apply(Math, array);
+}
+
+function fasterArrayMax(arr) {
+	return eval("Math.max("+arr.toString()+")")
+}
+
+function fasterArrayMin(arr) {
+	return eval("Math.min("+arr.toString()+")")
 }
 
 function addRowHandlers(col,tableid) {
