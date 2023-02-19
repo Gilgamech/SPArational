@@ -2,22 +2,26 @@
 //SPArational.js v3.6.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 9/1/2022
-//Notes: Major (remove functionality) dot Minor (add functionality) dot Patch (fix functionality, or modify code without modifying functionality).
-//v3.4: Add webRequestAsync for use with the await keyword, within async functions.
-//v3.5: Add RWJS2 to be an async function (requiring the await keyword), enabling URL replacement. Adding "http" as the beginning of any section will replace it with data from the remote URL. Use with care, as this must still parse as JSON.
+//Last updated: 2/19/2023
+//Version history:
 //v3.6: Add transposeArray for fast array transforms.
 //v3.6.1: Fix bug in colorifyMultipleWords. Needed to update colorifyDiv to colorifyWords.
 //v3.6.2: Update addLinkToWord to use replaceAll instead of replace.
+//v3.7: Add radio element type.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
+	let radioButton = false;
 	if (!$elementParent) {
 		return;
 	}; // end if elementType	
 	if (!$elementType) {
 		$elementType = "div"
 	}; // end if elementType	
+	if ($elementType == "radio") {
+		$elementType = "input"
+		radioButton = true;
+	}
 	var newElement = document.createElement($elementType);
 	if (!$elementId) {
 		$elementId = getBadPW();
@@ -68,6 +72,9 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	if ($attributeType && $attributeAction) {
 		document.getElementById($elementId).setAttribute($attributeType, $attributeAction);
 	}; // end if attributeType
+	if (radioButton == true) {
+		addElement(parentElement,innerText,"","label","","","","","","for",$elementId)
+	}
 	return $elementId
 }; // end addElement	
 
