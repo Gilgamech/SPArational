@@ -73,7 +73,8 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 		document.getElementById($elementId).setAttribute($attributeType, $attributeAction);
 	}; // end if attributeType
 	if (radioButton == true) {
-		addElement(parentElement,innerText,"","label","","","","","","for",$elementId)
+		document.getElementById($elementId).setAttribute("type", "radio");
+		addElement($elementParent,innerText,"","label","","","","","","for",$elementId)
 	}
 	return $elementId
 }; // end addElement	
