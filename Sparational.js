@@ -2,12 +2,10 @@
 //SPArational.js v3.6.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 2/19/2023
+//Last updated: 2/26/2023
 //Version history:
-//v3.6: Add transposeArray for fast array transforms.
-//v3.6.1: Fix bug in colorifyMultipleWords. Needed to update colorifyDiv to colorifyWords.
-//v3.6.2: Update addLinkToWord to use replaceAll instead of replace.
 //v3.7: Add radio element type.
+//v3.8: Add locateElements.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -128,6 +126,28 @@ function showElement($elementId) {
 
 function identifyElements(parentElement) {
 	document.getElementById(parentElement).onmousedown = function(event){console.log("Element "+event.target.id+" at "+event.clientX+"," + event.clientY);}
+}
+
+function locateElements(outerId,innerId) {
+//Tells how far an element is off screen. 0 means visible.
+	outerRect = document.getElementById(outerId).getBoundingClientRect();
+	innerRect = document.getElementById(innerId).getBoundingClientRect();
+	let out = [0,0]
+	//Graphics rows increment from top downward, so more is lower.
+	if (innerRect.bottom < outerRect.top || innerRect.bottom < 0 ) {
+		out[0] = Math.max(outerRect.top,0) - innerRect.bottom
+	} 
+	if (innerRect.top > outerRect.bottom || innerRect.top > document.documentElement.clientHeight) {
+		out[0] = Math.min(outerRect.bottom,document.documentElement.clientHeight) - innerRect.top
+	} 
+	//Graphics columns increment from left rightward, so more is righter.
+	if (outerRect.left  > innerRect.right|| 0 >  innerRect.right) {
+		out[1] = Math.max(outerRect.left,0) - innerRect.right
+	} 
+	if (innerRect.left > outerRect.right || innerRect.left > document.documentElement.clientWidth) {
+		out[1] = Math.min(outerRect.right,document.documentElement.clientWidth) - innerRect.left
+	} 
+	return out;
 }
 
 //buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage');
