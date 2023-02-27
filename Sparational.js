@@ -5,7 +5,7 @@
 //Last updated: 2/26/2023
 //Version history:
 //v3.7: Add radio element type.
-//v3.8: Add locateElements.
+//v3.8: Add locateElement.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -128,7 +128,7 @@ function identifyElements(parentElement) {
 	document.getElementById(parentElement).onmousedown = function(event){console.log("Element "+event.target.id+" at "+event.clientX+"," + event.clientY);}
 }
 
-function locateElements(outerId,innerId) {
+function locateElement(outerId,innerId) {
 //Tells how far an element is off screen. 0 means visible.
 	outerRect = document.getElementById(outerId).getBoundingClientRect();
 	innerRect = document.getElementById(innerId).getBoundingClientRect();
