@@ -128,7 +128,7 @@ function identifyElements(parentElement) {
 	document.getElementById(parentElement).onmousedown = function(event){console.log("Element "+event.target.id+" at "+event.clientX+"," + event.clientY);}
 }
 
-function locateElement(outerId,innerId) {
+function locateElement(innerId,outerId=(document.getElementById(innerId).parentElement.id)) {
 //Tells how far an element is off screen. 0 means visible.
 	outerRect = document.getElementById(outerId).getBoundingClientRect();
 	innerRect = document.getElementById(innerId).getBoundingClientRect();
