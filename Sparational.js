@@ -2,10 +2,11 @@
 //SPArational.js v3.6.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 2/26/2023
+//Last updated: 3/19/2023
 //Version history:
 //v3.7: Add radio element type.
 //v3.8: Add locateElement.
+//v3.8.1: Swap parameters for locateElement, and add the inner's parent's ID as the default for the outer.
 
 //Element tools
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
