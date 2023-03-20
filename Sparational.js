@@ -1,5 +1,5 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.6.2 - Make faster websites faster.
+//SPArational.js v3.8.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 3/19/2023
