@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.11 - Make faster websites faster.
+//SPArational.js v3.12 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 3/22/2023
 //Version history:
-//3.10: Add 3rd party mdIndexOf.
 //3.10.1: Bugfix 3rd party mdIndexOf.
 //3.11: Add addTableRow.
+//3.12: Add scrollTable.
 
 //Element tools
 function getElement($elementId){
@@ -825,6 +825,62 @@ function formatMax(targetColumn,tableid) {
 }
 
 //Table supporting functions
+function scrollTable(tableName,deBugVar="off") {
+	if (deBugVar=="debug") {console.log("scrollChart")};
+	let tableChildren = returnTablePart(tableName,'TBODY').children
+	let numberAbove = 0;
+	let numberBelow = 0;
+
+	for (let n=0; n < tableChildren.length; n++) {
+		let elementLocation = locateElement(tableChildren[n].id)[0] *1
+		if (elementLocation > 0) {
+			numberAbove++
+		} else if (elementLocation == 0) {
+			//In
+		} else if (elementLocation < 0) {
+			numberBelow++
+		} else {
+			console.log("Error - element "+tableChildren[n].id+" location is "+elementLocation)
+		}//end if elementLocation
+	}; //for let n
+
+	for (let n=0; n < tableChildren.length; n++) {
+		let elementLocation = locateElement(tableChildren[n].id)[0] *1
+		if (deBugVar=="debug") {console.log("elementLocation: "+elementLocation+" numberAbove: "+numberAbove+" numberBelow: "+numberBelow)};
+		
+		if (numberAbove > 2) {
+			//Delete any more than 2 above the window
+			let rowToChange = tableChildren[0];
+			deleteElement(rowToChange.id);//Delete top row
+			numberAbove--;
+			if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[3].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
+		} else if (numberAbove < 2) {
+			//Load another if only 1 above the window
+			let rowToChange = historyData[mdIndexOf(historyData,tableChildren[0].children[3].innerText)[0]-1]; //line above top
+			addTableRow(tableName,rowToChange)//Add to top
+			numberAbove++
+			if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
+		} else {
+			//This is expected, do nothing.
+		} 
+		if (numberBelow > 2) {
+			let rowToChange = tableChildren[tableChildren.length-1];
+			//Delete any more than 2 below the window
+			deleteElement(rowToChange.id);//Delete bottom row
+			numberBelow--
+			if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[3].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
+		} else if (numberBelow < 2) {
+			//Load another if only 1 below the window
+			let rowToChange = historyData[mdIndexOf(historyData,tableChildren[tableChildren.length-1].children[3].innerText)[0]+1]; //line below bottom
+			addTableRow(tableName,rowToChange,"end") //Add to bottom
+			numberBelow++
+			if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
+		} else {
+			//This is expected, do nothing.
+		} 
+	}; //for let n
+}//end scrollChart
+
 function sortAlphaTable(currentColumn,tableid) {
   var table, rows, switching, currentRow, currentCell, nextCell, shouldSwitch, dir, switchcount = 0;
   table = getElement(tableid);
