@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.8.1 - Make faster websites faster.
+//SPArational.js v3.10 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 3/21/2023
+//Last updated: 3/22/2023
 //Version history:
-//3.8: Add locateElement.
 //3.8.1: Swap parameters for locateElement, and add the inner's parent's ID as the default for the outer.
 //3.9: Add getElement.
+//3.10: Add 3rd party mdIndexOf.
 
 //Element tools
 function getElement($elementId){
@@ -607,6 +607,16 @@ function getNumberFromDiv($numericDiv) {
 	)
 };
 
+function mdIndexOf(array, inputText) {
+//https://stackoverflow.com/questions/16102263/to-find-index-of-multidimensional-array-in-javascript
+//Currently only works on 2d arrays, but could be extended to nd arrays. 
+	for (var i = 0; i < array.length; i++) {
+			var index = arr[i].indexOf(inputText);
+		if (index > -1) {
+			return [i, index];
+		}
+	}
+}
 //Table building tools
 function addTable(parentDivID,newTableID,columnData,divClass) {
 	var newDiv = addElement(parentDivID,"",divClass,"div");
