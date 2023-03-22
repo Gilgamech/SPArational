@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.12 - Make faster websites faster.
+//SPArational.js v3.13 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 3/22/2023
 //Version history:
-//3.10.1: Bugfix 3rd party mdIndexOf.
 //3.11: Add addTableRow.
 //3.12: Add scrollTable.
+//3.13: Add buildScrollingTable.
 
 //Element tools
 function getElement($elementId){
@@ -617,6 +617,7 @@ function mdIndexOf(array, inputText) {
 		}
 	}
 }
+
 //Table building tools
 function addTable(parentDivID,newTableID,columnData,divClass) {
 	var newDiv = addElement(parentDivID,"",divClass,"div");
@@ -826,6 +827,7 @@ function formatMax(targetColumn,tableid) {
 
 //Table supporting functions
 function scrollTable(tableName,deBugVar="off") {
+//getElement(wrapperName).onscroll= function () {scrollTable(tableName)}
 	if (deBugVar=="debug") {console.log("scrollChart")};
 	let tableChildren = returnTablePart(tableName,'TBODY').children
 	let numberAbove = 0;
@@ -880,6 +882,12 @@ function scrollTable(tableName,deBugVar="off") {
 		} 
 	}; //for let n
 }//end scrollChart
+
+function buildScrollingTable(parentElement,tableName,arrayData,offset,style) {
+	wrapperName = getElement(parentElement).parentElement.id;
+	mdArrayToTable(addElement(parentElement,"",style),tableName,arrayData.slice(0,getElement(wrapperName).offsetHeight/offset));
+	getElement(wrapperName).onscroll= function () {scrollTable(tableName)}
+}
 
 function sortAlphaTable(currentColumn,tableid) {
   var table, rows, switching, currentRow, currentCell, nextCell, shouldSwitch, dir, switchcount = 0;
