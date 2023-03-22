@@ -4,9 +4,9 @@
 //Created on: 8/3/2022
 //Last updated: 3/22/2023
 //Version history:
-//3.11: Add addTableRow.
 //3.12: Add scrollTable.
 //3.13: Add buildScrollingTable.
+//3.13.1: Bugfix for buildScrollingTable.
 
 //Element tools
 function getElement($elementId){
@@ -884,6 +884,9 @@ function scrollTable(tableName,deBugVar="off") {
 }//end scrollChart
 
 function buildScrollingTable(parentElement,tableName,arrayData,offset,style) {
+	if (!tableName) {
+		tableName = getBadPW();
+	}; 
 	wrapperName = getElement(parentElement).parentElement.id;
 	mdArrayToTable(addElement(parentElement,"",style),tableName,arrayData.slice(0,getElement(wrapperName).offsetHeight/offset));
 	getElement(wrapperName).onscroll= function () {scrollTable(tableName)}
