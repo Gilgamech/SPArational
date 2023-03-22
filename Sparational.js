@@ -1,13 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.10.1 - Make faster websites faster.
+//SPArational.js v3.11 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 3/22/2023
 //Version history:
-//3.8.1: Swap parameters for locateElement, and add the inner's parent's ID as the default for the outer.
-//3.9: Add getElement.
 //3.10: Add 3rd party mdIndexOf.
 //3.10.1: Bugfix 3rd party mdIndexOf.
+//3.11: Add addTableRow.
 
 //Element tools
 function getElement($elementId){
@@ -650,7 +649,19 @@ function addColumn(tableid,columnData,headLess) {
 	}
 }
 
-//need pagination
+function addTableRow(parentTableId,dataArray,beforeRow=0) {
+	const newNode = document.createElement("tr");
+	newNode.id = getBadPW();
+	const list = returnTablePart(parentTableId,'TBODY');
+	if (beforeRow == "end") {
+		beforeRow = list.children.length;
+	}
+	list.insertBefore(newNode, list.children[beforeRow]);
+	for (let n=0; n < dataArray.length; n++) {
+		addElement(newNode.id,dataArray[n],"","td")
+	}
+}
+
 function mdArrayToTable(parentDivID,newTableID,array) {
 	//Inputs a multidimensional array (e.g. [["a","b"],[1,2],[3,4]]) and outputs a table.
 	if (!newTableID) {
