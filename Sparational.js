@@ -2,13 +2,17 @@
 //SPArational.js v3.8.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 3/19/2023
+//Last updated: 3/21/2023
 //Version history:
-//v3.7: Add radio element type.
-//v3.8: Add locateElement.
-//v3.8.1: Swap parameters for locateElement, and add the inner's parent's ID as the default for the outer.
+//3.8: Add locateElement.
+//3.8.1: Swap parameters for locateElement, and add the inner's parent's ID as the default for the outer.
+//3.9: Add getElement.
 
 //Element tools
+function getElement($elementId){
+	return document.getElementById($elementId)
+}
+
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
 	let radioButton = false;
 	if (!$elementParent) {
@@ -37,7 +41,7 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	} else if ($elementParent == "head") {
 		document.head.appendChild(newElement);
 	} else {
-		document.getElementById($elementParent).appendChild(newElement);
+		getElement($elementParent).appendChild(newElement);
 	}; // end if divParent
 	if ($elementType == "input" && innerText) {
 		newElement.value = innerText
@@ -60,46 +64,46 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 		newElement.type= "text/css";
 	}; // end if elementType	
 	if ($onChange) {
-		document.getElementById($elementId).setAttribute("onchange", $onChange);
+		getElement($elementId).setAttribute("onchange", $onChange);
 	}; // end if onChange	
 	if ($onClick) {
-		document.getElementById($elementId).setAttribute("onclick", $onClick);
+		getElement($elementId).setAttribute("onclick", $onClick);
 	}; // end if onClick	
 	if ($contentEditable) {
-		document.getElementById($elementId).contentEditable = true;
+		getElement($elementId).contentEditable = true;
 	}; // end if contentEditable	
 	if ($attributeType && $attributeAction) {
-		document.getElementById($elementId).setAttribute($attributeType, $attributeAction);
+		getElement($elementId).setAttribute($attributeType, $attributeAction);
 	}; // end if attributeType
 	if (radioButton == true) {
-		document.getElementById($elementId).setAttribute("type", "radio");
+		getElement($elementId).setAttribute("type", "radio");
 		addElement($elementParent,innerText,"","label","","","","","","for",$elementId)
 	}
 	return $elementId
 }; // end addElement	
 
 function writeElement($elementId,data) {
-	var $elementType = document.getElementById($elementId).type;
+	var $elementType = getElement($elementId).type;
 	if (($elementType == "text") || ($elementType == "textarea") || ($elementType == "number") || ($elementType == "select-one")) {
-		document.getElementById($elementId).value = data;
-	} else if (document.getElementById($elementId).tagName  == 'IMG') {
-			document.getElementById($elementId).src = data;
+		getElement($elementId).value = data;
+	} else if (getElement($elementId).tagName  == 'IMG') {
+			getElement($elementId).src = data;
 	} else {
-		document.getElementById($elementId).innerText = data;
+		getElement($elementId).innerText = data;
 	}; // end if elementType
 }; // end writeElement
 
 function readElement($elementId) {
-	var $elementType = document.getElementById($elementId).type;
+	var $elementType = getElement($elementId).type;
 	if (($elementType == "text") || ($elementType == "textarea") || ($elementType == "select-one")|| ($elementType == "number")) {
-		return document.getElementById($elementId).value;
+		return getElement($elementId).value;
 	} else {
-		return document.getElementById($elementId).innerText;
+		return getElement($elementId).innerText;
 	}; // end if elementType
 }; // end readElement
 
 function deleteElement($elementId) {
-	var $div = document.getElementById($elementId);
+	var $div = getElement($elementId);
 	if ($div) {
 		$div.parentNode.removeChild($div);
 	}	
@@ -110,50 +114,56 @@ function appendElement($elementId,data) {
 }; // end appendElement
 
 function toggleElement($elementId) {
-	if (document.getElementById($elementId).style.visibility == "visible") {
-		document.getElementById($elementId).style.visibility="hidden";
+	if (getElement($elementId).style.visibility == "visible") {
+		getElement($elementId).style.visibility="hidden";
 	} else { 
-		document.getElementById($elementId).style.visibility="visible";
+		getElement($elementId).style.visibility="visible";
 	} // end if
 }; // end toggleElement
 
 function hideElement($elementId) {
-	document.getElementById($elementId).style.visibility="hidden";
+	getElement($elementId).style.visibility="hidden";
 }; // end toggleElement
 
 function showElement($elementId) {
-	document.getElementById($elementId).style.visibility="visible";
+	getElement($elementId).style.visibility="visible";
 }; // end toggleElement
 
 function identifyElements(parentElement) {
-	document.getElementById(parentElement).onmousedown = function(event){console.log("Element "+event.target.id+" at "+event.clientX+"," + event.clientY);}
+	getElement(parentElement).onmousedown = function(event){console.log("Element "+event.target.id+" at "+event.clientX+"," + event.clientY);}
 }
 
-function locateElement(innerId,outerId=(document.getElementById(innerId).parentElement.id)) {
+function locateElement(innerId,outerId=(getElement(innerId).parentElement.id)) {
 //Tells how far an element is off screen. 0 means visible.
-	outerRect = document.getElementById(outerId).getBoundingClientRect();
-	innerRect = document.getElementById(innerId).getBoundingClientRect();
+	outerRect = getElement(outerId).getBoundingClientRect();
+	innerRect = getElement(innerId).getBoundingClientRect();
 	let out = [0,0]
 	//Graphics rows increment from top downward, so more is lower.
 	if (innerRect.bottom < outerRect.top || innerRect.bottom < 0 ) {
 		out[0] = Math.max(outerRect.top,0) - innerRect.bottom
-	} 
+	}//above
+
+	if (outerRect.bottom < innerRect.top || document.documentElement.clientHeight < innerRect.top ) {
+		out[0] = Math.max(innerRect.top,0) - outerRect.bottom
+	}//below
+	
+	
 	if (innerRect.top > outerRect.bottom || innerRect.top > document.documentElement.clientHeight) {
 		out[0] = Math.min(outerRect.bottom,document.documentElement.clientHeight) - innerRect.top
 	} 
 	//Graphics columns increment from left rightward, so more is righter.
 	if (outerRect.left  > innerRect.right|| 0 >  innerRect.right) {
 		out[1] = Math.max(outerRect.left,0) - innerRect.right
-	} 
+	}//left
 	if (innerRect.left > outerRect.right || innerRect.left > document.documentElement.clientWidth) {
 		out[1] = Math.min(outerRect.right,document.documentElement.clientWidth) - innerRect.left
-	} 
+	}//right
 	return out;
 }
 
 //buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage');
 function rebuildElement(elementId) {
-	var oldElement = document.getElementById(elementId);
+	var oldElement = getElement(elementId);
 	var newElement = [];
 	newElement[0] = {};
 	newElement[0].id = elementId
@@ -322,9 +332,9 @@ function convertJupyterToSpa2($inputString) {
 function colorifyWords(divid, replaceWord, replaceClass) {
 	var replaceRegex = new RegExp(replaceWord, "g");
 	replaceWord = replaceWord.replace("\\","")
-	var str = document.getElementById(divid).innerHTML;
+	var str = getElement(divid).innerHTML;
 	str = str.replace(replaceRegex, '<span class="' + replaceClass + '">' + replaceWord + '</span>');
-	document.getElementById(divid).innerHTML = str;
+	getElement(divid).innerHTML = str;
 }; // end colorifyWords
 
 function colorifyMultipleWords (divList,wordList,replaceClass){
@@ -338,17 +348,17 @@ function colorifyMultipleWords (divList,wordList,replaceClass){
 function addPopupToWord(divid, replaceWord, popupText,outputClasses) {
 	var replaceRegex = new RegExp(replaceWord, "g");
 	replaceWord = replaceWord.replace(/\\/g,"")
-	var str = document.getElementById(divid).innerHTML;
+	var str = getElement(divid).innerHTML;
 	str = str.replace(replaceRegex, '<span class="popup '+outputClasses+'">' + replaceWord + '<span>' + popupText + '</span></span>');
-	document.getElementById(divid).innerHTML = str;
+	getElement(divid).innerHTML = str;
 }; // end addPopupToWord
 
 function addLinkToWord(divid, replaceWord, URI) {
 	var replaceRegex = new RegExp(replaceWord, "g");
 	replaceWord = replaceWord.replaceAll("\\","")
-	var str = document.getElementById(divid).innerHTML;
+	var str = getElement(divid).innerHTML;
 	str = str.replace(replaceRegex, '<a href="'+URI+'">' + replaceWord + '</a>');
-	document.getElementById(divid).innerHTML = str;
+	getElement(divid).innerHTML = str;
 }; // end addLinkToWord
 
 //Supporting functions
@@ -649,7 +659,7 @@ function mdArrayToTable(parentDivID,newTableID,array) {
 }
 
 function deleteColumn(tableid){
-	var allRows = document.getElementById(tableid).rows;
+	var allRows = getElement(tableid).rows;
 	for (var i=0; i<allRows.length; i++) {
 		if (allRows[i].cells.length > 1) {
 			allRows[i].deleteCell(-1);
@@ -768,7 +778,7 @@ function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,out
 }
 
 function formatMax(targetColumn,tableid) {
-	var tb = document.getElementById(tableid)
+	var tb = getElement(tableid)
 	var subtotal = returnAllValues(targetColumn,tableid);
 	var maxValue = getMaxOfArray(subtotal); 
 	var minValue = getMinOfArray(subtotal); 
@@ -795,7 +805,7 @@ function formatMax(targetColumn,tableid) {
 //Table supporting functions
 function sortAlphaTable(currentColumn,tableid) {
   var table, rows, switching, currentRow, currentCell, nextCell, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById(tableid);
+  table = getElement(tableid);
   switching = true;
   // Set the sorting direction to ascending:
   dir = "asc";
@@ -845,7 +855,7 @@ function sortAlphaTable(currentColumn,tableid) {
 
 function sortNumTable(currentColumn,tableid) {
   var table, rows, switching, currentRow, currentCell, nextCell, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById(tableid);
+  table = getElement(tableid);
   switching = true;
   // Set the sorting direction to ascending:
   dir = "asc";
@@ -972,7 +982,7 @@ function fasterArrayMin(arr) {
 }
 
 function addRowHandlers(col,tableid) {
- var table = document.getElementById(tableid);
+ var table = getElement(tableid);
  var rows = table.getElementsByTagName("tr");
     
  for (i = 0; i < rows.length; i++) {
@@ -982,7 +992,7 @@ function addRowHandlers(col,tableid) {
 }
 
 function returnTablePart(tableid,tablePart) {
-	var table = document.getElementById(tableid);
+	var table = getElement(tableid);
 	var tableData;
 	for (var i = 0; i < table.children.length; i++) {
 		if (table.children[i].tagName === tablePart) {
