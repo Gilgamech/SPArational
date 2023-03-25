@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.13 - Make faster websites faster.
+//SPArational.js v3.13.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 3/22/2023
+//Last updated: 3/24/2023
 //Version history:
-//3.12: Add scrollTable.
 //3.13: Add buildScrollingTable.
 //3.13.1: Bugfix for buildScrollingTable.
+//3.13.2: Bugfix for scrollTable.
 
 //Element tools
 function getElement($elementId){
@@ -826,7 +826,7 @@ function formatMax(targetColumn,tableid) {
 }
 
 //Table supporting functions
-function scrollTable(tableName,deBugVar="off") {
+function scrollTable(tableName,historyData,deBugVar="off") {
 //getElement(wrapperName).onscroll= function () {scrollTable(tableName)}
 	if (deBugVar=="debug") {console.log("scrollChart")};
 	let tableChildren = returnTablePart(tableName,'TBODY').children
