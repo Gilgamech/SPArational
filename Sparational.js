@@ -1,5 +1,5 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.10.1 - Make faster websites faster.
+//SPArational.js v3.14 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 3/22/2023
@@ -7,6 +7,7 @@
 //3.13.3: Bugfix for bugfix for scrollTable.
 //3.13.4: Bugfix for bugfix for bugfix for scrollTable.
 //3.10.1: Revert scrollTable to a sitelet.
+//3.14: Add colgroup classes and styles to mdArrayToTable.
 
 //Element tools
 function getElement($elementId){

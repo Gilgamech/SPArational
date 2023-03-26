@@ -40,10 +40,11 @@ function scrollTable(tableName,array,indexColumn,allowAbove = 2,allowBelow = 2,d
             console.log("Error - element "+tableChildren[n].id+" location is "+elementLocation)
         }//end if elementLocation
     }; //for let n
+	if (deBugVar=="debug") {console.log("numberAbove: "+numberAbove+" numberBelow: "+numberBelow)};
 	
     for (let n=0; n < tableChildren.length; n++) {
         let elementLocation = locateElement(tableChildren[n].id)[0] *1
-        if (deBugVar=="debug") {console.log("elementLocation: "+elementLocation+" numberAbove: "+numberAbove+" numberBelow: "+numberBelow)};
+        if (deBugVar=="debug") {console.log("elementLocation: "+elementLocation)};
         
         if (numberAbove > allowAbove) {
             //Delete any more than 2 above the window
@@ -58,7 +59,10 @@ function scrollTable(tableName,array,indexColumn,allowAbove = 2,allowBelow = 2,d
 				addTableRow(tableName,rowToChange)//Add to top
 				numberAbove++
 				if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-			}
+			} else {
+				if (deBugVar=="debug") {console.log("Reached top row.")};
+				
+			} 
         } else {
             //This is expected, do nothing.
         } 
