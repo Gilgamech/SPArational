@@ -7,6 +7,7 @@
 //0.13: Rename array variables to array.
 //0.13.1: Parameterize allowAbove and allowBelow.
 //0.13.2: Convert if above/below different checks from if to while.
+//0.13.3: Bugfix to top row check.
 
 function addTableRow(parentTableId,array,beforeRow=0) {
     const newNode = document.createElement("tr");
@@ -54,7 +55,7 @@ function scrollTable(tableName,array,indexColumn,allowAbove = 2,allowBelow = 2,d
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
         } while (numberAbove > allowAbove)
 
-		if (historyData[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
+		if (array[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
 		//Load one only if the column data doesn't match the header data aka don't load the top row.
 			do {
 			//Load another if only 1 above the window
