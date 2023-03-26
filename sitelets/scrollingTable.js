@@ -5,6 +5,7 @@
 //Last updated: 3/26/2023
 //Version history:
 //0.10.1: Revert scrollTable to a sitelet.
+//0.11: Rename historyData parameter of scrollTable function to arrayVar.
 
 function addTableRow(parentTableId,dataArray,beforeRow=0) {
     const newNode = document.createElement("tr");
@@ -19,7 +20,7 @@ function addTableRow(parentTableId,dataArray,beforeRow=0) {
     }
 }
 
-function scrollTable(tableName,historyData,deBugVar="off") {
+function scrollTable(tableName,arrayVar,deBugVar="off") {
 //getElement(wrapperName).onscroll= function () {scrollTable(tableName)}
     if (deBugVar=="debug") {console.log("scrollChart")};
     let tableChildren = returnTablePart(tableName,'TBODY').children
@@ -51,10 +52,10 @@ function scrollTable(tableName,historyData,deBugVar="off") {
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[3].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
         } else if (numberAbove < 2) {
             //Load another if only 1 above the window
-            let rowToChange = historyData[mdIndexOf(historyData,tableChildren[0].children[3].innerText)[0]-1]; //line above top
             addTableRow(tableName,rowToChange)//Add to top
             numberAbove++
             if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
+			let rowToChange = arrayVar[mdIndexOf(arrayVar,tableChildren[0].children[indexColumn].innerText)[0]-1]; //line above top
         } else {
             //This is expected, do nothing.
         } 
@@ -66,7 +67,7 @@ function scrollTable(tableName,historyData,deBugVar="off") {
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[3].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
         } else if (numberBelow < 2) {
             //Load another if only 1 below the window
-            let rowToChange = historyData[mdIndexOf(historyData,tableChildren[tableChildren.length-1].children[3].innerText)[0]+1]; //line below bottom
+            let rowToChange = arrayVar[mdIndexOf(arrayVar,tableChildren[tableChildren.length-1].children[indexColumn].innerText)[0]+1]; //line below bottom
             addTableRow(tableName,rowToChange,"end") //Add to bottom
             numberBelow++
             if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
