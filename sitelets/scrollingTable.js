@@ -4,11 +4,11 @@
 //Created on: 3/26/2022
 //Last updated: 3/26/2023
 //Version history:
-//0.11: Rename historyData parameter of scrollTable function to arrayVar.
 //0.12: Parameterize indexColumn.
 //0.12.1: Bugfix to prevent scrolling above top row.
+//0.13: Rename array variables to array.
 
-function addTableRow(parentTableId,dataArray,beforeRow=0) {
+function addTableRow(parentTableId,array,beforeRow=0) {
     const newNode = document.createElement("tr");
     newNode.id = getBadPW();
     const list = returnTablePart(parentTableId,'TBODY');
@@ -16,12 +16,12 @@ function addTableRow(parentTableId,dataArray,beforeRow=0) {
         beforeRow = list.children.length;
     }
     list.insertBefore(newNode, list.children[beforeRow]);
-    for (let n=0; n < dataArray.length; n++) {
-        addElement(newNode.id,dataArray[n],"","td")
+    for (let n=0; n < array.length; n++) {
+        addElement(newNode.id,array[n],"","td")
     }
 }
 
-function scrollTable(tableName,arrayVar,indexColumn,deBugVar="off") {
+function scrollTable(tableName,array,indexColumn,deBugVar="off") {
 //getElement(wrapperName).onscroll= function () {scrollTable(tableName)}
     if (deBugVar=="debug") {console.log("scrollChart")};
     let tableChildren = returnTablePart(tableName,'TBODY').children
@@ -52,9 +52,9 @@ function scrollTable(tableName,arrayVar,indexColumn,deBugVar="off") {
             numberAbove--;
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
         } else if (numberAbove < 2) { //Load another if only 1 above the window
-			if (historyData[mdIndexOf(arrayVar,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
+			if (historyData[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
 			//Load one only if the column data doesn't match the header data aka don't load the top row.
-				let rowToChange = arrayVar[mdIndexOf(arrayVar,tableChildren[0].children[indexColumn].innerText)[0]-1]; //line above top
+				let rowToChange = array[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1]; //line above top
 				addTableRow(tableName,rowToChange)//Add to top
 				numberAbove++
 				if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
@@ -70,7 +70,7 @@ function scrollTable(tableName,arrayVar,indexColumn,deBugVar="off") {
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
         } else if (numberBelow < 2) {
             //Load another if only 1 below the window
-            let rowToChange = arrayVar[mdIndexOf(arrayVar,tableChildren[tableChildren.length-1].children[indexColumn].innerText)[0]+1]; //line below bottom
+            let rowToChange = array[mdIndexOf(array,tableChildren[tableChildren.length-1].children[indexColumn].innerText)[0]+1]; //line below bottom
             addTableRow(tableName,rowToChange,"end") //Add to bottom
             numberBelow++
             if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
