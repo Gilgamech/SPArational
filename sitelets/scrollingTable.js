@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//scrollingTable.js v0.12.1
+//scrollingTable.js v0.13.1
 //Author: Stephen Gillie
 //Created on: 3/26/2022
 //Last updated: 3/26/2023
 //Version history:
-//0.12: Parameterize indexColumn.
 //0.12.1: Bugfix to prevent scrolling above top row.
 //0.13: Rename array variables to array.
+//0.13.1: Parameterize allowAbove and allowBelow.
 
 function addTableRow(parentTableId,array,beforeRow=0) {
     const newNode = document.createElement("tr");
@@ -21,7 +21,7 @@ function addTableRow(parentTableId,array,beforeRow=0) {
     }
 }
 
-function scrollTable(tableName,array,indexColumn,deBugVar="off") {
+function scrollTable(tableName,array,indexColumn,allowAbove = 2,allowBelow = 2,deBugVar="off") {
 //getElement(wrapperName).onscroll= function () {scrollTable(tableName)}
     if (deBugVar=="debug") {console.log("scrollChart")};
     let tableChildren = returnTablePart(tableName,'TBODY').children
@@ -45,13 +45,13 @@ function scrollTable(tableName,array,indexColumn,deBugVar="off") {
         let elementLocation = locateElement(tableChildren[n].id)[0] *1
         if (deBugVar=="debug") {console.log("elementLocation: "+elementLocation+" numberAbove: "+numberAbove+" numberBelow: "+numberBelow)};
         
-        if (numberAbove > 2) {
+        if (numberAbove > allowAbove) {
             //Delete any more than 2 above the window
             let rowToChange = tableChildren[0];
             deleteElement(rowToChange.id);//Delete top row
             numberAbove--;
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-        } else if (numberAbove < 2) { //Load another if only 1 above the window
+        } else if (numberAbove < allowAbove) { //Load another if only 1 above the window
 			if (historyData[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
 			//Load one only if the column data doesn't match the header data aka don't load the top row.
 				let rowToChange = array[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1]; //line above top
@@ -62,13 +62,13 @@ function scrollTable(tableName,array,indexColumn,deBugVar="off") {
         } else {
             //This is expected, do nothing.
         } 
-        if (numberBelow > 2) {
+        if (numberBelow > allowBelow) {
             let rowToChange = tableChildren[tableChildren.length-1];
             //Delete any more than 2 below the window
             deleteElement(rowToChange.id);//Delete bottom row
             numberBelow--
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-        } else if (numberBelow < 2) {
+        } else if (numberBelow < allowBelow) {
             //Load another if only 1 below the window
             let rowToChange = array[mdIndexOf(array,tableChildren[tableChildren.length-1].children[indexColumn].innerText)[0]+1]; //line below bottom
             addTableRow(tableName,rowToChange,"end") //Add to bottom
@@ -86,5 +86,5 @@ function buildScrollingTable(parentElement,tableName,arrayData,offset,style) {
     }; 
     wrapperName = getElement(parentElement).parentElement.id;
     mdArrayToTable(addElement(parentElement,"",style),tableName,arrayData.slice(0,getElement(wrapperName).offsetHeight/offset));
-    getElement(wrapperName).onscroll= function () {scrollTable(tableName,arrayData,3,"debug")}
+    getElement(wrapperName).onscroll= function () {scrollTable(tableName,array,3,4,2,"debug")}
 }
