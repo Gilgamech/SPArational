@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//scrollingTable.js v0.12
+//scrollingTable.js v0.12.1
 //Author: Stephen Gillie
 //Created on: 3/26/2022
 //Last updated: 3/26/2023
 //Version history:
-//0.10.1: Revert scrollTable to a sitelet.
 //0.11: Rename historyData parameter of scrollTable function to arrayVar.
 //0.12: Parameterize indexColumn.
+//0.12.1: Bugfix to prevent scrolling above top row.
 
 function addTableRow(parentTableId,dataArray,beforeRow=0) {
     const newNode = document.createElement("tr");
@@ -51,12 +51,14 @@ function scrollTable(tableName,arrayVar,indexColumn,deBugVar="off") {
             deleteElement(rowToChange.id);//Delete top row
             numberAbove--;
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-        } else if (numberAbove < 2) {
-            //Load another if only 1 above the window
-            addTableRow(tableName,rowToChange)//Add to top
-            numberAbove++
-            if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-			let rowToChange = arrayVar[mdIndexOf(arrayVar,tableChildren[0].children[indexColumn].innerText)[0]-1]; //line above top
+        } else if (numberAbove < 2) { //Load another if only 1 above the window
+			if (historyData[mdIndexOf(arrayVar,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
+			//Load one only if the column data doesn't match the header data aka don't load the top row.
+				let rowToChange = arrayVar[mdIndexOf(arrayVar,tableChildren[0].children[indexColumn].innerText)[0]-1]; //line above top
+				addTableRow(tableName,rowToChange)//Add to top
+				numberAbove++
+				if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
+			}
         } else {
             //This is expected, do nothing.
         } 
