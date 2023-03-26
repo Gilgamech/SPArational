@@ -80,11 +80,13 @@ function scrollTable(tableName,array,indexColumn,allowAbove = 2,allowBelow = 2,d
     }; //for let n
 }//end scrollChart
 
-function buildScrollingTable(parentElement,tableName,arrayData,offset,style) {
+function buildScrollingTable(parentElement,tableName,array,offset,style,classList,styleList) {
     if (!tableName) {
         tableName = getBadPW();
     }; 
     wrapperName = getElement(parentElement).parentElement.id;
-    mdArrayToTable(addElement(parentElement,"",style),tableName,arrayData.slice(0,getElement(wrapperName).offsetHeight/offset));
+    mdArrayToTable(addElement(parentElement,"",style),tableName,array.slice(0,getElement(wrapperName).offsetHeight/offset),classList,styleList);
     getElement(wrapperName).onscroll= function () {scrollTable(tableName,array,3,4,2,"debug")}
+	getElement(tableName).style = "width: 100%;"
 }
+
