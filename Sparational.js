@@ -622,6 +622,7 @@ function mdIndexOf(array, inputText) {
 function addTable(parentDivID,newTableID,columnData,divClass) {
 	var newDiv = addElement(parentDivID,"",divClass,"div");
 	var newTable = addElement(newDiv,"","","table","","","","","","","",newTableID)
+	var newColGroup = addElement(newTable,"","","colgroup");
 	var newThead = addElement(newTable,"","","thead");
 	var newTbody = addElement(newTable,"","","tbody");
 	var newTR = addElement(newThead,"","","tr");
@@ -650,7 +651,7 @@ function addColumn(tableid,columnData,headLess) {
 	}
 }
 
-function mdArrayToTable(parentDivID,newTableID,array) {
+function mdArrayToTable(parentElement,newTableID,array,classList,styleList) {
 	//Inputs a multidimensional array (e.g. [["a","b"],[1,2],[3,4]]) and outputs a table.
 	if (!newTableID) {
 		newTableID = getBadPW();
@@ -665,6 +666,7 @@ function mdArrayToTable(parentDivID,newTableID,array) {
 		} else {
 			addColumn(newTableID,out)
 		}
+		addElement(returnTablePart('historyTable','COLGROUP').id,"",classList[column],"col",styleList[column])
 	};
 }
 
