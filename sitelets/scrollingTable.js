@@ -4,9 +4,9 @@
 //Created on: 3/26/2022
 //Last updated: 3/26/2023
 //Version history:
-//0.12.1: Bugfix to prevent scrolling above top row.
 //0.13: Rename array variables to array.
 //0.13.1: Parameterize allowAbove and allowBelow.
+//0.13.2: Convert if above/below different checks from if to while.
 
 function addTableRow(parentTableId,array,beforeRow=0) {
     const newNode = document.createElement("tr");
@@ -46,45 +46,47 @@ function scrollTable(tableName,array,indexColumn,allowAbove = 2,allowBelow = 2,d
         let elementLocation = locateElement(tableChildren[n].id)[0] *1
         if (deBugVar=="debug") {console.log("elementLocation: "+elementLocation)};
         
-        if (numberAbove > allowAbove) {
+        do {
             //Delete any more than 2 above the window
             let rowToChange = tableChildren[0];
             deleteElement(rowToChange.id);//Delete top row
             numberAbove--;
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-        } else if (numberAbove < allowAbove) { //Load another if only 1 above the window
-			if (historyData[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
-			//Load one only if the column data doesn't match the header data aka don't load the top row.
+        } while (numberAbove > allowAbove)
+
+		if (historyData[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1][indexColumn] != returnTablePart('historyTable','THEAD').children[0].children[indexColumn].innerText) {
+		//Load one only if the column data doesn't match the header data aka don't load the top row.
+			do {
+			//Load another if only 1 above the window
 				let rowToChange = array[mdIndexOf(array,tableChildren[0].children[indexColumn].innerText)[0]-1]; //line above top
 				addTableRow(tableName,rowToChange)//Add to top
 				numberAbove++
 				if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-			} else {
-				if (deBugVar=="debug") {console.log("Reached top row.")};
-				
-			} 
-        } else {
-            //This is expected, do nothing.
-        } 
-        if (numberBelow > allowBelow) {
+			} while (numberAbove < allowAbove)
+		} else {
+			if (deBugVar=="debug") {console.log("Reached top row.")};
+		} 
+
+        do {
             let rowToChange = tableChildren[tableChildren.length-1];
             //Delete any more than 2 below the window
             deleteElement(rowToChange.id);//Delete bottom row
             numberBelow--
             if (deBugVar=="debug") {console.log("Removing "+rowToChange.children[indexColumn].innerText+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-        } else if (numberBelow < allowBelow) {
+        } while (numberBelow > allowBelow)
+
+		do {
             //Load another if only 1 below the window
             let rowToChange = array[mdIndexOf(array,tableChildren[tableChildren.length-1].children[indexColumn].innerText)[0]+1]; //line below bottom
             addTableRow(tableName,rowToChange,"end") //Add to bottom
             numberBelow++
             if (deBugVar=="debug") {console.log("Adding "+rowToChange+" - New numberAbove: "+numberAbove+" New numberBelow: "+numberBelow)};
-        } else {
-            //This is expected, do nothing.
-        } 
+        } while (numberBelow < allowBelow)
+		
     }; //for let n
 }//end scrollChart
 
-function buildScrollingTable(parentElement,tableName,array,offset,style,classList,styleList) {
+function buildScrollingTable(parentElement,tableName,array,offset,style,classList="",styleList="") {
     if (!tableName) {
         tableName = getBadPW();
     }; 
