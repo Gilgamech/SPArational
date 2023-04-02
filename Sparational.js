@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.14.1 - Make faster websites faster.
+//SPArational.js v3.14.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 3/22/2023
+//Last updated: 4/2/2023
 //Version history:
-//3.10.1: Revert scrollTable to a sitelet.
 //3.14: Add colgroup classes and styles to mdArrayToTable.
 //3.14.1: Complete renaming variable parentDivID to parentElement.
+//3.14.2: Bugfix to colgroups in mdArrayToTable.
 
 //Element tools
 function getElement($elementId){
@@ -666,7 +666,9 @@ function mdArrayToTable(parentElement,newTableID,array,classList,styleList) {
 		} else {
 			addColumn(newTableID,out)
 		}
-		addElement(returnTablePart('historyTable','COLGROUP').id,"",classList[column],"col",styleList[column])
+		if (classList != "") {
+			addElement(returnTablePart('historyTable','COLGROUP').id,"",classList[column],"col",styleList[column])
+		}
 	};
 }
 
