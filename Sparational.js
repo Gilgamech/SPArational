@@ -666,7 +666,7 @@ function mdArrayToTable(parentElement,newTableID,array,classList,styleList) {
 		} else {
 			addColumn(newTableID,out)
 		}
-		if (classList != "") {
+		if (classList != null) {
 			addElement(returnTablePart('historyTable','COLGROUP').id,"",classList[column],"col",styleList[column])
 		}
 	};
