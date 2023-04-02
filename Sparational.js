@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.14.2 - Make faster websites faster.
+//SPArational.js v3.15 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 4/2/2023
 //Version history:
-//3.14: Add colgroup classes and styles to mdArrayToTable.
 //3.14.1: Complete renaming variable parentDivID to parentElement.
 //3.14.2: Bugfix to colgroups in mdArrayToTable.
+//3.15: Add addList and addBlogPost.
 
 //Element tools
 function getElement($elementId){
@@ -337,7 +337,7 @@ function colorifyWords(divid, replaceWord, replaceClass) {
 	getElement(divid).innerHTML = str;
 }; // end colorifyWords
 
-function colorifyMultipleWords (divList,wordList,replaceClass){
+function colorifyMultipleWords(divList,wordList,replaceClass){
 	for (var wordName = 0;wordName<wordList.length;wordName++){
 		for (var divName = 0;divName<divList.length;divName++){
 			colorifyWords(divList[divName],wordList[wordName],replaceClass);
@@ -360,6 +360,21 @@ function addLinkToWord(divid, replaceWord, URI) {
 	str = str.replace(replaceRegex, '<a href="'+URI+'">' + replaceWord + '</a>');
 	getElement(divid).innerHTML = str;
 }; // end addLinkToWord
+
+function addList(parentElement,inputArray) {
+	for (var i = 0; i < inputArray.length; i++) {
+		addElement(parentElement,inputArray[i][0],"",inputArray[i][1],"",inputArray[i][3],"","","","","",inputArray[i][2]);
+//addElement("elementParent","inputArray[0]","","inputArray[1]","","","inputArray[3]","","","","","2")
+	}
+}
+
+function addBlogPost(parentElement,dateText,dateLink,inputArray) {
+	let innerElement = addElement(parentElement,"","textBubbleBG")
+	addList(innerElement,inputArray);
+	addLinkToWord(parentElement,dateText,dateLink)
+	addElement(parentElement,"","","br")
+	addElement(parentElement,"","","br")
+}
 
 //Supporting functions
 var spaRationalCachingVar = [];
