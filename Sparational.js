@@ -1,18 +1,19 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.15 - Make faster websites faster.
+//SPArational.js v3.15.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 4/2/2023
+//Last updated: 4/17/2023
 //Version history:
-//3.14.1: Complete renaming variable parentDivID to parentElement.
 //3.14.2: Bugfix to colgroups in mdArrayToTable.
 //3.15: Add addList and addBlogPost.
+//3.15.1: Bugfix for addBlogPost to fix links.
 
 //Element tools
 function getElement($elementId){
 	return document.getElementById($elementId)
 }
 
+//addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
 	let radioButton = false;
 	if (!$elementParent) {
@@ -369,7 +370,8 @@ function addList(parentElement,inputArray) {
 }
 
 function addBlogPost(parentElement,dateText,dateLink,inputArray) {
-	let innerElement = addElement(parentElement,"","textBubbleBG")
+	let innerElement = dateLink.replace("#","")
+	addElement(parentElement,"","textBubbleBG","","","","","","","","",innerElement)
 	addList(innerElement,inputArray);
 	addLinkToWord(parentElement,dateText,dateLink)
 	addElement(parentElement,"","","br")
