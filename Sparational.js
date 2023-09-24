@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.15.1 - Make faster websites faster.
+//SPArational.js v3.17 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 4/17/2023
+//Last updated: 9/24/2023
 //Version history:
-//3.14.2: Bugfix to colgroups in mdArrayToTable.
-//3.15: Add addList and addBlogPost.
 //3.15.1: Bugfix for addBlogPost to fix links.
+//3.16: Add titles to addList.
+//3.17: Add addInputField.
 
 //Element tools
 function getElement($elementId){
@@ -362,19 +362,28 @@ function addLinkToWord(divid, replaceWord, URI) {
 	getElement(divid).innerHTML = str;
 }; // end addLinkToWord
 
-function addList(parentElement,inputArray) {
+//[["innerText","elementType","elementId","Url"]]
+function addList(parentElement,inputArray,titleText,titleClass) {
+	addElement(parentElement,titleText,titleClass)
 	for (var i = 0; i < inputArray.length; i++) {
 		addElement(parentElement,inputArray[i][0],"",inputArray[i][1],"",inputArray[i][3],"","","","","",inputArray[i][2]);
-//addElement("elementParent","inputArray[0]","","inputArray[1]","","","inputArray[3]","","","","","2")
 	}
 }
 
 function addBlogPost(parentElement,dateText,dateLink,inputArray) {
 	let innerElement = dateLink.replace("#","")
 	addElement(parentElement,"","textBubbleBG","","","","","","","","",innerElement)
-	addList(innerElement,inputArray);
+	addList(innerElement,inputArray,"","textBubbleBG");
 	addLinkToWord(parentElement,dateText,dateLink)
 	addElement(parentElement,"","","br")
+	addElement(parentElement,"","","br")
+}
+
+//Form building tools
+function addInputField(parentElement,preInput,Input,PostInput,onChange,varName){
+	addElement(parentElement,preInput+": ","","span")
+	addElement(parentElement,Input,"","input","","",onChange,"","","value",Input,varName)
+	addElement(parentElement,PostInput,"","span")
 	addElement(parentElement,"","","br")
 }
 
@@ -618,10 +627,8 @@ function getRoundedNumber(number,digits){
 	return Math.round(number*Math.pow(10, digits))/Math.pow(10, digits);
 }
 
-function getNumberFromDiv($numericDiv) {
-	return Math.round(
-		readElement($numericDiv) *1
-	)
+function getNumberFromDiv($numericDiv,digits=0) {
+	getRoundedNumber(readElement($numericDiv),digits)
 };
 
 function mdIndexOf(array, inputText) {
