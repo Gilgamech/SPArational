@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.17 - Make faster websites faster.
+//SPArational.js v3.17.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 9/24/2023
 //Version history:
-//3.15.1: Bugfix for addBlogPost to fix links.
 //3.16: Add titles to addList.
 //3.17: Add addInputField.
+//3.17.1: Bugfix addBlogPost.
 
 //Element tools
 function getElement($elementId){
@@ -373,7 +373,7 @@ function addList(parentElement,inputArray,titleText,titleClass) {
 function addBlogPost(parentElement,dateText,dateLink,inputArray) {
 	let innerElement = dateLink.replace("#","")
 	addElement(parentElement,"","textBubbleBG","","","","","","","","",innerElement)
-	addList(innerElement,inputArray,"","textBubbleBG");
+	addList(innerElement,inputArray,"","");
 	addLinkToWord(parentElement,dateText,dateLink)
 	addElement(parentElement,"","","br")
 	addElement(parentElement,"","","br")
