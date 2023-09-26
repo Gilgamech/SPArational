@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.17.1 - Make faster websites faster.
+//SPArational.js v3.17.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 9/24/2023
+//Last updated: 9/26/2023
 //Version history:
-//3.16: Add titles to addList.
 //3.17: Add addInputField.
 //3.17.1: Bugfix addBlogPost.
+//3.17.2: Add fieldType variable to addInputField.
 
 //Element tools
 function getElement($elementId){
@@ -380,9 +380,10 @@ function addBlogPost(parentElement,dateText,dateLink,inputArray) {
 }
 
 //Form building tools
-function addInputField(parentElement,preInput,Input,PostInput,onChange,varName){
+//addInputField(parentElement,preInput,Input,PostInput,onChange,varName){
+function addInputField(parentElement,preInput,Input,PostInput,onChange,varName,fieldType="input"){
 	addElement(parentElement,preInput+": ","","span")
-	addElement(parentElement,Input,"","input","","",onChange,"","","value",Input,varName)
+	addElement(parentElement,Input,"",fieldType,"","",onChange,"","","value",Input,varName)
 	addElement(parentElement,PostInput,"","span")
 	addElement(parentElement,"","","br")
 }
