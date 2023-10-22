@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.17.2 - Make faster websites faster.
+//SPArational.js v3.18 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 9/26/2023
+//Last updated: 10/22/2023
 //Version history:
-//3.17: Add addInputField.
+//3.18: Add checkAllLinksOnPage.
 //3.17.1: Bugfix addBlogPost.
-//3.17.2: Add fieldType variable to addInputField.
+//3.17: Add addInputField.
 
 //Element tools
 function getElement($elementId){
@@ -642,6 +642,22 @@ function mdIndexOf(array, inputText) {
 		}
 	}
 }
+
+//Monitoring and performance tools
+function checkAllLinksOnPage(outputElement){
+	appendElement(outputElement,"\nReading "+document.links.length+" Document Links\n");
+	for (link of document.links) {
+		let href = link.href
+		webRequest("GET",link.href,function(a){ 
+			let len = a.length;
+			let works = " fails"
+			if (len > 100) {works = " works"}
+			appendElement(outputElement,"link "+href+ works+"\n");
+			colorifyWords(outputElement, "works", "maxValueInArray")
+			colorifyWords(outputElement, "fails", "red9")
+		})
+	}
+};
 
 //Table building tools
 function addTable(parentElement,newTableID,columnData,divClass) {
