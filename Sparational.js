@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.18.1 - Make faster websites faster.
+//SPArational.js v3.19 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 10/30/2023
 //Version history:
+//3.19: Add cwe (Convert Web to Elements).
 //3.18.1: Bugfix to getNumberFromDiv.
 //3.18: Add checkAllLinksOnPage.
-//3.17.1: Bugfix addBlogPost.
 
 
 //Element tools
@@ -183,8 +183,13 @@ function rebuildElement(elementId) {
 }
 
 //Sitelet tools
-function sideloadSitelet(siteletURI) {
-	
+function cwe(parentElement,URL) {
+	var sites;
+	webRequest("get",URL,function(data){
+		sites = rwjs(data);
+		//console.log(data.pages.main.elements)
+		cje2(parentElement,sites.pages.main.elements);
+	},"JSON"); //end webRequest
 }
 
 //Format transformations
