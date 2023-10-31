@@ -8,6 +8,7 @@
 //3.18: Add checkAllLinksOnPage.
 //3.17.1: Bugfix addBlogPost.
 
+
 //Element tools
 function getElement($elementId){
 	return document.getElementById($elementId)
