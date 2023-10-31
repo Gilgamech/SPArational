@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.18 - Make faster websites faster.
+//SPArational.js v3.18.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 10/22/2023
+//Last updated: 10/30/2023
 //Version history:
+//3.18.1: Bugfix to getNumberFromDiv.
 //3.18: Add checkAllLinksOnPage.
 //3.17.1: Bugfix addBlogPost.
-//3.17: Add addInputField.
 
 //Element tools
 function getElement($elementId){
@@ -162,7 +162,6 @@ function locateElement(innerId,outerId=(getElement(innerId).parentElement.id)) {
 	return out;
 }
 
-//buildElementRow('advancedPageDiv',$GilMain,'',getKeys($GilMain),'delPage');
 function rebuildElement(elementId) {
 	var oldElement = getElement(elementId);
 	var newElement = [];
@@ -179,7 +178,6 @@ function rebuildElement(elementId) {
 
 	console.log(JSON.stringify(newElement));
 	deleteElement(elementId)
-	//cje2(oldElement.parentNode,newElement);
 	cje2(newElement[0].elementParent,newElement);
 }
 
@@ -227,7 +225,7 @@ async function rwjs2($JSON) {
 }; // end function
 
 function cje2(parentElement,elements) {
-	//Convert $JSON to Element 2 - full rebuild.
+	//Convert $JSON to Element 2 - full rebuild for v3.0.
 	var eParent = elements[0].elementParent;
 	elements = JSON.stringify(elements);
 	elements = elements.replaceAll(eParent,parentElement);
@@ -628,8 +626,8 @@ function getRoundedNumber(number,digits){
 	return Math.round(number*Math.pow(10, digits))/Math.pow(10, digits);
 }
 
-function getNumberFromDiv($numericDiv,digits=0) {
-	getRoundedNumber(readElement($numericDiv),digits)
+function getNumberFromDiv(numericDiv,digits=0) {
+	return getRoundedNumber(readElement(numericDiv),digits)
 };
 
 function mdIndexOf(array, inputText) {
