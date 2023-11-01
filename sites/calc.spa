@@ -1,0 +1,38 @@
+{
+	"jmlVersion": "30OCT2023",
+	"Author": "Stephen Gillie",
+	"Created":" 8/17/2022",
+	"Updated": "10/30/2023",
+	"Notes": [
+		"2.0 - rewrite as SPA format.",
+		"v1.0 - release"
+	],
+	"pages": {
+		"main": {
+			"elements": [
+				{"elementParent": "parentElement","elementType":"input","attributeType": "onkeypress","attributeAction": "detectEnter(event,function(){writeElement('calcInput',eval(readElement('calcInput')))})","id": "calcInput"},
+				{"elementParent": "parentElement","id": "calcTopRow"},
+				{"elementParent": "calcTopRow","elementType":"button","innerText":"1","onClick":"appendElement('calcInput',1)"},
+				{"elementParent": "calcTopRow","elementType":"button","innerText":"2","onClick":"appendElement('calcInput',2)"},
+				{"elementParent": "calcTopRow","elementType":"button","innerText":"3","onClick":"appendElement('calcInput',3)"},
+				{"elementParent": "calcTopRow","elementType":"button","innerText":"+","onClick":"appendElement('calcInput','+')"},
+				{"elementParent": "parentElement","id": "calcMidRow"},
+				{"elementParent": "calcMidRow","elementType":"button","innerText":"4","onClick":"appendElement('calcInput',4)"},
+				{"elementParent": "calcMidRow","elementType":"button","innerText":"5","onClick":"appendElement('calcInput',5)"},
+				{"elementParent": "calcMidRow","elementType":"button","innerText":"6","onClick":"appendElement('calcInput',6)"},
+				{"elementParent": "calcMidRow","elementType":"button","innerText":"-","onClick":"appendElement('calcInput','-')"},
+				{"elementParent": "parentElement","id": "calcBotRow"},
+				{"elementParent": "calcBotRow","elementType":"button","innerText":"7","onClick":"appendElement('calcInput',7)"},
+				{"elementParent": "calcBotRow","elementType":"button","innerText":"8","onClick":"appendElement('calcInput',8)"},
+				{"elementParent": "calcBotRow","elementType":"button","innerText":"9","onClick":"appendElement('calcInput',9)"},
+				{"elementParent": "calcBotRow","elementType":"button","innerText":"*","onClick":"appendElement('calcInput','*')"},
+				{"elementParent": "parentElement","id": "calcZeroRow"},
+				{"elementParent": "calcZeroRow","elementType":"button","innerText":"0","onClick":"appendElement('calcInput',0)"},
+				{"elementParent": "calcZeroRow","elementType":"button","innerText":".","onClick":"appendElement('calcInput','.')"},
+				{"elementParent": "calcZeroRow","elementType":"button","innerText":"=","onClick":"writeElement('calcInput',eval(readElement('calcInput')))"},
+				{"elementParent": "calcZeroRow","elementType":"button","innerText":"/","onClick":"appendElement('calcInput','/')"}
+			]
+		}
+	}
+}
+
