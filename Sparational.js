@@ -1,14 +1,15 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.21 - Make faster websites faster.
+//SPArational.js v3.21.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 11/11/2023
+//Last updated: 11/12/2023
 //Notes:
 //Sparational development goal: "I don't know HTML and just want this to be easy to use." Most people just want to throw together some YAML files in folders, add a CSS file and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //Version history:
+//3.21.2: Add UL parsing to convertMdToSpa. 
+//3.21.1: Update links to allow a zero-byte URL to allow for an anchor element without an href. 
 //3.21: Add convertMdToSpa. (It's partially working!)
 //3.20: Rewrite cwe as convertWebElement.
-//3.19: Add cwe (Convert Web to Elements).
 
 
 //Element tools
@@ -207,7 +208,7 @@ function convertWebElement(parentElement,URL,rebuildFirst){
 				cje2(parentElement,rwjs(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
 				break;
 		}
-	})
+	},"","",30)
 };
 
 //Format transformations
@@ -276,12 +277,18 @@ function convertJupyterToSpa($inputString) {
 
 function convertMdToSpa(markdown) {
 //Markdown is for compositional data, so has a symbol-space-innerText format for most symbols, and symbol-innerText-symbol for the rest. 
-//No multi-line data formats but following lines with the same indent usually inherit the same formatting.
+//Following lines with the same indent usually inherit the same formatting.
 	let out = ""
+	let listIDs = []
+	let prevTabLevel = 0
+	let prevListItem = ""
+	
 	markdown = (markdown.split("\n")) 
 	for (line of markdown)	 {
 		let elementParent = "parentElement"
 		let href = ""
+		let tabLevel = 0
+		let listIDLength = listIDs.length
 		let symbol = line.split(" ")[0]
 		let innerText = line.replace(symbol+" ","")
 		//console.log("symbol: "+symbol+" innerText: "+innerText)
@@ -294,6 +301,19 @@ function convertMdToSpa(markdown) {
 			continue
 		}
 	//Case off the 1st char, then 2nd char, etc.
+		switch (firstChar) {
+			case " ":
+			switch (secondChar) {
+				case " ":
+				//Tab level 
+				tabLevel = line.match(/^\s*/).toString().split("  ").length
+				line = line.replace(/^\s*/,"")
+			}
+		}
+		//console.log("tabLevel "+tabLevel+" - prevTabLevel "+prevTabLevel+" |  line "+line)
+		firstChar = line.charAt(0);
+		secondChar = line.charAt(1);
+
 		switch (firstChar) {
 			case "#":
 			//Headings
@@ -332,9 +352,30 @@ function convertMdToSpa(markdown) {
 			case "*":
 				switch (secondChar) {
 					case " ":
-						let id = getBadPW();
-						out += "{\"elementParent\": \"parentElement\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText+"\"},"
+						if (tabLevel == 0) { 
+							listIDs[listIDs.length] = getBadPW();
+						}  else if (tabLevel > prevTabLevel) { 
+							listIDs[listIDs.length] = getBadPW();
+						}  else if (tabLevel < prevTabLevel) {
+							listIDs.pop();
+						} 
+						
+						let id = listIDs[listIDs.length -1]
+						let listLevel = listIDs[listIDs.length -2]
+						
+						if (tabLevel == 0) {
+							prevListItem = elementParent
+							console.log("First line: Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+						} else if (tabLevel > prevTabLevel) { 
+							if (prevListItem == "") {prevListItem = listLevel}
+							console.log("Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+						} else if (tabLevel < prevTabLevel) { 
+							console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+						}
+						prevListItem = getBadPW();
+						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 						break;
 				}
 				break;
@@ -362,6 +403,10 @@ function convertMdToSpa(markdown) {
 				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"innerText\": \""+line+"\"},"
 				break;
 		}
+				if (tabLevel != prevTabLevel) { 
+				//console.log("Error tabLevel "+tabLevel+" != prevTabLevel "+prevTabLevel+" --- listIDs.length "+listIDs.length)
+				}
+				prevTabLevel = tabLevel
 			//Need to build out href.
 /*
 	for (element of out) {
