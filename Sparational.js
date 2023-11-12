@@ -418,8 +418,8 @@ outSplit = outSplit[outSplit.length -1]
 if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
 //console.log("outSplit: "+outSplit)
 let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-let url = element.innerText.match(/\[.+\]\(\S+\)/g)[0]
-let txt = element.innerText.split(/\[.+\]\(\S+\)/g)[1]
+let url = element.innerText.match(/\[.+\]\(.*\)/g)[0]
+let txt = element.innerText.split(/\[.+\]\(.*\)/g)[1]
 if (txt == "[.]") {txt = ""}
 //console.log("url: "+url)
 //console.log("txt: "+txt)
@@ -429,7 +429,7 @@ out = out.replace(url+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
 //element.innerText = element.innerText.replace(url,"").replace(txt,"")
 //element.elementType = "span"
 
-out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \""+url.match(/\[.+\]/).toString().replace("[","").replace("]","")+'\",\"href\":\"'+url.match(/\(\S+\)/).toString().replace("(","").replace(")","")+"\"},"
+out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \""+url.match(/\[.+\]/).toString().replace("[","").replace("]","")+'\",\"href\":\"'+url.match(/\(.*\)/).toString().replace("(","").replace(")","")+"\"},"
 if (txt) {
  	out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \""+txt+"\"},"
 }
