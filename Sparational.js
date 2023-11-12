@@ -1,12 +1,14 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.19 - Make faster websites faster.
+//SPArational.js v3.21 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 10/30/2023
+//Last updated: 11/11/2023
+//Notes:
+//Sparational development goal: "I don't know HTML and just want this to be easy to use." Most people just want to throw together some YAML files in folders, add a CSS file and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //Version history:
+//3.21: Add convertMdToSpa. (It's partially working!)
+//3.20: Rewrite cwe as convertWebElement.
 //3.19: Add cwe (Convert Web to Elements).
-//3.18.1: Bugfix to getNumberFromDiv.
-//3.18: Add checkAllLinksOnPage.
 
 
 //Element tools
@@ -183,14 +185,30 @@ function rebuildElement(elementId) {
 }
 
 //Sitelet tools
-function cwe(parentElement,URL) {
-	var sites;
-	webRequest("get",URL,function(data){
-		sites = rwjs(data);
-		//console.log(data.pages.main.elements)
-		cje2(parentElement,sites.pages.main.elements);
-	},"JSON"); //end webRequest
-}
+//convertWebElement("https://www.sparational.com/sites/footer.md",'footer')
+function convertWebElement(parentElement,URL,rebuildFirst){
+	if (rebuildFirst) {}//rebuildElement(parentElement)} // Doesn't work yet
+	webRequest("Get",URL,function(callback){
+		let urlParts = URL.split(".");
+		let extension = urlParts[urlParts.length -1];
+		switch (extension) {
+			case "spa": 
+				cje2(parentElement,rwjs(JSON.parse(callback).pages.main.elements))
+				break;
+			case "md": 
+				//console.log(parentElement)
+				cje2(parentElement,rwjs(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertMdToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
+				//Need to simplify ConvertXxToSpa to return only elements?
+				break;
+			case "yaml": 
+				cje2(parentElement,rwjs(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
+				break;
+			default:
+				cje2(parentElement,rwjs(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
+				break;
+		}
+	})
+};
 
 //Format transformations
 function rwjs($JSON) {
@@ -246,44 +264,7 @@ function cje2(parentElement,elements) {
 	}
 }
 
-function convertMarkdownToSpa($inputString) {
-	var $out
-				console.log($inputString);
-	var $stringVar = JSON.stringify($inputString);
-				console.log($stringVar);
-	$stringVar = $stringVar.replace(/\["/g,'');
-	$stringVar = $stringVar.replace(/"\]/g,'');
-				console.log($stringVar);
 	
-	if ($stringVar.indexOf('#### ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h4"}]}
-	} else if ($stringVar.indexOf('### ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h3"}]}
-	} else if ($stringVar.indexOf('## ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h2"}]}
-	} else if ($stringVar.indexOf('# ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h1"}]}
-	} else if ($stringVar.indexOf('\**') > -1 ) {
-		$stringVar = $stringVar.replace(/\**/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
-	} else if ($stringVar.indexOf('__') > -1 ) {
-		$stringVar = $stringVar.replace(/__/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
-	} else if ($stringVar.indexOf('\*') > -1 ) {
-		$stringVar = $stringVar.replace(/\*/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
-	} else if ($stringVar.indexOf('_') > -1 ) {
-		$stringVar = $stringVar.replace(/_/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
-	} else {
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar}]}
-	}; // end if cell
-			console.log($out);
-	return $out;
 }
 
 function convertJupyterToSpa($inputString) {
@@ -294,44 +275,211 @@ function convertJupyterToSpa($inputString) {
 	$stringVar = $stringVar.replace(/\["/g,'');
 	$stringVar = $stringVar.replace(/"\]/g,'');
 				console.log($stringVar);
-	
-	if ($stringVar.indexOf('#### ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h4"}]}
-	} else if ($stringVar.indexOf('### ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h3"}]}
-	} else if ($stringVar.indexOf('## ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h2"}]}
-	} else if ($stringVar.indexOf('# ') > -1 ) {
-		$stringVar = $stringVar.replace(/#/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"h1"}]}
-	} else if ($stringVar.indexOf('\**') > -1 ) {
-		$stringVar = $stringVar.replace(/\**/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
-	} else if ($stringVar.indexOf('__') > -1 ) {
-		$stringVar = $stringVar.replace(/__/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"strong"}]}
-	} else if ($stringVar.indexOf('\*') > -1 ) {
-		$stringVar = $stringVar.replace(/\*/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
-	} else if ($stringVar.indexOf('_') > -1 ) {
-		$stringVar = $stringVar.replace(/_/g,'');
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar,"elementType":"em"}]}
-	} else {
-		$out = {"elements":[{"elementParent":"body","innerText":$stringVar}]}
-	}; // end if cell
-			console.log($out);
-	return $out;
-}; 
+function convertMdToSpa(markdown) {
+//Markdown is for compositional data, so has a symbol-space-innerText format for most symbols, and symbol-innerText-symbol for the rest. 
+//No multi-line data formats but following lines with the same indent usually inherit the same formatting.
+	let out = ""
+	markdown = (markdown.split("\n")) 
+	for (line of markdown)	 {
+		let elementParent = "parentElement"
+		let href = ""
+		let symbol = line.split(" ")[0]
+		let innerText = line.replace(symbol+" ","")
+		//console.log("symbol: "+symbol+" innerText: "+innerText)
+		let id = getBadPW();
+		let firstChar = line.charAt(0);
+		let secondChar = line.charAt(1);
 
+		if (line.length == 0) { 
+			out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"div\"},"
+			continue
+		}
+	//Case off the 1st char, then 2nd char, etc.
+		switch (firstChar) {
+			case "#":
+			//Headings
+			switch (symbol) {
+				case "#":
+					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h1\",\"innerText\": \""+innerText+"\"},"
+					break;
+				case "##":
+					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h2\",\"innerText\": \""+innerText+"\"},"
+					break;
+				case "###":
+					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h3\",\"innerText\": \""+innerText+"\"},"
+					break;
+				case "####":
+					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h4\",\"innerText\": \""+innerText+"\"},"
+					break;
+				case "#####":
+					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h5\",\"innerText\": \""+innerText+"\"},"
+					break;
+				case "######":
+					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h6\",\"innerText\": \""+innerText+"\"},"
+					break;
+			}
+			break;				
+			//blockquote
+			case ">":
+				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"blockquote\",\"innerText\": \""+innerText+"\"},"
+				//Subsequent lines need to inherit unless there's a line break, and subsequent lines with the same number of arrows need them removed. 
+				break;
+				
+			//Unordered Lists
+				//+ Sub-lists are made by indenting 2 spaces:
+				//  - Marker character change forces new list start:
+			case "+":
+			case "-":
+			case "*":
+				switch (secondChar) {
+					case " ":
+						let id = getBadPW();
+						out += "{\"elementParent\": \"parentElement\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText+"\"},"
+						break;
+				}
+				break;
+				
+			//Ordered Lists
+			case "0":
+			case "1":
+			case "2":
+			case "3":
+			case "4":
+			case "5":
+			case "6":
+			case "7":
+			case "8":
+			case "9":
+				switch (secondChar) {
+					case ".":
+						let id = getBadPW();
+						out += "{\"elementParent\": \"parentElement\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText+"\"},"
+				break;
+				}
+			break;
+			default:
+				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"innerText\": \""+line+"\"},"
+				break;
+		}
+			//Need to build out href.
+/*
+	for (element of out) {
+	
 function convertJupyterToSpa2($inputString) {
 		$stringVar = $stringVar.replace('# ','"          "elementType": "p",');
 		$stringVar = $stringVar + '</h1>"';
 		$inputString = JSON.parse($stringVar);
 		return $inputString;
 }; 
+			//Effects - not just if the line starts, but replace anywhere in the innerText.
+			case "**":
+				//Replace needs to happen before the case above, to prevent these as being interpreted as bullets when they start a line. Also it needs to happen after, because it needs to read from before. So the Bold section needs to skip - difference between bold and bullet is a space between? Or maybe regex it and set a variable saying which? 
+				
+				innerText = innerText.replaceAll("**","")
+				elementType = "strong"
+				break;
+			case "*":
+				innerText = innerText.replaceAll("*","")
+				elementType = "i"
+				break;
+			case "__":
+				innerText = innerText.replaceAll("__","")
+				elementType = "stsrong"
+				break;
+			case "_":
+				innerText = innerText.replaceAll("_","")
+				elementType = "i"
+				break;
+			case "~~":
+				innerText = innerText.replaceAll("~~","")
+				elementType = "strike"
+				break;
+			//Code
+			case "`":
+				elementType = "code"
+				break;
+				
+			//Links
+				//Search for link in innerText
+				//Remove that and all text after
+				//Add that as an anchor parented under the previous one. 
+				//Add all text after as a span parented under the first element.
+				
+			//a.match(/\[\S+\]\(\S+\)/g)
+			case "[\S":
+let page = '{"jmlVersion": "30OCT2023","pages": {"main": {"elements": [{"elementParent": "parentElement","innerText":"© 2013-2023 Gilgamech Technologies - Powered by [Sparational.js](https://www.Sparational.com/)"}]}}}'
+let parse = JSON.parse(page)
+let element = parse.pages.main.elements[0]
+*/
+try {
+let outSplit = out.split("},{")
+outSplit = outSplit[outSplit.length -1]
+if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
+//console.log("outSplit: "+outSplit)
+let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
+let url = element.innerText.match(/\[.+\]\(\S+\)/g)[0]
+let txt = element.innerText.split(/\[.+\]\(\S+\)/g)[1]
+if (txt == "[.]") {txt = ""}
+//console.log("url: "+url)
+//console.log("txt: "+txt)
+
+if (element.id == null) {element.id = getBadPW()}
+out = out.replace(url+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
+//element.innerText = element.innerText.replace(url,"").replace(txt,"")
+//element.elementType = "span"
+
+out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \""+url.match(/\[.+\]/).toString().replace("[","").replace("]","")+'\",\"href\":\"'+url.match(/\(\S+\)/).toString().replace("(","").replace(")","")+"\"},"
+if (txt) {
+ 	out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \""+txt+"\"},"
+}
+} catch(e) {
+console.log("error: "+e)
+}
+//console.log(out)
+/*
+parse.pages.main.elements[1] = JSON.parse('{"elementParent": "'+element.id+'","elementType":"a","innerText":"'+url.match(/\[\S+\]/).toString().replace("[","").replace("]","")+'","href":"'+url.match(/\(\S+\)/).toString().replace("(","").replace(")","")+'"}')
+parse.pages.main.elements[2] = JSON.parse('{"'+element.id+'": "parentElement","elementType":"span","innerText":"'+txt+'"}')
+
+				break;
+				
+			//Images
+			//a.match(/!\[\S+\]\(\S+\)/g)
+			case "![\S":
+				elementType = "img"
+				innerText = innerText.split("](")[0]
+				href = innerText.split("](")[1].replaceAll(")","")
+				break;
+				
+
+## 
+Like links, Images also have a footnote style syntax
+![Alt text][id]
+[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
+
+### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
+Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:
+Shortcuts (emoticons): :-) :-( 8-) ;)
+
+Superscript 19^th^
+Subscript H~2~O
+++Inserted text++
+==Marked text==
+Footnote 1 link[^first].
+Footnote 2 link[^second].
+Inline footnote^[Text of inline footnote] definition.
+Duplicated footnote reference[^second].
+[^first]: Footnote **can have markup**
+    and multiple paragraphs.
+[^second]: Footnote text.
+
+		}
+*/
+	}
+
+	return out;
+}
 
 //Text tools
 function colorifyWords(divid, replaceWord, replaceClass) {
