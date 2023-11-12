@@ -264,9 +264,6 @@ function cje2(parentElement,elements) {
 	}
 }
 
-	
-}
-
 function convertJupyterToSpa($inputString) {
 	var $out
 				console.log($inputString);
@@ -275,6 +272,8 @@ function convertJupyterToSpa($inputString) {
 	$stringVar = $stringVar.replace(/\["/g,'');
 	$stringVar = $stringVar.replace(/"\]/g,'');
 				console.log($stringVar);
+}
+
 function convertMdToSpa(markdown) {
 //Markdown is for compositional data, so has a symbol-space-innerText format for most symbols, and symbol-innerText-symbol for the rest. 
 //No multi-line data formats but following lines with the same indent usually inherit the same formatting.
