@@ -1,15 +1,14 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.21.2 - Make faster websites faster.
+//SPArational.js v3.21.3 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 11/12/2023
 //Notes:
 //Sparational development goal: "I don't know HTML and just want this to be easy to use." Most people just want to throw together some YAML files in folders, add a CSS file and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //Version history:
+//3.21.3: Bugfix to convertMdToSpa link parsing. 
 //3.21.2: Add UL parsing to convertMdToSpa. 
 //3.21.1: Update links to allow a zero-byte URL to allow for an anchor element without an href. 
-//3.21: Add convertMdToSpa. (It's partially working!)
-//3.20: Rewrite cwe as convertWebElement.
 
 
 //Element tools
@@ -458,26 +457,29 @@ let parse = JSON.parse(page)
 let element = parse.pages.main.elements[0]
 */
 try {
-let outSplit = out.split("},{")
-outSplit = outSplit[outSplit.length -1]
-if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
-//console.log("outSplit: "+outSplit)
-let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-let url = element.innerText.match(/\[.+\]\(.*\)/g)[0]
-let txt = element.innerText.split(/\[.+\]\(.*\)/g)[1]
-if (txt == "[.]") {txt = ""}
-//console.log("url: "+url)
-//console.log("txt: "+txt)
+	let outSplit = out.split("},{")
+	outSplit = outSplit[outSplit.length -1]
+	if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
+	//console.log("outSplit: "+outSplit)
+	let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
+	let midTxt = element.innerText.match(/\[.+\]\(\S*\)/g)[0]
+	let endTxt = element.innerText.split(/\[.+\]\(\S*\)/g)[1]
+	if (endTxt == "[.]") {endTxt = ""}
+	//console.log("midTxt: "+midTxt)
+	//console.log("endTxt: "+endTxt)
 
-if (element.id == null) {element.id = getBadPW()}
-out = out.replace(url+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-//element.innerText = element.innerText.replace(url,"").replace(txt,"")
-//element.elementType = "span"
+	if (element.id == null) {element.id = getBadPW()}
 
-out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \""+url.match(/\[.+\]/).toString().replace("[","").replace("]","")+'\",\"href\":\"'+url.match(/\(.*\)/).toString().replace("(","").replace(")","")+"\"},"
-if (txt) {
- 	out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \""+txt+"\"},"
-}
+	out = out.replace(midTxt+endTxt,"").replace(/"},$/,'","id":"'+element.id+'"},')
+	//element.innerText = element.innerText.replace(midTxt,"").replace(endTxt,"")
+	//element.elementType = "span"
+	
+	out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \""+midTxt.match(/\[.+\]/).toString().replace("[","").replace("]","")+'\",\"href\":\"'+midTxt.match(/\(\S*\)/).toString().replace("(","").replace(")","")+"\"},"
+	//Reattach the trailing text. Need to test with multiple links in a single line.
+	if (endTxt) {
+		out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \""+endTxt+"\"},"
+	}
+
 } catch(e) {
 console.log("error: "+e)
 }
