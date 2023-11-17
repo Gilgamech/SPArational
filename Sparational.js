@@ -1,14 +1,14 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.21.3 - Make faster websites faster.
+//SPArational.js v3.21.4 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 11/12/2023
+//Last updated: 11/17/2023
 //Notes:
 //Sparational development goal: "I don't know HTML and just want this to be easy to use." Most people just want to throw together some YAML files in folders, add a CSS file and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //Version history:
+//3.21.4: Rearrange a few things for sanity. 
 //3.21.3: Bugfix to convertMdToSpa link parsing. 
 //3.21.2: Add UL parsing to convertMdToSpa. 
-//3.21.1: Update links to allow a zero-byte URL to allow for an anchor element without an href. 
 
 
 //Element tools
@@ -259,7 +259,7 @@ function cje2(parentElement,elements) {
 		if (!element.elementParent) {
 			element.elementParent = parentElement;
 		}
-		console.log(element.elementParent)
+		//console.log(element.elementParent)
 		addElement(element.elementParent, element.innerText, element.elementClass, element.elementType, element.elementStyle, element.href, element.onChange, element.onClick, element.contentEditable, element.attributeType, element.attributeAction, element.id)
 	}
 }
@@ -273,6 +273,12 @@ function convertJupyterToSpa($inputString) {
 	$stringVar = $stringVar.replace(/"\]/g,'');
 				console.log($stringVar);
 }
+function convertJupyterToSpa2($inputString) {
+		$stringVar = $stringVar.replace('# ','"          "elementType": "p",');
+		$stringVar = $stringVar + '</h1>"';
+		$inputString = JSON.parse($stringVar);
+		return $inputString;
+}; 
 
 function convertMdToSpa(markdown) {
 //Markdown is for compositional data, so has a symbol-space-innerText format for most symbols, and symbol-innerText-symbol for the rest. 
@@ -410,12 +416,6 @@ function convertMdToSpa(markdown) {
 /*
 	for (element of out) {
 	
-function convertJupyterToSpa2($inputString) {
-		$stringVar = $stringVar.replace('# ','"          "elementType": "p",');
-		$stringVar = $stringVar + '</h1>"';
-		$inputString = JSON.parse($stringVar);
-		return $inputString;
-}; 
 			//Effects - not just if the line starts, but replace anywhere in the innerText.
 			case "**":
 				//Replace needs to happen before the case above, to prevent these as being interpreted as bullets when they start a line. Also it needs to happen after, because it needs to read from before. So the Bold section needs to skip - difference between bold and bullet is a space between? Or maybe regex it and set a variable saying which? 
@@ -456,6 +456,8 @@ let page = '{"jmlVersion": "30OCT2023","pages": {"main": {"elements": [{"element
 let parse = JSON.parse(page)
 let element = parse.pages.main.elements[0]
 */
+
+//Links
 try {
 	let outSplit = out.split("},{")
 	outSplit = outSplit[outSplit.length -1]
@@ -465,8 +467,7 @@ try {
 	let midTxt = element.innerText.match(/\[.+\]\(\S*\)/g)[0]
 	let endTxt = element.innerText.split(/\[.+\]\(\S*\)/g)[1]
 	if (endTxt == "[.]") {endTxt = ""}
-	//console.log("midTxt: "+midTxt)
-	//console.log("endTxt: "+endTxt)
+	//console.log("midTxt: "+midTxt+" endTxt: "+endTxt)
 
 	if (element.id == null) {element.id = getBadPW()}
 
