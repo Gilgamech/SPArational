@@ -464,7 +464,7 @@ try {
 	if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
 	//console.log("outSplit: "+outSplit)
 	let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-	let regex = /\[.+\]\(http\S*\)/ 
+	let regex = /\[.+\]\(\S*\)/g
 	let midTxt = element.innerText.match(regex)[0]
 	let endTxt = element.innerText.split(regex)[1]
 	if (endTxt == "[.]") {endTxt = ""}
