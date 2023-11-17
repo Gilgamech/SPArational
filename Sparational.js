@@ -1,14 +1,14 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.21.4 - Make faster websites faster.
+//SPArational.js v3.21.6 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 11/17/2023
 //Notes:
 //Sparational development goal: "I don't know HTML and just want this to be easy to use." Most people just want to throw together some YAML files in folders, add a CSS file and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //Version history:
+//3.21.6: Add multilevel ordered list support. 
+//3.21.5: Move regular expressions for bracket into a variable. 
 //3.21.4: Rearrange a few things for sanity. 
-//3.21.3: Bugfix to convertMdToSpa link parsing. 
-//3.21.2: Add UL parsing to convertMdToSpa. 
 
 
 //Element tools
@@ -273,6 +273,7 @@ function convertJupyterToSpa($inputString) {
 	$stringVar = $stringVar.replace(/"\]/g,'');
 				console.log($stringVar);
 }
+
 function convertJupyterToSpa2($inputString) {
 		$stringVar = $stringVar.replace('# ','"          "elementType": "p",');
 		$stringVar = $stringVar + '</h1>"';
@@ -398,8 +399,15 @@ function convertMdToSpa(markdown) {
 			case "9":
 				switch (secondChar) {
 					case ".":
-						let id = getBadPW();
-						out += "{\"elementParent\": \"parentElement\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+						if (tabLevel >= prevTabLevel) { 
+							listIDs[listIDs.length] = getBadPW();
+						} else if (tabLevel <= prevTabLevel) { 
+							listIDs.pop()
+						} 
+						let id = listIDs[listIDs.length -1]
+						if (tabLevel != prevTabLevel) { 
+							out += "{\"elementParent\": \"parentElement\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+						} 
 						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText+"\"},"
 				break;
 				}
@@ -1275,5 +1283,4 @@ var $septillion = $sixtillion *$thousand;
 var $octillion = $septillion *$thousand;
 var $nonillion = $octillion *$thousand;
 var $decillion = $nonillion *$thousand;
-
 
