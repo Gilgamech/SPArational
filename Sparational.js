@@ -1,14 +1,14 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.21.6 - Make faster websites faster.
+//SPArational.js v3.21.7 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 11/17/2023
+//Last updated: 11/23/2023
 //Notes:
 //Sparational development goal: "I don't know HTML and just want this to be easy to use." Most people just want to throw together some YAML files in folders, add a CSS file and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //Version history:
+//3.21.7: Fix bug with mutliple links in an innerText. 
 //3.21.6: Add multilevel ordered list support. 
 //3.21.5: Move regular expressions for bracket into a variable. 
-//3.21.4: Rearrange a few things for sanity. 
 
 
 //Element tools
@@ -306,7 +306,8 @@ function convertMdToSpa(markdown) {
 			out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"div\"},"
 			continue
 		}
-	//Case off the 1st char, then 2nd char, etc.
+		//Case off the 1st char, then 2nd char, etc.
+		//Handle indenting
 		switch (firstChar) {
 			case " ":
 			switch (secondChar) {
@@ -320,6 +321,7 @@ function convertMdToSpa(markdown) {
 		firstChar = line.charAt(0);
 		secondChar = line.charAt(1);
 
+		//Handle headers, lists, blockquotes, etc
 		switch (firstChar) {
 			case "#":
 			//Headings
@@ -467,28 +469,47 @@ let element = parse.pages.main.elements[0]
 
 //Links
 try {
+	//This system splits out by JML, selects the last one, parses. 
 	let outSplit = out.split("},{")
 	outSplit = outSplit[outSplit.length -1]
 	if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
 	//console.log("outSplit: "+outSplit)
 	let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-	let regex = /\[.+\]\(\S*\)/g
-	let midTxt = element.innerText.match(regex)[0]
-	let endTxt = element.innerText.split(regex)[1]
-	if (endTxt == "[.]") {endTxt = ""}
-	//console.log("midTxt: "+midTxt+" endTxt: "+endTxt)
-
+	//Takes the innerText value, and matches then splits from the same regex
+	for (txt of element.innerText.split(/\[/g)) {
+		//console.log("txt: "+txt)
+			txtSplit = txt.split(/\)/g)
+			for (tex of txtSplit) {
+				if (tex.includes("](")) {
+					let regex = /\]\(/
+					tex2 = tex.split(regex)
+					let innerTxt = tex2[0]
+					let linkTxt = tex2[1]
+					//console.log("text: " + innerTxt)
+					//console.log("link: " + linkTxt)
+	//Generates an ID if none. 
 	if (element.id == null) {element.id = getBadPW()}
 
-	out = out.replace(midTxt+endTxt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-	//element.innerText = element.innerText.replace(midTxt,"").replace(endTxt,"")
+	//Replaces the innerTxt and linkTxt with the ID and re-caps. 
+	out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
+	//element.innerText = element.innerText.replace(innerTxt,"").replace(linkTxt,"")
 	//element.elementType = "span"
 	
-	out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \""+midTxt.match(/\[.+\]/).toString().replace("[","").replace("]","")+'\",\"href\":\"'+midTxt.match(/\(\S*\)/).toString().replace("(","").replace(")","")+"\"},"
+	//Encapsulates innerTxt then linkTxt with JML.  
 	//Reattach the trailing text. Need to test with multiple links in a single line.
+	out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerTxt +'\",\"href\":\"' +linkTxt +"\"},"
+	
+	let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
 	if (endTxt) {
-		out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \""+endTxt+"\"},"
+		out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
 	}
+				} else {
+					//console.log("text: " + tex)
+					//console.log("Just text: " + innerTxt)
+				}; //end tex.includes
+			}; //end for tex
+	}; //end for txt
+	
 
 } catch(e) {
 console.log("error: "+e)
