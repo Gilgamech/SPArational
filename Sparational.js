@@ -1,14 +1,14 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.21.7 - Make faster websites faster.
+//SPArational.js v3.21.8 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 11/23/2023
 //Notes:
 //Sparational development goal: "I don't know HTML and just want this to be easy to use." Most people just want to throw together some YAML files in folders, add a CSS file and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //Version history:
+//3.21.8: Have convertMdToSpa return a full SPA file. 
 //3.21.7: Fix bug with mutliple links in an innerText. 
 //3.21.6: Add multilevel ordered list support. 
-//3.21.5: Move regular expressions for bracket into a variable. 
 
 
 //Element tools
@@ -196,7 +196,7 @@ function convertWebElement(parentElement,URL,rebuildFirst){
 				break;
 			case "md": 
 				//console.log(parentElement)
-				cje2(parentElement,rwjs(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertMdToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
+				cje2(parentElement,rwjs(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
 				//Need to simplify ConvertXxToSpa to return only elements?
 				break;
 			case "yaml": 
@@ -545,7 +545,7 @@ Duplicated footnote reference[^second].
 		}
 */
 	}
-
+	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
 	return out;
 }
 
