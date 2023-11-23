@@ -418,7 +418,6 @@ function convertMdToSpa(markdown) {
 		}; //end switch firstChar
 		prevTabLevel = tabLevel
 
-/*
 		//Links
 		try {
 			//This system splits out by JML, selects the last one, parses. 
@@ -449,7 +448,7 @@ function convertMdToSpa(markdown) {
 							let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
 							if (endTxt) {
 								out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-							}
+								}
 						}; //end tex.includes
 					}; //end for tex
 			}; //end for txt
@@ -457,40 +456,6 @@ function convertMdToSpa(markdown) {
 		} catch(e) {
 			console.log("error: "+e)
 		}; //end try 
-				break;
-				
-			//Images
-			//a.match(/!\[\S+\]\(\S+\)/g)
-			case "![\S":
-				elementType = "img"
-				innerText = innerText.split("](")[0]
-				href = innerText.split("](")[1].replaceAll(")","")
-				break;
-				
-
-## 
-Like links, Images also have a footnote style syntax
-![Alt text][id]
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
-
-### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
-Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:
-Shortcuts (emoticons): :-) :-( 8-) ;)
-
-Superscript 19^th^
-Subscript H~2~O
-++Inserted text++
-==Marked text==
-Footnote 1 link[^first].
-Footnote 2 link[^second].
-Inline footnote^[Text of inline footnote] definition.
-Duplicated footnote reference[^second].
-[^first]: Footnote **can have markup**
-    and multiple paragraphs.
-[^second]: Footnote text.
-
-		}
-*/
 	}; //end for line
 	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
 	return out;
