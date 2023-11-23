@@ -185,7 +185,6 @@ function rebuildElement(elementId) {
 }
 
 //Sitelet tools
-//convertWebElement("https://www.sparational.com/sites/footer.md",'footer')
 function convertWebElement(parentElement,URL,rebuildFirst){
 	if (rebuildFirst) {}//rebuildElement(parentElement)} // Doesn't work yet
 	webRequest("Get",URL,function(callback){
@@ -477,7 +476,6 @@ try {
 	let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
 	//Takes the innerText value, and matches then splits from the same regex
 	for (txt of element.innerText.split(/\[/g)) {
-		//console.log("txt: "+txt)
 			txtSplit = txt.split(/\)/g)
 			for (tex of txtSplit) {
 				if (tex.includes("](")) {
@@ -485,27 +483,20 @@ try {
 					tex2 = tex.split(regex)
 					let innerTxt = tex2[0]
 					let linkTxt = tex2[1]
-					//console.log("text: " + innerTxt)
-					//console.log("link: " + linkTxt)
-	//Generates an ID if none. 
-	if (element.id == null) {element.id = getBadPW()}
+					//Generates an ID if none. 
+					if (element.id == null) {element.id = getBadPW()}
 
-	//Replaces the innerTxt and linkTxt with the ID and re-caps. 
-	out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-	//element.innerText = element.innerText.replace(innerTxt,"").replace(linkTxt,"")
-	//element.elementType = "span"
-	
-	//Encapsulates innerTxt then linkTxt with JML.  
-	//Reattach the trailing text. Need to test with multiple links in a single line.
-	out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerTxt +'\",\"href\":\"' +linkTxt +"\"},"
-	
-	let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
-	if (endTxt) {
-		out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-	}
-				} else {
-					//console.log("text: " + tex)
-					//console.log("Just text: " + innerTxt)
+					//Replaces the innerTxt and linkTxt with the ID and re-caps. 
+					out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
+					
+					//Encapsulates innerTxt then linkTxt with JML.  
+					//Reattach the trailing text. Need to test with multiple links in a single line.
+					out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerTxt +'\",\"href\":\"' +linkTxt +"\"},"
+					
+					let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
+					if (endTxt) {
+						out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
+					}
 				}; //end tex.includes
 			}; //end for tex
 	}; //end for txt
