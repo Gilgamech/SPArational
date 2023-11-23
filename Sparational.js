@@ -282,7 +282,6 @@ function convertJupyterToSpa2($inputString) {
 
 function convertMdToSpa(markdown) {
 //Markdown is for compositional data, so has a symbol-space-innerText format for most symbols, and symbol-innerText-symbol for the rest. 
-//Following lines with the same indent usually inherit the same formatting.
 	let out = ""
 	let listIDs = []
 	let prevTabLevel = 0
@@ -416,54 +415,48 @@ function convertMdToSpa(markdown) {
 			default:
 				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"innerText\": \""+line+"\"},"
 				break;
-		}
-				if (tabLevel != prevTabLevel) { 
-				//console.log("Error tabLevel "+tabLevel+" != prevTabLevel "+prevTabLevel+" --- listIDs.length "+listIDs.length)
-				}
-				prevTabLevel = tabLevel
-			//Need to build out href.
+		}; //end switch firstChar
+		prevTabLevel = tabLevel
 
-//Links
-try {
-	//This system splits out by JML, selects the last one, parses. 
-	let outSplit = out.split("},{")
-	outSplit = outSplit[outSplit.length -1]
-	if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
-	//console.log("outSplit: "+outSplit)
-	let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-	//Takes the innerText value, and matches then splits from the same regex
-	for (txt of element.innerText.split(/\[/g)) {
-			txtSplit = txt.split(/\)/g)
-			for (tex of txtSplit) {
-				if (tex.includes("](")) {
-					let regex = /\]\(/
-					tex2 = tex.split(regex)
-					let innerTxt = tex2[0]
-					let linkTxt = tex2[1]
-					//Generates an ID if none. 
-					if (element.id == null) {element.id = getBadPW()}
-
-					//Replaces the innerTxt and linkTxt with the ID and re-caps. 
-					out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-					
-					//Encapsulates innerTxt then linkTxt with JML.  
-					//Reattach the trailing text. Need to test with multiple links in a single line.
-					out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerTxt +'\",\"href\":\"' +linkTxt +"\"},"
-					
-					let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
-					if (endTxt) {
-						out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-					}
-				}; //end tex.includes
-			}; //end for tex
-	}; //end for txt
-	
-
-} catch(e) {
-console.log("error: "+e)
-}
-//console.log(out)
 /*
+		//Links
+		try {
+			//This system splits out by JML, selects the last one, parses. 
+			let outSplit = out.split("},{")
+			outSplit = outSplit[outSplit.length -1]
+			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
+			//console.log("outSplit: "+outSplit)
+			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
+			//Takes the innerText value, and matches then splits from the same regex
+			for (txt of element.innerText.split(/\[/g)) {
+					txtSplit = txt.split(/\)/g)
+					for (tex of txtSplit) {
+						if (tex.includes("](")) {
+							let regex = /\]\(/
+							tex2 = tex.split(regex)
+							let innerTxt = tex2[0]
+							let linkTxt = tex2[1]
+							//Generates an ID if none. 
+							if (element.id == null) {element.id = getBadPW()}
+
+							//Replaces the innerTxt and linkTxt with the ID and re-caps. 
+							out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
+							
+							//Encapsulates innerTxt then linkTxt with JML.  
+							//Reattach the trailing text. Need to test with multiple links in a single line.
+							out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerTxt +'\",\"href\":\"' +linkTxt +"\"},"
+							
+							let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
+							if (endTxt) {
+								out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
+							}
+						}; //end tex.includes
+					}; //end for tex
+			}; //end for txt
+			
+		} catch(e) {
+			console.log("error: "+e)
+		}; //end try 
 				break;
 				
 			//Images
@@ -498,7 +491,7 @@ Duplicated footnote reference[^second].
 
 		}
 */
-	}
+	}; //end for line
 	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
 	return out;
 }
