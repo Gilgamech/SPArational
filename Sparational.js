@@ -422,49 +422,6 @@ function convertMdToSpa(markdown) {
 				}
 				prevTabLevel = tabLevel
 			//Need to build out href.
-/*
-	for (element of out) {
-	
-			//Effects - not just if the line starts, but replace anywhere in the innerText.
-			case "**":
-				//Replace needs to happen before the case above, to prevent these as being interpreted as bullets when they start a line. Also it needs to happen after, because it needs to read from before. So the Bold section needs to skip - difference between bold and bullet is a space between? Or maybe regex it and set a variable saying which? 
-				
-				innerText = innerText.replaceAll("**","")
-				elementType = "strong"
-				break;
-			case "*":
-				innerText = innerText.replaceAll("*","")
-				elementType = "i"
-				break;
-			case "__":
-				innerText = innerText.replaceAll("__","")
-				elementType = "stsrong"
-				break;
-			case "_":
-				innerText = innerText.replaceAll("_","")
-				elementType = "i"
-				break;
-			case "~~":
-				innerText = innerText.replaceAll("~~","")
-				elementType = "strike"
-				break;
-			//Code
-			case "`":
-				elementType = "code"
-				break;
-				
-			//Links
-				//Search for link in innerText
-				//Remove that and all text after
-				//Add that as an anchor parented under the previous one. 
-				//Add all text after as a span parented under the first element.
-				
-			//a.match(/\[\S+\]\(\S+\)/g)
-			case "[\S":
-let page = '{"jmlVersion": "30OCT2023","pages": {"main": {"elements": [{"elementParent": "parentElement","innerText":"© 2013-2023 Gilgamech Technologies - Powered by [Sparational.js](https://www.Sparational.com/)"}]}}}'
-let parse = JSON.parse(page)
-let element = parse.pages.main.elements[0]
-*/
 
 //Links
 try {
@@ -507,9 +464,6 @@ console.log("error: "+e)
 }
 //console.log(out)
 /*
-parse.pages.main.elements[1] = JSON.parse('{"elementParent": "'+element.id+'","elementType":"a","innerText":"'+url.match(/\[\S+\]/).toString().replace("[","").replace("]","")+'","href":"'+url.match(/\(\S+\)/).toString().replace("(","").replace(")","")+'"}')
-parse.pages.main.elements[2] = JSON.parse('{"'+element.id+'": "parentElement","elementType":"span","innerText":"'+txt+'"}')
-
 				break;
 				
 			//Images
