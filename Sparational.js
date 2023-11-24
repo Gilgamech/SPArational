@@ -399,16 +399,31 @@ function convertMdToSpa(markdown) {
 			case "9":
 				switch (secondChar) {
 					case ".":
-						if (tabLevel >= prevTabLevel) { 
+						if (tabLevel == 0) { 
 							listIDs[listIDs.length] = getBadPW();
-						} else if (tabLevel <= prevTabLevel) { 
-							listIDs.pop()
+						}  else if (tabLevel > prevTabLevel) { 
+							listIDs[listIDs.length] = getBadPW();
+						}  else if (tabLevel < prevTabLevel) {
+							listIDs.pop();
 						} 
+						
 						let id = listIDs[listIDs.length -1]
-						if (tabLevel != prevTabLevel) { 
-							out += "{\"elementParent\": \"parentElement\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-						} 
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText+"\"},"
+						let listLevel = listIDs[listIDs.length -2]
+						
+						if (tabLevel == 0) {
+							prevListItem = elementParent
+							console.log("First line: Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+						} else if (tabLevel > prevTabLevel) { 
+							if (prevListItem == "") {prevListItem = listLevel}
+							console.log("Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+						} else if (tabLevel < prevTabLevel) { 
+							console.log("Remove OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+						}
+						prevListItem = getBadPW();
+						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
+						break;
 				break;
 				}
 			break;
