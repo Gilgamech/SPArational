@@ -385,7 +385,7 @@ function convertMdToSpa(markdown) {
 						break;
 				//This is where Bold gets droped - because it's unhandled. 
 					case "*":
-						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"b\",\"innerText\": \""+line.replace("**","")+"\"},"
+						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"b\",\"innerText\": \""+line.replaceAll("**","")+"\"},"
 						break;
 					default:
 						break;
