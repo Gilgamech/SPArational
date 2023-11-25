@@ -26,26 +26,26 @@
 
 # FAQ
 - What is Sparational.js?
-	- Sparational.js is a Javascript engine to convert JSON to HTML. You can manually create a JSON file of HTML elements, use the site builder, or use the site converter to turn an HTML page into JSON.
-	- A small website frame is sent, with just enough HTML to define the HTML document.head and document.body, favicon, and mobile viewport. Testing showed these items wouldn't operate correctly if declared by the Sparational.js engine.
+  - Sparational.js is a Javascript engine to convert JSON to HTML. You can manually create a JSON file of HTML elements, use the site builder, or use the site converter to turn an HTML page into JSON.
+  - A small website frame is sent, with just enough HTML to define the HTML document.head and document.body, favicon, and mobile viewport. Testing showed these items wouldn't operate correctly if declared by the Sparational.js engine.
 - Page sections and wrappers. And errDiv.
-	- Head Wrapper is a DIV for elements normally found in the Head of a webpage, such as external or inline Javascript and CSS files.
-	- Nav Wrapper is for page tabs, links, and other information you want to display in the navigation bar.
-	- Body Wrapper is for the main content of a page or tab.
-	- Footer Wrapper is for footer elements at the bottom of each page, like ads, copyright, etc.
-	- errDiv is a default Div for error display. This is normally located in the Footer Wrapper.
-	- What is the DOM and how do you work with it?
+  - Head Wrapper is a DIV for elements normally found in the Head of a webpage, such as external or inline Javascript and CSS files.
+  - Nav Wrapper is for page tabs, links, and other information you want to display in the navigation bar.
+  - Body Wrapper is for the main content of a page or tab.
+  - Footer Wrapper is for footer elements at the bottom of each page, like ads, copyright, etc.
+  - errDiv is a default Div for error display. This is normally located in the Footer Wrapper.
+  - What is the DOM and how do you work with it?
 - DOM is the Document Object Model. That means "document" is a variable (aka an object) in the browser that contains the entire webpage.
-	- Usually, web browsers parse HTML and write this to the "document" variable.
-	- Sparational.js bypasses this and writes JSON to the "document" variable.
+  - Usually, web browsers parse HTML and write this to the "document" variable.
+  - Sparational.js bypasses this and writes JSON to the "document" variable.
 - HTML is nested code?
-	- Yes! Every item on a webpage is nested under the "document" variable - more specifically, the Head items are nested under document.head and the body (visible parts) are nested under document.body.
+  - Yes! Every item on a webpage is nested under the "document" variable - more specifically, the Head items are nested under document.head and the body (visible parts) are nested under document.body.
 - How do you use Sparational.js?
-	- With great skill! Add the imported variable sparational.sparationalCode to the website frame between the tags of a script element.
+  - With great skill! Add the imported variable sparational.sparationalCode to the website frame between the tags of a script element.
 - There are basically 3 ways to use:
-	- Template - choose one of the template pages in Sparational-Templates.js. OfferingOverview is built from 2 templates, allowing it to be built in less than 100 lines of JS and HTML (and 300 of CSS).
-	- Robust single page application - Use CJE2 to interpret JSON elements in a separate SPA file, and convert into a whole page. You can host this on S3, CDN, or any other hosting solution, to greatly reduce load on your server. Instead of building pages server-side and sending to the browser, Sparational.js offloads this work to the browser's processor. This Sparational.js page operates in this way. 
-	- Programmatic  - Use element and table tools to programmatically build parts of your website. Except for webRequest, all tools are synchronous and functional, allowing use in place of a variable in many situations. Why have a separate data variable when you can store your data in a div and read it later? This is best used for parts of pages, when most of the page is declared in HTML, allowing you to add a dynamic section where desired. Gilgamech Technologies main website is set up in this way.
+  - Template - choose one of the template pages in Sparational-Templates.js. OfferingOverview is built from 2 templates, allowing it to be built in less than 100 lines of JS and HTML (and 300 of CSS).
+  - Robust single page application - Use CJE2 to interpret JSON elements in a separate SPA file, and convert into a whole page. You can host this on S3, CDN, or any other hosting solution, to greatly reduce load on your server. Instead of building pages server-side and sending to the browser, Sparational.js offloads this work to the browser's processor. This Sparational.js page operates in this way. 
+  - Programmatic  - Use element and table tools to programmatically build parts of your website. Except for webRequest, all tools are synchronous and functional, allowing use in place of a variable in many situations. Why have a separate data variable when you can store your data in a div and read it later? This is best used for parts of pages, when most of the page is declared in HTML, allowing you to add a dynamic section where desired. Gilgamech Technologies main website is set up in this way.
 
 # Main functions:
 
