@@ -383,6 +383,12 @@ function convertMdToSpa(markdown) {
 						prevListItem = getBadPW();
 						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 						break;
+				//This is where Bold gets droped - because it's unhandled. 
+					case "*":
+						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"b\",\"innerText\": \""+innerText+"\"},"
+						break;
+					default:
+						break;
 				}
 				break;
 				
