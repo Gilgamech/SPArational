@@ -11,7 +11,7 @@
 				{
 				"elementParent": "parentElement",
 				"elementClass":"menu",
-				"elementType":"p"
+				"elementType":"p",
 				"id": "menu"
 				},
 				{
