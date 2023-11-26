@@ -12,9 +12,10 @@
 				"elementParent": "parentElement",
 				"elementClass":"menu",
 				"elementType":"p"
+				"id": "menu"
 				},
 				{
-				"elementParent": "parentElement",
+				"elementParent": "menu",
 				"href":"/",
 				"elementType":"a",
 				"id": "rootLink"
@@ -28,12 +29,12 @@
 				"id": "rootLink"
 				},
 				{
-				"elementParent": "parentElement",
+				"elementParent": "menu",
 				"elementType":"span",
 				"id": "searchSpan"
 				},
 				{
-				"elementParent": "parentElement",
+				"elementParent": "menu",
 				"elementClass":"searchBox",
 				"elementType":"input",
 				"innerText":"Product Name",
@@ -42,13 +43,13 @@
 				"attributeValue": "text"
 				},
 				{
-				"elementParent": "parentElement",
+				"elementParent": "menu",
 				"elementClass":"searchSpan",
 				"elementType":"span",
 				"id": "result"
 				},
 				{
-				"elementParent": "parentElement",
+				"elementParent": "menu",
 				"elementClass":"contact",
 				"elementType":"a",
 				"id": "result",

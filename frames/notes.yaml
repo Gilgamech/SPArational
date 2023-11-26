@@ -10,8 +10,9 @@ pages:
       - elementParent: parentElement
         elementClass: menu
         elementType: p
+        id: menu
 
-      - elementParent: parentElement
+      - elementParent: menu
         elementType: a
         href: "/"
         id: rootLink
@@ -21,11 +22,11 @@ pages:
         attributeType: height
         attributeValue: 18
 
-      - elementParent: parentElement
+      - elementParent: menu
         elementType: span
         id: searchSpan
 
-      - elementParent: parentElement
+      - elementParent: menu
         elementClass: searchBox
         elementType: input
         innerText: Product Name
@@ -33,12 +34,12 @@ pages:
         attributeType: type
         attributeValue: text
 
-      - elementParent: parentElement
+      - elementParent: menu
         elementClass: searchResult
         elementType: span
         id: result
 
-      - elementParent: parentElement
+      - elementParent: menu
         elementType: a
         elementClass: contact
         href: "mailto:OfferingOverview@Gilgamech.com"
