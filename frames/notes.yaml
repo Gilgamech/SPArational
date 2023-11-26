@@ -1,0 +1,55 @@
+#SPYAMLVersion: 30OCT2023
+PageName: pageFrame.yaml
+Author: Stephen Gillie
+Created: 11/1/2023
+Updated: 11/1/2023
+Notes: 2.0 - rewrite as SPA format.
+pages:
+  main:
+    elements:
+      - elementParent: parentElement
+        elementClass: menu
+        elementType: p
+
+      - elementParent: parentElement
+        elementType: a
+        href: "/"
+        id: rootLink
+      - elementParent: rootLink
+        href: "/logo.png"
+        elementType: p
+        attributeType: height
+        attributeValue: 18
+
+      - elementParent: parentElement
+        elementType: span
+        id: searchSpan
+
+      - elementParent: parentElement
+        elementClass: searchBox
+        elementType: input
+        innerText: Product Name
+        onChange: "showResults(this.value)"
+        attributeType: type
+        attributeValue: text
+
+      - elementParent: parentElement
+        elementClass: searchResult
+        elementType: span
+        id: result
+
+      - elementParent: parentElement
+        elementType: a
+        elementClass: contact
+        href: "mailto:OfferingOverview@Gilgamech.com"
+        innerText: Contact
+
+      - elementParent: parentElement
+        elementClass: grid-container
+        id: content
+
+      - elementParent: parentElement
+        innerText: if (decodeURIComponent(window.location.pathname).replace("/","") == "index2.html") {convertWebElement('content',decodeURIComponent(window.location.pathname).replace("html","md"))} else {convertWebElement(addElement("content","","grid-item"),"/notes"+decodeURIComponent(window.location.pathname).replace("html","md"))}
+        elementType: script
+      - https: //www.sparational.com/sites/footer.md
+      

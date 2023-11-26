@@ -1,0 +1,72 @@
+{
+	"jmlVersion": "30OCT2023",
+	"Author": "Stephen Gillie",
+	"Created":"11/26/2023",
+	"Updated": "11/26/2023",
+	"Notes": [
+	],
+	"pages": {
+		"main": {
+			"elements": [
+				{
+				"elementParent": "parentElement",
+				"elementClass":"menu",
+				"elementType":"p"
+				},
+				{
+				"elementParent": "parentElement",
+				"href":"/",
+				"elementType":"a",
+				"id": "rootLink"
+				},
+				{
+				"elementParent": "rootLink",
+				"href":"/logo.png",
+				"elementType":"p",
+				"attributeType": "height",
+				"attributeValue": "18",
+				"id": "rootLink"
+				},
+				{
+				"elementParent": "parentElement",
+				"elementType":"span",
+				"id": "searchSpan"
+				},
+				{
+				"elementParent": "parentElement",
+				"elementClass":"searchBox",
+				"elementType":"input",
+				"innerText":"Product Name",
+				"onChange": "showResults(this.value)",
+				"attributeType": "type",
+				"attributeValue": "text"
+				},
+				{
+				"elementParent": "parentElement",
+				"elementClass":"searchSpan",
+				"elementType":"span",
+				"id": "result"
+				},
+				{
+				"elementParent": "parentElement",
+				"elementClass":"contact",
+				"elementType":"a",
+				"id": "result",
+				"href":"mailto:OfferingOverview@Gilgamech.com",
+				"innerText":"Contact"
+				},
+				{
+				"elementParent": "parentElement",
+				"elementClass":"grid-container",
+				"id": "content"
+				},
+				{
+				"elementParent": "parentElement",
+				"elementType":"script",
+				"innerText":"if (decodeURIComponent(window.location.pathname).replace('/','') == '') { convertWebElement('content','/notes'+decodeURIComponent(window.location.pathname)+'index.md') } else { convertWebElement(addElement('content','','grid-item'),'/notes'+decodeURIComponent(window.location.pathname)+'.md') }"
+				},
+				"https://www.sparational.com/sites/footer.spa"
+			]
+		}
+	}
+}
