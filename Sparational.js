@@ -193,6 +193,9 @@ function convertWebElement(parentElement,URL,rebuildFirst){
 			case "spa": 
 				cje2(parentElement,rwjs(JSON.parse(callback).pages.main.elements))
 				break;
+			case "csv": 
+				mdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
+				break;
 			case "md": 
 				//console.log(parentElement)
 				cje2(parentElement,rwjs(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
