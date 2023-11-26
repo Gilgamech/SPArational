@@ -1,13 +1,16 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.22 - Make faster websites faster.
+//SPArational.js v3.23 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 11/25/2023
+//Last updated: 11/26/2023
 //Notes:
+//Sparational development goal: "Why use more than CSS and Markdown and the occasional data source to make a website?" Most people just want to throw together some Markdown files in folders, add CSS and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
+//If at first you duplicate code, refactor and refactor again.
+
 //Version history:
+//3.23: Add rewriteJson. Fully depreciate experimental async rwjs2 and soft-depreciate rwjs. 
 //3.22: Add CSV support to convertWebElement, through mdArrayToTable. 
 //3.21.9: Emergency bugfix for bold in convertMdToSpa. 
-//3.21.8: Have convertMdToSpa return a full SPA file. 
 
 
 //Element tools
@@ -191,21 +194,21 @@ function convertWebElement(parentElement,URL,rebuildFirst){
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) {
 			case "spa": 
-				cje2(parentElement,rwjs(JSON.parse(callback).pages.main.elements))
+				cje2(parentElement,rewriteJson(JSON.parse(callback).pages.main.elements))
 				break;
 			case "csv": 
 				mdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
 				break;
 			case "md": 
 				//console.log(parentElement)
-				cje2(parentElement,rwjs(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
-				//Need to simplify ConvertXxToSpa to return only elements?
+				cje2(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
 				break;
 			case "yaml": 
-				cje2(parentElement,rwjs(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
+				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
+				//cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
 				break;
 			default:
-				cje2(parentElement,rwjs(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
+				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
 				break;
 		}
 	},"","",30)
@@ -233,20 +236,28 @@ function rwjs($JSON) {
 	
 }; // end function
 
-async function rwjs2($JSON) {
-	for (var p = 0; p < getKeys($JSON.pages).length; p++) {
-		var page = $JSON.pages[getKeys($JSON.pages)[p]]
-		for (var e = 0; e < page.elements.length; e++) {
-			if (typeof page.elements[e] == "string") {
-				if (page.elements[e].substr(0,4) == "http") {
-					$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = await webRequestAsync("get",page.elements[e],"JSON");
-				} else if (page.elements[e].substr(0,2) == "$_") {
-					$JSON.pages[getKeys($JSON.pages)[p]].elements[e] = eval(page.elements[e].replace("$_","$JSON"))
-				}; // end if elements
-			}//end if typeof
-		}; // end for elements
-	}; // end for pages
-				return $JSON;
+//Format transformations
+function rewriteJson(data,baseData) {
+	let n = 0;
+	//Rewrite data - Works on any JSON, not just SPA files.
+	for(element in data){
+	//console.log(data[element])
+
+		if (typeof data[element] === "string") {
+			if (data[element].substr(0,2) == "$_") {
+				console.log(eval(data[element].replace("$_","baseData")))
+				try{ console.log("bd: "+JSON.stringify(baseData))}catch{}
+				data[element] = eval(data[element].replace("$_","baseData"))
+					
+			} else if (data[element].substr(0,4) == "http") {
+				data[element] = {"elementParent":"parentElement","elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+")")}
+			}; // end if element.substr
+			
+		} else if (typeof data[element] === "object") { 
+			data[element] = rewriteJson(data[element],baseData)
+		}; //end if typeof
+	}; // end for let element
+	return data;
 }; // end function
 
 function cje2(parentElement,elements) {
