@@ -24,7 +24,7 @@
 				"elementParent": "rootLink",
 				"href":"/logo.png",
 				"elementType":"img",
-				"attributeType": "height",
+				"attributeType": "max-height",
 				"attributeValue": "18"
 				},
 				{
