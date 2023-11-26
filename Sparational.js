@@ -250,7 +250,7 @@ function rewriteJson(data,baseData) {
 				data[element] = eval(data[element].replace("$_","baseData"))
 					
 			} else if (data[element].substr(0,4) == "http") {
-				data[element] = {"elementParent":"parentElement","elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+")")}
+				data[element] = {"elementParent":"parentElement","elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+"\")")}
 			}; // end if element.substr
 			
 		} else if (typeof data[element] === "object") { 
