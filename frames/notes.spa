@@ -23,10 +23,9 @@
 				{
 				"elementParent": "rootLink",
 				"href":"/logo.png",
-				"elementType":"p",
+				"elementType":"img",
 				"attributeType": "height",
-				"attributeValue": "18",
-				"id": "rootLink"
+				"attributeValue": "18"
 				},
 				{
 				"elementParent": "menu",

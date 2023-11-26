@@ -16,9 +16,10 @@ pages:
         elementType: a
         href: "/"
         id: rootLink
+        
       - elementParent: rootLink
         href: "/logo.png"
-        elementType: p
+        elementType: img
         attributeType: height
         attributeValue: 18
 
