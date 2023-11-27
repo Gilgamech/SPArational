@@ -20,7 +20,8 @@ pages:
       - elementParent: rootLink
         href: "/logo.png"
         elementType: img
-        elementStyle: max-height: 18;
+        attributeType: height
+        attributeAction: 18
 
       - elementParent: menu
         elementType: span
