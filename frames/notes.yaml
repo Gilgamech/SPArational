@@ -1,8 +1,7 @@
 #SPYAMLVersion: 30OCT2023
-PageName: pageFrame.yaml
 Author: Stephen Gillie
-Created: 11/1/2023
-Updated: 11/1/2023
+Created: 11/26/2023
+Updated: 11/26/2023
 Notes: 2.0 - rewrite as SPA format.
 pages:
   main:
