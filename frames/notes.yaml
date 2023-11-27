@@ -21,7 +21,7 @@ pages:
         href: "/logo.png"
         elementType: img
         attributeType: max-height
-        attributeValue: 18
+        attributeAction: 18
 
       - elementParent: menu
         elementType: span
@@ -33,7 +33,7 @@ pages:
         innerText: Product Name
         onChange: "showResults(this.value)"
         attributeType: type
-        attributeValue: text
+        attributeAction: text
 
       - elementParent: menu
         elementClass: searchResult
