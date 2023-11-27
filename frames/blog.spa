@@ -1,47 +1,46 @@
 {
-	"jmlVersion": "30OCT2023",
-	"Author": "Stephen Gillie",
-	"Created":"11/26/2023",
-	"Updated": "11/26/2023",
-	"Notes": [
-	],
-	"pages": {
-		"main": {
-			"elements": [
-				{
-				"elementParent": "parentElement",
-				"elementClass":"titleContainer",
-				"id": "titleParent"
-				},
-				{
-				"elementParent": "titleParent",
-				"elementClass":"pageTitle",
-				"href":"/",
-				"elementType":"a",
-				"innerText": "Gilgamech Technologies"
-				},
-				{
-				"elementParent": "parentElement",
-				"elementClass":"navContainer",
-				"elementType":"nav"
-				},
-				{
-				"elementParent": "parentElement",
-				"elementType":"script",
-				"innerText": "convertWebElement('navContainer',"https://www.Gilgamech.com/sites/menu.md")"
-				},
-				{
-				"elementParent": "parentElement",
-				"elementClass":"textBubbleBG",
-				"id":"content"
-				},
-				{
-				"elementParent": "parentElement",
-				"elementType":"script",
-				"innerText": "convertWebElement('content',decodeURIComponent(window.location.pathname).replace("html","md"))"
-				},
-				"https://www.sparational.com/sites/footer.spa"
-			]
-		}
-	}
+  "jmlVersion": "30OCT2023",
+  "Author": "Stephen Gillie",
+  "Created": "11/26/2023",
+  "Updated": "11/26/2023",
+  "Notes": [],
+  "pages": {
+    "main": {
+      "elements": [
+        {
+          "elementParent": "parentElement",
+          "elementClass": "titleContainer",
+          "id": "titleParent"
+        },
+        {
+          "elementParent": "titleParent",
+          "elementClass": "pageTitle",
+          "href": "/",
+          "elementType": "a",
+          "innerText": "Gilgamech Technologies"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "navContainer",
+          "elementType": "nav"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "innerText": "convertWebElement('navContainer','https://www.Gilgamech.com/sites/menu.md')"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementClass": "textBubbleBG",
+          "id": "content"
+        },
+        {
+          "elementParent": "parentElement",
+          "elementType": "script",
+          "innerText": "convertWebElement('content',decodeURIComponent(window.location.pathname).replace('html','md'))"
+        },
+        "https://www.sparational.com/sites/footer.spa"
+      ]
+    }
+  }
 }
