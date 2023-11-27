@@ -50,10 +50,10 @@ pages:
         elementType: span
         innerText: .
 
-      - elementParent: Interstitial
+      - elementParent: parentElement
         elementType: br
 
-      - elementParent: Interstitial
+      - elementParent: parentElement
         elementType: br
 
       - elementParent: parentElement
