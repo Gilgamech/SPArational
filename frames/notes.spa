@@ -24,8 +24,8 @@
 				"elementParent": "rootLink",
 				"href":"/logo.png",
 				"elementType":"img",
-				"attributeType": "height",
-				"attributeAction": "18"
+				"attributeType": "width",
+				"attributeAction": "140"
 				},
 				{
 				"elementParent": "menu",
