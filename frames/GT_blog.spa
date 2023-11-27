@@ -22,8 +22,8 @@
 				},
 				{
 				"elementParent": "parentElement",
-				"elementType":"nav"
-				"id":"navContainer",
+				"elementType":"nav",
+				"id":"navContainer"
 				},
 				{
 				"elementParent": "parentElement",
