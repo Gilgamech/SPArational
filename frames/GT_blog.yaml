@@ -17,8 +17,8 @@ pages:
         innerText: Gilgamech Technologies
 
       - elementParent: parentElement
-        elementClass: navContainer
         elementType: nav
+        id: navContainer
 
       - elementParent: parentElement
         elementType: script

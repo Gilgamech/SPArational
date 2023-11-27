@@ -22,8 +22,8 @@
 				},
 				{
 				"elementParent": "parentElement",
-				"elementClass":"navContainer",
 				"elementType":"nav"
+				"id":"navContainer",
 				},
 				{
 				"elementParent": "parentElement",
@@ -53,6 +53,7 @@
 				"innerText":" to the "
 				},
 				{
+				"elementParent": "Sentence",
 				"href":"https://www.youtube.com/watch?v=zy9FkAXMBfk",
 				"elementType":"a",
 				"innerText": "ridiculous"
