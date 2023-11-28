@@ -27,7 +27,7 @@
         {
           "elementParent": "parentElement",
           "elementType": "script",
-          "innerText": "convertWebElement('navContainer','https://www.Gilgamech.com/sites/menu.md')"
+          "innerText": "convertWebElement('navContainer','/menu.md')"
         },
         {
           "elementParent": "parentElement",
@@ -39,7 +39,7 @@
           "elementType": "script",
           "innerText": "convertWebElement('content',decodeURIComponent(window.location.pathname).replace('html','md'))"
         },
-        "https://www.sparational.com/sites/footer.spa"
+        "$_.frame.footer"
       ]
     }
   }
