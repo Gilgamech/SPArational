@@ -193,7 +193,7 @@ function convertWebElement(parentElement,URL,frameJml){
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) {
 			case "spa": 
-				let parsedRewrite = rewriteJson(JSON.parse(callback)
+				let parsedRewrite = rewriteJson(JSON.parse(callback))
 				if (frameJml) {
 					let parsedFrame = JSON.parse(frameJml)
 					parsedPage.frame = []
@@ -205,7 +205,7 @@ function convertWebElement(parentElement,URL,frameJml){
 					}
 					parsedRewrite = rewriteJson(parsedPage,parsedPage)
 				} else {
-					cje2(parentElement,parsedRewrite.pages.main.elements))
+					cje2(parentElement,parsedRewrite.pages.main.elements)
 				}
 				break;
 			case "csv": 
