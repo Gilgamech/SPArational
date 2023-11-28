@@ -187,7 +187,7 @@ function rebuildElement(elementId) {
 
 //Multisite tools
 function convertWebElement(parentElement,URL,rebuildFirst){
-	if (rebuildFirst) {}//rebuildElement(parentElement)} // Doesn't work yet
+    //frameJml is JML injected into the frame.
 	webRequest("Get",URL,function(callback){
 		let urlParts = URL.split(".");
 		let extension = urlParts[urlParts.length -1];
@@ -243,12 +243,12 @@ function rewriteJson(data,baseData) {
 	//console.log(data[element])
 
 		if (typeof data[element] === "string") {
-			if (data[element].substr(0,2) == "$_") {
-				console.log(eval(data[element].replace("$_","baseData")))
-				try{ console.log("bd: "+JSON.stringify(baseData))}catch{}
+			if (data[element].substr(0,2) == "$_") {//Replace-o-rama! Full SPA pages - now in JML or YAML - can support $_ "dollarsign-underscore" variable replacement from anywhere within the document.
+				//console.log(eval(data[element].replace("$_","baseData")))
+				//try{ console.log("bd: "+JSON.stringify(baseData))}catch{}
 				data[element] = eval(data[element].replace("$_","baseData"))
 					
-			} else if (data[element].substr(0,4) == "http") {
+			} else if (data[element].substr(0,4) == "http") {//Drop your load in the road! Leave a URL at the start of any line to have the page eventually load and display that data.
 				data[element] = {"elementParent":"parentElement","elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+"\")")}
 			}; // end if element.substr
 			
@@ -331,7 +331,8 @@ function convertMdToSpa(markdown) {
 		firstChar = line.charAt(0);
 		secondChar = line.charAt(1);
 
-		//Handle headers, lists, blockquotes, etc
+		//Handle headers, lists, blockquotes, etc. Every switch has to have a default section appends out with JML for a P element having line as the innerText. 
+		//Intake Markdown, output JML
 		switch (firstChar) {
 			case "#":
 			//Headings
@@ -403,7 +404,7 @@ function convertMdToSpa(markdown) {
 						break;
 					default:
 						break;
-				}
+				}; //end switch secondChar
 				break;
 				
 			//Ordered Lists
@@ -445,16 +446,16 @@ function convertMdToSpa(markdown) {
 						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 						break;
 				break;
-				}
+				}; //end switch secondChar
 			break;
 			default:
 				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"innerText\": \""+line+"\"},"
 				break;
 		}; //end switch firstChar
 		prevTabLevel = tabLevel
-
-		//Links
 		try {
+		
+		//Semantic Tags
 			//This system splits out by JML, selects the last one, parses. 
 			let outSplit = out.split("},{")
 			outSplit = outSplit[outSplit.length -1]
@@ -473,18 +474,18 @@ function convertMdToSpa(markdown) {
 							//Generates an ID if none. 
 							if (element.id == null) {element.id = getBadPW()}
 
-							//Replaces the innerTxt and linkTxt with the ID and re-caps. 
+							//Replaces the innerText and linkText with the ID and re-caps. 
 							out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
 							
-							//Encapsulates innerTxt then linkTxt with JML.  
-							//Reattach the trailing text. Need to test with multiple links in a single line.
 							out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerTxt +'\",\"href\":\"' +linkTxt +"\"},"
+							//Encapsulates innerText then linkText with JML.  
 							
+							//Reattach the trailing text. 
 							let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
 							if (endTxt) {
 								out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-								}
-						}; //end tex.includes
+							}; //end if endTxt
+						}; //end if tex
 					}; //end for tex
 			}; //end for txt
 			
@@ -528,7 +529,6 @@ function mdArrayToTable(parentElement,newTableID,array,classList,styleList) {
 		}
 	};
 }
-
 
 //Text tools
 function colorifyWords(divid, replaceWord, replaceClass) {
