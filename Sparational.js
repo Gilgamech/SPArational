@@ -193,8 +193,9 @@ function convertWebElement(parentElement,URL,frameJml){
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) {
 			case "spa": 
-				if (frameJml) {
 				let parsedRewrite = ""
+				if (frameJml) {
+					let parsedPage = JSON.parse(callback)
 					let parsedFrame = JSON.parse(frameJml)
 					parsedPage.frame = []
 					for (key of getKeys(parsedFrame)) {
