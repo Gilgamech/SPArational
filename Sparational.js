@@ -203,7 +203,7 @@ function convertWebElement(parentElement,URL,frameJml){
 					console.log(cmd); 
 					eval(cmd)
 				}
-				cje2(parentElement,rewriteJson(parsedPage,parsedPage).pages.main.elements)
+				cje2(parentElement,rewriteJson(rewriteJson(parsedPage,parsedPage),parsedPage).pages.main.elements)
 				break;
 			case "csv": 
 				mdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
