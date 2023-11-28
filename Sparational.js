@@ -199,7 +199,7 @@ function convertWebElement(parentElement,URL,frameJml){
 				for (key of getKeys(frameJml)) {
 					//Quick and dirty way to copy one sub-variable to the other.
 					cmd = "parsedJson.frame."+key+"= frameJml."+key; 
-					//console.log(cmd); 
+					console.log(cmd); 
 					eval(cmd)
 				}
 				cje2(parentElement,rewriteJson(parsedJson,parsedJson).pages.main.elements)
