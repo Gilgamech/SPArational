@@ -204,7 +204,7 @@ function convertWebElement(parentElement,URL,frameJml){
 						console.log(cmd); 
 						eval(cmd)
 					}
-					parsedRewrite = rewriteJson(parsedPage,parsedPage)
+					parsedRewrite = rewriteJson(rewriteJson(parsedPage,parsedPage),parsedPage)
 				} else {
 					parsedRewrite = rewriteJson(JSON.parse(callback))
 				}
