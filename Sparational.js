@@ -1,16 +1,16 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.23 - Make faster websites faster.
+//SPArational.js v3.23.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 11/26/2023
+//Last updated: 11/28/2023
 //Notes:
 //Sparational development goal: "Why use more than CSS and Markdown and the occasional data source to make a website?" Most people just want to throw together some Markdown files in folders, add CSS and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
 //If at first you duplicate code, refactor and refactor again.
 
 //Version history:
+//3.23.1: Add SPA rewrite section to convertWebElement. 
 //3.23: Add rewriteJson. Fully depreciate experimental async rwjs2 and soft-depreciate rwjs. 
 //3.22: Add CSV support to convertWebElement, through mdArrayToTable. 
-//3.21.9: Emergency bugfix for bold in convertMdToSpa. 
 
 
 //Element tools
@@ -186,15 +186,23 @@ function rebuildElement(elementId) {
 	cje2(newElement[0].elementParent,newElement);
 }
 
-//Sitelet tools
-function convertWebElement(parentElement,URL,rebuildFirst){
-	if (rebuildFirst) {}//rebuildElement(parentElement)} // Doesn't work yet
+//Multisite tools
+function convertWebElement(parentElement,URL,frameJml){
+	//frameJml is JML injected into the frame.
 	webRequest("Get",URL,function(callback){
 		let urlParts = URL.split(".");
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) {
 			case "spa": 
-				cje2(parentElement,rewriteJson(JSON.parse(callback).pages.main.elements))
+				let parsedJson = JSON.parse(callback)
+				parsedJson.frame = []
+				for (key of getKeys(frameJml)) {
+					//Quick and dirty way to copy one sub-variable to the other.
+					cmd = "parsedJson.frame."+key+"= frameJml."+key; 
+					//console.log(cmd); 
+					eval(cmd)
+				}
+				cje2(parentElement,rewriteJson(parsedJson,parsedJson).pages.main.elements)
 				break;
 			case "csv": 
 				mdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
