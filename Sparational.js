@@ -194,11 +194,12 @@ function convertWebElement(parentElement,URL,frameJml){
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) {
 			case "spa": 
-				let parsedJson = JSON.parse(callback)
-				parsedJson.frame = []
-				for (key of getKeys(frameJml)) {
+				let parsedPage = JSON.parse(callback)
+				let parsedFrame = JSON.parse(frameJml)
+				parsedPage.frame = []
+				for (key of getKeys(parsedFrame)) {
 					//Quick and dirty way to copy one sub-variable to the other.
-					cmd = "parsedJson.frame."+key+"= frameJml."+key; 
+					cmd = "parsedPage.frame."+key+"= parsedFrame."+key; 
 					console.log(cmd); 
 					eval(cmd)
 				}
