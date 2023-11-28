@@ -203,9 +203,9 @@ function convertWebElement(parentElement,URL,frameJml){
 						console.log(cmd); 
 						eval(cmd)
 					}
-					let parsedRewrite = rewriteJson(parsedPage,parsedPage)
+					parsedRewrite = rewriteJson(parsedPage,parsedPage)
 				} else {
-					let parsedRewrite = rewriteJson(JSON.parse(callback))
+					parsedRewrite = rewriteJson(JSON.parse(callback))
 				}
 				cje2(parentElement,parsedRewrite.pages.main.elements)
 				break;
