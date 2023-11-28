@@ -1,5 +1,5 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.23.2 - Make faster websites faster.
+//SPArational.js v3.23.3 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 11/26/2023
@@ -8,9 +8,9 @@
 //If at first you duplicate code, refactor and refactor again.
 
 //Version history:
+//3.23.3: Readd SPA rewrite section. 
 //3.23.2: Revert for further testing. 
 //3.23.1: Add SPA rewrite section to convertWebElement. 
-//3.23: Add rewriteJson. Fully depreciate experimental async rwjs2 and soft-depreciate rwjs. 
 
 //Element tools
 function getElement($elementId){
@@ -186,14 +186,27 @@ function rebuildElement(elementId) {
 }
 
 //Multisite tools
-function convertWebElement(parentElement,URL,rebuildFirst){
+function convertWebElement(parentElement,URL,frameJml){
     //frameJml is JML injected into the frame.
 	webRequest("Get",URL,function(callback){
 		let urlParts = URL.split(".");
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) {
 			case "spa": 
-				cje2(parentElement,rewriteJson(JSON.parse(callback).pages.main.elements))
+				let parsedRewrite = rewriteJson(JSON.parse(callback)
+				if (frameJml) {
+					let parsedFrame = JSON.parse(frameJml)
+					parsedPage.frame = []
+					for (key of getKeys(parsedFrame)) {
+						//Quick and dirty way to copy one sub-variable to the other.
+						cmd = "parsedPage.frame."+key+"= parsedFrame."+key; 
+						console.log(cmd); 
+						eval(cmd)
+					}
+					parsedRewrite = rewriteJson(parsedPage,parsedPage)
+				} else {
+					cje2(parentElement,parsedRewrite.pages.main.elements))
+				}
 				break;
 			case "csv": 
 				mdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
