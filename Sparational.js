@@ -193,8 +193,8 @@ function convertWebElement(parentElement,URL,frameJml){
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) {
 			case "spa": 
-				let parsedRewrite = rewriteJson(JSON.parse(callback))
 				if (frameJml) {
+				let parsedRewrite = ""
 					let parsedFrame = JSON.parse(frameJml)
 					parsedPage.frame = []
 					for (key of getKeys(parsedFrame)) {
@@ -203,10 +203,11 @@ function convertWebElement(parentElement,URL,frameJml){
 						console.log(cmd); 
 						eval(cmd)
 					}
-					parsedRewrite = rewriteJson(parsedPage,parsedPage)
+					let parsedRewrite = rewriteJson(parsedPage,parsedPage)
 				} else {
-					cje2(parentElement,parsedRewrite.pages.main.elements)
+					let parsedRewrite = rewriteJson(JSON.parse(callback))
 				}
+				cje2(parentElement,parsedRewrite.pages.main.elements)
 				break;
 			case "csv": 
 				mdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
