@@ -27,7 +27,7 @@
         {
           "elementParent": "parentElement",
           "elementType": "script",
-          "innerText": "convertWebElement('navContainer','/menu.md')"
+          "innerText": "convertWebElement('navContainer','/sites/menu.md')"
         },
         {
           "elementParent": "parentElement",
