@@ -338,6 +338,13 @@ function convertWebElement(parentElement,URL,frameJml){
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) { //Be caps indifferent.
 			case "spa": 
+			case "spA": 
+			case "sPa": 
+			case "sPA": 
+			case "Spa": 
+			case "SpA": 
+			case "SPa": 
+			case "SPA": 
 				let parsedRewrite = ""
 				if (frameJml) {
 					let parsedPage = JSON.parse(callback)
@@ -356,14 +363,29 @@ function convertWebElement(parentElement,URL,frameJml){
 				cje2(parentElement,parsedRewrite.pages.main.elements)
 				break;
 			case "csv": 
+			case "csV": 
+			case "cSv": 
+			case "cSV": 
+			case "Csv": 
+			case "CsV": 
+			case "CSv": 
+			case "CSV": 
 				convertMdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
 				break;
 			case "md": 
+			case "mD": 
+			case "Md": 
+			case "MD": 
 				//console.log(parentElement)
 				cje2(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
 				break;
+			case "yml": 
 			case "yaml": 
-				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
+				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
+				//cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
+				break;
+			case "json": 
+				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
 				//cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
 				break;
 			default:
