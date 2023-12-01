@@ -392,7 +392,7 @@ function convertWebElement(parentElement,URL,frameJml){
 				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
 				break;
 		}
-	},"Get","","",30)
+	})
 };
 //convertWebElement can take MDArray and output a table. What would be the extension on that?
 //convertWebElement can take PNG, GIF, BMP, ICO, etc and output an image element with the image URI as a source.
