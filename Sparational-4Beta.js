@@ -1,15 +1,29 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.23.3 - Make faster websites faster.
+//SPArational.js v4.-7.0 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 11/26/2023
+//Last updated: 12/1/2023
+//Version history:
+//4.-7.0 Add localStorage caching for webRequest.
+//4.-8.0: Add beta channel for testing without disrupting sites. 
+//3.23.3: Readd SPA rewrite section. 
 //Notes:
-//Sparational development goal: "Why use more than CSS and Markdown and the occasional data source to make a website?" Most people just want to throw together some Markdown files in folders, add CSS and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
-//If at first you duplicate code, refactor and refactor again.
 
-//Use start and end control characters as parse locations in substring.
-//ifAlive - Reload every X seconds.
-//Markdown HTTP passthrough. 
+/* Roadmap (subject to rearranging):
+//4.-7.0 Add localStorage caching for webRequest, and indefinite 404 cache fallback for best offline service. Prepend with "Data source offline. Using cached data from (formatted date/time):"
+//4.-6.0 Add reloadEvery parameter to webRequest, have it run on a timer, and have it use the indefinite fallback. Or maybe this should be a separate function? But make some way for automatic data reload. And add like colon-time detection after an anchor? Or require semantic tag?
+//4.-5.0 finish convertMdToSpa HTTP passthrough
+//4.-4.0 finish convertMdToSpa Markdown parsing
+//4.-3.0 finish convertMdToSpa Semantic Markdown parsing
+//4.-2.0 finish convertYamlToJson.
+//4.-1.0 finish YAML SPA detection. 
+//4.-0.0 finish direct-JSON display.
+//4.0.0 Boom Clap
+*/
+
+//Depreciate the JML SPA file format for YAML - keep all the support but don't talk about it - if someone asks about JML or JSON, talk about YAML support and direct-JSON display. 
+//- Convert all SPA to Semantic Markdown where possible, and YAML where not.
+//- Change the SPA format from Json to Yaml.
 
 /* # How to set up your own notes site: 
 1. Already have both an AWS account and a GitHub account.
@@ -31,12 +45,6 @@ This system is funded by using the plot from Office Space and also Superman 2: i
 - 10M HTTP requests from CDN
   - 20k from S3 to CDN
 */
-
-
-//Version history:
-//3.23.3: Readd SPA rewrite section. 
-//3.23.2: Revert for further testing. 
-//3.23.1: Add SPA rewrite section to convertWebElement. 
 
 /*Sparational 4.0 - Boom Clap
 It's in the name - rational single page applications.
@@ -365,15 +373,6 @@ function convertWebElement(parentElement,URL,frameJml){
 	},"","",30)
 };
 //convertWebElement can take MDArray and output a table. What would be the extension on that?
-//convertWebElement can take a video website and output an embedded video. Based on domain. Start with YT and add others later.
-
-/*Model:
-Page calls CWE
-CWE downloads page and sends through parser, then sends through CJE. 
-CJE parses and displays page, including replacing HTTP links with CWE in a script tag.
-CWE downloads site and sends through parser, then sends through CJE. 
-
-*/
 
 //Format transformations
 function rewriteJson(data,baseData) {
@@ -800,16 +799,15 @@ function convertMdArrayToTable(parentElement,newTableID,array,classList,styleLis
 }
 
 //Supporting functions
-var spaRationalCachingVar = [];
 function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached) {
 //if now is smaller than duration, read from cache.
-	if (spaRationalCachingVar[$URI] && Date.now() < spaRationalCachingVar[$URI+":duration"]) {
-		console.log($URI+" cached for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":duration"]) {
+		console.log($URI+" cached for "+((window.localStorage[$URI+":duration"]-Date.now())/1000)+" more seconds.")
 		$status = "304";
-		returnVar = spaRationalCachingVar[$URI];
+		returnVar = window.localStorage[$URI];
 		$callback(returnVar,$status);
 		return;
-	}; //end if spaRationalCachingVar
+	}; //end if window.localStorage
 
 	var $status;
 	var xhRequest = new XMLHttpRequest();
@@ -834,12 +832,12 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached) {
 						returnVar = JSON.parse(returnVar);
 					}; // end if $JSON
 					if ($cached > 0) {
-						spaRationalCachingVar[$URI] = returnVar;
-						spaRationalCachingVar[$URI+":duration"] = ($cached * 1000) + Date.now();
-						console.log("Caching "+$URI+" for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+						window.localStorage[$URI] = returnVar;
+						window.localStorage[$URI+":duration"] = ($cached * 1000) + Date.now();
+						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":duration"]-Date.now())/1000)+" more seconds.")
 					} else if ($cached = 0) {
-						spaRationalCachingVar[$URI] = null;
-						spaRationalCachingVar[$URI+":duration"] = Date.now();
+						window.localStorage[$URI] = null;
+						window.localStorage[$URI+":duration"] = Date.now();
 						console.log("Invalidating "+$URI)
 					}; //end if $cached
 					$callback(returnVar,$status);
@@ -1292,17 +1290,4 @@ function createClickHandler(col,table) {
 	formatMax(col,table)
   };
 }
-
-//textToNumNotation power values
-var $thousand = 1000;
-var $million = $thousand *$thousand;
-var $billion = $million *$thousand;
-var $trillion = $billion *$thousand;
-var $quadrillion = $trillion *$thousand;
-var $quintillion = $quadrillion *$thousand;
-var $sixtillion = $quadrillion *$thousand;
-var $septillion = $sixtillion *$thousand;
-var $octillion = $septillion *$thousand;
-var $nonillion = $octillion *$thousand;
-var $decillion = $nonillion *$thousand;
 
