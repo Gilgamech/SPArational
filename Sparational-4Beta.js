@@ -333,7 +333,7 @@ function rebuildElement(elementId) {
 //Multisite tools
 function convertWebElement(parentElement,URL,frameJml){
     //frameJml is JML injected into the frame.
-	webRequest("Get",URL,function(callback){
+	webRequest(URL,function(callback){
 		let urlParts = URL.split(".");
 		let extension = urlParts[urlParts.length -1];
 		switch (extension) { //Be caps indifferent.
@@ -392,9 +392,10 @@ function convertWebElement(parentElement,URL,frameJml){
 				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
 				break;
 		}
-	},"","",30)
+	},"Get","","",30)
 };
 //convertWebElement can take MDArray and output a table. What would be the extension on that?
+//convertWebElement can take PNG, GIF, BMP, ICO, etc and output an image element with the image URI as a source.
 
 //Format transformations
 function rewriteJson(data,baseData) {
@@ -821,7 +822,7 @@ function convertMdArrayToTable(parentElement,newTableID,array,classList,styleLis
 }
 
 //Supporting functions
-function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached) {
+function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 //if now is smaller than duration, read from cache.
 	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":duration"]) {
 		console.log($URI+" cached for "+((window.localStorage[$URI+":duration"]-Date.now())/1000)+" more seconds.")
