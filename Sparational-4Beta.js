@@ -18,7 +18,7 @@
 //4.-2.0 finish convertYamlToJson.
 //4.-1.0 finish YAML SPA detection. 
 //4.-0.0 finish direct-JSON display.
-//4.0.0 Boom Clap
+//4.0.0 Boom Clap - depreciate old functions.
 */
 
 //Depreciate the JML SPA file format for YAML - keep all the support but don't talk about it - if someone asks about JML or JSON, talk about YAML support and direct-JSON display. 
@@ -336,7 +336,7 @@ function convertWebElement(parentElement,URL,frameJml){
 	webRequest("Get",URL,function(callback){
 		let urlParts = URL.split(".");
 		let extension = urlParts[urlParts.length -1];
-		switch (extension) {
+		switch (extension) { //Be caps indifferent.
 			case "spa": 
 				let parsedRewrite = ""
 				if (frameJml) {

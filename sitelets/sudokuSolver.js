@@ -110,38 +110,5 @@ try {
 	}; //end for row
 }; //end function
 
-//Utility functions created during development, might be useful later.
-function factorySolverArray(){
-	for (row=0;row<9;row++){
-		for (col=0;col<9;col++){
-			solverArray[row][col] = [1,2,3,4,5,6,7,8,9]
-		}; //end for col
-	}; //end for row
-}; //end function
-
-function loopThroughArray(arrayToLoop,$callback){
-	for (row=0;row<9;row++){
-		for (col=0;col<9;col++){
-			$callback(row,col)
-		}; //end for col
-	}; //end for row
-}; //end function
-
-function readArrayToSolve(arrayToRead){
-	loopThroughArray(solverArray,function(){
-		var val = getNumberFromDiv('sudoku_'+row+'_'+col);
-		if (val != 0){solverArray[row][col] = val}
-	})//end loopThroughArray
-}; //end function
-
-function writeArrayToSolve(arrayToWrite){
-	loopThroughArray(solverArray,function(){
-			var val = arrayToWrite[row][col]
-			if (val == null){val = ''}
-			if (typeof val == "object"){val = ''}
-			writeElement('sudoku_'+row+'_'+col,val)
-	})//end loopThroughArray
-}; //end function 
-
 
 

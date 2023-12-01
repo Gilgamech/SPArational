@@ -1,9 +1,9 @@
 #SPA-YAML-Version: 30OCT2023
-PageName: footer.yaml
 Author: Stephen Gillie
 Created: 11/1/2023
 Updated: 11/25/2023
-Notes: 2.0 - rewrite as SPA format.
+Notes: 
+- 2.0 - rewrite as SPA format.
 pages:
   main:
     elements:
@@ -22,4 +22,4 @@ pages:
         innerText: Sparational.js.
         elementClass: copyright
         elementType: a
-        href: "https: //www.Sparational.com/"
+        href: "https://www.Sparational.com/"

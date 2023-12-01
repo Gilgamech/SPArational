@@ -9,6 +9,13 @@
 //0.13.2: Convert if above/below different checks from if to while.
 //0.13.3: Bugfix to top row check.
 
+//To Add: 
+//Prevent scroll above top row.
+//Prevent scroll below bottom row.
+//Improve scrolling speed.
+//Add infinite loop option.
+
+
 function addTableRow(parentTableId,array,beforeRow=0) {
     const newNode = document.createElement("tr");
     newNode.id = getBadPW();
