@@ -601,7 +601,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 				returnVar = window.localStorage[$URI];
 				$callback(returnVar,$status);
 				n = (n*1) + 1;
-			} else {
+			} else if (n==0) {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
 		} catch(e) {console.log(e)}; // end try
