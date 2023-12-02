@@ -394,8 +394,6 @@ function convertWebElement(parentElement,URL,frameJml){
 		}
 	})
 };
-//convertWebElement can take MDArray and output a table. What would be the extension on that?
-//convertWebElement can take PNG, GIF, BMP, ICO, etc and output an image element with the image URI as a source.
 
 //Format transformations
 function rewriteJson(data,baseData) {
@@ -614,15 +612,16 @@ function convertMdToSpa(markdown) {
 				//THEAD wrapped in THEAD tags and body wrapped in TBODY tags
 				//Wrap whole thing in Table tags
 			break;
+			case "h":
+				if (line.substr(0,4) == "http") {//Drop your load in the road! Leave a URL at the start of any line to have the page eventually load and display that data.
+					out += '"'+line+'",'
+				}; // end if element.substr
+			break;
 			default:
 				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"innerText\": \""+line+"\"},"
 				break;
 		}; //end switch firstChar
 		prevTabLevel = tabLevel
-		
-		//Images
-		//a.match(/!\[\S+\]\(\S+\)/g)
-		// ![image](URL "alt text")
 		
 			//Links
 			//This system splits out by JML, selects the last one, parses. 
@@ -658,60 +657,6 @@ function convertMdToSpa(markdown) {
 					}; //end for tex
 			}; //end for txt
 			
-/*//Effects  - need to regex and replace inline
-case "**":
-	//Replace needs to happen before the case above, to prevent these as being interpreted as bullets when they start a line. Also it needs to happen after, because it needs to read from before. So the Bold section needs to skip - difference between bold and bullet is a space between? Or maybe regex it and set a variable saying which? 
-	
-	innerText = innerText.replaceAll("**","")
-	elementType = "strong"
-	break;
-case "*":
-	innerText = innerText.replaceAll("*","")
-	elementType = "i"
-	break;
-case "__":
-	innerText = innerText.replaceAll("__","")
-	elementType = "stsrong"
-	break;
-case "_":
-	innerText = innerText.replaceAll("_","")
-	elementType = "i"
-	break;
-case "~~":
-	innerText = innerText.replaceAll("~~","")
-	elementType = "strike"
-	break;
-//Code
-case "`":
-	elementType = "code"
-	break;
-	
-
-
-## 
-Like links, Images also have a footnote style syntax
-![Alt text][id]
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
-
-### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
-Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:
-Shortcuts (emoticons): :-) :-( 8-) ;)
-
-Superscript 19^th^
-Subscript H~2~O
-++Inserted text++
-==Marked text==
-Footnote 1 link[^first].
-Footnote 2 link[^second].
-Inline footnote^[Text of inline footnote] definition.
-Duplicated footnote reference[^second].
-[^first]: Footnote **can have markup**
-	and multiple paragraphs.
-[^second]: Footnote text.
-
-        }
-*/
-
 	}; //end for line
 	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
 	return out;
