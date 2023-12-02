@@ -451,7 +451,7 @@ function convertMdToSpa(markdown) {
 			break;
 			case "h":
 				if (line.substr(0,4) == "http") {//Drop your load in the road! Leave a URL at the start of any line to have the page eventually load and display that data.
-					out += '"'+line+'",'
+					out += '{"httpPassthrough":"'+line+'"},'
 				}; // end if element.substr
 			break;
 			default:
@@ -467,6 +467,9 @@ function convertMdToSpa(markdown) {
 			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
 			console.log("outSplit: "+outSplit)
 			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
+			if (element.httpPassthrough) {
+				out = out.replaceAll(outSplit,'"'+element.urlPassthrough+'",')
+			}
 			//Takes the innerText value, and matches then splits from the same regex
 			for (txt of element.innerText.split(/\[/g)) {
 					txtSplit = txt.split(/\)/g)
