@@ -469,33 +469,35 @@ function convertMdToSpa(markdown) {
 			console.log("element: "+JSON.stringify(element))
 			if (element.httpPassthrough) {
 				out = out.replaceAll(outSplit,'"'+element.urlPassthrough+'",')
-			}
+			} else {
+				
 			//Takes the innerText value, and matches then splits from the same regex
-			for (txt of element.innerText.split(/\[/g)) {
-					txtSplit = txt.split(/\)/g)
-					for (tex of txtSplit) {
-						if (tex.includes("](")) {
-							let regex = /\]\(/
-							let txt0 = tex.split(regex)
-							let innerText = txt0[0]
-							let linkText = txt0[1]
-							//Generates an ID if none. 
-							if (element.id == null) {element.id = getBadPW()}
+				for (txt of element.innerText.split(/\[/g)) {
+						txtSplit = txt.split(/\)/g)
+						for (tex of txtSplit) {
+							if (tex.includes("](")) {
+								let regex = /\]\(/
+								let txt0 = tex.split(regex)
+								let innerText = txt0[0]
+								let linkText = txt0[1]
+								//Generates an ID if none. 
+								if (element.id == null) {element.id = getBadPW()}
 
-							//Replaces the innerText and linkText with the ID and re-caps. 
-							out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-							
-							out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerText +'\",\"href\":\"' +linkText +"\"},"
-							//Encapsulates innerText then linkText with JML.  
-							
-							//Reattach the trailing text. 
-							let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
-							if (endTxt) {
-								out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-							}; //end if endTxt
-						}; //end if tex
-					}; //end for tex
-			}; //end for txt
+								//Replaces the innerText and linkText with the ID and re-caps. 
+								out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
+								
+								out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerText +'\",\"href\":\"' +linkText +"\"},"
+								//Encapsulates innerText then linkText with JML.  
+								
+								//Reattach the trailing text. 
+								let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
+								if (endTxt) {
+									out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
+								}; //end if endTxt
+							}; //end if tex
+						}; //end for tex
+				}; //end for txt
+			}; //end if element
 			
 	}; //end for line
 	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
