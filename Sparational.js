@@ -9,7 +9,6 @@
 //3.23.1: Add SPA rewrite section to convertWebElement. 
 //Notes:
 
-
 //Element tools
 function getElement($elementId){
 	return document.getElementById($elementId)

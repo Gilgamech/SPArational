@@ -596,7 +596,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
 			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && n==0) {
-				console.log("Page "+$URI+" offline. Serving cached copy from "+(Date.now()-window.localStorage[$URI+":duration"])+"seconds ago.")
+				console.log("Page "+$URI+" offline. Serving cached copy from "+(Date.now()-window.localStorage[$URI+":duration"])+" seconds ago.")
 				$status = "304";
 				returnVar = window.localStorage[$URI];
 				$callback(returnVar,$status);
