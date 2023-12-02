@@ -551,10 +551,10 @@ function convertMdArrayToTable(parentElement,newTableID,array,classList,styleLis
 
 //Supporting functions
 //window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest.
-function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
+function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
 //if now is smaller than duration, read from cache.
-	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":duration"]) {
-		console.log($URI+" cached for "+((window.localStorage[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":onlineCacheDuration"]) {
+		console.log($URI+" cached for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" more seconds.")
 		$status = "304";
 		returnVar = window.localStorage[$URI];
 		$callback(returnVar,$status);
@@ -584,15 +584,15 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 					if ($JSON) {
 						returnVar = JSON.parse(returnVar);
 					}; // end if $JSON
-					if ($cached > 0) {
+					if (onlineCacheDuration > 0) {
 						window.localStorage[$URI] = returnVar;
-						window.localStorage[$URI+":duration"] = ($cached * 1000) + Date.now();
-						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":duration"]-Date.now())/1000)+" seconds.")
-					} else if ($cached = 0) {
+						window.localStorage[$URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
+						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" seconds.")
+					} else if (onlineCacheDuration <= 0) {
 						window.localStorage[$URI] = null;
-						window.localStorage[$URI+":duration"] = Date.now();
+						window.localStorage[$URI+":onlineCacheDuration"] = Date.now();
 						console.log("Invalidating "+$URI)
-					}; //end if $cached
+					}; //end if onlineCacheDuration
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
 			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && n==0) {
