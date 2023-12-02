@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v4.-7.2 - Make faster websites faster.
+//SPArational.js v4.-6.0 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 12/2/2023
 //Version history:
+//4.-6.0 convertMdToSpa HTTP passthrough complete.
+//4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. Caution: using this feature requires tombstoning deleted files.
 //4.-7.2: Rename cje2 to convertJmlToElements. 
-//4.-7.1 Remove frameJml parts as they were becoming an anti-pattern.
-//4.-7.0 Add localStorage caching for webRequest.
 //Notes:
 
 //Element tools
