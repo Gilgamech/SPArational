@@ -456,11 +456,11 @@ function convertMdToSpa(markdown) {
 		
 			//Links
 			//This system splits out by JML, selects the last one, parses. 
-			outSplit = out.split("},{")
+			let outSplit = out.split("},{")
 			outSplit = outSplit[outSplit.length -1]
 			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
 			//console.log("outSplit: "+outSplit)
-			element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
+			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
 			//Takes the innerText value, and matches then splits from the same regex
 			for (txt of element.innerText.split(/\[/g)) {
 					txtSplit = txt.split(/\)/g)
