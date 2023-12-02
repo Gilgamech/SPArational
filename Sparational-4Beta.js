@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v4.-7.0 - Make faster websites faster.
+//SPArational.js v4.-7.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 12/1/2023
+//Last updated: 12/2/2023
 //Version history:
+//4.-7.1 Remove frameJml parts as they were becoming an anti-pattern.
 //4.-7.0 Add localStorage caching for webRequest.
 //4.-8.0: Add beta channel for testing without disrupting sites. 
-//3.23.3: Readd SPA rewrite section. 
 //Notes:
 
 /* Roadmap (subject to rearranging):
@@ -345,22 +345,7 @@ function convertWebElement(parentElement,URL,frameJml){
 			case "SpA": 
 			case "SPa": 
 			case "SPA": 
-				let parsedRewrite = ""
-				if (frameJml) {
-					let parsedPage = JSON.parse(callback)
-					let parsedFrame = JSON.parse(frameJml)
-					parsedPage.frame = []
-					for (key of getKeys(parsedFrame)) {
-						//Quick and dirty way to copy one sub-variable to the other.
-						cmd = "parsedPage.frame."+key+"= parsedFrame."+key; 
-						console.log(cmd); 
-						eval(cmd)
-					}
-					parsedRewrite = rewriteJson(rewriteJson(parsedPage,parsedPage),parsedPage)
-				} else {
-					parsedRewrite = rewriteJson(JSON.parse(callback))
-				}
-				cje2(parentElement,parsedRewrite.pages.main.elements)
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
 				break;
 			case "csv": 
 			case "csV": 
