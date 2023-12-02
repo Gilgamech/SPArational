@@ -575,6 +575,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 	}; // end if $verb
 	xhRequest.open($verb, $URI, true);
 	xhRequest.onreadystatechange = function () {
+		let n = 0;
 		try {
 			$status = xhRequest.status;
 			if ($status == "200") {
@@ -594,11 +595,12 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 					}; //end if $cached
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
-			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI]) {
-				console.log("Page "+$URI+" offline. Serving cached copy from "+(((Date.now())/1000)-(window.localStorage[$URI+":duration"]))+"seconds ago.")
+			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && n==0) {
+				console.log("Page "+$URI+" offline. Serving cached copy from "+(((window.localStorage[$URI+":duration"])-(Date.now())/1000))+"seconds ago.")
 				$status = "304";
 				returnVar = window.localStorage[$URI];
 				$callback(returnVar,$status);
+				n++;
 			} else {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
