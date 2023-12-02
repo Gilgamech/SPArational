@@ -561,6 +561,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 		return;
 	}; //end if window.localStorage
 
+	let n = 0;
 	var $status;
 	var xhRequest = new XMLHttpRequest();
 	var returnVar;
@@ -575,7 +576,6 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 	}; // end if $verb
 	xhRequest.open($verb, $URI, true);
 	xhRequest.onreadystatechange = function () {
-		let n = 0;
 		try {
 			$status = xhRequest.status;
 			if ($status == "200") {
