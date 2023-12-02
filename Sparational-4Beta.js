@@ -577,7 +577,6 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 	xhRequest.onreadystatechange = function () {
 		try {
 			$status = xhRequest.status;
-			console.log($status)
 			if ($status == "200") {
 				if (xhRequest.readyState == 4) {
 					returnVar = xhRequest.responseText;
@@ -596,7 +595,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
 			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI]) {
-				console.log("Page "+$URI+" offline. Serving cached copy from "+(Date.now())/1000-(window.localStorage[$URI+":duration"])+"seconds ago.")
+				console.log("Page "+$URI+" offline. Serving cached copy from "+(((Date.now())/1000)-(window.localStorage[$URI+":duration"]))+"seconds ago.")
 				$status = "304";
 				returnVar = window.localStorage[$URI];
 				$callback(returnVar,$status);
