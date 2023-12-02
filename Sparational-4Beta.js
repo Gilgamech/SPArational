@@ -722,7 +722,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 					if ($cached > 0) {
 						window.localStorage[$URI] = returnVar;
 						window.localStorage[$URI+":duration"] = ($cached * 1000) + Date.now();
-						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":duration"]-Date.now())/1000)+" seconds.")
 					} else if ($cached = 0) {
 						window.localStorage[$URI] = null;
 						window.localStorage[$URI+":duration"] = Date.now();
@@ -730,6 +730,11 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 					}; //end if $cached
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
+			} else if ($status == "404" && window.localStorage[$URI]) {
+				console.log("Page "+$URI+" offline. Serving cached copy from "+(Date.now())/1000-(window.localStorage[$URI+":duration"])+"seconds ago.")
+				$status = "304";
+				returnVar = window.localStorage[$URI];
+				$callback(returnVar,$status);
 			} else {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
