@@ -466,9 +466,9 @@ function convertMdToSpa(markdown) {
 			outSplit = outSplit[outSplit.length -1]
 			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
 			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-			console.log("element: "+JSON.stringify(element))
 			if (element.httpPassthrough) {
 				out = out.replaceAll(outSplit,'"'+element.urlPassthrough+'",')
+				console.log("out: "+JSON.stringify(out))
 			} else {
 				
 			//Takes the innerText value, and matches then splits from the same regex
