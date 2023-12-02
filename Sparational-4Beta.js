@@ -620,64 +620,6 @@ function convertMdToSpa(markdown) {
 		}; //end switch firstChar
 		prevTabLevel = tabLevel
 		
-		//Semantic Tags
-//~[input:inputId](Placeholder)
-//~[button:buttonId](+1)~writeElement('inputId',readElement('inputId'+1))~
-			//This system splits out by JML, selects the last one, parses. 
-			let outSplit = out.split("},{")
-			outSplit = outSplit[outSplit.length -1]
-			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
-			//console.log("outSplit: "+outSplit)
-			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-			//Takes the innerText value, and matches then splits from the same regex
-			//~[button:buttonId](+1)~writeElement('inputId',readElement('inputId'+1))~
-			let tilde = element.innerText.split(/~/g) 
-			//'',[button:buttonId](+1), writeElement('inputId',readElement('inputId'+1)),''
-			//tilde[1] = ID section
-			//tilde[2] = onClick
-			//"~"+tilde[1]+"~"+tilde[2]+"~"
-			let tildeReplace = "~"+tilde[1]+"~"+tilde[2]+"~"
-			
-			for (txt of element.innerText.split(/~\[/g)) {
-				//button:buttonId](+1)~writeElement('inputId',readElement('inputId'+1))~
-					if (txt.includes("](")) {
-						//button:buttonId](+1, writeElement('inputId',readElement('inputId'+1))~
-						txtSplit = txt.split(/\)~/g)[0]
-						//button:buttonId](+1
-						//writeElement('inputId',readElement('inputId'+1))"
-						
-						txt0 = txtSplit.split(/\]\(/)
-						//button:buttonId
-						//+1
-						
-						//elementType = button
-						let elementType = txt0[0].split(":")[0]
-						//elementId = buttonId
-						let elementId = txt0[0].split(":")[1]
-						//innerText = +1
-						let innerText = txt0[1]
-						//onClick = writeElement('inputId',readElement('inputId'+1))
-						let onClick = tilde[2]
-						//Generates an ID if none. 
-						if (element.id == null) {element.id = getBadPW()}
-						
-						//Replaces the innerText and linkText with the ID and re-caps. 
-						console.log(txt)
-						out = out.replace(tildeReplace,"").replace(/~},$/,'","id":"'+element.id+'"},')
-						
-//~[button:buttonId](+1)"writeElement('inputId',readElement('inputId'+1))"
-						
-						//Encapsulates innerText then linkText with JML.  
-						out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText +"\",\"onClick\": \""+onClick +"\",\"id\":\""+elementId +"\"},"
-						
-						//Reattach the trailing text. 
-						let endTxt = txt[txt.indexOf(tildeReplace)+1]
-						if (endTxt) {
-							out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-						}; //end if endTxt
-					}; //end if txt
-			}; //end for txt
-			
 		//Images
 		//a.match(/!\[\S+\]\(\S+\)/g)
 		// ![image](URL "alt text")
