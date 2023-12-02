@@ -39,7 +39,7 @@
           "elementType": "script",
           "innerText": "convertWebElement('content',decodeURIComponent(window.location.pathname).replace('html','md'))"
         },
-        "$_.frame.footer"
+        "https://www.sparational.com/sites/footer.spa"
       ]
     }
   }
