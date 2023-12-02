@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v4.-7.1 - Make faster websites faster.
+//SPArational.js v4.-7.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 12/2/2023
 //Version history:
+//4.-7.2: Rename cje2 to convertJmlToElements. 
 //4.-7.1 Remove frameJml parts as they were becoming an anti-pattern.
 //4.-7.0 Add localStorage caching for webRequest.
-//4.-8.0: Add beta channel for testing without disrupting sites. 
 //Notes:
 
 /* Roadmap (subject to rearranging):
@@ -81,7 +81,7 @@ Depreciations:  ("Most" of these should goto Gilgamech.js or another site-specif
 - 
 
 Modifications:
-- Simplify linking to another section: "onClick": "rebuildElement('content');cje2('content',sites.pages.info.elements);", (Need to know that the page JS stores the page data in 'sites'.)
+- Simplify linking to another section: "onClick": "rebuildElement('content');convertJmlToElements('content',sites.pages.info.elements);", (Need to know that the page JS stores the page data in 'sites'.)
 - If no data source is specified, it defaults to looking for an index.spa/.yaml/.md/.jupyter in the root.
 - Spaconfig as a text file or section with config info.
 	- SPA files would have a spaconfig section off the main variable.
@@ -327,12 +327,11 @@ function rebuildElement(elementId) {
 
 	console.log(JSON.stringify(newElement));
 	deleteElement(elementId)
-	cje2(newElement[0].elementParent,newElement);
+	convertJmlToElements(newElement[0].elementParent,newElement);
 }
 
 //Multisite tools
-function convertWebElement(parentElement,URL,frameJml){
-    //frameJml is JML injected into the frame.
+function convertWebElement(parentElement,URL){
 	webRequest(URL,function(callback){
 		let urlParts = URL.split(".");
 		let extension = urlParts[urlParts.length -1];
@@ -362,19 +361,19 @@ function convertWebElement(parentElement,URL,frameJml){
 			case "Md": 
 			case "MD": 
 				//console.log(parentElement)
-				cje2(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
 				break;
 			case "yml": 
 			case "yaml": 
-				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
-				//cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
+				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
 				break;
 			case "json": 
-				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
-				//cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
+				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
 				break;
 			default:
-				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
 				break;
 		}
 	})
@@ -404,7 +403,7 @@ function rewriteJson(data,baseData) {
 	return data;
 }; // end function
 
-function cje2(parentElement,elements) {
+function convertJmlToElements(parentElement,elements) {
 	//Convert $JSON to Element 2 - full rebuild for v3.0.
 	var eParent = elements[0].elementParent;
 	elements = JSON.stringify(elements);
