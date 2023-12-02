@@ -467,7 +467,7 @@ function convertMdToSpa(markdown) {
 			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
 			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
 			if (element.httpPassthrough) {
-				out = out.replaceAll(outSplit,'"'+element.urlPassthrough+'",')
+				out = out.replaceAll(outSplit,'"'+element.httpPassthrough+'",')
 				console.log("out: "+JSON.stringify(out))
 			} else {
 				
