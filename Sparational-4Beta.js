@@ -5,7 +5,7 @@
 //Last updated: 12/2/2023
 //Version history:
 //4.-6.0 convertMdToSpa HTTP passthrough complete.
-//4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. Caution: using this feature requires tombstoning deleted files.
+//4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. 
 //4.-7.2: Rename cje2 to convertJmlToElements. 
 //Notes:
 
@@ -587,6 +587,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration =
 					if (onlineCacheDuration > 0) {
 						window.localStorage[$URI] = returnVar;
 						window.localStorage[$URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
+						window.localStorage[$URI+":offlineCacheDuration"] = (offlineCacheDuration * 1000) + Date.now();
 						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" seconds.")
 					} else if (onlineCacheDuration <= 0) {
 						window.localStorage[$URI] = null;
@@ -595,8 +596,8 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration =
 					}; //end if onlineCacheDuration
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
-			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && n==0) {
-				console.log("Page "+$URI+" offline. Serving cached copy from "+(Date.now()-window.localStorage[$URI+":duration"])+" seconds ago.")
+			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":offlineCacheDuration"] && n==0) { //&&
+				console.log("Page "+$URI+" offline. Serving cached copy.")
 				$status = "304";
 				returnVar = window.localStorage[$URI];
 				$callback(returnVar,$status);
