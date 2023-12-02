@@ -384,18 +384,12 @@ function rewriteJson(data,baseData) {
 	let n = 0;
 	//Rewrite data - Works on any JSON, not just SPA files.
 	for(element in data){
-	//console.log(data[element])
-
 		if (typeof data[element] === "string") {
 			if (data[element].substr(0,2) == "$_") {//Replace-o-rama! Full SPA pages - now in JML or YAML - can support $_ "dollarsign-underscore" variable replacement from anywhere within the document.
-				//console.log(eval(data[element].replace("$_","baseData")))
-				//try{ console.log("bd: "+JSON.stringify(baseData))}catch{}
 				data[element] = eval(data[element].replace("$_","baseData"))
-					
 			} else if (data[element].substr(0,4) == "http") {//Drop your load in the road! Leave a URL at the start of any line to have the page eventually load and display that data.
 				data[element] = {"elementParent":"parentElement","elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+"\")")}
 			}; // end if element.substr
-			
 		} else if (typeof data[element] === "object") { 
 			data[element] = rewriteJson(data[element],baseData)
 		}; //end if typeof
