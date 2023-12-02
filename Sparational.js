@@ -3,14 +3,12 @@
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 11/26/2023
-//Notes:
-//Sparational development goal: "Why use more than CSS and Markdown and the occasional data source to make a website?" Most people just want to throw together some Markdown files in folders, add CSS and point DNS at it - and it just works and looks amazing. Anything that could be a choice, at least find a rational default that minimizes input. The "80% of the time answer" should be the default answer. 
-//If at first you duplicate code, refactor and refactor again.
-
 //Version history:
 //3.23.3: Readd SPA rewrite section. 
 //3.23.2: Revert for further testing. 
 //3.23.1: Add SPA rewrite section to convertWebElement. 
+//Notes:
+
 
 //Element tools
 function getElement($elementId){
@@ -255,18 +253,12 @@ function rewriteJson(data,baseData) {
 	let n = 0;
 	//Rewrite data - Works on any JSON, not just SPA files.
 	for(element in data){
-	//console.log(data[element])
-
 		if (typeof data[element] === "string") {
 			if (data[element].substr(0,2) == "$_") {//Replace-o-rama! Full SPA pages - now in JML or YAML - can support $_ "dollarsign-underscore" variable replacement from anywhere within the document.
-				//console.log(eval(data[element].replace("$_","baseData")))
-				//try{ console.log("bd: "+JSON.stringify(baseData))}catch{}
 				data[element] = eval(data[element].replace("$_","baseData"))
-					
 			} else if (data[element].substr(0,4) == "http") {//Drop your load in the road! Leave a URL at the start of any line to have the page eventually load and display that data.
 				data[element] = {"elementParent":"parentElement","elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+"\")")}
 			}; // end if element.substr
-			
 		} else if (typeof data[element] === "object") { 
 			data[element] = rewriteJson(data[element],baseData)
 		}; //end if typeof
