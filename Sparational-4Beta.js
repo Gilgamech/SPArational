@@ -9,7 +9,6 @@
 //4.-7.0 Add localStorage caching for webRequest.
 //Notes:
 
-
 //Element tools
 function getElement(elementId){
 	return document.getElementById(elementId)
@@ -438,6 +437,7 @@ function convertMdToSpa(markdown) {
 				}; //end switch secondChar
 			break;
 			case "|":
+				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"id\": \""+line+"\"},"
 				//Split each | If above the ' ----' row it's a TH and below it's TD.
 				//Wrap each line in TR tags.
 				//THEAD wrapped in THEAD tags and body wrapped in TBODY tags
@@ -467,7 +467,7 @@ function convertMdToSpa(markdown) {
 					for (tex of txtSplit) {
 						if (tex.includes("](")) {
 							let regex = /\]\(/
-							txt0 = tex.split(regex)
+							let txt0 = tex.split(regex)
 							let innerText = txt0[0]
 							let linkText = txt0[1]
 							//Generates an ID if none. 
@@ -540,6 +540,7 @@ function convertMdArrayToTable(parentElement,newTableID,array,classList,styleLis
 }
 
 //Supporting functions
+//window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest.
 function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 //if now is smaller than duration, read from cache.
 	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":duration"]) {
