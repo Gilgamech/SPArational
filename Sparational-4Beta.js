@@ -468,7 +468,6 @@ function convertMdToSpa(markdown) {
 			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
 			if (element.httpPassthrough) {
 				out = out.replaceAll(outSplit,'"'+element.httpPassthrough+'",')
-				console.log("out: "+JSON.stringify(out))
 			} else {
 				
 			//Takes the innerText value, and matches then splits from the same regex
@@ -595,7 +594,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,$cached = 30) {
 					}; //end if $cached
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
-			} else if ($status == "404" && window.localStorage[$URI]) {
+			} else if (($status.substr(0,1) == "4" || $status.substr(0,1) == "5") && window.localStorage[$URI]) {
 				console.log("Page "+$URI+" offline. Serving cached copy from "+(Date.now())/1000-(window.localStorage[$URI+":duration"])+"seconds ago.")
 				$status = "304";
 				returnVar = window.localStorage[$URI];
