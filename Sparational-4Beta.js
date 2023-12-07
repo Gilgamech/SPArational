@@ -486,7 +486,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					}
 
 				} else {//Return everything else as a paragraph.
-					out += "{\"elementType\":\"p\",\"innerText\": \""+replaceParagraph(block)+"\"},"
+					out += replaceParagraph(block)
 				};//end if symbol
 				break;
 		};//end switch symbol
@@ -543,8 +543,7 @@ text = text.replace(/\`/g,"%code%")
 	if (elementType != "") {
 		text = text.replace(/"},$/,"\",\"id\": \""+id+"\"},")
 	}
-	text += block
-
+	text += "{\"elementType\":\"p\",\"innerText\": \""+block+"\"},"
 
 	return text
 }
