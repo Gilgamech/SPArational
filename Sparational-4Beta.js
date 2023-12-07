@@ -186,32 +186,27 @@ function rebuildElement(elementId) {
 function convertWebElement(parentElement,URL){
 	let urlParts = URL.split(".");
 	let extension = urlParts[urlParts.length -1].toLowerCase();
-	webRequest(URL,function(callback){
 		switch (extension) { //Be caps indifferent.
 			case "spa": //Need to swap this to YAML processing when 4.0 hits.
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
+				webRequest(URL,function(callback){
+					convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
+				})
 				break;
 			case "csv": 
-				convertMdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
+				webRequest(URL,function(callback){
+					convertMdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
+				})
 				break;
 			case "md": 
 				//console.log(parentElement)
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
+				webRequest(URL,function(callback){
+					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
+				})
 				break;
-			case "yml": 
-			case "yaml": 
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
-				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
-				break;
-			case "json": 
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"YAML not yet supported.\"}]}}}').pages.main.elements))
-				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
-				break;
-			default:
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
+			default: //Fallback to supplying a link.
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementType\":\"a\",\"href\":\"'+URL+'\"}]}}}').pages.main.elements))
 				break;
 		}
-	})
 };
 
 //Format transformations
