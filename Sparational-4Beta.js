@@ -184,9 +184,9 @@ function rebuildElement(elementId) {
 
 //Multisite tools
 function convertWebElement(parentElement,URL){
+	let urlParts = URL.split(".");
+	let extension = urlParts[urlParts.length -1].toLowerCase();
 	webRequest(URL,function(callback){
-		let urlParts = URL.split(".");
-		let extension = urlParts[urlParts.length -1].toLower();
 		switch (extension) { //Be caps indifferent.
 			case "spa": //Need to swap this to YAML processing when 4.0 hits.
 				convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
