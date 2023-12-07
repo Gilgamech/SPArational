@@ -187,31 +187,14 @@ function convertWebElement(parentElement,URL){
 	webRequest(URL,function(callback){
 		let urlParts = URL.split(".");
 		let extension = urlParts[urlParts.length -1];
-		switch (extension) { //Be caps indifferent.
-			case "spa": 
-			case "spA": 
-			case "sPa": 
-			case "sPA": 
-			case "Spa": 
-			case "SpA": 
-			case "SPa": 
-			case "SPA": 
+		switch (extension.toLower()) { //Be caps indifferent.
+			case "spa": //Need to swap this to YAML processing when 4.0 hits.
 				convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
 				break;
 			case "csv": 
-			case "csV": 
-			case "cSv": 
-			case "cSV": 
-			case "Csv": 
-			case "CsV": 
-			case "CSv": 
-			case "CSV": 
 				convertMdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
 				break;
 			case "md": 
-			case "mD": 
-			case "Md": 
-			case "MD": 
 				//console.log(parentElement)
 				convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
 				break;
