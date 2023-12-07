@@ -1,12 +1,12 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v4.-6.0 - Make faster websites faster.
+//SPArational.js v4.-6.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 12/2/2023
+//Last updated: 12/7/2023
 //Version history:
+//4.-6.1: Full rewrite of Markdown parser, including breaking out Paragraph inline parsing to a separate function. 
 //4.-6.0 convertMdToSpa HTTP passthrough complete.
 //4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. 
-//4.-7.2: Rename cje2 to convertJmlToElements. 
 //Notes:
 
 //Element tools
@@ -271,220 +271,327 @@ function convertMdToSpa(markdown) {
 	let listIDs = []
 	let prevTabLevel = 0
 	let prevListItem = ""
-	
-	markdown = (markdown.split("\n")) 
-	for (line of markdown)	 {
+
+	markdown = markdown.replace(/\n\s+\n/g,"\n\n")
+	markdown = markdown.replace(/\n\t+\n/g,"\n\n")
+
+//Parse page on \n\n into blocks.
+	for (block of markdown.split("\n\n")) {
+
+		let symbol = block.split(" ")[0]
+		let elementClass = block.split("\n")[0].split(" ")[1]
+		let innerText = block.replace(symbol+" ","")
+		//console.log("symbol: "+symbol+" innerText: "+innerText)
+
 		let elementParent = "parentElement"
 		let href = ""
-		let tabLevel = 0
 		let listIDLength = listIDs.length
-		let symbol = line.split(" ")[0]
-		let innerText = line.replace(symbol+" ","")
-		//console.log("symbol: "+symbol+" innerText: "+innerText)
 		let id = getBadPW();
-		let firstChar = line.charAt(0);
-		let secondChar = line.charAt(1);
 
-		if (line.length == 0) { 
-			out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"div\"},"
-			continue
-		}
-		//Case off the 1st char, then 2nd char, etc.
-		//Handle indenting
-		switch (firstChar) {
-			case " ":
-			switch (secondChar) {
-				case " ":
-				//Tab level 
-				tabLevel = line.match(/^\s*/).toString().split("  ").length
-				line = line.replace(/^\s*/,"")
-			}
-		}
-		//console.log("tabLevel "+tabLevel+" - prevTabLevel "+prevTabLevel+" |  line "+line)
-		firstChar = line.charAt(0);
-		secondChar = line.charAt(1);
+		let headerSplit = innerText.replace("}","").split("{#")
+		let header = headerSplit[0]
+		id = headerSplit[1]
+		innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
 
-		//Handle headers, lists, blockquotes, etc. Every switch has to have a default section appends out with JML for a P element having line as the innerText. 
-		//Intake Markdown, output JML
-		switch (firstChar) {
-			case "#":
+
+		console.log(symbol)
+		switch (symbol) {
 			//Headings
-			switch (symbol) {
-				case "#":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h1\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "##":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h2\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "###":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h3\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "####":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h4\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "#####":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h5\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "######":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h6\",\"innerText\": \""+innerText+"\"},"
-					break;
-			}
-			break;				
-			//blockquote
-			case ">":
-				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"blockquote\",\"innerText\": \""+innerText+"\"},"
-				//Subsequent lines need to inherit unless there's a line break, and subsequent lines with the same number of arrows need them removed. 
+			case "#":
+				out += "{\"elementType\":\"h1\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				if (headerSplit.length > 1) {
+					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
+				}
 				break;
-				
+			case "##":
+				out += "{\"elementType\":\"h2\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				if (headerSplit.length > 1) {
+					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
+				}
+				break;
+			case "###":
+				out += "{\"elementType\":\"h3\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				if (headerSplit.length > 1) {
+					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
+				}
+				break;
+			case "####":
+				out += "{\"elementType\":\"h4\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				if (headerSplit.length > 1) {
+					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
+				}
+				break;
+			case "#####":
+				out += "{\"elementType\":\"h5\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				if (headerSplit.length > 1) {
+					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
+				}
+				break;
+			case "######":
+				out += "{\"elementType\":\"h6\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				if (headerSplit.length > 1) {
+					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
+				}
+				break;
+
 			//Unordered Lists
 				//+ Sub-lists are made by indenting 2 spaces:
 				//  - Marker character change forces new list start:
 			case "+":
 			case "-":
 			case "*":
-				switch (secondChar) {
-					case " ":
-						if (tabLevel == 0) { 
-							listIDs[listIDs.length] = getBadPW();
-						}  else if (tabLevel > prevTabLevel) { 
-							listIDs[listIDs.length] = getBadPW();
-						}  else if (tabLevel < prevTabLevel) {
-							listIDs.pop();
-						} 
-						
-						let id = listIDs[listIDs.length -1]
-						let listLevel = listIDs[listIDs.length -2]
-						
-						if (tabLevel == 0) {
-							prevListItem = elementParent
-							console.log("First line: Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-						} else if (tabLevel > prevTabLevel) { 
-							if (prevListItem == "") {prevListItem = listLevel}
-							console.log("Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-						} else if (tabLevel < prevTabLevel) { 
-							console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-						}
-						prevListItem = getBadPW();
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
-						break;
-				//This is where Bold gets dropped - because it's unhandled. 
-					case "*":
-						let newID = getBadPW();
-						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"id\": \""+newID+"\"},"
-						out += "{\"elementParent\": \""+newID+"\",\"elementType\":\"b\",\"innerText\": \""+line.replaceAll("**","")+"\"},"
-						break;
-					default:
-						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"id\": \""+line+"\"},"
-						break;
-				}; //end switch secondChar
-				break;
+				out += "{\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+				for (line of block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,"").split("\n")) {
+					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+line+"\"},"
+				}
+/*
+				if (tabLevel == 0) { 
+					listIDs[listIDs.length] = getBadPW();
+				}  else if (tabLevel > prevTabLevel) { 
+					listIDs[listIDs.length] = getBadPW();
+				}  else if (tabLevel < prevTabLevel) {
+					listIDs.pop();
+				} 
 				
-			//Ordered Lists
-			case "0":
-			case "1":
-			case "2":
-			case "3":
-			case "4":
-			case "5":
-			case "6":
-			case "7":
-			case "8":
-			case "9":
-				switch (secondChar) {
-					case ".":
-						if (tabLevel == 0) { 
-							listIDs[listIDs.length] = getBadPW();
-						}  else if (tabLevel > prevTabLevel) { 
-							listIDs[listIDs.length] = getBadPW();
-						}  else if (tabLevel < prevTabLevel) {
-							listIDs.pop();
-						} 
-						
-						let id = listIDs[listIDs.length -1]
-						let listLevel = listIDs[listIDs.length -2]
-						
-						if (tabLevel == 0) {
-							prevListItem = elementParent
-							console.log("First line: Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-						} else if (tabLevel > prevTabLevel) { 
-							if (prevListItem == "") {prevListItem = listLevel}
-							console.log("Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-						} else if (tabLevel < prevTabLevel) { 
-							console.log("Remove OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-						}
-						prevListItem = getBadPW();
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
-						break;
-					default:
-						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"id\": \""+line+"\"},"
-						break;
-				break;
-				}; //end switch secondChar
-			break;
-			case "|":
-				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"id\": \""+line+"\"},"
-				//Split each | If above the ' ----' row it's a TH and below it's TD.
-				//Wrap each line in TR tags.
-				//THEAD wrapped in THEAD tags and body wrapped in TBODY tags
-				//Wrap whole thing in Table tags
-			break;
-			case "h":
-				if (line.substr(0,4) == "http") {//Drop your load in the road! Leave a URL at the start of any line to have the page eventually load and display that data.
-					out += '{"httpPassthrough":"'+line+'"},'
-				}; // end if element.substr
-			break;
-			default:
-				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"innerText\": \""+line+"\"},"
-				break;
-		}; //end switch firstChar
-		prevTabLevel = tabLevel
-		
-			//Links
-			//This system splits out by JML, selects the last one, parses. 
-			let outSplit = out.split("},{")
-			outSplit = outSplit[outSplit.length -1]
-			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
-			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-			if (element.httpPassthrough) {
-				out = out.replaceAll(outSplit,'"'+element.httpPassthrough+'",')
-			} else {
+				let id = listIDs[listIDs.length -1]
+				let listLevel = listIDs[listIDs.length -2]
 				
-			//Takes the innerText value, and matches then splits from the same regex
-				for (txt of element.innerText.split(/\[/g)) {
-						txtSplit = txt.split(/\)/g)
-						for (tex of txtSplit) {
-							if (tex.includes("](")) {
-								let regex = /\]\(/
-								let txt0 = tex.split(regex)
-								let innerText = txt0[0]
-								let linkText = txt0[1]
-								//Generates an ID if none. 
-								if (element.id == null) {element.id = getBadPW()}
+				if (tabLevel == 0) {
+					prevListItem = elementParent
+					console.log("First line: Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+					out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+				} else if (tabLevel > prevTabLevel) { 
+					if (prevListItem == "") {prevListItem = listLevel}
+					console.log("Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+					out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+				} else if (tabLevel < prevTabLevel) { 
+					console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+				}
+				prevListItem = getBadPW();
+				out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
+				break;
+*/
+				
+			//Ordered Lists - Nestable
+			//Need to replace with regex, to match numbers of any length.
+			case "0.": 
+			case "1.":
+			case "2.":
+			case "3.":
+			case "4.":
+			case "5.":
+			case "6.":
+			case "7.":
+			case "8.":
+			case "9.":
+				out += "{\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+				for (line of block.replace(/[0-9]+[.][ ]/g,"").split("\n")) {
+					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+line+"\"},"
+				}
+				break;
+/*
+//Ordered Lists
+if (tabLevel == 0) { 
+	listIDs[listIDs.length] = getBadPW();
+}  else if (tabLevel > prevTabLevel) { 
+	listIDs[listIDs.length] = getBadPW();
+}  else if (tabLevel < prevTabLevel) {
+	listIDs.pop();
+} 
 
-								//Replaces the innerText and linkText with the ID and re-caps. 
-								out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-								
-								out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerText +'\",\"href\":\"' +linkText +"\"},"
-								//Encapsulates innerText then linkText with JML.  
-								
-								//Reattach the trailing text. 
-								let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
-								if (endTxt) {
-									out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-								}; //end if endTxt
-							}; //end if tex
-						}; //end for tex
-				}; //end for txt
-			}; //end if element
-			
-	}; //end for line
+let id = listIDs[listIDs.length -1]
+let listLevel = listIDs[listIDs.length -2]
+
+if (tabLevel == 0) {
+	prevListItem = elementParent
+	console.log("First line: Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+	out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+} else if (tabLevel > prevTabLevel) { 
+	if (prevListItem == "") {prevListItem = listLevel}
+	console.log("Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+	out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
+} else if (tabLevel < prevTabLevel) { 
+	console.log("Remove OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+}
+prevListItem = getBadPW();
+out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
+*/
+
+			//Code blocks
+			case "~~~":
+			case "```":
+				// Make any words after into the class, to streamline code coloration - can just have CSS classes named after each language.
+				out += "{\"elementType\":\"pre\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
+				for (line of block.split("\n")) {
+					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"innerText\": \""+line+"\"},"
+				}
+				break;
+
+
+			//Divs - Nestable
+			case ":::":
+				// Make any words after into the class
+				out += "{\"elementType\":\"pre\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
+				for (line of block.split("\n")) {
+					out += "{\"elementParent\": \""+id+"\",\"innerText\": \""+line+"\"},"
+				}
+				break;
+
+
+			default: //Fall out of the symbol replacement system and into a RegExp replacement system. 
+				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row
+					out += "{\"elementType\":\"hr\"},"
+
+				} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nestable.
+					out += "{\"elementType\":\"blockquote\",\"id\": \""+id+"\"},"
+					for (line of block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n").split("\n")) {//Snip only the base layer of angle brackets.
+						out += "{\"elementParent\": \""+id+"\",\"innerText\": \""+line+"\"},"
+					}
+
+				} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
+					out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
+					let table = block
+					let regex = /\n+.*\|\-{3,}.*\n+/g //The all-dashes line
+					let Thead = table.split(regex)[0]
+					let Tbody = table.split(regex)[1]
+					let Tdata = table.match(regex) //Justification data
+
+					for (line of Thead.split("\n")) {
+						let TheadId = getBadPW();
+						let TRID = getBadPW();
+						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TheadId+"\"},"
+						out += "{\"elementParent\": \""+TheadId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
+						for (data of line.split("\|")) {
+							if (data){
+								out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"th\",\"innerText\": \""+data+"\"},"
+							}
+						}
+					}
+					for (line of Tbody.split("\n")) {
+						let TbodyId = getBadPW();
+						let TRID = getBadPW();
+						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"tbody\",\"id\": \""+TbodyId+"\"},"
+						out += "{\"elementParent\": \""+TbodyId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
+						for (data of line.split("\|")) {
+							if (data){
+								out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"td\",\"innerText\": \""+data+"\"},"
+							}
+						}
+					}
+
+				} else if (block.substr(0,4).match(/[ ]{4}/g)) {//Code block
+					out += "{\"elementType\":\"pre\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
+					for (line of block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n").split("\n")) {//Nip off the first 4 lines of each line.
+						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"innerText\": \""+line+"\"},"
+					}
+
+				} else {//Return everything else as a paragraph.
+					out += "{\"elementType\":\"p\",\"innerText\": \""+replaceParagraph(block)+"\"},"
+				};//end if symbol
+				break;
+		};//end switch symbol
+	};//end for block
+
 	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
 	return out;
 }
+
+function replaceParagraph(text) {
+	//out += "{\"elementType\":\"p\",\"innerText\": \""+replaceParagraph(block)+"\"},"
+	let id = getBadPW();
+	let elementType = ""
+	
+	//Passthrough
+	if (text.substr(0,4) == "http") {//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
+		text = "{\"httpPassthrough\": \""+text+"\"},"
+	}
+
+text = text.replace(/\*{2}/g,"%strong%")
+text = text.replace(/\_{2}/g,"%strong%")
+text = text.replace(/\~{2}/g,"%del%")
+text = text.replace(/\={2}/g,"%mark%")
+text = text.replace(/\+{2}/g,"%ins%")
+text = text.replace(/\*/g,"%em%")
+text = text.replace(/\_/g,"%em%")
+text = text.replace(/\~/g,"%sub%")
+text = text.replace(/\^/g,"%sup%")
+text = text.replace(/\`/g,"%code%")
+
+	//Effects
+	switch (text) {
+	case "**":
+	case "__":
+		text = text.replaceAll("**","")
+		elementType = "strong"
+		break;
+	case "*":
+	case "_":
+		text = text.replaceAll("_","")
+		elementType = "em"
+		break;
+	case "~~":
+		text = text.replaceAll("~~","")
+		elementType = "strike"
+		break;
+	case "`":
+		text = text.replaceAll("`","")
+		elementType = "code"
+		break;
+	}
+
+	if (elementType != "") {
+		text = text.replace(/"},$/,"\",\"id\": \""+id+"\"},")
+	}
+	text += "{\"elementType\":\"p\",\"innerText\": \""+replaceParagraph(block)+"\"},"
+
+
+	return text
+}
+
+/*
+//Links
+//This system splits out by JML, selects the last one, parses. 
+let outSplit = out.split("},{")
+outSplit = outSplit[outSplit.length -1]
+if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
+let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
+if (element.httpPassthrough) {
+	out = out.replaceAll(outSplit,'"'+element.httpPassthrough+'",')
+} else {
+	
+//Takes the innerText value, and matches then splits from the same regex
+	for (txt of element.innerText.split(/\[/g)) {
+		txtSplit = txt.split(/\)/g)
+		for (tex of txtSplit) {
+			if (tex.includes("](")) {
+				let regex = /\]\(/
+				let txt0 = tex.split(regex)
+				let innerText = txt0[0]
+				let linkText = txt0[1]
+				//Generates an ID if none. 
+				if (element.id == null) {element.id = getBadPW()}
+
+				//Replaces the innerText and linkText with the ID and re-caps. 
+				out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
+				
+				out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerText +'\",\"href\":\"' +linkText +"\"},"
+				//Encapsulates innerText then linkText with JML.  
+				
+				//Reattach the trailing text. 
+				let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
+				if (endTxt) {
+					out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
+				}; //end if endTxt
+			}; //end if tex
+		}; //end for tex
+	}; //end for txt
+}; //end if element
+
+	Images
+	a.match(/!\[\S+\]\(\S+\)/g)
+	 ![image](URL "alt text")
+*/
+
 
 //convertMdArrayToTable(parentElement,newTableID,convertCsvToMDArray(inputString),classList,styleList)
 function convertCsvToMdArray(inputString) {
