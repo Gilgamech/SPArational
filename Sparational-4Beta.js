@@ -542,7 +542,7 @@ text = text.replace(/\`/g,"%code%")
 	if (elementType != "") {
 		text = text.replace(/"},$/,"\",\"id\": \""+id+"\"},")
 	}
-	text += "{\"elementType\":\"p\",\"innerText\": \""+block+"\"},"
+	text += block
 
 
 	return text
