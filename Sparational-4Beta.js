@@ -503,7 +503,7 @@ function replaceParagraph(text) {
 	
 	//Passthrough
 	if (text.substr(0,4) == "http") {//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
-		text = "{\"httpPassthrough\": \""+text+"\"},"
+		text = "{\"httpPassthrough\": \""+text.replace(/\n/g,"")+"\"},"
 		return text
 	}
 
