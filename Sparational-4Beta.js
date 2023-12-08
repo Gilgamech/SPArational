@@ -534,7 +534,10 @@ let symbolEnd = "~%#%"
 //let text = "This text is %#%~st~%#%bolded, man! Can you%#%~st~%#% believe it?"
 //reassembled Symbol matching
 let tmatch = text.match(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
-let symbol = tmatch[0].split("~")[1]
+let symbol = ""
+if (tmatch[0].match("~")){
+	symbol = tmatch[0].split("~")[1]
+}
 let token = symbolStart+symbol+symbolEnd
 
 let tsplit = text.split(token)
