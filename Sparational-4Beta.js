@@ -514,22 +514,22 @@ function replaceParagraph(text) {
 		text = "{\"httpPassthrough\": \""+text.replace(/\n/g,"")+"\"},"
 		return text
 	}
+//Hashes toward the symbol.
+let symbolStart = "%#%#"
+let symbolEnd = "#%#%"
 
-text = text.replace(/\*{2}/g,"%#%~st~%#%")
-text = text.replace(/\_{2}/g,"%#%~st~%#%")
-text = text.replace(/\~{2}/g,"%#%~de~%#%")
-text = text.replace(/\={2}/g,"%#%~ma~%#%")
-text = text.replace(/\+{2}/g,"%#%~in~%#%")
-text = text.replace(/\*/g,"%#%~em~%#%")
-text = text.replace(/\_/g,"%#%~em~%#%")
-text = text.replace(/\~/g,"%#%~sb~%#%")
-text = text.replace(/\^/g,"%#%~sp~%#%")
-text = text.replace(/\`/g,"%#%~co~%#%")
+text = text.replace(/\*{2}/g,symbolStart+"st"+symbolEnd)
+text = text.replace(/\_{2}/g,symbolStart+"st"+symbolEnd)
+text = text.replace(/\~{2}/g,symbolStart+"de"+symbolEnd)
+text = text.replace(/\={2}/g,symbolStart+"ma"+symbolEnd)
+text = text.replace(/\+{2}/g,symbolStart+"in"+symbolEnd)
+text = text.replace(/\*/g,symbolStart+"em"+symbolEnd)
+text = text.replace(/\_/g,symbolStart+"em"+symbolEnd)
+text = text.replace(/\~/g,symbolStart+"sb"+symbolEnd)
+text = text.replace(/\^/g,symbolStart+"sp"+symbolEnd)
+text = text.replace(/\`/g,symbolStart+"co"+symbolEnd)
 
 /*
-//Tildes toward the symbol.
-let symbolStart = "%#%~"
-let symbolEnd = "~%#%"
 
 
 //let text = "This text is %#%~st~%#%bolded, man! Can you%#%~st~%#% believe it?"
