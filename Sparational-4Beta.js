@@ -471,8 +471,6 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					:::{onClick_or_onChange_put_JS_here}
 					*/
 
-					let out = ""
-					markdown = `:::input #inputId\n1\n:::\n\n:::button\n+1\n:::{writeElement('inputId',getNumberFromDiv('inputId',0) +1)}`
 					for (block of markdown.split("\n\n")) {
 						inSplit = block.split("\n")
 						let topLine = inSplit[0].replace(/^[:]{3}/g,"")
