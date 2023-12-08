@@ -478,7 +478,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 						id = topLine.split("#")[1].split(" ")[0]
 					}
 					elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
-					innerText = block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],"")
+					innerText = JSON.stringify(block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],""))
 					let onClick = ""
 					if (botLine.match("\{")){
 						onClick = botLine.replace(/^{/g,"").replace(/\}$/g,"")
