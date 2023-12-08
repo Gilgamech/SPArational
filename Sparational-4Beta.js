@@ -465,18 +465,17 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					}
 
 				} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - nestable.
-					/* Div definition
-					:::elementType elementClass1 #id .elementClass2 .elementClass3 .elementClass4
-					innerText
-					:::{onClick_or_onChange_put_JS_here}
-					*/
 					inSplit = block.split("\n")
 					let topLine = inSplit[0].replace(/^[:]{3}/g,"")
 					let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
 					let elementType = topLine.split(" ")[0]
 					if (topLine.match("#")){
 						id = topLine.split("#")[1].split(" ")[0]
-					}
+						if (id.match(":")){
+							id = id.split(":")[0]
+							elementParent = id.split(";")[1]
+						}
+					} 
 					elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
 					innerText = JSON.stringify(block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],""))
 					let onClick = ""
