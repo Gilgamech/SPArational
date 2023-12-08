@@ -526,6 +526,7 @@ text = text.replace(/\~/g,"%#%~sb~%#%")
 text = text.replace(/\^/g,"%#%~sp~%#%")
 text = text.replace(/\`/g,"%#%~co~%#%")
 
+/*
 //Tildes toward the symbol.
 let symbolStart = "%#%~"
 let symbolEnd = "~%#%"
@@ -535,7 +536,7 @@ let symbolEnd = "~%#%"
 //reassembled Symbol matching
 let tmatch = text.match(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
 let symbol = ""
-if (tmatch[0].match("~")){
+if (tmatch.match("~")){
 	symbol = tmatch[0].split("~")[1]
 }
 let token = symbolStart+symbol+symbolEnd
@@ -544,7 +545,7 @@ let tsplit = text.split(token)
 let outText = tsplit[0]
 let wrap = tsplit[1] 
 let span = tsplit[2]
-
+*/
 /*Direct regex matching
 let tsplit = text.split(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
 let outText = tsplit[0]
