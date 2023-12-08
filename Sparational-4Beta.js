@@ -261,7 +261,7 @@ function convertJupyterToSpa2(inputString) {
 }; 
 
 function convertMdToSpa(markdown) {
-//Markdown is for compositional data, so has a symbol-space-innerText format for most symbols, and symbol-innerText-symbol for the rest. 
+//Markdown is made of Blocks which are filled with data.
 	let out = ""
 	let listIDs = []
 	let prevTabLevel = 0
@@ -504,7 +504,6 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 }
 
 function replaceParagraph(text) {
-	//out += "{\"elementType\":\"p\",\"innerText\": \""+replaceParagraph(block)+"\"},"
 	let id = getBadPW();
 	let elementType = ""
 	
@@ -513,6 +512,8 @@ function replaceParagraph(text) {
 		text = "{\"httpPassthrough\": \""+text.replace(/\n/g,"")+"\"},"
 		return text
 	}
+
+//Unused symbols: @#$%&
 //Hashes toward the symbol.
 let symbolStart = "%#%#"
 let symbolEnd = "#%#%"
@@ -529,8 +530,6 @@ text = text.replace(/\^/g,symbolStart+"sp"+symbolEnd)
 text = text.replace(/\`/g,symbolStart+"co"+symbolEnd)
 
 /*
-
-
 //let text = "This text is %#%~st~%#%bolded, man! Can you%#%~st~%#% believe it?"
 //reassembled Symbol matching
 let tmatch = text.match(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
@@ -539,19 +538,21 @@ if (tmatch.match("~")){
 	symbol = tmatch[0].split("~")[1]
 }
 let token = symbolStart+symbol+symbolEnd
+*/
 
+/*
 let tsplit = text.split(token)
 let outText = tsplit[0]
 let wrap = tsplit[1] 
 let span = tsplit[2]
 */
+
 /*Direct regex matching
 let tsplit = text.split(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
 let outText = tsplit[0]
 let wrap = tsplit[1] 
 let span = tsplit[2]
 */
-
 
 	return "{\"elementType\":\"p\",\"innerText\": \""+text+"\"},"
 }
@@ -703,7 +704,7 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration =
 			} else if (n==0) {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
-		} catch(e) {console.log(e)}; // end try
+		} catch(e) {console.log(e)}; // end try - This try catch captures errors within the callback too.
 	}; // end xhRequest.onreadystatechange
 	xhRequest.send($file);
 }; // end webRequest
