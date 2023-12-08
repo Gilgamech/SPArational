@@ -483,8 +483,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					if (botLine.match("\{")){
 						onClick = botLine.replace(/^{/g,"").replace(/\}$/g,"")
 					}
-					out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+innerText+"\",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
-
+					out += "{\"elementParent\":\""+elementParent+"\",\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
 
 
 				} else if (block.substr(0,4).match(/[ ]{4}/g)) {//Code block - don't process anything.
