@@ -423,16 +423,6 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 				break;
 
 
-			//Divs - Nestable
-			case ":::":
-				// Make any words after into the class
-				out += "{\"elementType\":\"pre\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
-				for (line of block.split("\n")) {
-					out += "{\"elementParent\": \""+id+"\",\"innerText\": \""+line+"\"},"
-				}
-				break;
-
-
 			default: //Fall out of the symbol replacement system and into a RegExp replacement system. 
 				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row
 					out += "{\"elementType\":\"hr\"},"
@@ -474,7 +464,38 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 						}
 					}
 
-				} else if (block.substr(0,4).match(/[ ]{4}/g)) {//Code block
+				} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - nestable.
+					/* Div definition
+					:::elementType elementClass1 #id .elementClass2 .elementClass3 .elementClass4
+					innerText
+					:::{onClick_or_onChange_put_JS_here}
+					*/
+
+					let out = ""
+					markdown = `:::input #inputId\n1\n:::\n\n:::button\n+1\n:::{writeElement('inputId',getNumberFromDiv('inputId',0) +1)}`
+					for (block of markdown.split("\n\n")) {
+						inSplit = block.split("\n")
+						let topLine = inSplit[0].replace(/^[:]{3}/g,"")
+						let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
+						let elementType = topLine.split(" ")[0]
+						let id = ""
+						if (topLine.match("#")){
+							id = topLine.split("#")[1].split(" ")[0]
+						}
+						let elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
+						let innerText = block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],"")
+						let onClick = ""
+						if (botLine.match("\{")){
+							onClick = botLine.replace(/^{/g,"").replace(/\}$/g,"")
+						}
+						out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+innerText+"\",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
+					}
+					out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
+					let out = JSON.parse(out)
+
+
+
+				} else if (block.substr(0,4).match(/[ ]{4}/g)) {//Code block - don't process anything.
 					out += "{\"elementType\":\"pre\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
 					for (line of block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n").split("\n")) {//Nip off the first 4 lines of each line.
 						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"innerText\": \""+line+"\"},"
