@@ -515,43 +515,40 @@ function replaceParagraph(text) {
 		return text
 	}
 
-text = text.replace(/\*{2}/g,"%strong%")
-text = text.replace(/\_{2}/g,"%strong%")
-text = text.replace(/\~{2}/g,"%del%")
-text = text.replace(/\={2}/g,"%mark%")
-text = text.replace(/\+{2}/g,"%ins%")
-text = text.replace(/\*/g,"%em%")
-text = text.replace(/\_/g,"%em%")
-text = text.replace(/\~/g,"%sub%")
-text = text.replace(/\^/g,"%sup%")
-text = text.replace(/\`/g,"%code%")
+text = text.replace(/\*{2}/g,"%#%~st~%#%")
+text = text.replace(/\_{2}/g,"%#%~st~%#%")
+text = text.replace(/\~{2}/g,"%#%~de~%#%")
+text = text.replace(/\={2}/g,"%#%~ma~%#%")
+text = text.replace(/\+{2}/g,"%#%~in~%#%")
+text = text.replace(/\*/g,"%#%~em~%#%")
+text = text.replace(/\_/g,"%#%~em~%#%")
+text = text.replace(/\~/g,"%#%~sb~%#%")
+text = text.replace(/\^/g,"%#%~sp~%#%")
+text = text.replace(/\`/g,"%#%~co~%#%")
 
-	//Effects
-	switch (text) {
-	case "**":
-	case "__":
-		text = text.replaceAll("**","")
-		elementType = "strong"
-		break;
-	case "*":
-	case "_":
-		text = text.replaceAll("_","")
-		elementType = "em"
-		break;
-	case "~~":
-		text = text.replaceAll("~~","")
-		elementType = "strike"
-		break;
-	case "`":
-		text = text.replaceAll("`","")
-		elementType = "code"
-		break;
-	}
+//Tildes toward the symbol.
+let symbolStart = "%#%~"
+let symbolEnd = "~%#%"
 
-	if (elementType != "") {
-		text = text.replace(/"},$/,"\",\"id\": \""+id+"\"},")
-	}
-	text += block
+
+//let text = "This text is %#%~st~%#%bolded, man! Can you%#%~st~%#% believe it?"
+//reassembled Symbol matching
+let tmatch = text.match(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
+let symbol = tmatch[0].split("~")[1]
+let token = symbolStart+symbol+symbolEnd
+
+let tsplit = text.split(token)
+let outText = tsplit[0]
+let wrap = tsplit[1] 
+let span = tsplit[2]
+
+/*Direct regex matching
+let tsplit = text.split(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
+let outText = tsplit[0]
+let wrap = tsplit[1] 
+let span = tsplit[2]
+*/
+
 
 	return "{\"elementType\":\"p\",\"innerText\": \""+text+"\"},"
 }
