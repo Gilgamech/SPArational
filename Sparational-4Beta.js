@@ -557,51 +557,6 @@ let span = tsplit[2]
 	return "{\"elementType\":\"p\",\"innerText\": \""+text+"\"},"
 }
 
-/*
-//Links
-//This system splits out by JML, selects the last one, parses. 
-let outSplit = out.split("},{")
-outSplit = outSplit[outSplit.length -1]
-if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
-let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-if (element.httpPassthrough) {
-	out = out.replaceAll(outSplit,'"'+element.httpPassthrough+'",')
-} else {
-	
-//Takes the innerText value, and matches then splits from the same regex
-	for (txt of element.innerText.split(/\[/g)) {
-		txtSplit = txt.split(/\)/g)
-		for (tex of txtSplit) {
-			if (tex.includes("](")) {
-				let regex = /\]\(/
-				let txt0 = tex.split(regex)
-				let innerText = txt0[0]
-				let linkText = txt0[1]
-				//Generates an ID if none. 
-				if (element.id == null) {element.id = getBadPW()}
-
-				//Replaces the innerText and linkText with the ID and re-caps. 
-				out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-				
-				out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerText +'\",\"href\":\"' +linkText +"\"},"
-				//Encapsulates innerText then linkText with JML.  
-				
-				//Reattach the trailing text. 
-				let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
-				if (endTxt) {
-					out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-				}; //end if endTxt
-			}; //end if tex
-		}; //end for tex
-	}; //end for txt
-}; //end if element
-
-	Images
-	a.match(/!\[\S+\]\(\S+\)/g)
-	 ![image](URL "alt text")
-*/
-
-
 //convertMdArrayToTable(parentElement,newTableID,convertCsvToMDArray(inputString),classList,styleList)
 function convertCsvToMdArray(inputString) {
 	let out = ""
