@@ -488,8 +488,6 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 						}
 						out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+innerText+"\",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
 					}
-					out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
-					let out = JSON.parse(out)
 
 
 
