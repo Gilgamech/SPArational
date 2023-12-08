@@ -470,24 +470,20 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					innerText
 					:::{onClick_or_onChange_put_JS_here}
 					*/
-
-					for (block of markdown.split("\n\n")) {
-						inSplit = block.split("\n")
-						let topLine = inSplit[0].replace(/^[:]{3}/g,"")
-						let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
-						let elementType = topLine.split(" ")[0]
-						let id = ""
-						if (topLine.match("#")){
-							id = topLine.split("#")[1].split(" ")[0]
-						}
-						let elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
-						let innerText = block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],"")
-						let onClick = ""
-						if (botLine.match("\{")){
-							onClick = botLine.replace(/^{/g,"").replace(/\}$/g,"")
-						}
-						out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+innerText+"\",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
+					inSplit = block.split("\n")
+					let topLine = inSplit[0].replace(/^[:]{3}/g,"")
+					let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
+					let elementType = topLine.split(" ")[0]
+					if (topLine.match("#")){
+						id = topLine.split("#")[1].split(" ")[0]
 					}
+					elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
+					innerText = block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],"")
+					let onClick = ""
+					if (botLine.match("\{")){
+						onClick = botLine.replace(/^{/g,"").replace(/\}$/g,"")
+					}
+					out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+innerText+"\",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
 
 
 
