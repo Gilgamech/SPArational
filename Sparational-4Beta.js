@@ -281,6 +281,8 @@ function convertMdToSpa(markdown) {
 		let elementParent = "parentElement"
 		let href = ""
 		let listIDLength = listIDs.length
+		let elementType = ""
+		let id = getRandomishString()
 
 		inSplit = block.split("\n")
 		let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
@@ -288,9 +290,11 @@ function convertMdToSpa(markdown) {
 		let topSplit = topLine.split(" ")
 		let botSplit = botLine.split(" ")
 		let elementHash = topSplit[2]
-		let elementType = elementHash.split("#")[0]
-		let id = elementHash.split("#")[1]
-		if (!(id)) {id = getRandomishString()}
+			
+		if (elementHash) {
+			let elementType = elementHash.split("#")[0]
+			let id = elementHash.split("#")[1]
+		}
 		
 		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
 		let headerSplit = innerText.replace("}","").split("{#")
