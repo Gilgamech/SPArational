@@ -593,7 +593,6 @@ function parseInline(text,elementType="p"){
 			block += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
 	}
-	block = block.toString().replace(/"},$/,"\"}")
 	return block;
 }
 //[innerText](http://website.com/)
