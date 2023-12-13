@@ -307,22 +307,22 @@ function convertMdToJml(markdown) {
 		switch (symbol) {
 			//Headings - Parsed.
 			case "#":
-				out += parseInline(header,"h1")
+				out += parseInline(elementParent,header,"h1")
 				break;
 			case "##":
-				out += parseInline(header,"h2")
+				out += parseInline(elementParent,header,"h2")
 				break;
 			case "###":
-				out += parseInline(header,"h3")
+				out += parseInline(elementParent,header,"h3")
 				break;
 			case "####":
-				out += parseInline(header,"h4")
+				out += parseInline(elementParent,header,"h4")
 				break;
 			case "#####":
-				out += parseInline(header,"h5")
+				out += parseInline(elementParent,header,"h5")
 				break;
 			case "######":
-				out += parseInline(header,"h6")
+				out += parseInline(elementParent,header,"h6")
 				break;
 
 			//Unordered Lists - Nesting.
@@ -491,7 +491,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					out += parseBlock(block,/:[ ]/g,"dl",elementClass,"dd")
 
 				} else {//Return everything else as a paragraph.
-					out += parseInline(block)
+					out += parseInline(elementParent,block)
 				};//end if symbol
 				break;
 		};//end switch symbol
@@ -562,12 +562,16 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	return out;
 }
 
-function parseInline(text,elementType="p"){
+function parseInline(parentElement,text,elementType="p"){
 	//Takes unparsed block, replaces tokens, and splits off token to return an element with children.
 	let split = new RegExp(tokenSplitter)
 	let id = getRandomishString();
 	blockSplit = replaceSymbols(text).split(split)
-	block = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+	if (parentElement) {
+		block = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+	} else {
+		block = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+	}
 	for (let b = 1; b < blockSplit.length -1; b+=4) {
 		
         //console.log(block)
