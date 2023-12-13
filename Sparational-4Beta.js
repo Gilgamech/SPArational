@@ -266,9 +266,6 @@ function convertJupyterToJml2(inputString) {
 function convertMdToJml(markdown) {
 //Markdown is made of Blocks which are filled with data.
 	let out = ""
-	let listIDs = []
-	let prevTabLevel = 0
-	let prevListItem = ""
 
 	markdown = markdown.replace(/\n\s+\n/g,"\n\n")
 	markdown = markdown.replace(/\n\t+\n/g,"\n\n")
@@ -279,7 +276,6 @@ function convertMdToJml(markdown) {
 
 		let elementParent = "parentElement"
 		let href = ""
-		let listIDLength = listIDs.length
 		let elementType = ""
 		let id = getRandomishString()
 
@@ -446,6 +442,42 @@ function convertMdToJml(markdown) {
 
 	out = '['+out.replace(/[,]$/,"")+']'
 	return out;
+}
+
+function tabLevel(line) {
+	let tabLevel = 0
+	let listIDs = []
+	let listIDLength = listIDs.length
+	let prevTabLevel = 0
+	let prevListItem = ""
+
+
+	if (line.substr(0,2) == "  ") {
+		tabLevel = line.match(/^\s*/).toString().split("  ").length
+		line = line.replace(/^\s*/,"")
+	}
+	if (tabLevel == 0) { 
+		listIDs[listIDs.length] = getRandomishString();
+	}  else if (tabLevel > prevTabLevel) { 
+		listIDs[listIDs.length] = getRandomishString();
+	}  else if (tabLevel < prevTabLevel) {
+		listIDs.pop();
+	} 
+	let id = listIDs[listIDs.length -1]//id already declared.
+	let listLevel = listIDs[listIDs.length -2]
+	if (tabLevel == 0) {
+		prevListItem = elementParent
+		console.log("First line: Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+		out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+	} else if (tabLevel > prevTabLevel) { 
+		if (prevListItem == "") {prevListItem = listLevel}
+		console.log("Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+		out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
+	} else if (tabLevel < prevTabLevel) { 
+		console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
+	}
+	prevListItem = getRandomishString();
+	out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 }
 
 let tokenData = {
