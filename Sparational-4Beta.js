@@ -410,12 +410,13 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 					out += "{\"elementType\":\"hr\"},"
 					
-					
 				} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
 					//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
 					out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
+					
 				} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
 					out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
+					
 				} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
 					out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
 					let table = block
