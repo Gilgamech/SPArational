@@ -273,21 +273,32 @@ function convertMdToSpa(markdown) {
 //Parse page on \n\n into blocks.
 	for (block of markdown.split("\n\n")) {
 
-		let symbol = block.split(" ")[0]
+		inSplit = block.split("\n")
+		let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
+		let botLine = inSplit[inSplit.length -1]//.replace(/^[:]{3}/g,"")
+		let topSplit = topLine.split(" ")
 
 		/* Div definition
 		:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
 		innerText
 		:::{onClick_or_onChange_put_JS_here}
 		*/
+		let elementHash = topSplit[2]
+		let elementType = elementHash.split("#")[0]
+		let id = elementHash.split("#")[1]
+		if (!(id)) {id = getRandomishString()}
+		//let leadingDelineator = topSplit.split("\{")
+		let elementClass = topSplit.replace(elementHash,"") //Needs to snip leading delineator
 		let elementClass = block.split("\n")[0].split(" ")[1]
-		let innerText = block.replace(symbol+" ","")
+		let trailingDelineator = botSplit.split("\{")
+		let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
+		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
+		let symbol = block.split(" ")[0]
 		//console.log("symbol: "+symbol+" innerText: "+innerText)
 
 		let elementParent = "parentElement"
 		let href = ""
 		let listIDLength = listIDs.length
-		let id = getBadPW();
 
 		let headerSplit = innerText.replace("}","").split("{#")
 		let header = headerSplit[0]
@@ -396,22 +407,14 @@ prevListItem = getRandomishString();
 out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 */
 
-			//Code blocks
-			case "~~~":
-			case "```":
-				// Make any words after into the class, to streamline code coloration - can just have CSS classes named after each language.
-				out += "{\"elementType\":\"pre\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
-				for (line of block.split("\n")) {
-					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"innerText\": \""+line+"\"},"
-				}
-				break;
-
-
 			default: //Fall out of the symbol replacement system and into a RegExp replacement system. 
-				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row
+				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 					out += "{\"elementType\":\"hr\"},"
 					
 					
+				} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
+					//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
+					out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
 				} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
 					out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
 				} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
@@ -447,17 +450,12 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 							}
 						}
 					}
-
-				} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - nestable.
-					inSplit = block.split("\n")
-					let topLine = inSplit[0].replace(/^[:]{3}/g,"")
-					let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
-					let elementType = topLine.split(" ")[0]
+					
+				} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
 					if (topLine.match("#")){
 						id = topLine.split("#")[1].split(" ")[0]
 						if (id.match(":")){
 							id = id.split(":")[0]
-							elementParent = id.split(";")[1]
 						}
 					} 
 					elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
@@ -466,14 +464,29 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					if (botLine.match("\{")){
 						onClick = botLine.replace(/^{/g,"").replace(/\}$/g,"")
 					}
-					out += "{\"elementParent\":\""+elementParent+"\",\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
+					out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
 
 
-				} else if (block.substr(0,4).match(/[ ]{4}/g)) {//Code block - don't process anything.
-					out += "{\"elementType\":\"pre\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
-					for (line of block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n").split("\n")) {//Nip off the first 4 lines of each line.
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"innerText\": \""+line+"\"},"
-					}
+				} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
+					out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
+				break;
+					
+
+
+
+
+				} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
+					//This is an unordered list with a bunch of CSS: 
+					//https://www.w3schools.com/howto/howto_js_todolist.asp
+					out += parseBlock(block,/^-[ ]\[[X ]\]/g,"ul",elementClass,"li")
+
+
+				} else if (block.match(/^.+\n:[ ]/g)) {//Definition List block - Parsed.
+					//This is an unordered list with a bunch of CSS: 
+					//https://www.w3schools.com/howto/howto_js_todolist.asp
+					out += parseBlock(block,/:[ ]/g,"dl",elementClass,"dd")
+
+
 
 				} else {//Return everything else as a paragraph.
 					out += replaceSymbols("{\"elementType\":\"p\",\"innerText\": \""+block+"\"},")
@@ -482,7 +495,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 		};//end switch symbol
 	};//end for block
 
-	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
+	out = '['+out.replace(/[,]$/,"")+']'
 	return out;
 }
 
