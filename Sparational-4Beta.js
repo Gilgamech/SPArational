@@ -306,22 +306,22 @@ function convertMdToSpa(markdown) {
 		switch (symbol) {
 			//Headings - Parsed.
 			case "#":
-				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h1\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
 				break;
 			case "##":
-				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h2\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
 				break;
 			case "###":
-				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h3\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
 				break;
 			case "####":
-				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h4\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
 				break;
 			case "#####":
-				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h5\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
 				break;
 			case "######":
-				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h6\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
 				break;
 
 			//Unordered Lists - Nesting.
