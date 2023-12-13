@@ -497,7 +497,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 
 
 				} else {//Return everything else as a paragraph.
-					out += replaceSymbols("{\"elementType\":\"p\",\"innerText\": \""+block+"\"},")
+					out += parseInline(block)
 				};//end if symbol
 				break;
 		};//end switch symbol
