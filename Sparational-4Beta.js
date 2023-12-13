@@ -330,7 +330,7 @@ function convertMdToSpa(markdown) {
 			case "+":
 			case "-":
 			case "*":
-				out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),"","ul","","li")
+				out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
 				break;
 
 /*
