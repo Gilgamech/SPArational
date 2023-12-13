@@ -557,7 +557,8 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	
 	out += "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
 	for (line of block.replace(regex,regexReplace).split("\n")) {
-		out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+innerType+"\",\"innerText\": \""+line+"\"},"
+		out += parseInline(id,line,innerType)
+		//out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+innerType+"\",\"innerText\": \""+line+"\"},"
 	}
 	return out;
 }
