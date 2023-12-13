@@ -300,39 +300,21 @@ function convertMdToSpa(markdown) {
 			//Headings - Parsed.
 			case "#":
 				out += "{\"elementType\":\"h1\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
-				if (headerSplit.length > 1) {
-					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
-				}
 				break;
 			case "##":
 				out += "{\"elementType\":\"h2\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
-				if (headerSplit.length > 1) {
-					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
-				}
 				break;
 			case "###":
 				out += "{\"elementType\":\"h3\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
-				if (headerSplit.length > 1) {
-					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
-				}
 				break;
 			case "####":
 				out += "{\"elementType\":\"h4\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
-				if (headerSplit.length > 1) {
-					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
-				}
 				break;
 			case "#####":
 				out += "{\"elementType\":\"h5\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
-				if (headerSplit.length > 1) {
-					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
-				}
 				break;
 			case "######":
 				out += "{\"elementType\":\"h6\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
-				if (headerSplit.length > 1) {
-					out = out.replace(/"},$/,"\",\"id\": \""+id+"\"},")
-				}
 				break;
 
 			//Unordered Lists - Nesting.
@@ -341,10 +323,9 @@ function convertMdToSpa(markdown) {
 			case "+":
 			case "-":
 			case "*":
-				out += "{\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-				for (line of block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,"").split("\n")) {
-					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+line+"\"},"
-				}
+				out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),"","ul","","li")
+				break;
+
 /*
 				if (tabLevel == 0) { 
 					listIDs[listIDs.length] = getRandomishString();
@@ -385,10 +366,7 @@ function convertMdToSpa(markdown) {
 			case "7.":
 			case "8.":
 			case "9.":
-				out += "{\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-				for (line of block.replace(/[0-9]+[.][ ]/g,"").split("\n")) {
-					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+line+"\"},"
-				}
+				out += parseBlock(block,/[0-9]+[.][ ]/g,"ol","","li")
 				break;
 /*
 //Ordered Lists
@@ -432,13 +410,10 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 			default: //Fall out of the symbol replacement system and into a RegExp replacement system. 
 				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row
 					out += "{\"elementType\":\"hr\"},"
-
-				} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nestable.
-					out += "{\"elementType\":\"blockquote\",\"id\": \""+id+"\"},"
-					for (line of block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n").split("\n")) {//Snip only the base layer of angle brackets.
-						out += "{\"elementParent\": \""+id+"\",\"innerText\": \""+line+"\"},"
-					}
-
+					
+					
+				} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
+					out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
 				} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
 					out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
 					let table = block
@@ -501,7 +476,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					}
 
 				} else {//Return everything else as a paragraph.
-					out += replaceParagraph(block)
+					out += replaceSymbols("{\"elementType\":\"p\",\"innerText\": \""+block+"\"},")
 				};//end if symbol
 				break;
 		};//end switch symbol
@@ -511,29 +486,94 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 	return out;
 }
 
-function replaceParagraph(text) {
-	let elementType = ""
+function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
+	let out = ""
 	let id = getRandomishString();
 	
-	if (text.substr(0,4) == "http") {//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
-		text = "{\"httpPassthrough\": \""+text.replace(/\n/g,"")+"\"},"
-		return text
+	out += "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
+	for (line of block.replace(regex,regexReplace).split("\n")) {
+		out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+innerType+"\",\"innerText\": \""+line+"\"},"
 	}
+	return out;
+}
 
-let symbolStart = "%#%#"
-let symbolEnd = "#%#%"
+//Set up regexes for token+text, because these sections have to start with a nonspace letter or number, and have to end with the same. So can be regex'd.
+let tokenData = {
+"de":{"regex":/\~{2}/,"elementType":"del"},
+"in":{"regex":/\+{2}/,"elementType":"ins"},
+"ma":{"regex":/\={2}/,"elementType":"mark"},
+"sa":{"regex":/\*{2}/,"elementType":"strong"},
+"su":{"regex":/\_{2}/,"elementType":"strong"},
+"a2":{"regex":/\</,"elementType":"a"},
+"a3":{"regex":/\>/,"elementType":"a"},
+"ab":{"regex":/\*\[/,"elementType":"a"},
+"an":{"regex":/[ ]\[/,"elementType":"a"},
+"co":{"regex":/\`/,"elementType":"code"},
+"ea":{"regex":/\*/,"elementType":"em"},
+"eu":{"regex":/\_/,"elementType":"em"},
+"fi":{"regex":/\^\[/,"elementType":"a"},
+"fo":{"regex":/\[\^/,"elementType":"a"},
+"im":{"regex":/\!\[/,"elementType":"img"},
+"q1":{"regex":/\]\s*\(/,"elementType":"a"},
+"q2":{"regex":/"\)/,"elementType":"a"},
+"q4":{"regex":/\]\s*\[/,"elementType":"a"},
+"q5":{"regex":/\]/,"elementType":"a"},
+"q6":{"regex":/[ ]\[/,"elementType":"a"},
+"q7":{"regex":/\]\s*\:\s*/,"elementType":"a"},
+"sb":{"regex":/\~/,"elementType":"sub"},
+"sp":{"regex":/\^/,"elementType":"sup"},
+}
 
-text = text.replace(/\*{2}/g,symbolStart+"st"+symbolEnd)
-text = text.replace(/\_{2}/g,symbolStart+"st"+symbolEnd)
-text = text.replace(/\~{2}/g,symbolStart+"de"+symbolEnd)
-text = text.replace(/\={2}/g,symbolStart+"ma"+symbolEnd)
-text = text.replace(/\+{2}/g,symbolStart+"in"+symbolEnd)
-text = text.replace(/\*/g,symbolStart+"em"+symbolEnd)
-text = text.replace(/\_/g,symbolStart+"em"+symbolEnd)
-text = text.replace(/\~/g,symbolStart+"sb"+symbolEnd)
-text = text.replace(/\^/g,symbolStart+"sp"+symbolEnd)
-text = text.replace(/\`/g,symbolStart+"co"+symbolEnd)
+//Instead of foreaching across tokens, need to foreach across token occurrence in the string. So tokens need to have identical beginnings.
+//Hashes toward the token.
+let tokenSplitter = "%%%%%%"
+let tokenStart = "$$$"+tokenSplitter+"###"
+let tokenEnd = "###"+tokenSplitter+"$$$"
+//Bracket defined objects are just like other inline objects, but have a weird closing tag, and numerous internal tags to define different object data. 
 
+function replaceSymbols(text) {
+	//Have to split out inline code first so the contents don't get parsed.
+	for (key of getKeys(tokenData)) {
+		//for (index in tokenData.length) {
+		let regex = new RegExp(tokenData[key].regex,"g")
+		//console.log(regex)
+		text = text.replace(regex,tokenStart+key+tokenEnd)//code - Unparsed.
+	}
+	return text
+}
+
+//let text = "Site *frames* are a way to fully isolate site **data** from the HTML bootstrap. A site frame is meant to hold a small amount of JS and other 'connective tissue' to ~~support~~ ++describe++ a site, as it ==calls== **data** from near and far. This is enabled through the new URL replacement feature:"
+//convertJmlToElements("content",JSON.parse("["+parseInline(text)+"]"))
+function parseInline(text,elementType="p"){
+	let split = new RegExp(tokenSplitter)
+	let id = getRandomishString();
+	blockSplit = replaceSymbols(text).split(split)
+	block = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+	for (let b = 1; b < blockSplit.length -1; b+=4) {
+		
+	//t2.match(/\]\(\S*\)/)
+	//t3.match(/\S*\)/)
+	//t3.split(/\S*\)/)
+
+        //console.log(block)
+		elementType = tokenData[blockSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
+		let innerText = blockSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
+		//let elementType = blockSplit[b+2]
+		let spanText = blockSplit[b+3].replace(/^\$\$/,"").replace(/\$\$$/,"")
+		
+		if (elementType == "a") {
+			let href = spanText.match(/\S*\)/)[0].replace(/\)$/,"")
+			spanText = spanText.split(/\S*\)/)[1]
+			block += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\" "+innerText+"\",\"href\": \""+href+"\"},"
+		} else {
+			block += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
+		}
+		if (spanText) {
+			block += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
+		}; //end if endTxt
+	}
+	block = block.toString().replace(/"},$/,"\"}")
+	return block;
 }
 //[innerText](http://website.com/)
 //[innerText](/local/reference/)
@@ -544,8 +584,6 @@ text = text.replace(/\`/g,symbolStart+"co"+symbolEnd)
 [innerText][id] - Direct
 [id]: href "attributeAction*"
 
-	return "{\"elementType\":\"p\",\"innerText\": \""+text+"\"},"
-}
 [innerText] - Indirect
 [innerText]: href "attributeAction*"
 
