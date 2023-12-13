@@ -739,8 +739,6 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration =
 	xhRequest.send($file);
 }; // end webRequest
 
-function getBadPW() {
-	return Math.random().toString(36).slice(-20);
 function getRandomishString() {
 	return Math.random().toString(36).slice(-20).replace("0.","");
  }
