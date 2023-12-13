@@ -8,6 +8,9 @@
 //4.-6.0 convertMdToSpa HTTP passthrough complete.
 //4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. 
 //Notes:
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sitelets can't load themselves or they would cause a loop.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Will do nestables later. Nestable means the innerText goes through the block parser again, and might reattach itself under instead of having to rebuild the parent.
+//Are there impossible nesting combinations?
 
 //Element tools
 function getElement(elementId){
@@ -649,7 +652,33 @@ function convertMdArrayToTable(parentElement,newTableID,array,classList,styleLis
 	};
 }
 
+function convertYamlToJson(yaml) {
+	let data = []
+	let nextLine = []
+	//let result = yaml.split("\n").filter((word) => word.match(":"));
+	for (line of yaml.split("\n")) {
+		let lineSplit = line.split("#")[0]
+		let datum = lineSplit.replaceAll(" ","").split(":")
+		if (datum[0] == ""){
+			continue
+		} else if (datum[1] == ""){
+			let indentedItems = ""
+			data[datum[0]] = convertYamlToJson(indentedItems)
+		} else if (datum[0].substr(0,2) == "  "){
+			//data[datum[0]] = []
+			//need to retain/define the nth datum[0] to reparent under. Just like the reparent code for Markdown.
+			//on 2 spaces before the dash, nest under an intermediate UL. parentElement = addElement(parentElement,"","ul")
+		} else {
+			data[datum[0]] = datum[1]
+		}
+	}
+	return data
+}
+
 //Supporting functions
+//Have PathName area, to put file URL, and if it doesn't come from there, error. As an optional security check. 
+//Add the reloadEvery duration in seconds following a colon following an HTTP passthru. Needs to be built into the script feeding convertWebElement and convertWebElement itself, as well as webRequest or a wrapper as a timer.
+
 //window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest.
 function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
 //if now is smaller than duration, read from cache.
