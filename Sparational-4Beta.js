@@ -247,7 +247,7 @@ function convertJmlToElements(parentElement,elements) {
 	}
 }
 
-function convertJupyterToSpa(inputString) {
+function convertJupyterToJml(inputString) {
 	var out
 				console.log(inputString);
 	var stringVar = JSON.stringify(inputString);
@@ -257,7 +257,7 @@ function convertJupyterToSpa(inputString) {
 				console.log(stringVar);
 }
 
-function convertJupyterToSpa2(inputString) {
+function convertJupyterToJml2(inputString) {
 		stringVar = stringVar.replace('# ','"          "elementType": "p",');
 		stringVar = stringVar + '</h1>"';
 		inputString = JSON.parse(stringVar);
@@ -620,7 +620,7 @@ function convertCsvToMdArray(inputString) {
 	return out;
 }
 
-function convertJsonToSpa(inputString) {
+function convertJsonToJml(inputString) {
 //JSON won't always be so pretty, and might be at any state between pretty and minified. So might need to parse and stringify first. This is also a good time to check for a jmlVersion, since all SPA files have one.
 //Instead of removing brackets, hide them by making their text color equal to their background color.
 //Direct JSON goes right onto the page: 
