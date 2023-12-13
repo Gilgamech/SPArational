@@ -9,8 +9,7 @@
 //4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. 
 //Notes:
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sitelets can't load themselves or they would cause a loop.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//Will do nestables later. Nestable means the innerText goes through the block parser again, and might reattach itself under instead of having to rebuild the parent.
-//Are there impossible nesting combinations?
+//window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest. Also it's insecure so needs an option to disable.
 
 //Element tools
 function getElement(elementId){
@@ -277,7 +276,6 @@ function convertMdToJml(markdown) {
 //Parse page on \n\n into blocks.
 	for (block of markdown.split("\n\n")) {
 		let symbol = block.split(" ")[0]
-		//console.log("symbol: "+symbol+" innerText: "+innerText)
 
 		let elementParent = "parentElement"
 		let href = ""
@@ -303,7 +301,6 @@ function convertMdToJml(markdown) {
 		let header = headerSplit[0].replace(symbol+" ","")
 		id = headerSplit[1]
 
-		console.log(symbol)
 		switch (symbol) {
 			//Headings - Parsed.
 			case "#":
@@ -335,31 +332,6 @@ function convertMdToJml(markdown) {
 				break;
 
 /*
-				if (tabLevel == 0) { 
-					listIDs[listIDs.length] = getRandomishString();
-				}  else if (tabLevel > prevTabLevel) { 
-					listIDs[listIDs.length] = getRandomishString();
-				}  else if (tabLevel < prevTabLevel) {
-					listIDs.pop();
-				} 
-				
-				let id = listIDs[listIDs.length -1]
-				let listLevel = listIDs[listIDs.length -2]
-				
-				if (tabLevel == 0) {
-					prevListItem = elementParent
-					console.log("First line: Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-					out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-				} else if (tabLevel > prevTabLevel) { 
-					if (prevListItem == "") {prevListItem = listLevel}
-					console.log("Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-					out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-				} else if (tabLevel < prevTabLevel) { 
-					console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-				}
-				prevListItem = getRandomishString();
-				out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
-				break;
 */
 				
 			//Ordered Lists - Nesting.
@@ -377,31 +349,6 @@ function convertMdToJml(markdown) {
 				out += parseBlock(block,/[0-9]+[.][ ]/g,"ol","","li")
 				break;
 /*
-//Ordered Lists
-if (tabLevel == 0) { 
-	listIDs[listIDs.length] = getRandomishString();
-}  else if (tabLevel > prevTabLevel) { 
-	listIDs[listIDs.length] = getRandomishString();
-}  else if (tabLevel < prevTabLevel) {
-	listIDs.pop();
-} 
-
-let id = listIDs[listIDs.length -1]
-let listLevel = listIDs[listIDs.length -2]
-
-if (tabLevel == 0) {
-	prevListItem = elementParent
-	console.log("First line: Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-	out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-} else if (tabLevel > prevTabLevel) { 
-	if (prevListItem == "") {prevListItem = listLevel}
-	console.log("Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-	out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-} else if (tabLevel < prevTabLevel) { 
-	console.log("Remove OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-}
-prevListItem = getRandomishString();
-out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 */
 
 			default: //Fall out of the symbol replacement system and into a RegExp replacement system. 
@@ -501,7 +448,6 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 	return out;
 }
 
-//Set up regexes for token+text, because these sections have to start with a nonspace letter or number, and have to end with the same. So can be regex'd.
 let tokenData = {
 "de":{"regex":/\~{2}/,"elementType":"del"},
 "in":{"regex":/\+{2}/,"elementType":"ins"},
@@ -528,12 +474,9 @@ let tokenData = {
 "sp":{"regex":/\^/,"elementType":"sup"},
 }
 
-//Instead of foreaching across tokens, need to foreach across token occurrence in the string. So tokens need to have identical beginnings.
-//Hashes toward the token.
 let tokenSplitter = "%%%%%%"
 let tokenStart = "$$$"+tokenSplitter+"###"
 let tokenEnd = "###"+tokenSplitter+"$$$"
-//Bracket defined objects are just like other inline objects, but have a weird closing tag, and numerous internal tags to define different object data. 
 
 function replaceSymbols(text) {
 	//Have to split out inline code first so the contents don't get parsed.
@@ -545,10 +488,6 @@ function replaceSymbols(text) {
 	}
 	return text
 }
-
-//let text = "Site *frames* are a way to fully isolate site **data** from the HTML bootstrap. A site frame is meant to hold a small amount of JS and other 'connective tissue' to ~~support~~ ++describe++ a site, as it ==calls== **data** from near and far. This is enabled through the new URL replacement feature:"
-//convertJmlToElements("content",JSON.parse("["+parseInline(text)+"]"))
-	//Takes unparsed block, iterates over split by regex to replace tokens, and splits by token to return an element with children.
 
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
@@ -594,26 +533,7 @@ function parseInline(parentElement,text,elementType="p"){
 	}
 	return block;
 }
-//[innerText](http://website.com/)
-//[innerText](/local/reference/)
 
-//t2.match(/\]\(\S*\)/)
-//t3.match(/\S*\)/)
-//t3.split(/\S*\)/)
-
-/*
-[innerText](href "attributeAction*") - Inline
-
-[innerText][id] - Direct
-[id]: href "attributeAction*"
-
-[innerText] - Indirect
-[innerText]: href "attributeAction*"
-
-*Needs "attributeTitle":"Title"
-*/
-
-//convertMdArrayToTable(parentElement,newTableID,convertCsvToMDArray(inputString),classList,styleList)
 function convertCsvToMdArray(inputString) {
 	let out = ""
 	for (line of inputString.split("\n")) {
@@ -682,11 +602,6 @@ function convertYamlToJson(yaml) {
 	return data
 }
 
-//Supporting functions
-//Have PathName area, to put file URL, and if it doesn't come from there, error. As an optional security check. 
-//Add the reloadEvery duration in seconds following a colon following an HTTP passthru. Needs to be built into the script feeding convertWebElement and convertWebElement itself, as well as webRequest or a wrapper as a timer.
-
-//window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest.
 function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
 //if now is smaller than duration, read from cache.
 	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":onlineCacheDuration"]) {
