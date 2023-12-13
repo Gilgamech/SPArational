@@ -522,7 +522,7 @@ let tokenData = {
 "q2":{"regex":/"\)/,"elementType":"a"},
 "q4":{"regex":/\]\s*\[/,"elementType":"a"},
 "q5":{"regex":/\]/,"elementType":"a"},
-"q6":{"regex":/[ ]\[/,"elementType":"a"},
+"q6":{"regex":/\[/,"elementType":"a"},
 "q7":{"regex":/\]\s*\:\s*/,"elementType":"a"},
 "sb":{"regex":/\~/,"elementType":"sub"},
 "sp":{"regex":/\^/,"elementType":"sup"},
