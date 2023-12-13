@@ -407,10 +407,6 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 					out += "{\"elementType\":\"hr\"},"
 					
-				} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
-					//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
-					out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
-					
 				} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
 					out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
 					
@@ -477,12 +473,12 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 
 				} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
 					out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
-				break;
+
+				} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
+					//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
+					out += "\""+block.replace(/\n/g,"")+"\","
+					//out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
 					
-
-
-
-
 				} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 					//This is an unordered list with a bunch of CSS: 
 					//https://www.w3schools.com/howto/howto_js_todolist.asp
