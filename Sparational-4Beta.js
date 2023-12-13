@@ -291,7 +291,7 @@ function convertMdToSpa(markdown) {
 		let id = elementHash.split("#")[1]
 		if (!(id)) {id = getRandomishString()}
 		//let leadingDelineator = topSplit.split("\{")
-		let elementClass = topSplit.replace(elementHash,"") //Needs to snip leading delineator
+		let elementClass = topLine.replace(elementHash+" ","") //Needs to snip leading delineator
 		let trailingDelineator = botSplit.split("\{")
 		let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
 		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
