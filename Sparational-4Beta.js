@@ -29,7 +29,7 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	}
 	var newElement = document.createElement($elementType);
 	if (!$elementId) {
-		$elementId = getBadPW();
+		$elementId = getRandomishString();
 	}; // end if divParent
 	newElement.id = $elementId;
 	if ($elementStyle) {
@@ -347,9 +347,9 @@ function convertMdToSpa(markdown) {
 				}
 /*
 				if (tabLevel == 0) { 
-					listIDs[listIDs.length] = getBadPW();
+					listIDs[listIDs.length] = getRandomishString();
 				}  else if (tabLevel > prevTabLevel) { 
-					listIDs[listIDs.length] = getBadPW();
+					listIDs[listIDs.length] = getRandomishString();
 				}  else if (tabLevel < prevTabLevel) {
 					listIDs.pop();
 				} 
@@ -368,7 +368,7 @@ function convertMdToSpa(markdown) {
 				} else if (tabLevel < prevTabLevel) { 
 					console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
 				}
-				prevListItem = getBadPW();
+				prevListItem = getRandomishString();
 				out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 				break;
 */
@@ -393,9 +393,9 @@ function convertMdToSpa(markdown) {
 /*
 //Ordered Lists
 if (tabLevel == 0) { 
-	listIDs[listIDs.length] = getBadPW();
+	listIDs[listIDs.length] = getRandomishString();
 }  else if (tabLevel > prevTabLevel) { 
-	listIDs[listIDs.length] = getBadPW();
+	listIDs[listIDs.length] = getRandomishString();
 }  else if (tabLevel < prevTabLevel) {
 	listIDs.pop();
 } 
@@ -414,7 +414,7 @@ if (tabLevel == 0) {
 } else if (tabLevel < prevTabLevel) { 
 	console.log("Remove OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
 }
-prevListItem = getBadPW();
+prevListItem = getRandomishString();
 out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 */
 
@@ -446,11 +446,16 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					let Thead = table.split(regex)[0]
 					let Tbody = table.split(regex)[1]
 					let Tdata = table.match(regex) //Justification data
+					//Use text-align: left; text-align: right; text-align: center;
+					//Introduce other styling? Like with === instead of ---?
+
+					let TheadId = getRandomishString();
+					let TbodyId = getRandomishString();
+					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TheadId+"\"},"
+					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"tbody\",\"id\": \""+TbodyId+"\"},"
 
 					for (line of Thead.split("\n")) {
-						let TheadId = getBadPW();
-						let TRID = getBadPW();
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TheadId+"\"},"
+						let TRID = getRandomishString();
 						out += "{\"elementParent\": \""+TheadId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
 						for (data of line.split("\|")) {
 							if (data){
@@ -459,9 +464,7 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 						}
 					}
 					for (line of Tbody.split("\n")) {
-						let TbodyId = getBadPW();
-						let TRID = getBadPW();
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"tbody\",\"id\": \""+TbodyId+"\"},"
+						let TRID = getRandomishString();
 						out += "{\"elementParent\": \""+TbodyId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
 						for (data of line.split("\|")) {
 							if (data){
@@ -509,8 +512,8 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 }
 
 function replaceParagraph(text) {
-	let id = getBadPW();
 	let elementType = ""
+	let id = getRandomishString();
 	
 	if (text.substr(0,4) == "http") {//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
 		text = "{\"httpPassthrough\": \""+text.replace(/\n/g,"")+"\"},"
@@ -577,7 +580,7 @@ function convertJsonToSpa(inputString) {
 function convertMdArrayToTable(parentElement,newTableID,array,classList,styleList) {
 	//Inputs a multidimensional array (e.g. [["a","b"],[1,2],[3,4]]) and outputs a table.
 	if (!newTableID) {
-		newTableID = getBadPW();
+		newTableID = getRandomishString();
 	}; // end if divParent
 	for (column=0;column<array[0].length;column++){
 		var out = [];
@@ -658,6 +661,8 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration =
 
 function getBadPW() {
 	return Math.random().toString(36).slice(-20);
+function getRandomishString() {
+	return Math.random().toString(36).slice(-20).replace("0.","");
  }
 
 function getKeys(obj){
