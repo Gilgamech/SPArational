@@ -190,6 +190,7 @@ function convertWebElement(parentElement,URL){
 	let urlParts = URL.split(".");
 	let extension = urlParts[urlParts.length -1].toLowerCase();
 		switch (extension) { //Be caps indifferent.
+			case "jml": //Need to swap this to YAML processing when 4.0 hits.
 			case "spa": //Need to swap this to YAML processing when 4.0 hits.
 				webRequest(URL,function(callback){
 					convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
@@ -484,13 +485,10 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					//https://www.w3schools.com/howto/howto_js_todolist.asp
 					out += parseBlock(block,/^-[ ]\[[X ]\]/g,"ul",elementClass,"li")
 
-
 				} else if (block.match(/^.+\n:[ ]/g)) {//Definition List block - Parsed.
 					//This is an unordered list with a bunch of CSS: 
 					//https://www.w3schools.com/howto/howto_js_todolist.asp
 					out += parseBlock(block,/:[ ]/g,"dl",elementClass,"dd")
-
-
 
 				} else {//Return everything else as a paragraph.
 					out += parseInline(block)
@@ -550,6 +548,8 @@ function replaceSymbols(text) {
 
 //let text = "Site *frames* are a way to fully isolate site **data** from the HTML bootstrap. A site frame is meant to hold a small amount of JS and other 'connective tissue' to ~~support~~ ++describe++ a site, as it ==calls== **data** from near and far. This is enabled through the new URL replacement feature:"
 //convertJmlToElements("content",JSON.parse("["+parseInline(text)+"]"))
+	//Takes unparsed block, iterates over split by regex to replace tokens, and splits by token to return an element with children.
+
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
 	let out = ""
@@ -563,16 +563,13 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 }
 
 function parseInline(text,elementType="p"){
+	//Takes unparsed block, replaces tokens, and splits off token to return an element with children.
 	let split = new RegExp(tokenSplitter)
 	let id = getRandomishString();
 	blockSplit = replaceSymbols(text).split(split)
 	block = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 	for (let b = 1; b < blockSplit.length -1; b+=4) {
 		
-	//t2.match(/\]\(\S*\)/)
-	//t3.match(/\S*\)/)
-	//t3.split(/\S*\)/)
-
         //console.log(block)
 		elementType = tokenData[blockSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
 		let innerText = blockSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
@@ -594,6 +591,10 @@ function parseInline(text,elementType="p"){
 }
 //[innerText](http://website.com/)
 //[innerText](/local/reference/)
+
+//t2.match(/\]\(\S*\)/)
+//t3.match(/\S*\)/)
+//t3.split(/\S*\)/)
 
 /*
 [innerText](href "attributeAction*") - Inline
