@@ -377,7 +377,8 @@ function convertMdToJml(markdown) {
 
 		} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
 			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
-			out += "\""+block.replace(/\n/g,"")+"\","
+			out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('parentElement','"+block+"')\"},"
+			//out += "\""+block.replace(/\n/g,"")+"\","
 			//out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
 			
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
