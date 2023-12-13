@@ -274,6 +274,12 @@ function convertMdToSpa(markdown) {
 	for (block of markdown.split("\n\n")) {
 
 		let symbol = block.split(" ")[0]
+
+		/* Div definition
+		:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
+		innerText
+		:::{onClick_or_onChange_put_JS_here}
+		*/
 		let elementClass = block.split("\n")[0].split(" ")[1]
 		let innerText = block.replace(symbol+" ","")
 		//console.log("symbol: "+symbol+" innerText: "+innerText)
@@ -291,7 +297,7 @@ function convertMdToSpa(markdown) {
 
 		console.log(symbol)
 		switch (symbol) {
-			//Headings
+			//Headings - Parsed.
 			case "#":
 				out += "{\"elementType\":\"h1\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
 				if (headerSplit.length > 1) {
@@ -329,9 +335,9 @@ function convertMdToSpa(markdown) {
 				}
 				break;
 
-			//Unordered Lists
+			//Unordered Lists - Nesting.
 				//+ Sub-lists are made by indenting 2 spaces:
-				//  - Marker character change forces new list start:
+				//  - Marker character change forces new list start
 			case "+":
 			case "-":
 			case "*":
@@ -367,7 +373,7 @@ function convertMdToSpa(markdown) {
 				break;
 */
 				
-			//Ordered Lists - Nestable
+			//Ordered Lists - Nesting.
 			//Need to replace with regex, to match numbers of any length.
 			case "0.": 
 			case "1.":
@@ -506,14 +512,11 @@ function replaceParagraph(text) {
 	let id = getBadPW();
 	let elementType = ""
 	
-	//Passthrough
 	if (text.substr(0,4) == "http") {//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
 		text = "{\"httpPassthrough\": \""+text.replace(/\n/g,"")+"\"},"
 		return text
 	}
 
-//Unused symbols: @#$%&
-//Hashes toward the symbol.
 let symbolStart = "%#%#"
 let symbolEnd = "#%#%"
 
@@ -528,33 +531,23 @@ text = text.replace(/\~/g,symbolStart+"sb"+symbolEnd)
 text = text.replace(/\^/g,symbolStart+"sp"+symbolEnd)
 text = text.replace(/\`/g,symbolStart+"co"+symbolEnd)
 
-/*
-//let text = "This text is %#%~st~%#%bolded, man! Can you%#%~st~%#% believe it?"
-//reassembled Symbol matching
-let tmatch = text.match(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
-let symbol = ""
-if (tmatch.match("~")){
-	symbol = tmatch[0].split("~")[1]
 }
-let token = symbolStart+symbol+symbolEnd
-*/
+//[innerText](http://website.com/)
+//[innerText](/local/reference/)
 
 /*
-let tsplit = text.split(token)
-let outText = tsplit[0]
-let wrap = tsplit[1] 
-let span = tsplit[2]
-*/
+[innerText](href "attributeAction*") - Inline
 
-/*Direct regex matching
-let tsplit = text.split(/[%][#][%][~][a-zA-Z0-9]{2}[~][%][#][%]/g)
-let outText = tsplit[0]
-let wrap = tsplit[1] 
-let span = tsplit[2]
-*/
+[innerText][id] - Direct
+[id]: href "attributeAction*"
 
 	return "{\"elementType\":\"p\",\"innerText\": \""+text+"\"},"
 }
+[innerText] - Indirect
+[innerText]: href "attributeAction*"
+
+*Needs "attributeTitle":"Title"
+*/
 
 //convertMdArrayToTable(parentElement,newTableID,convertCsvToMDArray(inputString),classList,styleList)
 function convertCsvToMdArray(inputString) {
