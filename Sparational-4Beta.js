@@ -275,26 +275,6 @@ function convertMdToSpa(markdown) {
 
 //Parse page on \n\n into blocks.
 	for (block of markdown.split("\n\n")) {
-
-		inSplit = block.split("\n")
-		let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
-		let botLine = inSplit[inSplit.length -1]//.replace(/^[:]{3}/g,"")
-		let topSplit = topLine.split(" ")
-
-		/* Div definition
-		:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
-		innerText
-		:::{onClick_or_onChange_put_JS_here}
-		*/
-		let elementHash = topSplit[2]
-		let elementType = elementHash.split("#")[0]
-		let id = elementHash.split("#")[1]
-		if (!(id)) {id = getRandomishString()}
-		//let leadingDelineator = topSplit.split("\{")
-		let elementClass = topLine.replace(elementHash+" ","") //Needs to snip leading delineator
-		let trailingDelineator = botSplit.split("\{")
-		let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
-		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
 		let symbol = block.split(" ")[0]
 		//console.log("symbol: "+symbol+" innerText: "+innerText)
 
@@ -302,32 +282,42 @@ function convertMdToSpa(markdown) {
 		let href = ""
 		let listIDLength = listIDs.length
 
+		inSplit = block.split("\n")
+		let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
+		let botLine = inSplit[inSplit.length -1]//.replace(/^[:]{3}/g,"")
+		let topSplit = topLine.split(" ")
+		let botSplit = botLine.split(" ")
+		let elementHash = topSplit[2]
+		let elementType = elementHash.split("#")[0]
+		let id = elementHash.split("#")[1]
+		if (!(id)) {id = getRandomishString()}
+		
+		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
 		let headerSplit = innerText.replace("}","").split("{#")
+		innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
 		let header = headerSplit[0]
 		id = headerSplit[1]
-		innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
-
 
 		console.log(symbol)
 		switch (symbol) {
 			//Headings - Parsed.
 			case "#":
-				out += "{\"elementType\":\"h1\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
 				break;
 			case "##":
-				out += "{\"elementType\":\"h2\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
 				break;
 			case "###":
-				out += "{\"elementType\":\"h3\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
 				break;
 			case "####":
-				out += "{\"elementType\":\"h4\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
 				break;
 			case "#####":
-				out += "{\"elementType\":\"h5\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
 				break;
 			case "######":
-				out += "{\"elementType\":\"h6\",\"elementClass\":\""+elementClass+"\",\"innerText\": \""+header+"\"},"
+				out += "{\"elementType\":\"h1\",\"innerText\": \""+header+"\"},"
 				break;
 
 			//Unordered Lists - Nesting.
@@ -455,6 +445,17 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 					}
 					
 				} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
+					/* Div definition
+					:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
+					innerText
+					:::{onClick_or_onChange_put_JS_here}
+					*/
+
+					//let leadingDelineator = topSplit.split("\{")
+					let elementClass = topLine.replace(elementHash+" ","") //Needs to snip leading delineator
+					let trailingDelineator = botSplit.split("\{")
+					let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
+
 					if (topLine.match("#")){
 						id = topLine.split("#")[1].split(" ")[0]
 						if (id.match(":")){
