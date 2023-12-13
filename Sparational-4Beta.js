@@ -296,147 +296,100 @@ function convertMdToJml(markdown) {
 		innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
 		let header = headerSplit[0].replace(symbol+" ","")
 		id = headerSplit[1]
+		
+		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
+			out += parseInline(elementParent,header,("h"+symbol.length))
+		
+		} else if (symbol.match(/[-+*]{1,1}/)) {//Unordered Lists - Nesting.
+			out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
+		
+		} else if (symbol.match(/\d*[.]/)) {//Ordered Lists - Nesting.
+			out += parseBlock(block,/[0-9]+[.][ ]/g,"ol","","li")
+		
+		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
+			out += "{\"elementType\":\"hr\"},"
+			
+		} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
+			out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
+			
+		} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
+			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
+			let table = block
+			let regex = /\n+.*\|\-{3,}.*\n+/g //The all-dashes line
+			let Thead = table.split(regex)[0]
+			let Tbody = table.split(regex)[1]
+			let Tdata = table.match(regex) //Justification data
+			//Use text-align: left; text-align: right; text-align: center;
+			//Introduce other styling? Like with === instead of ---?
 
-		switch (symbol) {
-			//Headings - Parsed.
-			case "#":
-				out += parseInline(elementParent,header,"h1")
-				break;
-			case "##":
-				out += parseInline(elementParent,header,"h2")
-				break;
-			case "###":
-				out += parseInline(elementParent,header,"h3")
-				break;
-			case "####":
-				out += parseInline(elementParent,header,"h4")
-				break;
-			case "#####":
-				out += parseInline(elementParent,header,"h5")
-				break;
-			case "######":
-				out += parseInline(elementParent,header,"h6")
-				break;
+			let TheadId = getRandomishString();
+			let TbodyId = getRandomishString();
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TheadId+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"tbody\",\"id\": \""+TbodyId+"\"},"
 
-			//Unordered Lists - Nesting.
-				//+ Sub-lists are made by indenting 2 spaces:
-				//  - Marker character change forces new list start
-			case "+":
-			case "-":
-			case "*":
-				out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
-				break;
-
-/*
-*/
-				
-			//Ordered Lists - Nesting.
-			//Need to replace with regex, to match numbers of any length.
-			case "0.": 
-			case "1.":
-			case "2.":
-			case "3.":
-			case "4.":
-			case "5.":
-			case "6.":
-			case "7.":
-			case "8.":
-			case "9.":
-				out += parseBlock(block,/[0-9]+[.][ ]/g,"ol","","li")
-				break;
-/*
-*/
-
-			default: //Fall out of the symbol replacement system and into a RegExp replacement system. 
-				if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
-					out += "{\"elementType\":\"hr\"},"
-					
-				} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
-					out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
-					
-				} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
-					out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
-					let table = block
-					let regex = /\n+.*\|\-{3,}.*\n+/g //The all-dashes line
-					let Thead = table.split(regex)[0]
-					let Tbody = table.split(regex)[1]
-					let Tdata = table.match(regex) //Justification data
-					//Use text-align: left; text-align: right; text-align: center;
-					//Introduce other styling? Like with === instead of ---?
-
-					let TheadId = getRandomishString();
-					let TbodyId = getRandomishString();
-					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TheadId+"\"},"
-					out += "{\"elementParent\": \""+id+"\",\"elementType\":\"tbody\",\"id\": \""+TbodyId+"\"},"
-
-					for (line of Thead.split("\n")) {
-						let TRID = getRandomishString();
-						out += "{\"elementParent\": \""+TheadId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
-						for (data of line.split("\|")) {
-							if (data){
-								out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"th\",\"innerText\": \""+data+"\"},"
-							}
-						}
+			for (line of Thead.split("\n")) {
+				let TRID = getRandomishString();
+				out += "{\"elementParent\": \""+TheadId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
+				for (data of line.split("\|")) {
+					if (data){
+						out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"th\",\"innerText\": \""+data+"\"},"
 					}
-					for (line of Tbody.split("\n")) {
-						let TRID = getRandomishString();
-						out += "{\"elementParent\": \""+TbodyId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
-						for (data of line.split("\|")) {
-							if (data){
-								out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"td\",\"innerText\": \""+data+"\"},"
-							}
-						}
+				}
+			}
+			for (line of Tbody.split("\n")) {
+				let TRID = getRandomishString();
+				out += "{\"elementParent\": \""+TbodyId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
+				for (data of line.split("\|")) {
+					if (data){
+						out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"td\",\"innerText\": \""+data+"\"},"
 					}
-					
-				} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
-					/* Div definition
-					:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
-					innerText
-					:::{onClick_or_onChange_put_JS_here}
-					*/
+				}
+			}
+			
+		} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
+			/* Div definition
+			:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
+			innerText
+			:::{onClick_or_onChange_put_JS_here}
+			*/
 
-					//let leadingDelineator = topSplit.split("\{")
-					let elementClass = topLine.replace(elementHash+" ","") //Needs to snip leading delineator
-					let trailingDelineator = botSplit.split("\{")
-					let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
+			//let leadingDelineator = topSplit.split("\{")
+			let elementClass = topLine.replace(elementHash+" ","") //Needs to snip leading delineator
+			let trailingDelineator = botSplit.split("\{")
+			let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
 
-					if (topLine.match("#")){
-						id = topLine.split("#")[1].split(" ")[0]
-						if (id.match(":")){
-							id = id.split(":")[0]
-						}
-					} 
-					elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
-					innerText = JSON.stringify(block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],""))
-					let onClick = ""
-					if (botLine.match("\{")){
-						onClick = botLine.replace(/^{/g,"").replace(/\}$/g,"")
-					}
-					out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+onClick+"\",\"id\": \""+id+"\"},"
+			if (topLine.match("#")){
+				id = topLine.split("#")[1].split(" ")[0]
+				if (id.match(":")){
+					id = id.split(":")[0]
+				}
+			} 
+			elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
+			innerText = JSON.stringify(block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],""))
+			let onClick = ""
+			if (botLine.match("\{")){
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+botLine.replace(/^{/g,"").replace(/\}$/g,"")+"\",\"id\": \""+id+"\"},"
+			}
 
 
-				} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
-					out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
+		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
+			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
 
-				} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
-					//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
-					out += "\""+block.replace(/\n/g,"")+"\","
-					//out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
-					
-				} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
-					//This is an unordered list with a bunch of CSS: 
-					//https://www.w3schools.com/howto/howto_js_todolist.asp
-					out += parseBlock(block,/^-[ ]\[[X ]\]/g,"ul",elementClass,"li")
+		} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
+			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
+			out += "\""+block.replace(/\n/g,"")+"\","
+			//out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
+			
+		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
+			//This is an unordered list with a bunch of CSS: 
+			//https://www.w3schools.com/howto/howto_js_todolist.asp
+			out += parseBlock(block,/^-[ ]\[[X ]\]/g,"ul",elementClass,"li")
 
-				} else if (block.match(/^.+\n:[ ]/g)) {//Definition List block - Parsed.
-					//This is an unordered list with a bunch of CSS: 
-					//https://www.w3schools.com/howto/howto_js_todolist.asp
-					out += parseBlock(block,/:[ ]/g,"dl",elementClass,"dd")
+		} else if (block.match(/^.+\n:[ ]/g)) {//Definition List block - Parsed.
+			out += parseBlock(block,/:[ ]/g,"dl",elementClass,"dd")
 
-				} else {//Return everything else as a paragraph.
-					out += parseInline(elementParent,block)
-				};//end if symbol
-				break;
+		} else {//Return everything else as a paragraph.
+			out += parseInline(elementParent,block)
 		};//end switch symbol
 	};//end for block
 
