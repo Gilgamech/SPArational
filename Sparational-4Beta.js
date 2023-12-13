@@ -200,11 +200,11 @@ function convertWebElement(parentElement,URL){
 			case "md": 
 				//console.log(parentElement)
 				webRequest(URL,function(callback){
-					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
+					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback))))
 				})
 				break;
 			default: //Fallback to supplying a link.
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementType\":\"a\",\"href\":\"'+URL+'\"}]}}}').pages.main.elements))
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"a\",\"href\":\"'+URL+'\"}')))
 				break;
 		}
 };
