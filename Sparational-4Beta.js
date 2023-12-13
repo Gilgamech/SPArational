@@ -299,29 +299,29 @@ function convertMdToJml(markdown) {
 		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
 		let headerSplit = innerText.replace("}","").split("{#")
 		innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
-		let header = headerSplit[0]
+		let header = headerSplit[0].replace(symbol+" ","")
 		id = headerSplit[1]
 
 		console.log(symbol)
 		switch (symbol) {
 			//Headings - Parsed.
 			case "#":
-				out += "{\"elementType\":\"h1\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
+				out += parseInline(header,"h1")
 				break;
 			case "##":
-				out += "{\"elementType\":\"h2\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
+				out += parseInline(header,"h2")
 				break;
 			case "###":
-				out += "{\"elementType\":\"h3\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
+				out += parseInline(header,"h3")
 				break;
 			case "####":
-				out += "{\"elementType\":\"h4\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
+				out += parseInline(header,"h4")
 				break;
 			case "#####":
-				out += "{\"elementType\":\"h5\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
+				out += parseInline(header,"h5")
 				break;
 			case "######":
-				out += "{\"elementType\":\"h6\",\"innerText\": \""+header.replace(symbol+" ","")+"\"},"
+				out += parseInline(header,"h6")
 				break;
 
 			//Unordered Lists - Nesting.
