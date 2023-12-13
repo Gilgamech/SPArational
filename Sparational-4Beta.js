@@ -5,7 +5,7 @@
 //Last updated: 12/7/2023
 //Version history:
 //4.-6.1: Full rewrite of Markdown parser, including breaking out Paragraph inline parsing to a separate function. 
-//4.-6.0 convertMdToSpa HTTP passthrough complete.
+//4.-6.0 convertMdToJml HTTP passthrough complete.
 //4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. 
 //Notes:
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sitelets can't load themselves or they would cause a loop.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -203,7 +203,7 @@ function convertWebElement(parentElement,URL){
 			case "md": 
 				//console.log(parentElement)
 				webRequest(URL,function(callback){
-					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback))))
+					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToJml(callback))))
 				})
 				break;
 			default: //Fallback to supplying a link.
@@ -263,7 +263,7 @@ function convertJupyterToSpa2(inputString) {
 		return inputString;
 }; 
 
-function convertMdToSpa(markdown) {
+function convertMdToJml(markdown) {
 //Markdown is made of Blocks which are filled with data.
 	let out = ""
 	let listIDs = []
