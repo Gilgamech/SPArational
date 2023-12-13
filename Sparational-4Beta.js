@@ -507,17 +507,6 @@ out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""
 	return out;
 }
 
-function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
-	let out = ""
-	let id = getRandomishString();
-	
-	out += "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
-	for (line of block.replace(regex,regexReplace).split("\n")) {
-		out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+innerType+"\",\"innerText\": \""+line+"\"},"
-	}
-	return out;
-}
-
 //Set up regexes for token+text, because these sections have to start with a nonspace letter or number, and have to end with the same. So can be regex'd.
 let tokenData = {
 "de":{"regex":/\~{2}/,"elementType":"del"},
@@ -565,6 +554,18 @@ function replaceSymbols(text) {
 
 //let text = "Site *frames* are a way to fully isolate site **data** from the HTML bootstrap. A site frame is meant to hold a small amount of JS and other 'connective tissue' to ~~support~~ ++describe++ a site, as it ==calls== **data** from near and far. This is enabled through the new URL replacement feature:"
 //convertJmlToElements("content",JSON.parse("["+parseInline(text)+"]"))
+function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
+	//Takes unparsed block and splits off regex to return an element with children.
+	let out = ""
+	let id = getRandomishString();
+	
+	out += "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
+	for (line of block.replace(regex,regexReplace).split("\n")) {
+		out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+innerType+"\",\"innerText\": \""+line+"\"},"
+	}
+	return out;
+}
+
 function parseInline(text,elementType="p"){
 	let split = new RegExp(tokenSplitter)
 	let id = getRandomishString();
