@@ -236,7 +236,7 @@ function convertWebElement(parentElement,URL){
 			case "md": 
 				//console.log(parentElement)
 				webRequest(URL,function(callback){
-					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToJml(callback))))
+					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToJml(callback).replace(/\n/g,""))))
 				})
 			case "js": 
 				//console.log(parentElement)
@@ -499,9 +499,7 @@ function parseInline(parentElement,text,elementType="p",id = (getRandomishString
 		} else {
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
 		}
-		if (spanText.replace(/^\s*$/g,"") == '') {
-			spanText = null
-		} else {
+		if (spanText) {
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
 	}
