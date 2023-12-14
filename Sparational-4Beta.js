@@ -2,16 +2,47 @@
 //SPArational.js v4.-5.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 12/13/2023
+//Last updated: 12/14/2023
 //Version history:
+//4.-5.1 Bugfix to list handling.
 //4.-5.0 Finish round one of Markdown parsing.
 //4.-6.1: Full rewrite of Markdown parser, including breaking out Paragraph inline parsing to a separate function. 
-//4.-6.0 convertMdToJml HTTP passthrough complete.
-//4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. 
 //Notes:
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sitelets can't load themselves or they would cause a loop.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest. Also it's insecure so needs an option to disable.
 //topLine.substr(0.3).match(botLine.substr(0.3))
+
+//Init vars
+let tokenData = {
+"de":{"regex":/\~{2}/,"elementType":"del"},
+"in":{"regex":/\+{2}/,"elementType":"ins"},
+"ma":{"regex":/\={2}/,"elementType":"mark"},
+"sa":{"regex":/\*{2}/,"elementType":"strong"},
+"su":{"regex":/\_{2}/,"elementType":"strong"},
+"a2":{"regex":/\</,"elementType":"a"},
+"a3":{"regex":/\>/,"elementType":"a"},
+"ab":{"regex":/\*\[/,"elementType":"a"},
+"an":{"regex":/[ ]\[/,"elementType":"a"},
+"co":{"regex":/\`/,"elementType":"code"},
+"ea":{"regex":/\*/,"elementType":"em"},
+"eu":{"regex":/\_/,"elementType":"em"},
+"fi":{"regex":/\^\[/,"elementType":"a"},
+"fo":{"regex":/\[\^/,"elementType":"a"},
+"im":{"regex":/\!\[/,"elementType":"img"},
+"q1":{"regex":/\]\s*\(/,"elementType":"a"},
+"q2":{"regex":/"\)/,"elementType":"a"},
+"q4":{"regex":/\]\s*\[/,"elementType":"a"},
+"q5":{"regex":/\]/,"elementType":"a"},
+"q6":{"regex":/\[/,"elementType":"a"},
+"q7":{"regex":/\]\s*\:\s*/,"elementType":"a"},
+"sb":{"regex":/\~/,"elementType":"sub"},
+"sp":{"regex":/\^/,"elementType":"sup"},
+}
+
+let tokenSplitter = "%%%%%%"
+let tokenStart = "$$$"+tokenSplitter+"###"
+let tokenEnd = "###"+tokenSplitter+"$$$"
+let prevLI = ""
 
 //Element tools
 function getElement(elementId){
@@ -400,36 +431,6 @@ function convertMdToJml(markdown) {
 	return out;
 }
 
-let tokenData = {
-"de":{"regex":/\~{2}/,"elementType":"del"},
-"in":{"regex":/\+{2}/,"elementType":"ins"},
-"ma":{"regex":/\={2}/,"elementType":"mark"},
-"sa":{"regex":/\*{2}/,"elementType":"strong"},
-"su":{"regex":/\_{2}/,"elementType":"strong"},
-"a2":{"regex":/\</,"elementType":"a"},
-"a3":{"regex":/\>/,"elementType":"a"},
-"ab":{"regex":/\*\[/,"elementType":"a"},
-"an":{"regex":/[ ]\[/,"elementType":"a"},
-"co":{"regex":/\`/,"elementType":"code"},
-"ea":{"regex":/\*/,"elementType":"em"},
-"eu":{"regex":/\_/,"elementType":"em"},
-"fi":{"regex":/\^\[/,"elementType":"a"},
-"fo":{"regex":/\[\^/,"elementType":"a"},
-"im":{"regex":/\!\[/,"elementType":"img"},
-"q1":{"regex":/\]\s*\(/,"elementType":"a"},
-"q2":{"regex":/"\)/,"elementType":"a"},
-"q4":{"regex":/\]\s*\[/,"elementType":"a"},
-"q5":{"regex":/\]/,"elementType":"a"},
-"q6":{"regex":/\[/,"elementType":"a"},
-"q7":{"regex":/\]\s*\:\s*/,"elementType":"a"},
-"sb":{"regex":/\~/,"elementType":"sub"},
-"sp":{"regex":/\^/,"elementType":"sup"},
-}
-
-let tokenSplitter = "%%%%%%"
-let tokenStart = "$$$"+tokenSplitter+"###"
-let tokenEnd = "###"+tokenSplitter+"$$$"
-
 function replaceSymbols(text) {
 	//Have to split out inline code first so the contents don't get parsed.
 	for (key of getKeys(tokenData)) {
@@ -440,8 +441,6 @@ function replaceSymbols(text) {
 	}
 	return text
 }
-
-let prevLI = ""
 
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
