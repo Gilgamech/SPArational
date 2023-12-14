@@ -211,50 +211,38 @@ function rebuildElement(elementId) {
 
 	console.log(JSON.stringify(newElement));
 	deleteElement(elementId)
-	cje2(newElement[0].elementParent,newElement);
+	convertJmlToElements(newElement[0].elementParent,newElement);
 }
 
 //Multisite tools
-function convertWebElement(parentElement,URL,frameJml){
-    //frameJml is JML injected into the frame.
-	webRequest("Get",URL,function(callback){
-		let urlParts = URL.split(".");
-		let extension = urlParts[urlParts.length -1];
-		switch (extension) {
-			case "spa": 
-				let parsedRewrite = ""
-				if (frameJml) {
-					let parsedPage = JSON.parse(callback)
-					let parsedFrame = JSON.parse(frameJml)
-					parsedPage.frame = []
-					for (key of getKeys(parsedFrame)) {
-						//Quick and dirty way to copy one sub-variable to the other.
-						cmd = "parsedPage.frame."+key+"= parsedFrame."+key; 
-						console.log(cmd); 
-						eval(cmd)
-					}
-					parsedRewrite = rewriteJson(rewriteJson(parsedPage,parsedPage),parsedPage)
-				} else {
-					parsedRewrite = rewriteJson(JSON.parse(callback))
-				}
-				cje2(parentElement,parsedRewrite.pages.main.elements)
+function convertWebElement(parentElement,URL){
+	let urlParts = URL.split(".");
+	let extension = urlParts[urlParts.length -1].toLowerCase();
+		switch (extension) { //Be caps indifferent.
+			case "jml": //Need to swap this to YAML processing when 4.0 hits.
+			case "spa": //Need to swap this to YAML processing when 4.0 hits.
+				webRequest(URL,function(callback){
+					convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
+				})
 				break;
 			case "csv": 
-				mdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
+				webRequest(URL,function(callback){
+					convertMdArrayToTable(parentElement,"",eval(convertCsvToMdArray(callback)))
+				})
 				break;
 			case "md": 
 				//console.log(parentElement)
-				cje2(parentElement,rewriteJson(JSON.parse(convertMdToSpa(callback)).pages.main.elements))
+				webRequest(URL,function(callback){
+					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToJml(callback))))
+				})
+			case "js": 
+				//console.log(parentElement)
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}')))
 				break;
-			case "yaml": 
-				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
-				//cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+convertYamlToSpa(callback).replace(/[,]$/,"")+']}}}').pages.main.elements))
-				break;
-			default:
-				cje2(parentElement,rewriteJson(JSON.parse('{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": [{\"elementParent\": \"parentElement\",\"innerText\":\"Other page types not yet supported.\"}]}}}').pages.main.elements))
+			default: //Fallback to supplying a link.
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"a\",\"href\":\"'+URL+'\"}')))
 				break;
 		}
-	},"","",30)
 };
 
 //Format transformations
@@ -313,6 +301,21 @@ function cje2(parentElement,elements) {
 	}
 }
 
+function convertJmlToElements(parentElement,elements) {
+	var eParent = elements[0].elementParent;
+	elements = JSON.stringify(elements);
+	elements = elements.replaceAll(eParent,parentElement);
+	elements = JSON.parse(elements);
+	
+	for (let element of elements) {
+		if (!element.elementParent) {
+			element.elementParent = parentElement;
+		}
+		//console.log(element.elementParent)
+		addElement(element.elementParent, element.innerText, element.elementClass, element.elementType, element.elementStyle, element.href, element.onChange, element.onClick, element.contentEditable, element.attributeType, element.attributeAction, element.id)
+	}
+}
+
 function convertJupyterToJml(inputString) {
 	var out
 				console.log(inputString);
@@ -330,208 +333,212 @@ function convertJupyterToJml2(inputString) {
 		return inputString;
 }; 
 
-function convertMdToSpa(markdown) {
-//Markdown is for compositional data, so has a symbol-space-innerText format for most symbols, and symbol-innerText-symbol for the rest. 
+function convertMdToJml(markdown) {
+//Markdown is made of Blocks which are filled with data.
 	let out = ""
-	let listIDs = []
-	let prevTabLevel = 0
-	let prevListItem = ""
-	
-	markdown = (markdown.split("\n")) 
-	for (line of markdown)	 {
+
+	markdown = markdown.replace(/\n\s+\n/g,"\n\n")
+	markdown = markdown.replace(/\n\t+\n/g,"\n\n")
+
+//Parse page on \n\n into blocks.
+	for (block of markdown.split("\n\n")) {
+		let symbol = block.split(" ")[0]
+
 		let elementParent = "parentElement"
 		let href = ""
-		let tabLevel = 0
-		let listIDLength = listIDs.length
-		let symbol = line.split(" ")[0]
-		let innerText = line.replace(symbol+" ","")
-		//console.log("symbol: "+symbol+" innerText: "+innerText)
-		let id = getRandomishString();
-		let firstChar = line.charAt(0);
-		let secondChar = line.charAt(1);
+		let elementType = ""
+		let id = getRandomishString()
 
-		if (line.length == 0) { 
-			out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"div\"},"
-			continue
-		}
-		//Case off the 1st char, then 2nd char, etc.
-		//Handle indenting
-		switch (firstChar) {
-			case " ":
-			switch (secondChar) {
-				case " ":
-				//Tab level 
-				tabLevel = line.match(/^\s*/).toString().split("  ").length
-				line = line.replace(/^\s*/,"")
-			}
-		}
-		//console.log("tabLevel "+tabLevel+" - prevTabLevel "+prevTabLevel+" |  line "+line)
-		firstChar = line.charAt(0);
-		secondChar = line.charAt(1);
-
-		//Handle headers, lists, blockquotes, etc. Every switch has to have a default section appends out with JML for a P element having line as the innerText. 
-		//Intake Markdown, output JML
-		switch (firstChar) {
-			case "#":
-			//Headings
-			switch (symbol) {
-				case "#":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h1\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "##":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h2\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "###":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h3\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "####":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h4\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "#####":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h5\",\"innerText\": \""+innerText+"\"},"
-					break;
-				case "######":
-					out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"h6\",\"innerText\": \""+innerText+"\"},"
-					break;
-			}
-			break;				
-			//blockquote
-			case ">":
-				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"blockquote\",\"innerText\": \""+innerText+"\"},"
-				//Subsequent lines need to inherit unless there's a line break, and subsequent lines with the same number of arrows need them removed. 
-				break;
-				
-			//Unordered Lists
-				//+ Sub-lists are made by indenting 2 spaces:
-				//  - Marker character change forces new list start:
-			case "+":
-			case "-":
-			case "*":
-				switch (secondChar) {
-					case " ":
-						if (tabLevel == 0) { 
-							listIDs[listIDs.length] = getRandomishString();
-						}  else if (tabLevel > prevTabLevel) { 
-							listIDs[listIDs.length] = getRandomishString();
-						}  else if (tabLevel < prevTabLevel) {
-							listIDs.pop();
-						} 
-						
-						let id = listIDs[listIDs.length -1]
-						let listLevel = listIDs[listIDs.length -2]
-						
-						if (tabLevel == 0) {
-							prevListItem = elementParent
-							console.log("First line: Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-						} else if (tabLevel > prevTabLevel) { 
-							if (prevListItem == "") {prevListItem = listLevel}
-							console.log("Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-						} else if (tabLevel < prevTabLevel) { 
-							console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-						}
-						prevListItem = getRandomishString();
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
-						break;
-				//This is where Bold gets droped - because it's unhandled. 
-					case "*":
-						let newID = getRandomishString();
-						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"id\": \""+newID+"\"},"
-						out += "{\"elementParent\": \""+newID+"\",\"elementType\":\"b\",\"innerText\": \""+line.replaceAll("**","")+"\"},"
-						break;
-					default:
-						break;
-				}; //end switch secondChar
-				break;
-				
-			//Ordered Lists
-			case "0":
-			case "1":
-			case "2":
-			case "3":
-			case "4":
-			case "5":
-			case "6":
-			case "7":
-			case "8":
-			case "9":
-				switch (secondChar) {
-					case ".":
-						if (tabLevel == 0) { 
-							listIDs[listIDs.length] = getRandomishString();
-						}  else if (tabLevel > prevTabLevel) { 
-							listIDs[listIDs.length] = getRandomishString();
-						}  else if (tabLevel < prevTabLevel) {
-							listIDs.pop();
-						} 
-						
-						let id = listIDs[listIDs.length -1]
-						let listLevel = listIDs[listIDs.length -2]
-						
-						if (tabLevel == 0) {
-							prevListItem = elementParent
-							console.log("First line: Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-						} else if (tabLevel > prevTabLevel) { 
-							if (prevListItem == "") {prevListItem = listLevel}
-							console.log("Add OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-							out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ol\",\"id\": \""+id+"\"},"
-						} else if (tabLevel < prevTabLevel) { 
-							console.log("Remove OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-						}
-						prevListItem = getRandomishString();
-						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
-						break;
-				break;
-				}; //end switch secondChar
-			break;
-			default:
-				out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"innerText\": \""+line+"\"},"
-				break;
-		}; //end switch firstChar
-		prevTabLevel = tabLevel
-		try {
-		
-		//Semantic Tags
-			//This system splits out by JML, selects the last one, parses. 
-			let outSplit = out.split("},{")
-			outSplit = outSplit[outSplit.length -1]
-			if (!(outSplit.match("^{"))) {outSplit = "{"+outSplit}
-			//console.log("outSplit: "+outSplit)
-			let element = JSON.parse(outSplit.toString().replace(/},$/,"}"))
-			//Takes the innerText value, and matches then splits from the same regex
-			for (txt of element.innerText.split(/\[/g)) {
-					txtSplit = txt.split(/\)/g)
-					for (tex of txtSplit) {
-						if (tex.includes("](")) {
-							let regex = /\]\(/
-							tex2 = tex.split(regex)
-							let innerTxt = tex2[0]
-							let linkTxt = tex2[1]
-							//Generates an ID if none. 
-							if (element.id == null) {element.id = getRandomishString()}
-
-							//Replaces the innerText and linkText with the ID and re-caps. 
-							out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
-							
-							out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"a\",\"innerText\": \"" +innerTxt +'\",\"href\":\"' +linkTxt +"\"},"
-							//Encapsulates innerText then linkText with JML.  
-							
-							//Reattach the trailing text. 
-							let endTxt = txtSplit[txtSplit.indexOf(tex)+1]
-							if (endTxt) {
-								out += "{\"elementParent\": \""+element.id+"\",\"elementType\":\"span\",\"innerText\": \"" +endTxt +"\"},"
-							}; //end if endTxt
-						}; //end if tex
-					}; //end for tex
-			}; //end for txt
+		inSplit = block.split("\n")
+		let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
+		let botLine = inSplit[inSplit.length -1]//.replace(/^[:]{3}/g,"")
+		let topSplit = topLine.split(" ")
+		let botSplit = botLine.split(" ")
+		let elementHash = topSplit[2]
 			
-		} catch(e) {
-			console.log("error: "+e)
-		}; //end try 
-	}; //end for line
-	out = '{\"jmlVersion\": \"30OCT2023\",\"pages\": {\"main\": {\"elements\": ['+out.replace(/[,]$/,"")+']}}}'
+		if (elementHash) {
+			let elementType = elementHash.split("#")[0]
+			let id = elementHash.split("#")[1]
+		}
+		
+		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
+		let headerSplit = innerText.replace("}","").split("{#")
+		innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
+		let header = headerSplit[0].replace(symbol+" ","")
+		id = headerSplit[1]
+		
+		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
+			out += parseInline(elementParent,header,("h"+symbol.length))
+		
+		} else if (symbol.match(/[-+*]{1,1}/)) {//Unordered Lists - Nesting.
+			out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
+		
+		} else if (symbol.match(/\d+[.]/)) {//Ordered Lists - Nesting.
+			out += parseBlock(block,/[0-9]+[.][ ]/g,"ol","","li")
+		
+		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
+			out += "{\"elementType\":\"hr\"},"
+			
+		} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
+			out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
+			
+		} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
+			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
+			let table = block
+			let regex = /\n+.*\|\-{3,}.*\n+/g //The all-dashes line
+			let Thead = table.split(regex)[0]
+			let Tbody = table.split(regex)[1]
+			let Tdata = table.match(regex) //Justification data
+			//Use text-align: left; text-align: right; text-align: center;
+			//Introduce other styling? Like with === instead of ---?
+
+			let TheadId = getRandomishString();
+			let TbodyId = getRandomishString();
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TheadId+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"tbody\",\"id\": \""+TbodyId+"\"},"
+
+			for (line of Thead.split("\n")) {
+				let TRID = getRandomishString();
+				out += "{\"elementParent\": \""+TheadId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
+				for (data of line.split("\|")) {
+					if (data){
+						out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"th\",\"innerText\": \""+data+"\"},"
+					}
+				}
+			}
+			for (line of Tbody.split("\n")) {
+				let TRID = getRandomishString();
+				out += "{\"elementParent\": \""+TbodyId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
+				for (data of line.split("\|")) {
+					if (data){
+						out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"td\",\"innerText\": \""+data+"\"},"
+					}
+				}
+			}
+			
+		} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
+			/* Div definition
+			:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
+			innerText
+			:::{onClick_or_onChange_put_JS_here}
+			*/
+
+			//let leadingDelineator = topSplit.split("\{")
+			let elementClass = topLine.replace(elementHash+" ","") //Needs to snip leading delineator
+			let trailingDelineator = botSplit.split("\{")
+			let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
+
+			if (topLine.match("#")){
+				id = topLine.split("#")[1].split(" ")[0]
+				if (id.match(":")){
+					id = id.split(":")[0]
+				}
+			} 
+			elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
+			innerText = JSON.stringify(block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],""))
+			let onClick = ""
+			if (botLine.match("\{")){
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+botLine.replace(/^{/g,"").replace(/\}$/g,"")+"\",\"id\": \""+id+"\"},"
+			}
+		
+		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
+			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
+
+		} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
+			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
+			out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('parentElement','"+block.replace(/\n/g,"")+"')\"},"
+			
+		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
+			//This is an unordered list with a bunch of CSS: 
+			//https://www.w3schools.com/howto/howto_js_todolist.asp
+			out += parseBlock(block,/^-[ ]\[[X ]\]/g,"ul",elementClass,"li")
+
+		} else if (block.match(/^.+\n:[ ]/g)) {//Definition List block - Parsed.
+			out += parseBlock(block,/:[ ]/g,"dl",elementClass,"dd")
+
+		} else {//Return everything else as a paragraph.
+			out += parseInline(elementParent,block)
+		};//end switch symbol
+	};//end for block
+
+	out = '['+out.replace(/[,]$/,"")+']'
+	return out;
+}
+
+function replaceSymbols(text) {
+	//Have to split out inline code first so the contents don't get parsed.
+	for (key of getKeys(tokenData)) {
+		//for (index in tokenData.length) {
+		let regex = new RegExp(tokenData[key].regex,"g")
+		//console.log(regex)
+		text = text.replace(regex,tokenStart+key+tokenEnd)//code - Unparsed.
+	}
+	return text
+}
+
+function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
+	//Takes unparsed block and splits off regex to return an element with children.
+	let tabLevel = 0
+	//listID holds UL IDs
+	let listID = []
+	listID[0] = getRandomishString();
+	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
+	for (line of block.replace(regex,regexReplace).split("\n")) {
+		//listID holds as many IDs as are at tabLevel, or double the number of spaces leading the line.
+		tabLevel = line.match(/^\s*/).toString().split("  ").length
+		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not any number.
+		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs until they're the same.
+			listID[listID.length] = getRandomishString();
+			if (prevLI == "") {
+				out += "{\"elementParent\":\""+listID[listID.length -2]+"\",\"elementType\":\"ul\",\"id\": \""+listID[listID.length -1]+"\"},"
+			} else {
+				out += "{\"elementParent\":\""+prevLI+"\",\"elementType\":\"ul\",\"id\": \""+listID[listID.length -1]+"\"},"
+				prevLI = ""
+			}
+		}  
+		while (tabLevel < listID.length) {//If the listID.length is greater than the tabLevel, then delete IDs until they're the same.
+			listID.pop();
+		} 
+		if (innerType == "li") {
+			prevLI = getRandomishString()
+			out += parseInline(listID[listID.length -1],line,innerType,prevLI)
+		} else {
+			out += parseInline(listID[listID.length -1],line,innerType)
+		}
+	}
+	return out;
+}
+
+function parseInline(parentElement,text,elementType="p",id = (getRandomishString())){
+	//Takes unparsed block, replaces tokens, and splits off token to return an element with children.
+	//Build parent element.
+	let split = new RegExp(tokenSplitter)
+	textSplit = replaceSymbols(text).split(split)
+	if (parentElement) {
+		out = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+	} else {
+		out = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+	}
+	//Parse tokens into children of parent.
+	for (let b = 1; b < textSplit.length -1; b+=4) {
+		elementType = tokenData[textSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
+		let innerText = textSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
+		//let elementType = textSplit[b+2]
+		let spanText = textSplit[b+3].replace(/^\$\$/,"").replace(/\$\$$/,"")
+		
+		if (elementType == "a") {
+			let href = spanText.match(/\S*\)/)[0].replace(/\)$/,"")
+			spanText = spanText.split(/\S*\)/)[1]
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\" "+innerText+"\",\"href\": \""+href+"\"},"
+		} else {
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
+		}
+		if (spanText.replace(/^\s*$/g,"") == '') {
+			spanText = null
+		} else {
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
+		}; //end if endTxt
+	}
 	return out;
 }
 
@@ -627,17 +634,17 @@ function addInputField(parentElement,preInput,Input,PostInput,onChange,varName,f
 }
 
 //Supporting functions
-var spaRationalCachingVar = [];
-function webRequest($verb,$URI,$callback,$JSON,$file,$cached) {
+function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
 //if now is smaller than duration, read from cache.
-	if (spaRationalCachingVar[$URI] && Date.now() < spaRationalCachingVar[$URI+":duration"]) {
-		console.log($URI+" cached for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
+	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":onlineCacheDuration"]) {
+		console.log($URI+" cached for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" more seconds.")
 		$status = "304";
-		returnVar = spaRationalCachingVar[$URI];
+		returnVar = window.localStorage[$URI];
 		$callback(returnVar,$status);
 		return;
-	}; //end if spaRationalCachingVar
+	}; //end if window.localStorage
 
+	let n = 0;
 	var $status;
 	var xhRequest = new XMLHttpRequest();
 	var returnVar;
@@ -660,21 +667,28 @@ function webRequest($verb,$URI,$callback,$JSON,$file,$cached) {
 					if ($JSON) {
 						returnVar = JSON.parse(returnVar);
 					}; // end if $JSON
-					if ($cached > 0) {
-						spaRationalCachingVar[$URI] = returnVar;
-						spaRationalCachingVar[$URI+":duration"] = ($cached * 1000) + Date.now();
-						console.log("Caching "+$URI+" for "+((spaRationalCachingVar[$URI+":duration"]-Date.now())/1000)+" more seconds.")
-					} else if ($cached = 0) {
-						spaRationalCachingVar[$URI] = null;
-						spaRationalCachingVar[$URI+":duration"] = Date.now();
+					if (onlineCacheDuration > 0) {
+						window.localStorage[$URI] = returnVar;
+						window.localStorage[$URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
+						window.localStorage[$URI+":offlineCacheDuration"] = (offlineCacheDuration * 1000) + Date.now();
+						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" seconds.")
+					} else if (onlineCacheDuration <= 0) {
+						window.localStorage[$URI] = null;
+						window.localStorage[$URI+":onlineCacheDuration"] = Date.now();
 						console.log("Invalidating "+$URI)
-					}; //end if $cached
+					}; //end if onlineCacheDuration
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
-			} else {
+			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":offlineCacheDuration"] && n==0) { //&&
+				console.log("Page "+$URI+" offline. Serving cached copy.")
+				$status = "304";
+				returnVar = window.localStorage[$URI];
+				$callback(returnVar,$status);
+				n = (n*1) + 1;
+			} else if (n==0) {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
-		} catch(e) {console.log(e)}; // end try
+		} catch(e) {console.log(e)}; // end try - This try catch captures errors within the callback too.
 	}; // end xhRequest.onreadystatechange
 	xhRequest.send($file);
 }; // end webRequest
