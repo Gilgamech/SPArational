@@ -1,9 +1,10 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v4.-6.1 - Make faster websites faster.
+//SPArational.js v4.-5.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 12/7/2023
+//Last updated: 12/13/2023
 //Version history:
+//4.-5.0 Finish round one of Markdown parsing.
 //4.-6.1: Full rewrite of Markdown parser, including breaking out Paragraph inline parsing to a separate function. 
 //4.-6.0 convertMdToJml HTTP passthrough complete.
 //4.-7.3 Add localStorage caching for webRequest, and indefinite page error cache fallback for best offline service. 
@@ -205,6 +206,9 @@ function convertWebElement(parentElement,URL){
 				webRequest(URL,function(callback){
 					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToJml(callback))))
 				})
+			case "js": 
+				//console.log(parentElement)
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}')))
 				break;
 			default: //Fallback to supplying a link.
 				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"a\",\"href\":\"'+URL+'\"}')))
