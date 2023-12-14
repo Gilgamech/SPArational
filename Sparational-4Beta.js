@@ -11,6 +11,7 @@
 //Notes:
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sitelets can't load themselves or they would cause a loop.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest. Also it's insecure so needs an option to disable.
+//topLine.substr(0.3).match(botLine.substr(0.3))
 
 //Element tools
 function getElement(elementId){
@@ -443,9 +444,9 @@ function replaceSymbols(text) {
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
 	let tabLevel = 0
+	//listID holds UL IDs
 	let listID = []
 	listID[0] = getRandomishString();
-	//Any UL/OL/TL/DL/EtcL created gets the listID.length ID, and every LI gets the listID.length as elementParent.
 	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 	for (line of block.replace(regex,regexReplace).split("\n")) {
 		//listID holds as many IDs as are at tabLevel, or double the number of spaces leading the line.
