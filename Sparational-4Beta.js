@@ -442,13 +442,23 @@ function replaceSymbols(text) {
 
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
-	let out = ""
-	let id = getRandomishString();
-
-	out += "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
+	let tabLevel = 0
+	let listID = []
+	listID[0] = getRandomishString();
+	//Any UL/OL/TL/DL/EtcL created gets the listID.length ID, and every LI gets the listID.length as elementParent.
+	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 	for (line of block.replace(regex,regexReplace).split("\n")) {
-		out += parseInline(id,line,innerType)
-		//out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+innerType+"\",\"innerText\": \""+line+"\"},"
+		//listID holds as many IDs as are at tabLevel, or double the number of spaces leading the line.
+		tabLevel = line.match(/^\s*/).toString().split("  ").length
+		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not any number.
+		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs until they're the same.
+			listID[listID.length] = getRandomishString();
+			out += "{\"elementParent\":\""+listID[listID.length -2]+"\",\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
+		}  
+		while (tabLevel < listID.length) {//If the listID.length is greater than the tabLevel, then delete IDs until they're the same.
+			listID.pop();
+		} 
+		out += parseInline(listID[listID.length -1],line,innerType)
 	}
 	return out;
 }
