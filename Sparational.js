@@ -4,9 +4,9 @@
 //Created on: 8/3/2022
 //Last updated: 12/14/2023
 //Version history:
+//3.25:Rewrite webRequest, convertJmlToElements, and convertMdToJml, including adding parseBlock and parseInline. 
 //3.24: Add getRandomishString. Remove dollar signs from variable names inside most functions, and otherwise standardize. 
 //3.23.3: Readd SPA rewrite section. 
-//3.23.2: Revert for further testing. 
 //Notes:
 
 //Init vars
@@ -276,7 +276,7 @@ function rewriteJson(data,baseData) {
 			if (data[element].substr(0,2) == "$_") {//Replace-o-rama! Full SPA pages - now in JML or YAML - can support $_ "dollarsign-underscore" variable replacement from anywhere within the document.
 				data[element] = eval(data[element].replace("$_","baseData"))
 			} else if (data[element].substr(0,4) == "http") {//Drop your load in the road! Leave a URL at the start of any line to have the page eventually load and display that data.
-				data[element] = {"elementParent":"parentElement","elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+"\")")}
+				data[element] = {"elementType":"script","innerText":("convertWebElement(\"parentElement\",\""+data[element]+"\")")}
 			}; // end if element.substr
 		} else if (typeof data[element] === "object") { 
 			data[element] = rewriteJson(data[element],baseData)
