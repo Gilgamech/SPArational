@@ -141,7 +141,7 @@ function readElement(elementId) {
 
 function deleteElement(elementId) {
 	var element = getElement(elementId);
-	if (element) { 
+	if (element) {
 		element.parentNode.removeChild(element);
 	}	
 }; // end removeBot
