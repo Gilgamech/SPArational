@@ -11,29 +11,28 @@
 
 //Init vars
 let tokenData = {
+"co":{"regex":/\`/,"elementType":"code"},
 "de":{"regex":/\~{2}/,"elementType":"del"},
+"ea":{"regex":/\*/,"elementType":"em"},
+"eu":{"regex":/\_/,"elementType":"em"},
 "in":{"regex":/\+{2}/,"elementType":"ins"},
 "ma":{"regex":/\={2}/,"elementType":"mark"},
 "sa":{"regex":/\*{2}/,"elementType":"strong"},
 "su":{"regex":/\_{2}/,"elementType":"strong"},
+"sb":{"regex":/\~/,"elementType":"sub"},
+"sp":{"regex":/\^/,"elementType":"sup"},
 "a2":{"regex":/\</,"elementType":"a"},
 "a3":{"regex":/\>/,"elementType":"a"},
-"ab":{"regex":/\*\[/,"elementType":"a"},
-"an":{"regex":/[ ]\[/,"elementType":"a"},
-"co":{"regex":/\`/,"elementType":"code"},
-"ea":{"regex":/\*/,"elementType":"em"},
-"eu":{"regex":/\_/,"elementType":"em"},
+"ab":{"regex":/\*\[/,"elementType":"abbr"},
 "fi":{"regex":/\^\[/,"elementType":"a"},
 "fo":{"regex":/\[\^/,"elementType":"a"},
 "im":{"regex":/\!\[/,"elementType":"img"},
+"an":{"regex":/\[/,"elementType":"a"},
 "q1":{"regex":/\]\s*\(/,"elementType":"a"},
 "q2":{"regex":/"\)/,"elementType":"a"},
 "q4":{"regex":/\]\s*\[/,"elementType":"a"},
 "q5":{"regex":/\]/,"elementType":"a"},
-"q6":{"regex":/\[/,"elementType":"a"},
 "q7":{"regex":/\]\s*\:\s*/,"elementType":"a"},
-"sb":{"regex":/\~/,"elementType":"sub"},
-"sp":{"regex":/\^/,"elementType":"sup"},
 }
 
 let tokenSplitter = "%%%%%%"
