@@ -9,6 +9,38 @@
 //3.23.2: Revert for further testing. 
 //Notes:
 
+//Init vars
+let tokenData = {
+"de":{"regex":/\~{2}/,"elementType":"del"},
+"in":{"regex":/\+{2}/,"elementType":"ins"},
+"ma":{"regex":/\={2}/,"elementType":"mark"},
+"sa":{"regex":/\*{2}/,"elementType":"strong"},
+"su":{"regex":/\_{2}/,"elementType":"strong"},
+"a2":{"regex":/\</,"elementType":"a"},
+"a3":{"regex":/\>/,"elementType":"a"},
+"ab":{"regex":/\*\[/,"elementType":"a"},
+"an":{"regex":/[ ]\[/,"elementType":"a"},
+"co":{"regex":/\`/,"elementType":"code"},
+"ea":{"regex":/\*/,"elementType":"em"},
+"eu":{"regex":/\_/,"elementType":"em"},
+"fi":{"regex":/\^\[/,"elementType":"a"},
+"fo":{"regex":/\[\^/,"elementType":"a"},
+"im":{"regex":/\!\[/,"elementType":"img"},
+"q1":{"regex":/\]\s*\(/,"elementType":"a"},
+"q2":{"regex":/"\)/,"elementType":"a"},
+"q4":{"regex":/\]\s*\[/,"elementType":"a"},
+"q5":{"regex":/\]/,"elementType":"a"},
+"q6":{"regex":/\[/,"elementType":"a"},
+"q7":{"regex":/\]\s*\:\s*/,"elementType":"a"},
+"sb":{"regex":/\~/,"elementType":"sub"},
+"sp":{"regex":/\^/,"elementType":"sup"},
+}
+
+let tokenSplitter = "%%%%%%"
+let tokenStart = "$$$"+tokenSplitter+"###"
+let tokenEnd = "###"+tokenSplitter+"$$$"
+let prevLI = ""
+
 //Element tools
 function getElement(elementId){
 	return document.getElementById(elementId)
