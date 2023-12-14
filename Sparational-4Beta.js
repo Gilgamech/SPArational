@@ -463,16 +463,17 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	return out;
 }
 
-function parseInline(parentElement,text,elementType="p"){
+function parseInline(parentElement,text,elementType="p",id = (getRandomishString())){
 	//Takes unparsed block, replaces tokens, and splits off token to return an element with children.
+	//Build parent element.
 	let split = new RegExp(tokenSplitter)
-	let id = getRandomishString();
 	textSplit = replaceSymbols(text).split(split)
 	if (parentElement) {
 		out = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 	} else {
 		out = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 	}
+	//Parse tokens into children of parent.
 	for (let b = 1; b < textSplit.length -1; b+=4) {
 		elementType = tokenData[textSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
 		let innerText = textSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
