@@ -533,9 +533,8 @@ function parseInline(parentElement,text,elementType="p",id = (getRandomishString
 		} else {
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
 		}
-		if (spanText.replace(/^\s*$/g,"") == '') {
-			spanText = null
-		} else {
+		spanText = spanText.replace(/\n/g,"")
+		if (spanText) {
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
 	}
