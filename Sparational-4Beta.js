@@ -374,16 +374,13 @@ function convertMdToJml(markdown) {
 			if (botLine.match("\{")){
 				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+botLine.replace(/^{/g,"").replace(/\}$/g,"")+"\",\"id\": \""+id+"\"},"
 			}
-
-
+		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
 			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
 
 		} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
 			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
 			out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('parentElement','"+block.replace(/\n/g,"")+"')\"},"
-			//out += "\""+block.replace(/\n/g,"")+"\","
-			//out += "{\"httpPassthrough\": \""+block.replace(/\n/g,"")+"\"},"
 			
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
@@ -400,42 +397,6 @@ function convertMdToJml(markdown) {
 
 	out = '['+out.replace(/[,]$/,"")+']'
 	return out;
-}
-
-function tabLevel(line) {
-	let tabLevel = 0
-	let listIDs = []
-	let listIDLength = listIDs.length
-	let prevTabLevel = 0
-	let prevListItem = ""
-
-
-	if (line.substr(0,2) == "  ") {
-		tabLevel = line.match(/^\s*/).toString().split("  ").length
-		line = line.replace(/^\s*/,"")
-	}
-	if (tabLevel == 0) { 
-		listIDs[listIDs.length] = getRandomishString();
-	}  else if (tabLevel > prevTabLevel) { 
-		listIDs[listIDs.length] = getRandomishString();
-	}  else if (tabLevel < prevTabLevel) {
-		listIDs.pop();
-	} 
-	let id = listIDs[listIDs.length -1]//id already declared.
-	let listLevel = listIDs[listIDs.length -2]
-	if (tabLevel == 0) {
-		prevListItem = elementParent
-		console.log("First line: Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-		out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-	} else if (tabLevel > prevTabLevel) { 
-		if (prevListItem == "") {prevListItem = listLevel}
-		console.log("Add UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-		out += "{\"elementParent\": \""+prevListItem+"\",\"elementType\":\"ul\",\"id\": \""+id+"\"},"
-	} else if (tabLevel < prevTabLevel) { 
-		console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
-	}
-	prevListItem = getRandomishString();
-	out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 }
 
 let tokenData = {
@@ -483,7 +444,7 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	//Takes unparsed block and splits off regex to return an element with children.
 	let out = ""
 	let id = getRandomishString();
-	
+
 	out += "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
 	for (line of block.replace(regex,regexReplace).split("\n")) {
 		out += parseInline(id,line,innerType)
@@ -503,8 +464,6 @@ function parseInline(parentElement,text,elementType="p"){
 		block = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 	}
 	for (let b = 1; b < blockSplit.length -1; b+=4) {
-		
-        //console.log(block)
 		elementType = tokenData[blockSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
 		let innerText = blockSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
 		//let elementType = blockSplit[b+2]
