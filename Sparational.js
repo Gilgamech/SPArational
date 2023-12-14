@@ -285,7 +285,7 @@ function rewriteJson(data,baseData) {
 	return data;
 }; // end function
 
-function cje2(parentElement,elements) {
+function convertJmlToElements(parentElement,elements) {
 	//Convert $JSON to Element 2 - full rebuild for v3.0.
 	var eParent = elements[0].elementParent;
 	elements = JSON.stringify(elements);
@@ -301,7 +301,7 @@ function cje2(parentElement,elements) {
 	}
 }
 
-function convertJmlToElements(parentElement,elements) {
+function cje2(parentElement,elements) {
 	var eParent = elements[0].elementParent;
 	elements = JSON.stringify(elements);
 	elements = elements.replaceAll(eParent,parentElement);
@@ -572,6 +572,29 @@ function mdArrayToTable(parentElement,newTableID,array,classList,styleList) {
 			addElement(returnTablePart('historyTable','COLGROUP').id,"",classList[column],"col",styleList[column])
 		}
 	};
+}
+
+function convertYamlToJson(yaml) {
+	let data = []
+	let nextLine = []
+	//let result = yaml.split("\n").filter((word) => word.match(":"));
+	for (line of yaml.split("\n")) {
+		let lineSplit = line.split("#")[0]
+		let datum = lineSplit.replaceAll(" ","").split(":")
+		if (datum[0] == ""){
+			continue
+		} else if (datum[1] == ""){
+			let indentedItems = ""
+			data[datum[0]] = convertYamlToJson(indentedItems)
+		} else if (datum[0].substr(0,2) == "  "){
+			//data[datum[0]] = []
+			//need to retain/define the nth datum[0] to reparent under. Just like the reparent code for Markdown.
+			//on 2 spaces before the dash, nest under an intermediate UL. parentElement = addElement(parentElement,"","ul")
+		} else {
+			data[datum[0]] = datum[1]
+		}
+	}
+	return data
 }
 
 //Text tools
