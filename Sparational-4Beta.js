@@ -467,32 +467,32 @@ function parseInline(parentElement,text,elementType="p"){
 	//Takes unparsed block, replaces tokens, and splits off token to return an element with children.
 	let split = new RegExp(tokenSplitter)
 	let id = getRandomishString();
-	blockSplit = replaceSymbols(text).split(split)
+	textSplit = replaceSymbols(text).split(split)
 	if (parentElement) {
-		block = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+		out = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 	} else {
-		block = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+blockSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+		out = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 	}
-	for (let b = 1; b < blockSplit.length -1; b+=4) {
-		elementType = tokenData[blockSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
-		let innerText = blockSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
-		//let elementType = blockSplit[b+2]
-		let spanText = blockSplit[b+3].replace(/^\$\$/,"").replace(/\$\$$/,"")
+	for (let b = 1; b < textSplit.length -1; b+=4) {
+		elementType = tokenData[textSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
+		let innerText = textSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
+		//let elementType = textSplit[b+2]
+		let spanText = textSplit[b+3].replace(/^\$\$/,"").replace(/\$\$$/,"")
 		
 		if (elementType == "a") {
 			let href = spanText.match(/\S*\)/)[0].replace(/\)$/,"")
 			spanText = spanText.split(/\S*\)/)[1]
-			block += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\" "+innerText+"\",\"href\": \""+href+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\" "+innerText+"\",\"href\": \""+href+"\"},"
 		} else {
-			block += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
 		}
 		if (spanText.replace(/^\s*$/g,"") == '') {
-			spantext = null
+			spanText = null
 		} else {
-			block += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
 	}
-	return block;
+	return out;
 }
 
 function convertCsvToMdArray(inputString) {
