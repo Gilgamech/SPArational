@@ -456,11 +456,11 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not any number.
 		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs until they're the same.
 			listID[listID.length] = getRandomishString();
-			if (prevLi == "") {
+			if (prevLI == "") {
 				out += "{\"elementParent\":\""+listID[listID.length -2]+"\",\"elementType\":\"ul\",\"id\": \""+listID[listID.length -1]+"\"},"
 			} else {
 				out += "{\"elementParent\":\""+prevLI+"\",\"elementType\":\"ul\",\"id\": \""+listID[listID.length -1]+"\"},"
-				prevLi = ""
+				prevLI = ""
 			}
 		}  
 		while (tabLevel < listID.length) {//If the listID.length is greater than the tabLevel, then delete IDs until they're the same.
