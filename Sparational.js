@@ -1,17 +1,17 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.23.3 - Make faster websites faster.
+//SPArational.js v3.24 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 11/26/2023
+//Last updated: 12/14/2023
 //Version history:
+//3.24: Add getRandomishString. Remove dollar signs from variable names inside most functions, and otherwise standardize. 
 //3.23.3: Readd SPA rewrite section. 
 //3.23.2: Revert for further testing. 
-//3.23.1: Add SPA rewrite section to convertWebElement. 
 //Notes:
 
 //Element tools
-function getElement($elementId){
-	return document.getElementById($elementId)
+function getElement(elementId){
+	return document.getElementById(elementId)
 }
 
 //addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
@@ -29,7 +29,7 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	}
 	var newElement = document.createElement($elementType);
 	if (!$elementId) {
-		$elementId = getBadPW();
+		$elementId = getRandomishString();
 	}; // end if divParent
 	newElement.id = $elementId;
 	if ($elementStyle) {
@@ -84,51 +84,51 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	return $elementId
 }; // end addElement	
 
-function writeElement($elementId,data) {
-	var $elementType = getElement($elementId).type;
-	if (($elementType == "text") || ($elementType == "textarea") || ($elementType == "number") || ($elementType == "select-one")) {
-		getElement($elementId).value = data;
-	} else if (getElement($elementId).tagName  == 'IMG') {
-			getElement($elementId).src = data;
+function writeElement(elementId,data) {
+	var elementType = getElement(elementId).type;
+	if ((elementType == "text") || (elementType == "textarea") || (elementType == "number") || (elementType == "select-one")) {
+		getElement(elementId).value = data;
+	} else if (getElement(elementId).tagName  == 'IMG') {
+			getElement(elementId).src = data;
 	} else {
-		getElement($elementId).innerText = data;
+		getElement(elementId).innerText = data;
 	}; // end if elementType
 }; // end writeElement
 
-function readElement($elementId) {
-	var $elementType = getElement($elementId).type;
-	if (($elementType == "text") || ($elementType == "textarea") || ($elementType == "select-one")|| ($elementType == "number")) {
-		return getElement($elementId).value;
+function readElement(elementId) {
+	var elementType = getElement(elementId).type;
+	if ((elementType == "text") || (elementType == "textarea") || (elementType == "select-one")|| (elementType == "number")) {
+		return getElement(elementId).value;
 	} else {
-		return getElement($elementId).innerText;
+		return getElement(elementId).innerText;
 	}; // end if elementType
 }; // end readElement
 
-function deleteElement($elementId) {
-	var $div = getElement($elementId);
-	if ($div) {
-		$div.parentNode.removeChild($div);
+function deleteElement(elementId) {
+	var element = getElement(elementId);
+	if (element) {
+		element.parentNode.removeChild(element);
 	}	
 }; // end removeBot
 
-function appendElement($elementId,data) {
-	writeElement($elementId,readElement($elementId) + data)
+function appendElement(elementId,data) {
+	writeElement(elementId,readElement(elementId) + data)
 }; // end appendElement
 
-function toggleElement($elementId) {
-	if (getElement($elementId).style.visibility == "visible") {
-		getElement($elementId).style.visibility="hidden";
+function toggleElement(elementId) {
+	if (getElement(elementId).style.visibility == "visible") {
+		hideElement(elementId);
 	} else { 
-		getElement($elementId).style.visibility="visible";
+		showElement(elementId);
 	} // end if
 }; // end toggleElement
 
-function hideElement($elementId) {
-	getElement($elementId).style.visibility="hidden";
+function hideElement(elementId) {
+	getElement(elementId).style.visibility="hidden";
 }; // end toggleElement
 
-function showElement($elementId) {
-	getElement($elementId).style.visibility="visible";
+function showElement(elementId) {
+	getElement(elementId).style.visibility="visible";
 }; // end toggleElement
 
 function identifyElements(parentElement) {
@@ -314,7 +314,7 @@ function convertMdToSpa(markdown) {
 		let symbol = line.split(" ")[0]
 		let innerText = line.replace(symbol+" ","")
 		//console.log("symbol: "+symbol+" innerText: "+innerText)
-		let id = getBadPW();
+		let id = getRandomishString();
 		let firstChar = line.charAt(0);
 		let secondChar = line.charAt(1);
 
@@ -378,9 +378,9 @@ function convertMdToSpa(markdown) {
 				switch (secondChar) {
 					case " ":
 						if (tabLevel == 0) { 
-							listIDs[listIDs.length] = getBadPW();
+							listIDs[listIDs.length] = getRandomishString();
 						}  else if (tabLevel > prevTabLevel) { 
-							listIDs[listIDs.length] = getBadPW();
+							listIDs[listIDs.length] = getRandomishString();
 						}  else if (tabLevel < prevTabLevel) {
 							listIDs.pop();
 						} 
@@ -399,12 +399,12 @@ function convertMdToSpa(markdown) {
 						} else if (tabLevel < prevTabLevel) { 
 							console.log("Remove UL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
 						}
-						prevListItem = getBadPW();
+						prevListItem = getRandomishString();
 						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 						break;
 				//This is where Bold gets droped - because it's unhandled. 
 					case "*":
-						let newID = getBadPW();
+						let newID = getRandomishString();
 						out += "{\"elementParent\": \""+elementParent+"\",\"elementType\":\"p\",\"id\": \""+newID+"\"},"
 						out += "{\"elementParent\": \""+newID+"\",\"elementType\":\"b\",\"innerText\": \""+line.replaceAll("**","")+"\"},"
 						break;
@@ -427,9 +427,9 @@ function convertMdToSpa(markdown) {
 				switch (secondChar) {
 					case ".":
 						if (tabLevel == 0) { 
-							listIDs[listIDs.length] = getBadPW();
+							listIDs[listIDs.length] = getRandomishString();
 						}  else if (tabLevel > prevTabLevel) { 
-							listIDs[listIDs.length] = getBadPW();
+							listIDs[listIDs.length] = getRandomishString();
 						}  else if (tabLevel < prevTabLevel) {
 							listIDs.pop();
 						} 
@@ -448,7 +448,7 @@ function convertMdToSpa(markdown) {
 						} else if (tabLevel < prevTabLevel) { 
 							console.log("Remove OL "+id+" of "+listIDs.length+" - prevListItem "+prevListItem)
 						}
-						prevListItem = getBadPW();
+						prevListItem = getRandomishString();
 						out += "{\"elementParent\": \""+id+"\",\"elementType\":\"li\",\"innerText\": \""+innerText.replace(/- /,"")+"\",\"id\": \""+prevListItem+"\"},"
 						break;
 				break;
@@ -478,7 +478,7 @@ function convertMdToSpa(markdown) {
 							let innerTxt = tex2[0]
 							let linkTxt = tex2[1]
 							//Generates an ID if none. 
-							if (element.id == null) {element.id = getBadPW()}
+							if (element.id == null) {element.id = getRandomishString()}
 
 							//Replaces the innerText and linkText with the ID and re-caps. 
 							out = out.replace("["+txt,"").replace(/"},$/,'","id":"'+element.id+'"},')
@@ -518,7 +518,7 @@ function convertCsvToMdArray(inputString) {
 function mdArrayToTable(parentElement,newTableID,array,classList,styleList) {
 	//Inputs a multidimensional array (e.g. [["a","b"],[1,2],[3,4]]) and outputs a table.
 	if (!newTableID) {
-		newTableID = getBadPW();
+		newTableID = getRandomishString();
 	}; // end if divParent
 	for (column=0;column<array[0].length;column++){
 		var out = [];
@@ -701,7 +701,10 @@ function webRequestAsync($verb,$URI,$JSON,$file,$cached) {
 	})
 }; // end webRequestAsync
 
-function getBadPW() {
+function getRandomishString() {
+	return Math.random().toString(36).slice(-20).replace("0.","");
+ }
+ function getBadPW() {
 	return Math.random().toString(36).slice(-20);
  }
 
