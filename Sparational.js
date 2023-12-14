@@ -313,21 +313,21 @@ function cje2(parentElement,elements) {
 	}
 }
 
-function convertJupyterToSpa($inputString) {
-	var $out
-				console.log($inputString);
-	var $stringVar = JSON.stringify($inputString);
-				console.log($stringVar);
-	$stringVar = $stringVar.replace(/\["/g,'');
-	$stringVar = $stringVar.replace(/"\]/g,'');
-				console.log($stringVar);
+function convertJupyterToJml(inputString) {
+	var out
+				console.log(inputString);
+	var stringVar = JSON.stringify(inputString);
+				console.log(stringVar);
+	stringVar = stringVar.replace(/\["/g,'');
+	stringVar = stringVar.replace(/"\]/g,'');
+				console.log(stringVar);
 }
 
-function convertJupyterToSpa2($inputString) {
-		$stringVar = $stringVar.replace('# ','"          "elementType": "p",');
-		$stringVar = $stringVar + '</h1>"';
-		$inputString = JSON.parse($stringVar);
-		return $inputString;
+function convertJupyterToJml2(inputString) {
+		stringVar = stringVar.replace('# ','"          "elementType": "p",');
+		stringVar = stringVar + '</h1>"';
+		inputString = JSON.parse(stringVar);
+		return inputString;
 }; 
 
 function convertMdToSpa(markdown) {
@@ -535,7 +535,6 @@ function convertMdToSpa(markdown) {
 	return out;
 }
 
-//mdArrayToTable(parentElement,newTableID,convertCsvToMDArray(inputString),classList,styleList)
 function convertCsvToMdArray(inputString) {
 	let out = ""
 	for (line of inputString.split("\n")) {
@@ -874,11 +873,11 @@ function getNumberFromDiv(numericDiv,digits=0) {
 	return getRoundedNumber(readElement(numericDiv),digits)
 };
 
-function mdIndexOf(array, inputText) {
+function mdIndexOf(array, searchString) {
 //https://stackoverflow.com/questions/16102263/to-find-index-of-multidimensional-array-in-javascript
 //Currently only works on 2d arrays, but could be extended to nd arrays. 
 	for (var i = 0; i < array.length; i++) {
-			var index = array[i].indexOf(inputText);
+			var index = array[i].indexOf(searchString);
 		if (index > -1) {
 			return [i, index];
 		}
