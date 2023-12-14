@@ -520,6 +520,7 @@ function parseInline(parentElement,text,elementType="p",id = (getRandomishString
 	}
 	//Parse tokens into children of parent.
 	for (let b = 1; b < textSplit.length -1; b+=4) {
+	try {
 		elementType = tokenData[textSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
 		let innerText = textSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
 		//let elementType = textSplit[b+2]
@@ -535,6 +536,7 @@ function parseInline(parentElement,text,elementType="p",id = (getRandomishString
 		if (spanText) {
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
+	} catch {}
 	}
 	return out;
 }
