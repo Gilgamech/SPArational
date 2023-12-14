@@ -513,7 +513,9 @@ function parseInline(parentElement,text,elementType="p"){
 		} else {
 			block += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
 		}
-		if (spanText) {
+		if (spanText.replace(/^\s*$/g,"") == '') {
+			spantext = null
+		} else {
 			block += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
 	}
