@@ -14,10 +14,10 @@
 <script>
 var sites;
 window.onload = function(){
-	webRequest("get","https://www.sparational.com/index.spa",function(data){
+	webRequest("https://www.sparational.com/index.spa",function(data){
 		sites = rwjs(data);
 		//console.log(data.pages.main.elements)
-		cje2("content",sites.pages.howTo.elements);
+		convertJmlToElements("content",sites.pages.howTo.elements);
 	},"JSON"); //end webRequest
 }; //end window.onload
 </script>
