@@ -369,15 +369,15 @@ function convertMdToJml(markdown) {
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
 			out += parseInline(elementParent,header,("h"+symbol.length))
 		
+		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
+			out += "{\"elementType\":\"hr\"},"
+			
 		} else if (symbol.match(/[-+*]{1,1}/)) {//Unordered Lists - Nesting.
 			out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
 		
 		} else if (symbol.match(/\d+[.]/)) {//Ordered Lists - Nesting.
 			out += parseBlock(block,/[0-9]+[.][ ]/g,"ol","","li")
 		
-		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
-			out += "{\"elementType\":\"hr\"},"
-			
 		} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
 			out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
 			
