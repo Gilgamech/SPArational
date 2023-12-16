@@ -384,10 +384,14 @@ function convertMdToJml(markdown) {
 		} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
 			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
 			let table = block
-			let regex = /\n+.*\|\-{3,}.*\n+/g //The all-dashes line
-			let Thead = table.split(regex)[0]
-			let Tbody = table.split(regex)[1]
-			let Tdata = table.match(regex) //Justification data
+			let tableSplit = table.split("\n")
+			let Thead = tableSplit[0]
+			let Tdata = tableSplit[1]
+			let Tbody = table.replace(Thead+"\n","").replace(Tdata+"\n","")
+			//let regex = /\n+.*\|\-{3,}.*\n+/g //The all-dashes line
+			//let Thead = table.split(regex)[0]
+			//let Tbody = table.split(regex)[1]
+			//let Tdata = table.match(regex) //Justification data
 			//Use text-align: left; text-align: right; text-align: center;
 			//Introduce other styling? Like with === instead of ---?
 
