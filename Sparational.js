@@ -232,7 +232,7 @@ function convertWebElement(parentElement,URL){
 			case "md": 
 				//console.log(parentElement)
 				webRequest(URL,function(callback){
-					convertJmlToElements(parentElement,rewriteJson(JSON.parse(convertMdToJml(callback).replace(/\n/g,""))))
+					convertJmlToElements(parentElement,JSON.parse(convertMdToJml(callback).replace(/\n/g,"")))
 				})
 			case "js": 
 				//console.log(parentElement)
