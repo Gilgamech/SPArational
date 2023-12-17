@@ -10,7 +10,6 @@
 //Notes:
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sitelets can't load themselves or they would cause a loop.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //window.localStorage needs garbage collection - if there are more than like 25 pages, remove the oldest. Also it's insecure so needs an option to disable.
-//topLine.substr(0.3).match(botLine.substr(0.3))
 
 //Init vars
 let tokenData = {
