@@ -330,7 +330,7 @@ function convertJupyterToJml2(inputString) {
 		return inputString;
 }; 
 
-function convertMdToJml(markdown) {
+function convertMdToJml(markdown,elementParent = "parentElement") {
 //Markdown is made of Blocks which are filled with data.
 	let out = ""
 
@@ -343,7 +343,6 @@ function convertMdToJml(markdown) {
 		let symbol = block.split(" ")[0]
 		let blockSplit = block.split("\n")
 
-		let elementParent = "parentElement"
 		let id = getRandomishString()
 
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
@@ -424,10 +423,11 @@ function convertMdToJml(markdown) {
 				if (elementType == "input" || elementType == "textarea") {
 					action = "onChange"
 				}
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
 			} else {
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
 			}
+			out += convertMdToJml(innerText,id)
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
 			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
