@@ -330,7 +330,7 @@ function convertJupyterToJml2(inputString) {
 		return inputString;
 }; 
 
-function convertMdToJml(markdown,elementParent = "parentElement") {
+function convertMdToJml(markdown,nestedParent = "parentElement") {
 //Markdown is made of Blocks which are filled with data.
 	let out = ""
 
@@ -343,6 +343,7 @@ function convertMdToJml(markdown,elementParent = "parentElement") {
 		let symbol = block.split(" ")[0]
 		let blockSplit = block.split("\n")
 
+		let elementParent = nestedParent
 		let id = getRandomishString()
 
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
