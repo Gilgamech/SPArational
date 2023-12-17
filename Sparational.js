@@ -336,6 +336,7 @@ function convertMdToJml(markdown) {
 
 	markdown = markdown.replace(/\n\s+\n/g,"\n\n")
 	markdown = markdown.replace(/\n\t+\n/g,"\n\n")
+	markdown = markdown.replace(/^\n*/g,"")
 	markdown = markdown.replace(/\n*$/g,"")
 	//If a line only has tabs or spaces, delete them.
 	for (block of markdown.split("\n\n")) {
