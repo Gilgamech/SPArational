@@ -432,7 +432,13 @@ function convertMdToJml(markdown) {
 
 		} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
 			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
-			out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('parentElement','"+block.replace(/\n/g,"")+"')\"},"
+			let colonSplit = block.replace(/\n/g,"").split(":")
+			let Url = colonSplit[0]+":"+colonSplit[1]
+			let reloadEvery = colonSplit[2]
+			if (colonSplit[3]) {
+				parentElement = colonSplit[3]
+			}
+			out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+parentElement+"','"+Url+"')\"},"
 			
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
