@@ -415,7 +415,8 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			}
 			
 			let elementClass = topLine.replace(divRegex,"").replace(" "+elementHash,"")
-			let innerText = JSON.stringify(blockSplit.slice(1,blockSplit.length -1)[0])
+			let innerText = blockSplit.slice(1,blockSplit.length -1)[0]
+			//if (!(innerText)){innerText="\"\""}
 
 			if (botLine.match(/^\{/)){
 				let action = "onClick"
