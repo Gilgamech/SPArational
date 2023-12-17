@@ -713,6 +713,15 @@ function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration =
 	xhRequest.send($file);
 }; // end webRequest
 
+function reloadEvery(parentElement,URL,seconds = 60){
+	let id = addElement(parentElement)
+	convertWebElement(id,URL)
+	setInterval(function () {
+		rebuildElement(id)
+		convertWebElement(id,URL)
+	}, seconds*1000);
+}
+
 function webRequestAsync($verb,$URI,$JSON,$file,$cached) {
 //if now is smaller than duration, read from cache.
 	if (spaRationalCachingVar[$URI] && Date.now() < spaRationalCachingVar[$URI+":duration"]) {
