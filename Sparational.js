@@ -415,8 +415,8 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			}
 			
 			let elementClass = topLine.replace(divRegex,"").replace(" "+elementHash,"")
-			let innerText = JSON.stringify(blockSplit.slice(1,blockSplit.length -1)[0])
 			if (!(innerText)){innerText="\"\""}
+			let innerText = JSON.stringify(blockSplit.slice(1,blockSplit.length -1)[0]) //innerText gets its outer quotes from the JSON.stringify, so doesn't need to have extra escaped quotes around it. 
 
 			if (botLine.match(/^\{/)){
 				let action = "onClick"
@@ -427,6 +427,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
 			} else {
 				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
+			}
+			if (innerText){
+				//out += convertMdToJml(innerText,id)
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
