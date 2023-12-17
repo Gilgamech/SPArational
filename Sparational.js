@@ -217,8 +217,8 @@ function rebuildElement(elementId) {
 function convertWebElement(parentElement,URL){
 	let urlParts = URL.split(".");
 	let extension = urlParts[urlParts.length -1].toLowerCase();
-		switch (extension) { //Be caps indifferent.
-			case "jml": //Need to swap this to YAML processing when 4.0 hits.
+		switch (extension) { 
+			case "jml":
 			case "spa": //Need to swap this to YAML processing when 4.0 hits.
 				webRequest(URL,function(callback){
 					convertJmlToElements(parentElement,rewriteJson(JSON.parse(callback)).pages.main.elements)
@@ -230,12 +230,10 @@ function convertWebElement(parentElement,URL){
 				})
 				break;
 			case "md": 
-				//console.log(parentElement)
 				webRequest(URL,function(callback){
 					convertJmlToElements(parentElement,JSON.parse(convertMdToJml(callback).replace(/\n/g,"")))
 				})
 			case "js": 
-				//console.log(parentElement)
 				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}')))
 				break;
 			default: //Fallback to supplying a link.
@@ -338,8 +336,7 @@ function convertMdToJml(markdown) {
 
 	markdown = markdown.replace(/\n\s+\n/g,"\n\n")
 	markdown = markdown.replace(/\n\t+\n/g,"\n\n")
-
-//Parse page on \n\n into blocks.
+	//If a line only has tabs or spaces, delete them.
 	for (block of markdown.split("\n\n")) {
 		let symbol = block.split(" ")[0]
 
@@ -420,8 +417,11 @@ function convertMdToJml(markdown) {
 			}
 			
 		} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
-			/* Div definition
-			:::elementClass1 elementClass2 elementType#id .elementClass3 .elementClass4 .elementClass5
+			/* Div definition 
+			- Curly brackets and dots optional in the top line. 
+			- Curly brackets and no line breaks required on bottom line. If you can't fit it in one line, put it into a function in another file and call it. 
+			- elementType and id are attached to the hash. It can be anywhere in the top line.
+			:::elementClass1 elementClass2 elementType#id elementClass3 elementClass4 elementClass5
 			innerText
 			:::{onClick_or_onChange_put_JS_here}
 			*/
