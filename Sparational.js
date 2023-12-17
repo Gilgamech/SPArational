@@ -378,7 +378,7 @@ function convertMdToJml(markdown) {
 						if (data){
 							out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
 						}
-						elementType = "tr"
+						elementType = "td"
 					}
 				}
 			}
