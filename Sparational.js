@@ -427,7 +427,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			} else {
 				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
 			}
-			out += convertMdToJml(innerText,id)
+			if (innerText){
+				out += convertMdToJml(innerText,id)
+			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
 			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
