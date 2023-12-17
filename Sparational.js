@@ -231,7 +231,7 @@ function convertWebElement(parentElement,URL){
 				break;
 			case "md": 
 				webRequest(URL,function(callback){
-					convertJmlToElements(parentElement,JSON.parse('['+convertMdToJml(callback).replace(/[,]$/,"").replace(/\n/g,"")+']'))
+					convertJmlToElements(parentElement,JSON.parse(convertMdToJml(callback).replace(/\n/g,"")))
 				})
 			case "js": 
 				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}]')))
@@ -330,7 +330,7 @@ function convertJupyterToJml2(inputString) {
 		return inputString;
 }; 
 
-function convertMdToJml(markdown,nestedParent = "parentElement") {
+function convertMdToJml(markdown) {
 //Markdown is made of Blocks which are filled with data.
 	let out = ""
 
@@ -343,7 +343,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		let symbol = block.split(" ")[0]
 		let blockSplit = block.split("\n")
 
-		let elementParent = nestedParent
+		let elementParent = "parentElement"
 		let id = getRandomishString()
 
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
@@ -416,7 +416,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			
 			let elementClass = topLine.replace(divRegex,"").replace(" "+elementHash,"")
 			let innerText = JSON.stringify(blockSplit.slice(1,blockSplit.length -1)[0])
-			if (innerText == undefined){innerText="\"\""}
+			if (!(innerText)){innerText="\"\""}
 
 			if (botLine.match(/^\{/)){
 				let action = "onClick"
@@ -424,12 +424,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				if (elementType == "input" || elementType == "textarea") {
 					action = "onChange"
 				}
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+innerText+"\",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
 			} else {
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+innerText+"\",\"id\": \""+id+"\"},"
-			}
-			if (innerText){
-				//out += convertMdToJml(innerText,id)
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
@@ -458,7 +455,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		};//end switch symbol
 	};//end for block
 
-	out = out
+	out = '['+out.replace(/[,]$/,"")+']'
 	return out;
 }
 
