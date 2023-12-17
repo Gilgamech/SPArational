@@ -341,30 +341,10 @@ function convertMdToJml(markdown) {
 		let symbol = block.split(" ")[0]
 
 		let elementParent = "parentElement"
-		let href = ""
-		let elementType = ""
 		let id = getRandomishString()
 
-		inSplit = block.split("\n")
-		let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
-		let botLine = inSplit[inSplit.length -1]//.replace(/^[:]{3}/g,"")
-		let topSplit = topLine.split(" ")
-		let botSplit = botLine.split(" ")
-		let elementHash = topSplit[2]
-			
-		if (elementHash) {
-			let elementType = elementHash.split("#")[0]
-			let id = elementHash.split("#")[1]
-		}
-		
-		let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
-		let headerSplit = innerText.replace("}","").split("{#")
-		innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
-		let header = headerSplit[0].replace(symbol+" ","")
-		id = headerSplit[1]
-		
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
-			out += parseInline(elementParent,header,("h"+symbol.length))
+			out += parseInline(elementParent,block.replace(symbol+" ",""),("h"+symbol.length))
 		
 		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 			out += "{\"elementType\":\"hr\"},"
@@ -426,18 +406,34 @@ function convertMdToJml(markdown) {
 			:::{onClick_or_onChange_put_JS_here}
 			*/
 
+			let href = ""
+			let elementType = ""
+			let inSplit = block.split("\n")
+			let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
+			let botLine = inSplit[inSplit.length -1]//.replace(/^[:]{3}/g,"")
+			let topSplit = topLine.split(" ")
+			let botSplit = botLine.split(" ")
+			let elementHash = topSplit[2] //Make this find the hash anywhere in the top line.
+				
+			if (elementHash) {
+				elementType = elementHash.split("#")[0]
+				id = elementHash.split("#")[1]
+			}
+			
+			
+			
+			let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
+			let headerSplit = innerText.replace("}","").split("{#")
+			innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
+			let header = headerSplit[0].replace(symbol+" ","")
+			
+			let elementClass = topLine.replace(elementHash+" ","")
+			//let elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
+
 			//let leadingDelineator = topSplit.split("\{")
-			let elementClass = topLine.replace(elementHash+" ","") //Needs to snip leading delineator
 			let trailingDelineator = botSplit.split("\{")
 			let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
 
-			if (topLine.match("#")){
-				id = topLine.split("#")[1].split(" ")[0]
-				if (id.match(":")){
-					id = id.split(":")[0]
-				}
-			} 
-			elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
 			innerText = JSON.stringify(block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],""))
 			let onClick = ""
 			if (botLine.match("\{")){
