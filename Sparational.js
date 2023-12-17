@@ -339,6 +339,7 @@ function convertMdToJml(markdown) {
 	//If a line only has tabs or spaces, delete them.
 	for (block of markdown.split("\n\n")) {
 		let symbol = block.split(" ")[0]
+		let blockSplit = block.split("\n")
 
 		let elementParent = "parentElement"
 		let id = getRandomishString()
@@ -360,7 +361,6 @@ function convertMdToJml(markdown) {
 			
 		} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
 			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
-			let blockSplit = block.split("\n")
 			let elementType = "th"
 			let Thead = blockSplit[0]
 			let Tdata = blockSplit[1]//Was going to split and match on this, but how many blocks have multiple header rows?
@@ -396,7 +396,6 @@ function convertMdToJml(markdown) {
 			let elementType = "div"
 			let action = "onClick"
 
-			let inSplit = block.split("\n")
 			let topLine = inSplit[0].replace(/^[:]{3}/g,"")
 			let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
 			
