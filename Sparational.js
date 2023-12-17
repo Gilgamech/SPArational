@@ -393,38 +393,28 @@ function convertMdToJml(markdown) {
 			:::{onClick_or_onChange_put_JS_here}
 			*/
 
-			let href = ""
-			let elementType = ""
+			let elementType = "div"
+			let action = "onClick"
+
 			let inSplit = block.split("\n")
-			let topLine = inSplit[0]//.replace(/^[:]{3}/g,"")
-			let botLine = inSplit[inSplit.length -1]//.replace(/^[:]{3}/g,"")
-			let topSplit = topLine.split(" ")
-			let botSplit = botLine.split(" ")
-			let elementHash = topSplit[2] //Make this find the hash anywhere in the top line.
-				
+			let topLine = inSplit[0].replace(/^[:]{3}/g,"")
+			let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
+			
+			let elementHash = topLine.split(" ")[2] //Make this find the hash anywhere in the top line.
+			let elementClass = topLine.replace(elementHash+" ","")
+			let innerText = JSON.stringify(block.replace(topLine+"\n","").replace("\n"+botLine,""))
+			let onAction = botLine.replace(/^{/g,"").replace(/\}$/g,"")
+
 			if (elementHash) {
 				elementType = elementHash.split("#")[0]
 				id = elementHash.split("#")[1]
 			}
-			
-			
-			
-			let innerText = block.replace(topLine+"\n","").replace("\n"+botLine,"")
-			let headerSplit = innerText.replace("}","").split("{#")
-			innerText = innerText.replaceAll("{#"+headerSplit[1]+"}","")
-			let header = headerSplit[0].replace(symbol+" ","")
-			
-			let elementClass = topLine.replace(elementHash+" ","")
-			//let elementClass = topLine.replaceAll("#"+id,"").replaceAll(elementType,"").replaceAll("\.","")
+			if (elementType == "input" || elementType == "textarea") {
+				action = "onChange"
+			}
 
-			//let leadingDelineator = topSplit.split("\{")
-			let trailingDelineator = botSplit.split("\{")
-			let onSomething = botSplit.replace(trailingDelineator[0],"").replace(/\}$/,"")
-
-			innerText = JSON.stringify(block.replace(inSplit[0]+"\n","").replace("\n"+inSplit[inSplit.length -1],""))
-			let onClick = ""
 			if (botLine.match("\{")){
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"onClick\":\""+botLine.replace(/^{/g,"").replace(/\}$/g,"")+"\",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
