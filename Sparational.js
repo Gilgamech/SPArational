@@ -423,9 +423,9 @@ function convertMdToJml(markdown,elementParent = "parentElement") {
 				if (elementType == "input" || elementType == "textarea") {
 					action = "onChange"
 				}
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
 			} else {
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
 			}
 			//out += convertMdToJml(innerText,id)
 		
