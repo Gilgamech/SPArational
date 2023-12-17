@@ -392,28 +392,38 @@ function convertMdToJml(markdown) {
 			innerText
 			:::{onClick_or_onChange_put_JS_here}
 			*/
+			//topLine.substr(0.3).match(botLine.substr(0.3))
 
 			let elementType = "div"
-			let action = "onClick"
+			let divRegex = /^[:]{3}/g
+			let elementHash = ""
 
-			let topLine = inSplit[0].replace(/^[:]{3}/g,"")
-			let botLine = inSplit[inSplit.length -1].replace(/^[:]{3}/g,"")
-			
-			let elementHash = topLine.split(" ")[2] //Make this find the hash anywhere in the top line.
-			let elementClass = topLine.replace(elementHash+" ","")
-			let innerText = JSON.stringify(block.replace(topLine+"\n","").replace("\n"+botLine,""))
-			let onAction = botLine.replace(/^{/g,"").replace(/\}$/g,"")
+			let topLine = blockSplit[0].replace(divRegex,"")
+			let botLine = blockSplit[blockSplit.length -1].replace(divRegex,"")
 
+			if (topLine.match(/#/)){
+				elementHash = topLine.split(" ").filter(function( obj ) {
+					return obj.match(/#/g,"");
+				});
+				elementHash = elementHash[0]
+			}
 			if (elementHash) {
 				elementType = elementHash.split("#")[0]
 				id = elementHash.split("#")[1]
 			}
-			if (elementType == "input" || elementType == "textarea") {
-				action = "onChange"
-			}
+			
+			let elementClass = topLine.replace(divRegex,"").replace(" "+elementHash,"")
+			let innerText = JSON.stringify(blockSplit.slice(1,blockSplit.length -1)[0])
 
-			if (botLine.match("\{")){
+			if (botLine.match(/^\{/)){
+				let action = "onClick"
+				let onAction = botLine.replace(divRegex,"").replace(/^{/g,"").replace(/\}$/g,"")
+				if (elementType == "input" || elementType == "textarea") {
+					action = "onChange"
+				}
 				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+			} else {
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
