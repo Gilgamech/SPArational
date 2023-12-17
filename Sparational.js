@@ -231,7 +231,7 @@ function convertWebElement(parentElement,URL){
 				break;
 			case "md": 
 				webRequest(URL,function(callback){
-					convertJmlToElements(parentElement,JSON.parse(convertMdToJml(callback).replace(/\n/g,"")))
+					convertJmlToElements(parentElement,JSON.parse('['+convertMdToJml(callback).replace(/\n/g,"")+']'))
 				})
 			case "js": 
 				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}]')))
@@ -458,7 +458,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		};//end switch symbol
 	};//end for block
 
-	out = '['+out.replace(/[,]$/,"")+']'
+	out = out.replace(/[,]$/,"")
 	return out;
 }
 
