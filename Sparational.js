@@ -234,10 +234,10 @@ function convertWebElement(parentElement,URL){
 					convertJmlToElements(parentElement,JSON.parse(convertMdToJml(callback).replace(/\n/g,"")))
 				})
 			case "js": 
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}')))
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}]')))
 				break;
 			default: //Fallback to supplying a link.
-				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"a\",\"href\":\"'+URL+'\"}')))
+				convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"a\",\"href\":\"'+URL+'\"}]')))
 				break;
 		}
 };
