@@ -361,6 +361,7 @@ function convertMdToJml(markdown) {
 		} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
 			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
 			let blockSplit = block.split("\n")
+			let elementType = "th"
 			let Thead = blockSplit[0]
 			let Tdata = blockSplit[1]//Was going to split and match on this, but how many blocks have multiple header rows?
 			//Use text-align: left; text-align: right; text-align: center;
@@ -375,8 +376,9 @@ function convertMdToJml(markdown) {
 					out += "{\"elementParent\": \""+TpartId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
 					for (data of line.split("\|")) {
 						if (data){
-							out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\"th\",\"innerText\": \""+data+"\"},"
+							out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
 						}
+						elementType = "tr"
 					}
 				}
 			}
