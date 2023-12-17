@@ -377,11 +377,11 @@ function convertMdToJml(markdown) {
 					for (data of line.split("\|")) {
 						if (data){
 							out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
-						}
-						elementType = "td"
-					}
-				}
-			}
+						}; //end if data
+					}; //end for data 
+					elementType = "td"
+				}; //end for line
+			}; //end for Tpart
 			
 		} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
 			/* Div definition 
