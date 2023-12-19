@@ -1,22 +1,20 @@
 ::: #titleParent titleContainer
-::: #pageTitle
-[Gilgamech Technologies](/)
-:::
+[Gilgamech Technologies](/) 
 :::
 
 ::: nav#navContainer
 :::
 
-https://www.Gilgamech.com/sites/menu.md::navContainer
-
 ::: #content textBubbleBG 
 :::
 
-::: script#content textBubbleBG test1
+::: script#
 convertWebElement('content',decodeURIComponent(window.location.pathname).replace('html','md'))
 :::
 
-::: #footer copyright 
+::: #copyright copyright 
 :::
+
+https://www.Gilgamech.com/sites/menu.md::navContainer
 
 https://www.Sparational.com/sites/footer.md::footer
