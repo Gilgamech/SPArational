@@ -424,12 +424,12 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				if (elementType == "input" || elementType == "textarea") {
 					action = "onChange"
 				}
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
 			} else {
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
+				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"id\": \""+id+"\"},"
 			}
 			if (innerText){
-				//out += convertMdToJml(innerText,id)
+				out += parseInline(id,innerText)
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
