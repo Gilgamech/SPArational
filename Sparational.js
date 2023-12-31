@@ -621,8 +621,6 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 	//Build parent element.
 	let split = new RegExp(tokenSplitter)
 	textSplit = replaceSymbols(text).split(split)
-	if (parentElement) {
-		out = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 
 	let regexBegin = new RegExp('^'+tokenA)
 	let regexSymbol = new RegExp(tokenB,'g')
