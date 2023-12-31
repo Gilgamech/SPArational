@@ -509,7 +509,6 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			
 			let elementClass = topLine.replace(divRegex,"").replace(" "+elementHash,"")
 			let innerText = JSON.stringify(blockSplit.slice(1,blockSplit.length -1)[0]) //innerText gets its outer quotes from the JSON.stringify, so doesn't need to have extra escaped quotes around it. 
-            if (!(innerText)){innerText="\"\""}
 
 			if (botLine.match(/^\{/)){
 				let action = "onClick"
