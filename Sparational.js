@@ -422,9 +422,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
 			let innerText = block.replace(symbol+" ","")
 			let elementType = ("h"+symbol.length)
+			/*
 			let elementHash = ""
 
-			/*
 			if (innerText.match(/#/)){
 				elementHash = innerText.split(" ").filter(function( obj ) {
 					return obj.match(/#/g,"");
@@ -437,7 +437,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				id = elementHash.split("#")[1]
 			}
 			*/
-            out += parseInline(elementParent,innerText.elementType)
+            out += parseInline(elementParent,innerText.elementType,id)
 		
 		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 			out += "{\"elementType\":\"hr\"},"
