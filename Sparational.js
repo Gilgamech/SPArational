@@ -40,11 +40,6 @@ let tokenStart = "$$$"+tokenSplitter+"###"
 let tokenEnd = "###"+tokenSplitter+"$$$"
 let prevLI = ""
 
-//Element tools
-function getElement(elementId){
-	return document.getElementById(elementId)
-}
-
 //DOM tools
 //addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
@@ -115,6 +110,10 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	}
 	return $elementId
 }; // end addElement	
+
+function getElement(elementId){
+	return document.getElementById(elementId)
+}
 
 function writeElement(elementId,data) {
 	var elementType = getElement(elementId).type;
