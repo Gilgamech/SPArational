@@ -560,7 +560,14 @@ function replaceSymbols(text) {
 	for (key of getKeys(tokenData)) {
 		let token = tokenStart+key+tokenEnd
 		let regex = new RegExp(tokenData[key].regex,"g")
+		let regexEscape = new RegExp("\\\\"+token,"g")
+		let regexSpaces = new RegExp(" "+token+" ","g")
+		let regexUrl = new RegExp(token,"g")
+
 		text = text.replace(regex,token)
+		//It's easier (faster and less complex) to replace all and then replace back the escaped ones after.
+		text = text.replace(regexEscape,tokenData[key].symbol)//Escaping the Backslashes - a potent sequel to the action-packed HTML thriller Escaping The Ampersands.
+		text = text.replace(regexSpaces," "+tokenData[key].symbol+" ")
 	}
 	return text
 }
