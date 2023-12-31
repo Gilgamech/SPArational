@@ -34,8 +34,9 @@ let tokenData = {
 	"a6":{"symbol":"]","regex":/\]/,"elementType":"a"},
 	"a7":{"symbol":"]:","regex":/\]\s*\:\s*/,"elementType":"a"},
 }
-
-let tokenSplitter = "%%%%%%"
+let tokenA = "¤¤¤"
+let tokenB = "ĦĦĦ"
+let tokenSplitter = "ŒŒŒŒŒŒ"
 let tokenStart = "$$$"+tokenSplitter+"###"
 let tokenEnd = "###"+tokenSplitter+"$$$"
 
