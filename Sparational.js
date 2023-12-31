@@ -119,7 +119,7 @@ function writeElement(elementId,data) {
 	if ((elementType == "text") || (elementType == "textarea") || (elementType == "number") || (elementType == "select-one")) {
 		getElement(elementId).value = data;
 	} else if (getElement(elementId).tagName  == 'IMG') {
-			getElement(elementId).src = data;
+		getElement(elementId).src = data;
 	} else {
 		getElement(elementId).innerText = data;
 	}; // end if elementType
@@ -926,8 +926,8 @@ function checkAllLinksOnPage(outputElement){
 	appendElement(outputElement,"\nReading "+document.links.length+" Document Links\n");
 	for (link of document.links) {
 		let href = link.href
-		webRequest("GET",link.href,function(a){ 
 			let len = a.length;
+		webRequest(link.href,function(content,statusCode){
 			let works = " fails"
 			if (len > 100) {works = " works"}
 			appendElement(outputElement,"link "+href+ works+"\n");
