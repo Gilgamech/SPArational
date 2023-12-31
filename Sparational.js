@@ -558,8 +558,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 
 function replaceSymbols(text) {
 	for (key of getKeys(tokenData)) {
+		let token = tokenStart+key+tokenEnd
 		let regex = new RegExp(tokenData[key].regex,"g")
-		text = text.replace(regex,tokenStart+key+tokenEnd)//code - Unparsed.
+		text = text.replace(regex,token)
 	}
 	return text
 }
