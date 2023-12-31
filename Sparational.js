@@ -445,7 +445,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 			out += "{\"elementType\":\"hr\"},"
 			
-		} else if (symbol.match(/[-+*]{1,1}/)) {//Unordered Lists - Nesting.
+		} else if (symbol.match(/[-+*][ ]/)) {//Unordered Lists - Nesting.
 			out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
 		
 		} else if (symbol.match(/\d+[.]/)) {//Ordered Lists - Nesting.
