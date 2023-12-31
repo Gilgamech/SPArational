@@ -517,11 +517,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				if (elementType == "input" || elementType == "textarea") {
 					action = "onChange"
 				}
-                out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+				out += parseInline(id,innerText,elementType,elementClass,action,onAction)
 			} else {
-                out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
-			}
-			if (innerText){
+				out += parseInline(id,innerText,elementType,elementClass)
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
