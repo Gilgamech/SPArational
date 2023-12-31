@@ -2,14 +2,12 @@
 //SPArational.js v3.24 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 12/14/2023
+//Last updated: 12/31/2023
 //Version history:
 //3.25:Rewrite webRequest, convertJmlToElements, and convertMdToJml, including adding parseBlock and parseInline. 
-//3.24: Add getRandomishString. Remove dollar signs from variable names inside most functions, and otherwise standardize. 
-//3.23.3: Readd SPA rewrite section. 
 //Notes:
 
-//Init vars
+//Init token vars
 let tokenData = {
 "co":{"regex":/\`/,"elementType":"code"},
 "de":{"regex":/\~{2}/,"elementType":"del"},
@@ -45,6 +43,7 @@ function getElement(elementId){
 	return document.getElementById(elementId)
 }
 
+//DOM tools
 //addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
 	let radioButton = false;
@@ -213,7 +212,7 @@ function rebuildElement(elementId) {
 	convertJmlToElements(newElement[0].elementParent,newElement);
 }
 
-//Multisite tools
+//Network tools
 function convertWebElement(parentElement,URL){
 	let urlParts = URL.split(".");
 	let extension = urlParts[urlParts.length -1].toLowerCase();
@@ -242,7 +241,6 @@ function convertWebElement(parentElement,URL){
 		}
 };
 
-//Format transformations
 function rwjs($JSON) {
 	//Rewrite $JSON
 	//Works on any JSON, not just SPA files.
@@ -264,7 +262,7 @@ function rwjs($JSON) {
 	
 }; // end function
 
-//Format transformations
+//Processors
 function rewriteJson(data,baseData) {
 	let n = 0;
 	//Rewrite data - Works on any JSON, not just SPA files.
@@ -365,7 +363,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
 			let elementType = "th"
 			let Thead = blockSplit[0]
-			let Tdata = blockSplit[1]//Was going to split and match on this, but how many blocks have multiple header rows?
+			let Tdata = blockSplit[1]//Was going to split and match on this, but how many tables have multiple header rows?
 			//Use text-align: left; text-align: right; text-align: center;
 			//Introduce other styling? Like with === instead of ---?
 			let Tbody = block.replace(Thead+"\n","").replace(Tdata+"\n","")
@@ -381,7 +379,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 							out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
 						}; //end if data
 					}; //end for data 
-					elementType = "td"
+					elementType = "td"//After the first time through, change cell type from table header to table data. 
 				}; //end for line
 			}; //end for Tpart
 			
@@ -462,11 +460,8 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 }
 
 function replaceSymbols(text) {
-	//Have to split out inline code first so the contents don't get parsed.
 	for (key of getKeys(tokenData)) {
-		//for (index in tokenData.length) {
 		let regex = new RegExp(tokenData[key].regex,"g")
-		//console.log(regex)
 		text = text.replace(regex,tokenStart+key+tokenEnd)//code - Unparsed.
 	}
 	return text
@@ -474,9 +469,8 @@ function replaceSymbols(text) {
 
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
-	let tabLevel = 0
-	//listID holds UL IDs
-	let listID = []
+	let tabLevel = 0 //Could be called indentationLevel. 
+	let listID = [] //listID holds UL IDs. 
 	listID[0] = getRandomishString();
 	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 	for (line of block.replace(regex,regexReplace).split("\n")) {
@@ -593,7 +587,7 @@ function convertYamlToJson(yaml) {
 	return data
 }
 
-//Text tools
+//HTML tools
 function colorifyWords(divid, replaceWord, replaceClass) {
 	var replaceRegex = new RegExp(replaceWord, "g");
 	replaceWord = replaceWord.replace("\\","")
@@ -775,6 +769,7 @@ function webRequestAsync($verb,$URI,$JSON,$file,$cached) {
 }; // end webRequestAsync
 
 function getRandomishString() {
+	//Returns a "random" string of dubious cryptographic strength. Good for non-clobbering DIV names but think twice before using as a password.
 	return Math.random().toString(36).slice(-20).replace("0.","");
  }
  function getBadPW() {
