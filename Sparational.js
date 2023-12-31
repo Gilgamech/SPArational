@@ -623,6 +623,11 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 	textSplit = replaceSymbols(text).split(split)
 	if (parentElement) {
 		out = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
+
+	let regexBegin = new RegExp('^'+tokenA)
+	let regexSymbol = new RegExp(tokenB,'g')
+	let regexEnd = new RegExp(tokenA+'$')
+	let firstText = textSplit[0].replace(regexBegin,"").replace(regexEnd,"")
 	} else {
 		out = "{\"elementType\":\""+elementType+"\",\"innerText\":\""+textSplit[0].replace(/^\$\$/,"").replace(/\$\$$/,"")+"\",\"id\": \""+id+"\"},"
 	}
