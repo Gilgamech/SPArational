@@ -533,7 +533,11 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			if (colonSplit[3]) {
 				elementParent = colonSplit[3]
 			}
-			out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+elementParent+"','"+Url+"')\"},"
+			if (reloadEverySec) {
+				out += "{\"elementType\":\"script\",\"innerText\":\"reloadEvery('"+elementParent+"','"+Url+"','"+reloadEverySec+"')\"},"
+			} else {
+				out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+elementParent+"','"+Url+"')\"},"
+			}
 			
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
