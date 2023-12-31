@@ -635,6 +635,7 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 	for (let b = 1; b < textSplit.length -1; b+=4) {
 		elementType = tokenData[textSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
 		let innerText = textSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
+	try {
 		//let elementType = textSplit[b+2]
 		let spanText = textSplit[b+3].replace(/^\$\$/,"").replace(/\$\$$/,"")
 		
@@ -648,6 +649,7 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 		if (spanText) {
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
+	} catch(e) {console.log(e)}
 	}
 	return out;
 }
