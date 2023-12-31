@@ -420,9 +420,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		let id = getRandomishString()
 
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
-			/*
 			let innerText = block.replace(symbol+" ","")
 			let elementType = ("h"+symbol.length)
+			/*
 			let elementHash = ""
 
 			if (innerText.match(/#/)){
