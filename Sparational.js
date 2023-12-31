@@ -938,6 +938,29 @@ function checkAllLinksOnPage(outputElement){
 	}
 };
 
+function timeThis(callback) {
+    let timerStart = Date.now()
+    callback()
+    let timerStop = Date.now()
+    let totalTime = timerStop-timerStart;
+    console.log("Took "+totalTime+" ms")
+}
+
+function getContrast(elementId) {
+	let textColor = window.getComputedStyle(getElement(elementId)).color
+	let backgroundColor = window.getComputedStyle(getElement(elementId)).backgroundColor
+	
+	while (backgroundColor == 'rgba(0, 0, 0, 0)') {//If the background is transparent, cycle up through parent elements until you find one whose background isn't transparent.
+		backgroundColor = window.getComputedStyle(getElement(elementId).parentElement).backgroundColor
+		elementId = getElement(elementId).parentElement.id
+	}
+	//Convert from RGB code to sums ready for adding.
+	textColor = textColor.replaceAll("rgb\(","").replaceAll(",","+").replaceAll("\)","")
+	backgroundColor = backgroundColor.replaceAll("rgb\(","").replaceAll(",","+").replaceAll("\)","")
+	//Return the absolute difference, to not confuse with negative numbers when bright text is on a dark background. 
+	return Math.abs(eval(textColor) - eval(backgroundColor))
+}
+
 //Table building tools
 function addTable(parentElement,newTableID,columnData,divClass) {
 	var newDiv = addElement(parentElement,"",divClass,"div");
