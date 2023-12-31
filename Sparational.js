@@ -627,7 +627,11 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 	let regexSymbol = new RegExp(tokenB,'g')
 	let regexEnd = new RegExp(tokenA+'$')
 	let firstText = textSplit[0].replace(regexBegin,"").replace(regexEnd,"")
+	if (action && onAction) {
+		out = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\""+action+"\":\""+onAction+"\",\"innerText\":\""+firstText+"\",\"id\": \""+id+"\"},"
+	} else {
 		out = "{\"elementParent\": \""+parentElement+"\",\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":\""+firstText+"\",\"id\": \""+id+"\"},"
+	}
 	//Parse tokens into children of parent.
 	for (let b = 1; b < textSplit.length -1; b+=4) {
 	try {
