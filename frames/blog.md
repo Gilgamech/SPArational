@@ -17,4 +17,4 @@ convertWebElement('content',decodeURIComponent(window.location.pathname).replace
 
 https://www.Gilgamech.com/sites/menu.md::navContainer
 
-https://www.Sparational.com/sites/footer.md::footer
+https://www.Sparational.com/sites/footer.md::copyright

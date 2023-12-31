@@ -8,7 +8,6 @@
     "main": {
       "elements": [
         {
-          "elementParent": "parentElement",
           "elementClass": "titleContainer",
           "id": "titleParent"
         },
@@ -20,26 +19,22 @@
           "innerText": "Gilgamech Technologies"
         },
         {
-          "elementParent": "parentElement",
           "elementType": "nav",
           "id": "navContainer"
         },
         {
-          "elementParent": "parentElement",
           "elementType": "script",
           "innerText": "convertWebElement('navContainer','/sites/menu.md')"
         },
         {
-          "elementParent": "parentElement",
           "elementClass": "textBubbleBG",
           "id": "content"
         },
         {
-          "elementParent": "parentElement",
           "elementType": "script",
           "innerText": "convertWebElement('content',decodeURIComponent(window.location.pathname).replace('html','md'))"
         },
-        "https://www.sparational.com/sites/footer.spa"
+        "https://www.sparational.com/sites/footer.jml"
       ]
     }
   }
