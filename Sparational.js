@@ -4,6 +4,7 @@
 //Created on: 8/3/2022
 //Last updated: 12/31/2023
 //Version history:
+//3.25.1 Add timeThis to measure performance monitoring.
 //3.25:Rewrite webRequest, convertJmlToElements, and convertMdToJml, including adding parseBlock and parseInline. 
 //Notes:
 
@@ -436,7 +437,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
 			let colonSplit = block.replace(/\n/g,"").split(":")
 			let Url = colonSplit[0]+":"+colonSplit[1]
-			let reloadEvery = colonSplit[2]
+			let reloadEverySec = colonSplit[2]
 			if (colonSplit[3]) {
 				elementParent = colonSplit[3]
 			}
@@ -475,8 +476,8 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 	for (line of block.replace(regex,regexReplace).split("\n")) {
 		//listID holds as many IDs as are at tabLevel, or double the number of spaces leading the line.
-		tabLevel = line.match(/^\s*/).toString().split("  ").length
-		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not any number.
+		tabLevel = line.match(/^\s*/).toString().split("  ").length//Gather the leading spaces and count the pairs to get the tabLevel.
+		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not a random number.
 		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs until they're the same.
 			listID[listID.length] = getRandomishString();
 			if (prevLI == "") {
