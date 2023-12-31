@@ -128,7 +128,7 @@ function writeElement(elementId,data) {
 
 function readElement(elementId) {
 	var elementType = getElement(elementId).type;
-	if ((elementType == "text") || (elementType == "textarea") || (elementType == "select-one")|| (elementType == "number")) {
+	if ((elementType == "text") || (elementType == "textarea") || (elementType == "number") || (elementType == "select-one")) {
 		return getElement(elementId).value;
 	} else {
 		return getElement(elementId).innerText;
