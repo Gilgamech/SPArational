@@ -38,7 +38,6 @@ let tokenData = {
 let tokenSplitter = "%%%%%%"
 let tokenStart = "$$$"+tokenSplitter+"###"
 let tokenEnd = "###"+tokenSplitter+"$$$"
-let prevLI = ""
 
 //DOM tools
 //addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
@@ -585,6 +584,7 @@ function replaceSymbols(text) {
 
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
+	let prevLI = ""
 	let tabLevel = 0 //Could be called indentationLevel. 
 	let listID = [] //listID holds UL IDs. 
 	listID[0] = getRandomishString();
