@@ -423,7 +423,6 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			let innerText = block.replace(symbol+" ","")
 			let elementType = ("h"+symbol.length)
 			let elementHash = ""
-			let id = getRandomishString()
 
 			/*
 			if (innerText.match(/#/)){
@@ -439,7 +438,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			}
             out += parseInline(elementParent,innerText,elementType)
 			*/
-            out += parseInline(elementParent,innerText.elementType)
+            out += parseInline(elementParent,innerText.elementType,id)
 		
 		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 			out += "{\"elementType\":\"hr\"},"
