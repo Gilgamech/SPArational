@@ -1,9 +1,11 @@
 //Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.24 - Make faster websites faster.
+//SPArational.js v3.25.4 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 12/31/2023
 //Version history:
+//3.25.4 Fix image processing.
+//3.25.3 Fix symbol escaping. 
 //3.25.2 Add load time display to webRequest.
 //3.25.1 Add timeThis to measure performance monitoring.
 //3.25:Rewrite webRequest, convertJmlToElements, and convertMdToJml, including adding parseBlock and parseInline. 
@@ -208,7 +210,6 @@ function rebuildElement(elementId) {
 	//if (oldElement.onclick) {newElement[0].onClick = oldElement.onclick};
 	//if (oldElement.contentEditable) {newElement[0].contentEditable = oldElement.contentEditable};
 
-	console.log(JSON.stringify(newElement));
 	deleteElement(elementId)
 	convertJmlToElements(newElement[0].elementParent,newElement);
 }
