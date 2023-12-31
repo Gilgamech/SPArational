@@ -2,39 +2,37 @@
 //SPArational.js v3.24 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 12/31/2023
+//Last updated: 12/14/2023
 //Version history:
-//3.25.4 Fix image processing.
-//3.25.3 Add load time display to webRequest.
-//3.25.2 Add timeThis to measure performance monitoring.
-//3.25.1 Fix symbol escaping. 
 //3.25:Rewrite webRequest, convertJmlToElements, and convertMdToJml, including adding parseBlock and parseInline. 
+//3.24: Add getRandomishString. Remove dollar signs from variable names inside most functions, and otherwise standardize. 
+//3.23.3: Readd SPA rewrite section. 
 //Notes:
 
-//Init token vars
+//Init vars
 let tokenData = {
-	"co":{"symbol":"`","regex":/\`/,"elementType":"code"},
-	"de":{"symbol":"~~","regex":/\~{2}/,"elementType":"del"},
-	"ea":{"symbol":"*","regex":/\*/,"elementType":"em"},
-	"eu":{"symbol":"_","regex":/\_/,"elementType":"em"},
-	"in":{"symbol":"++","regex":/\+{2}/,"elementType":"ins"},
-	"ma":{"symbol":"==","regex":/\={2}/,"elementType":"mark"},
-	"sa":{"symbol":"**","regex":/\*{2}/,"elementType":"strong"},
-	"su":{"symbol":"__","regex":/\_{2}/,"elementType":"strong"},
-	"sb":{"symbol":"~","regex":/\~/,"elementType":"sub"},
-	"sp":{"symbol":"^","regex":/\^/,"elementType":"sup"},
-	"a2":{"symbol":"<","regex":/\</,"elementType":"a"},
-	"a3":{"symbol":">","regex":/\>/,"elementType":"a"},
-	"ab":{"symbol":"*[","regex":/\*\[/,"elementType":"abbr"},
-	"fi":{"symbol":"^[","regex":/\^\[/,"elementType":"a"},
-	"fo":{"symbol":"[^","regex":/\[\^/,"elementType":"a"},
-	"im":{"symbol":"![","regex":/\!\[/,"elementType":"img"},
-	"an":{"symbol":"[","regex":/\[/,"elementType":"a"},
-	"am":{"symbol":"](","regex":/\]\s*\(/,"elementType":"a"},
-	"a4":{"symbol":"\")","regex":/"\)/,"elementType":"a"},
-	"a5":{"symbol":"][","regex":/\]\s*\[/,"elementType":"a"},
-	"a6":{"symbol":"]","regex":/\]/,"elementType":"a"},
-	"a7":{"symbol":"]:","regex":/\]\s*\:\s*/,"elementType":"a"},
+"co":{"regex":/\`/,"elementType":"code"},
+"de":{"regex":/\~{2}/,"elementType":"del"},
+"ea":{"regex":/\*/,"elementType":"em"},
+"eu":{"regex":/\_/,"elementType":"em"},
+"in":{"regex":/\+{2}/,"elementType":"ins"},
+"ma":{"regex":/\={2}/,"elementType":"mark"},
+"sa":{"regex":/\*{2}/,"elementType":"strong"},
+"su":{"regex":/\_{2}/,"elementType":"strong"},
+"sb":{"regex":/\~/,"elementType":"sub"},
+"sp":{"regex":/\^/,"elementType":"sup"},
+"a2":{"regex":/\</,"elementType":"a"},
+"a3":{"regex":/\>/,"elementType":"a"},
+"ab":{"regex":/\*\[/,"elementType":"abbr"},
+"fi":{"regex":/\^\[/,"elementType":"a"},
+"fo":{"regex":/\[\^/,"elementType":"a"},
+"im":{"regex":/\!\[/,"elementType":"img"},
+"an":{"regex":/\[/,"elementType":"a"},
+"q1":{"regex":/\]\s*\(/,"elementType":"a"},
+"q2":{"regex":/"\)/,"elementType":"a"},
+"q4":{"regex":/\]\s*\[/,"elementType":"a"},
+"q5":{"regex":/\]/,"elementType":"a"},
+"q7":{"regex":/\]\s*\:\s*/,"elementType":"a"},
 }
 
 let tokenSplitter = "%%%%%%"
@@ -42,7 +40,11 @@ let tokenStart = "$$$"+tokenSplitter+"###"
 let tokenEnd = "###"+tokenSplitter+"$$$"
 let prevLI = ""
 
-//DOM tools
+//Element tools
+function getElement(elementId){
+	return document.getElementById(elementId)
+}
+
 //addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
 function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
 	let radioButton = false;
@@ -113,16 +115,12 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	return $elementId
 }; // end addElement	
 
-function getElement(elementId){
-	return document.getElementById(elementId)
-}
-
 function writeElement(elementId,data) {
 	var elementType = getElement(elementId).type;
 	if ((elementType == "text") || (elementType == "textarea") || (elementType == "number") || (elementType == "select-one")) {
 		getElement(elementId).value = data;
 	} else if (getElement(elementId).tagName  == 'IMG') {
-		getElement(elementId).src = data;
+			getElement(elementId).src = data;
 	} else {
 		getElement(elementId).innerText = data;
 	}; // end if elementType
@@ -130,7 +128,7 @@ function writeElement(elementId,data) {
 
 function readElement(elementId) {
 	var elementType = getElement(elementId).type;
-	if ((elementType == "text") || (elementType == "textarea") || (elementType == "number") || (elementType == "select-one")) {
+	if ((elementType == "text") || (elementType == "textarea") || (elementType == "select-one")|| (elementType == "number")) {
 		return getElement(elementId).value;
 	} else {
 		return getElement(elementId).innerText;
@@ -210,11 +208,12 @@ function rebuildElement(elementId) {
 	//if (oldElement.onclick) {newElement[0].onClick = oldElement.onclick};
 	//if (oldElement.contentEditable) {newElement[0].contentEditable = oldElement.contentEditable};
 
+	console.log(JSON.stringify(newElement));
 	deleteElement(elementId)
 	convertJmlToElements(newElement[0].elementParent,newElement);
 }
 
-//Network tools
+//Multisite tools
 function convertWebElement(parentElement,URL){
 	let urlParts = URL.split(".");
 	let extension = urlParts[urlParts.length -1].toLowerCase();
@@ -243,7 +242,7 @@ function convertWebElement(parentElement,URL){
 		}
 };
 
-//Processors
+//Format transformations
 function rwjs($JSON) {
 	//Rewrite $JSON
 	//Works on any JSON, not just SPA files.
@@ -294,6 +293,7 @@ function convertJmlToElements(parentElement,elements) {
 		if (!element.elementParent) {
 			element.elementParent = parentElement;
 		}
+		//console.log(element.elementParent)
 		addElement(element.elementParent, element.innerText, element.elementClass, element.elementType, element.elementStyle, element.href, element.onChange, element.onClick, element.contentEditable, element.attributeType, element.attributeAction, element.id)
 	}
 }
@@ -308,6 +308,7 @@ function cje2(parentElement,elements) {
 		if (!element.elementParent) {
 			element.elementParent = parentElement;
 		}
+		//console.log(element.elementParent)
 		addElement(element.elementParent, element.innerText, element.elementClass, element.elementType, element.elementStyle, element.href, element.onChange, element.onClick, element.contentEditable, element.attributeType, element.attributeAction, element.id)
 	}
 }
@@ -364,7 +365,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
 			let elementType = "th"
 			let Thead = blockSplit[0]
-			let Tdata = blockSplit[1]//Was going to split and match on this, but how many tables have multiple header rows?
+			let Tdata = blockSplit[1]//Was going to split and match on this, but how many blocks have multiple header rows?
 			//Use text-align: left; text-align: right; text-align: center;
 			//Introduce other styling? Like with === instead of ---?
 			let Tbody = block.replace(Thead+"\n","").replace(Tdata+"\n","")
@@ -373,14 +374,14 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				let TpartId = getRandomishString();
 				out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TpartId+"\"},"
 				for (line of Tpart.split("\n")) {
-					let TRowID = getRandomishString();
-					out += "{\"elementParent\": \""+TpartId+"\",\"elementType\":\"tr\",\"id\": \""+TRowID+"\"},"
+					let TRID = getRandomishString();
+					out += "{\"elementParent\": \""+TpartId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
 					for (data of line.split("\|")) {
 						if (data){
-							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
+							out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
 						}; //end if data
 					}; //end for data 
-					elementType = "td"//After the first time through, change cell type from table header to table data. 
+					elementType = "td"
 				}; //end for line
 			}; //end for Tpart
 			
@@ -423,9 +424,11 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				if (elementType == "input" || elementType == "textarea") {
 					action = "onChange"
 				}
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+                out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
 			} else {
-				out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
+                out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
+			}
+			if (innerText){
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
@@ -435,11 +438,11 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
 			let colonSplit = block.replace(/\n/g,"").split(":")
 			let Url = colonSplit[0]+":"+colonSplit[1]
-			let reloadEverySec = colonSplit[2]
+			let reloadEvery = colonSplit[2]
 			if (colonSplit[3]) {
 				elementParent = colonSplit[3]
 			}
-				out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+elementParent+"','"+Url+"')\"},"
+			out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+elementParent+"','"+Url+"')\"},"
 			
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
@@ -459,9 +462,11 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 }
 
 function replaceSymbols(text) {
+	//Have to split out inline code first so the contents don't get parsed.
 	for (key of getKeys(tokenData)) {
+		//for (index in tokenData.length) {
 		let regex = new RegExp(tokenData[key].regex,"g")
-
+		//console.log(regex)
 		text = text.replace(regex,tokenStart+key+tokenEnd)//code - Unparsed.
 	}
 	return text
@@ -469,15 +474,15 @@ function replaceSymbols(text) {
 
 function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regexReplace="") {
 	//Takes unparsed block and splits off regex to return an element with children.
-	let prevLI = ""
-	let tabLevel = 0 //Could be called indentationLevel. 
-	let listID = [] //listID holds UL IDs. 
+	let tabLevel = 0
+	//listID holds UL IDs
+	let listID = []
 	listID[0] = getRandomishString();
 	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 	for (line of block.replace(regex,regexReplace).split("\n")) {
 		//listID holds as many IDs as are at tabLevel, or double the number of spaces leading the line.
-		tabLevel = line.match(/^\s*/).toString().split("  ").length//Gather the leading spaces and count the pairs to get the tabLevel.
-		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not a random number.
+		tabLevel = line.match(/^\s*/).toString().split("  ").length
+		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not any number.
 		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs until they're the same.
 			listID[listID.length] = getRandomishString();
 			if (prevLI == "") {
@@ -512,11 +517,13 @@ function parseInline(parentElement,text,elementType="p",id = (getRandomishString
 	}
 	//Parse tokens into children of parent.
 	for (let b = 1; b < textSplit.length -1; b+=4) {
+	try {
 		elementType = tokenData[textSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
 		let innerText = textSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
 		//let elementType = textSplit[b+2]
 		let spanText = textSplit[b+3].replace(/^\$\$/,"").replace(/\$\$$/,"")
-		if ((elementType == "a") || (elementType == "img")) {
+		
+		if (elementType == "a") {
 			let href = spanText.match(/\S*\)/)[0].replace(/\)$/,"")
 			spanText = spanText.split(/\S*\)/)[1]
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\" "+innerText+"\",\"href\": \""+href+"\"},"
@@ -526,6 +533,7 @@ function parseInline(parentElement,text,elementType="p",id = (getRandomishString
 		if (spanText) {
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"span\",\"innerText\": \"" +spanText +"\"},"
 		}; //end if endTxt
+	} catch(e) {console.log(e)}
 	}
 	return out;
 }
@@ -585,7 +593,7 @@ function convertYamlToJson(yaml) {
 	return data
 }
 
-//HTML tools
+//Text tools
 function colorifyWords(divid, replaceWord, replaceClass) {
 	var replaceRegex = new RegExp(replaceWord, "g");
 	replaceWord = replaceWord.replace("\\","")
@@ -645,17 +653,13 @@ function addInputField(parentElement,preInput,Input,PostInput,onChange,varName,f
 }
 
 //Supporting functions
-function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
+function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
 //if now is smaller than duration, read from cache.
-    let timerStart = Date.now()
-	if (window.localStorage[URI] && Date.now() < window.localStorage[URI+":onlineCacheDuration"]) {
-		console.log(URI+" cached for "+((window.localStorage[URI+":onlineCacheDuration"]-Date.now())/1000)+" more seconds.")
+	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":onlineCacheDuration"]) {
+		console.log($URI+" cached for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" more seconds.")
 		$status = "304";
-		returnVar = window.localStorage[URI];
+		returnVar = window.localStorage[$URI];
 		$callback(returnVar,$status);
-    let timerStop = Date.now()
-    let totalTime = timerStop-timerStart;
-    console.log("webRequest for "+URI+" took "+totalTime+" ms")
 		return;
 	}; //end if window.localStorage
 
@@ -672,7 +676,7 @@ function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 
 	} else {
 		xhRequest.overrideMimeType("text/plain");
 	}; // end if $verb
-	xhRequest.open($verb, URI, true);
+	xhRequest.open($verb, $URI, true);
 	xhRequest.onreadystatechange = function () {
 		try {
 			$status = xhRequest.status;
@@ -683,30 +687,27 @@ function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 
 						returnVar = JSON.parse(returnVar);
 					}; // end if $JSON
 					if (onlineCacheDuration > 0) {
-						window.localStorage[URI] = returnVar;
-						window.localStorage[URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
-						window.localStorage[URI+":offlineCacheDuration"] = (offlineCacheDuration * 1000) + Date.now();
-						console.log("Caching "+URI+" for "+((window.localStorage[URI+":onlineCacheDuration"]-Date.now())/1000)+" seconds.")
+						window.localStorage[$URI] = returnVar;
+						window.localStorage[$URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
+						window.localStorage[$URI+":offlineCacheDuration"] = (offlineCacheDuration * 1000) + Date.now();
+						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" seconds.")
 					} else if (onlineCacheDuration <= 0) {
-						window.localStorage[URI] = null;
-						window.localStorage[URI+":onlineCacheDuration"] = Date.now();
-						console.log("Invalidating "+URI)
+						window.localStorage[$URI] = null;
+						window.localStorage[$URI+":onlineCacheDuration"] = Date.now();
+						console.log("Invalidating "+$URI)
 					}; //end if onlineCacheDuration
 					$callback(returnVar,$status);
 				}; // end xhRequest.readyState
-			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[URI] && Date.now() < window.localStorage[URI+":offlineCacheDuration"] && n==0) { //&&
-				console.log("Page "+URI+" offline. Serving cached copy.")
+			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":offlineCacheDuration"] && n==0) { //&&
+				console.log("Page "+$URI+" offline. Serving cached copy.")
 				$status = "304";
-				returnVar = window.localStorage[URI];
+				returnVar = window.localStorage[$URI];
 				$callback(returnVar,$status);
 				n = (n*1) + 1;
 			} else if (n==0) {
 				$callback(" Error: "+xhRequest.statusText,$status);
 			}; // end if $status
 		} catch(e) {console.log(e)}; // end try - This try catch captures errors within the callback too.
-    let timerStop = Date.now()
-    let totalTime = timerStop-timerStart;
-    console.log("webRequest for "+URI+" took "+totalTime+" ms")
 	}; // end xhRequest.onreadystatechange
 	xhRequest.send($file);
 }; // end webRequest
@@ -774,7 +775,6 @@ function webRequestAsync($verb,$URI,$JSON,$file,$cached) {
 }; // end webRequestAsync
 
 function getRandomishString() {
-	//Returns a "random" string of dubious cryptographic strength. Good for non-clobbering DIV names but think twice before using as a password.
 	return Math.random().toString(36).slice(-20).replace("0.","");
  }
  function getBadPW() {
@@ -931,7 +931,7 @@ function checkAllLinksOnPage(outputElement){
 	appendElement(outputElement,"\nReading "+document.links.length+" Document Links\n");
 	for (link of document.links) {
 		let href = link.href
-		webRequest(link.href,function(a){ 
+		webRequest("GET",link.href,function(a){ 
 			let len = a.length;
 			let works = " fails"
 			if (len > 100) {works = " works"}
@@ -941,29 +941,6 @@ function checkAllLinksOnPage(outputElement){
 		})
 	}
 };
-
-function timeThis(callback) {
-    let timerStart = Date.now()
-    callback()
-    let timerStop = Date.now()
-    let totalTime = timerStop-timerStart;
-    console.log("Took "+totalTime+" ms")
-}
-
-function getContrast(elementId) {
-	let textColor = window.getComputedStyle(getElement(elementId)).color
-	let backgroundColor = window.getComputedStyle(getElement(elementId)).backgroundColor
-	
-	while (backgroundColor == 'rgba(0, 0, 0, 0)') {//If the background is transparent, cycle up through parent elements until you find one whose background isn't transparent.
-		backgroundColor = window.getComputedStyle(getElement(elementId).parentElement).backgroundColor
-		elementId = getElement(elementId).parentElement.id
-	}
-	//Convert from RGB code to sums ready for adding.
-	textColor = textColor.replaceAll("rgb\(","").replaceAll(",","+").replaceAll("\)","")
-	backgroundColor = backgroundColor.replaceAll("rgb\(","").replaceAll(",","+").replaceAll("\)","")
-	//Return the absolute difference, to not confuse with negative numbers when bright text is on a dark background. 
-	return Math.abs(eval(textColor) - eval(backgroundColor))
-}
 
 //Table building tools
 function addTable(parentElement,newTableID,columnData,divClass) {
