@@ -436,9 +436,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				elementType = elementHash.split("#")[0]
 				id = elementHash.split("#")[1]
 			}
-            out += parseInline(elementParent,innerText.elementType,id)
-			*/
             out += parseInline(elementParent,innerText,elementType)
+			*/
+            out += parseInline(elementParent,innerText.elementType,id)
 		
 		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 			out += "{\"elementType\":\"hr\"},"
