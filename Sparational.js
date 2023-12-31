@@ -568,6 +568,16 @@ function replaceSymbols(text) {
 		//It's easier (faster and less complex) to replace all and then replace back the escaped ones after.
 		text = text.replace(regexEscape,tokenData[key].symbol)//Escaping the Backslashes - a potent sequel to the action-packed HTML thriller Escaping The Ampersands.
 		text = text.replace(regexSpaces," "+tokenData[key].symbol+" ")
+
+		//Detect URIs as either containing HTTP for an absolute link, or starting with a slash for a relative link. 
+		//But don't escape anchor or image tokens in this way, so they'll still be picked up by parseInline.
+		for (split of text.split(" ")){
+			if (((split.match("http")) || (split.substr(0,1) == "/")) &&(key != "an")&&(key != "im")&&(key != "am")) {
+				let tleaf = split.replaceAll(regexUrl,tokenData[key].symbol)
+				text = text.replaceAll(split,tleaf)
+			}
+		}
+		
 	}
 	return text
 }
