@@ -596,7 +596,7 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	return out;
 }
 
-function parseInline(parentElement,text,elementType="p",id = (getRandomishString())){
+function parseInline(parentElement= "parentElement",text,elementType="p",id = (getRandomishString()),elementClass="",action,onAction){
 	//Takes unparsed block, replaces tokens, and splits off token to return an element with children.
 	//Build parent element.
 	let split = new RegExp(tokenSplitter)
