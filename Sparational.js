@@ -953,7 +953,7 @@ function timeThis(callback) {
     console.log("Took "+totalTime+" ms")
 }
 
-function getContrast(elementId) {
+function getElementContrast(elementId) {
 	let textColor = window.getComputedStyle(getElement(elementId)).color
 	let backgroundColor = window.getComputedStyle(getElement(elementId)).backgroundColor
 	
