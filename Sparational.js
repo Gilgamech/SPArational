@@ -447,11 +447,11 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				let TpartId = getRandomishString();
 				out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TpartId+"\"},"
 				for (line of Tpart.split("\n")) {
-					let TRID = getRandomishString();
-					out += "{\"elementParent\": \""+TpartId+"\",\"elementType\":\"tr\",\"id\": \""+TRID+"\"},"
+					let TRowID = getRandomishString();
+					out += "{\"elementParent\": \""+TpartId+"\",\"elementType\":\"tr\",\"id\": \""+TRowID+"\"},"
 					for (data of line.split("\|")) {
 						if (data){
-							out += "{\"elementParent\": \""+TRID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
+							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
 						}; //end if data
 					}; //end for data 
 					elementType = "td"//After the first time through, change cell type from table header to table data. 
