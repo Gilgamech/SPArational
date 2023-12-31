@@ -37,8 +37,8 @@ let tokenData = {
 let tokenA = "¤¤¤"
 let tokenB = "ĦĦĦ"
 let tokenSplitter = "ŒŒŒŒŒŒ"
-let tokenStart = "$$$"+tokenSplitter+"###"
-let tokenEnd = "###"+tokenSplitter+"$$$"
+let tokenStart = tokenA+tokenSplitter+tokenB
+let tokenEnd = tokenB+tokenSplitter+tokenA
 
 //DOM tools
 //addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
@@ -633,13 +633,12 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 	}
 	//Parse tokens into children of parent.
 	for (let b = 1; b < textSplit.length -1; b+=4) {
-		elementType = tokenData[textSplit[b].replace(/#/g,"")].elementType //Reuse the variable by clobbering the extant data.
-		let innerText = textSplit[b+1].replace(/^\$\$/,"").replace(/\$\$$/,"")
 	try {
+		elementType = tokenData[textSplit[b].replace(regexSymbol,"")].elementType //Reuse the variable by clobbering the extant data.
+		let innerText = textSplit[b+1].replace(regexBegin,"").replace(regexEnd,"")
 		//let elementType = textSplit[b+2]
-		let spanText = textSplit[b+3].replace(/^\$\$/,"").replace(/\$\$$/,"")
-		
-		if (elementType == "a") {
+		let spanText = textSplit[b+3].replace(regexBegin,"").replace(regexEnd,"")
+		if ((elementType == "a") || (elementType == "img")) {
 			let href = spanText.match(/\S*\)/)[0].replace(/\)$/,"")
 			spanText = spanText.split(/\S*\)/)[1]
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\" "+innerText+"\",\"href\": \""+href+"\"},"
