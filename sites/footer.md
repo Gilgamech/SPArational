@@ -1,1 +1,1 @@
-© 2013-2023 Gilgamech Technologies - Powered by [Sparational.js](https://www.Sparational.com/)
+© 2013-2024 Gilgamech Technologies - Powered by [Sparational.js](https://www.Sparational.com/)
