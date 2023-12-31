@@ -418,13 +418,14 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 
 		let elementParent = nestedParent
 		let id = getRandomishString()
+		let elementHash = ""
 
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
 			let innerText = block.replace(symbol+" ","")
 			let elementType = ("h"+symbol.length)
-			/*
-			let elementHash = ""
+			elementHash = ""
 
+			/*
 			if (innerText.match(/#/)){
 				elementHash = innerText.split(" ").filter(function( obj ) {
 					return obj.match(/#/g,"");
@@ -489,7 +490,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 
 			let elementType = "div"
 			let divRegex = /^[:]{3}/g
-			let elementHash = ""
+			elementHash = ""
 
 			let topLine = blockSplit[0].replace(divRegex,"")
 			let botLine = blockSplit[blockSplit.length -1].replace(divRegex,"")
