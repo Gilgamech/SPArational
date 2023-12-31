@@ -420,7 +420,22 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		let id = getRandomishString()
 
 		if (symbol.match(/#{1,6}/)) {//Headings - Parsed.
-			out += parseInline(elementParent,block.replace(symbol+" ",""),("h"+symbol.length))
+			let innerText = block.replace(symbol+" ","")
+			let elementType = ("h"+symbol.length)
+			let elementHash = ""
+
+			if (innerText.match(/#/)){
+				elementHash = innerText.split(" ").filter(function( obj ) {
+					return obj.match(/#/g,"");
+				});
+				innerText = innerText.replace(elementHash,"")
+				elementHash = elementHash[0]
+			}
+			if (elementHash) {
+				elementType = elementHash.split("#")[0]
+				id = elementHash.split("#")[1]
+			}
+			out += parseInline(elementParent,innerText,elementType,id)
 		
 		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 			out += "{\"elementType\":\"hr\"},"
