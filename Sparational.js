@@ -4,6 +4,7 @@
 //Created on: 8/3/2022
 //Last updated: 12/31/2023
 //Version history:
+//3.25.2 Add load time display to webRequest.
 //3.25.1 Add timeThis to measure performance monitoring.
 //3.25:Rewrite webRequest, convertJmlToElements, and convertMdToJml, including adding parseBlock and parseInline. 
 //Notes:
@@ -262,6 +263,80 @@ function rwjs($JSON) {
 	//faster: stringify, 
 	
 }; // end function
+function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
+//if now is smaller than duration, read from cache.
+    let timerStart = Date.now()
+	if (window.localStorage[URI] && Date.now() < window.localStorage[URI+":onlineCacheDuration"]) {
+		console.log(URI+" cached for "+((window.localStorage[URI+":onlineCacheDuration"]-Date.now())/1000)+" more seconds.")
+		$status = "304";
+		returnVar = window.localStorage[URI];
+		$callback(returnVar,$status);
+    let timerStop = Date.now()
+    let totalTime = timerStop-timerStart;
+    console.log("webRequest for "+URI+" took "+totalTime+" ms")
+		return;
+	}; //end if window.localStorage
+
+	let n = 0;
+	var $status;
+	var xhRequest = new XMLHttpRequest();
+	var returnVar;
+	if ($verb == "POST") {
+		xhRequest.overrideMimeType("text/plain");
+	} else if ($verb == "GET") {
+		xhRequest.overrideMimeType("application/json");
+	} else if ($verb == "PUT") {
+		xhRequest.overrideMimeType("application/json");
+	} else {
+		xhRequest.overrideMimeType("text/plain");
+	}; // end if $verb
+	xhRequest.open($verb, URI, true);
+	xhRequest.onreadystatechange = function () {
+		try {
+			$status = xhRequest.status;
+			if ($status == "200") {
+				if (xhRequest.readyState == 4) {
+					returnVar = xhRequest.responseText;
+					if ($JSON) {
+						returnVar = JSON.parse(returnVar);
+					}; // end if $JSON
+					if (onlineCacheDuration > 0) {
+						window.localStorage[URI] = returnVar;
+						window.localStorage[URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
+						window.localStorage[URI+":offlineCacheDuration"] = (offlineCacheDuration * 1000) + Date.now();
+						console.log("Caching "+URI+" for "+((window.localStorage[URI+":onlineCacheDuration"]-Date.now())/1000)+" seconds.")
+					} else if (onlineCacheDuration <= 0) {
+						window.localStorage[URI] = null;
+						window.localStorage[URI+":onlineCacheDuration"] = Date.now();
+						console.log("Invalidating "+URI)
+					}; //end if onlineCacheDuration
+					$callback(returnVar,$status);
+				}; // end xhRequest.readyState
+			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[URI] && Date.now() < window.localStorage[URI+":offlineCacheDuration"] && n==0) { //&&
+				console.log("Page "+URI+" offline. Serving cached copy.")
+				$status = "304";
+				returnVar = window.localStorage[URI];
+				$callback(returnVar,$status);
+				n = (n*1) + 1;
+			} else if (n==0) {
+				$callback(" Error: "+xhRequest.statusText,$status);
+			}; // end if $status
+		} catch(e) {console.log(e)}; // end try - This try catch captures errors within the callback too.
+    let timerStop = Date.now()
+    let totalTime = timerStop-timerStart;
+    console.log("webRequest for "+URI+" took "+totalTime+" ms")
+	}; // end xhRequest.onreadystatechange
+	xhRequest.send($file);
+}; // end webRequest
+
+function reloadEvery(parentElement,URL,seconds = 60){
+	let id = addElement(parentElement)
+	convertWebElement(id,URL)
+	setInterval(function () {
+		rebuildElement(id)
+		convertWebElement(id,URL)
+	}, seconds*1000);
+}
 
 //Processors
 function rewriteJson(data,baseData) {
@@ -648,73 +723,6 @@ function addInputField(parentElement,preInput,Input,PostInput,onChange,varName,f
 }
 
 //Supporting functions
-function webRequest($URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
-//if now is smaller than duration, read from cache.
-	if (window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":onlineCacheDuration"]) {
-		console.log($URI+" cached for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" more seconds.")
-		$status = "304";
-		returnVar = window.localStorage[$URI];
-		$callback(returnVar,$status);
-		return;
-	}; //end if window.localStorage
-
-	let n = 0;
-	var $status;
-	var xhRequest = new XMLHttpRequest();
-	var returnVar;
-	if ($verb == "POST") {
-		xhRequest.overrideMimeType("text/plain");
-	} else if ($verb == "GET") {
-		xhRequest.overrideMimeType("application/json");
-	} else if ($verb == "PUT") {
-		xhRequest.overrideMimeType("application/json");
-	} else {
-		xhRequest.overrideMimeType("text/plain");
-	}; // end if $verb
-	xhRequest.open($verb, $URI, true);
-	xhRequest.onreadystatechange = function () {
-		try {
-			$status = xhRequest.status;
-			if ($status == "200") {
-				if (xhRequest.readyState == 4) {
-					returnVar = xhRequest.responseText;
-					if ($JSON) {
-						returnVar = JSON.parse(returnVar);
-					}; // end if $JSON
-					if (onlineCacheDuration > 0) {
-						window.localStorage[$URI] = returnVar;
-						window.localStorage[$URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
-						window.localStorage[$URI+":offlineCacheDuration"] = (offlineCacheDuration * 1000) + Date.now();
-						console.log("Caching "+$URI+" for "+((window.localStorage[$URI+":onlineCacheDuration"]-Date.now())/1000)+" seconds.")
-					} else if (onlineCacheDuration <= 0) {
-						window.localStorage[$URI] = null;
-						window.localStorage[$URI+":onlineCacheDuration"] = Date.now();
-						console.log("Invalidating "+$URI)
-					}; //end if onlineCacheDuration
-					$callback(returnVar,$status);
-				}; // end xhRequest.readyState
-			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[$URI] && Date.now() < window.localStorage[$URI+":offlineCacheDuration"] && n==0) { //&&
-				console.log("Page "+$URI+" offline. Serving cached copy.")
-				$status = "304";
-				returnVar = window.localStorage[$URI];
-				$callback(returnVar,$status);
-				n = (n*1) + 1;
-			} else if (n==0) {
-				$callback(" Error: "+xhRequest.statusText,$status);
-			}; // end if $status
-		} catch(e) {console.log(e)}; // end try - This try catch captures errors within the callback too.
-	}; // end xhRequest.onreadystatechange
-	xhRequest.send($file);
-}; // end webRequest
-
-function reloadEvery(parentElement,URL,seconds = 60){
-	let id = addElement(parentElement)
-	convertWebElement(id,URL)
-	setInterval(function () {
-		rebuildElement(id)
-		convertWebElement(id,URL)
-	}, seconds*1000);
-}
 
 function webRequestAsync($verb,$URI,$JSON,$file,$cached) {
 //if now is smaller than duration, read from cache.
