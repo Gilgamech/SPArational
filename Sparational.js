@@ -1,17 +1,43 @@
-//Copyright 2013-2023 Gilgamech Technologies
-//SPArational.js v3.25.4 - Make faster websites faster.
+//Copyright 2013-2024 Gilgamech Technologies
+//SPArational.js v3.26.0 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 12/31/2023
+//Last updated: 1/6/2024
 //Version history:
+//3.26.0 Move HTTP procesing from block to inline. 
 //3.25.4 Fix image processing.
 //3.25.3 Fix symbol escaping. 
-//3.25.2 Add load time display to webRequest.
-//3.25.1 Add timeThis to measure performance monitoring.
-//3.25:Rewrite webRequest, convertJmlToElements, and convertMdToJml, including adding parseBlock and parseInline. 
 //Notes:
 
-//Init token vars
+/*Token data codes:
+co: code
+de: del
+ea: emphasis asterisk
+eu: emphasis underscore
+in: insert
+ma: mark
+sa: strong asterisk
+su: strong underscore
+sb: sub(script)
+sp: sup(erscript)
+a2: a(nchor) open angle bracket
+a3: a(nchor) close angle bracket
+hr: href relative
+ab: abbr(eviation)
+fi: footnote inline
+fo: footnote other
+im: img 
+an: a(nchor) bracket open (new) tag
+am: a(nchor) bracket middle tag
+a4: a(nchor) bracket close tag
+a5: a(nchor) footnote/abbr middle tag
+a6: a(nchor) footnote close tag
+a7: a(nchor) footnote definition middle tag
+ha: href absolute
+
+Order of codes is important in preventing some from clobbering others.
+*/
+
 let tokenData = {
 	"co":{"symbol":"`","regex":/\`/,"elementType":"code"},
 	"de":{"symbol":"~~","regex":/\~{2}/,"elementType":"del"},
@@ -35,6 +61,8 @@ let tokenData = {
 	"a5":{"symbol":"][","regex":/\]\s*\[/,"elementType":"a"},
 	"a6":{"symbol":"]","regex":/\]/,"elementType":"a"},
 	"a7":{"symbol":"]:","regex":/\]\s*\:\s*/,"elementType":"a"},
+	"hr":{"symbol":"/","regex":/[ ]s\//,"elementType":"hr"},
+	"ha":{"symbol":"http","regex":/http/,"elementType":"ha"},
 }
 let tokenA = "¤¤¤"
 let tokenB = "ĦĦĦ"
@@ -525,20 +553,6 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
 			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
 
-		} else if (block.substr(0,4) == "http") {//Needs to be moved back to inline at some point.
-			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
-			let colonSplit = block.replace(/\n/g,"").split(":")
-			let Url = colonSplit[0]+":"+colonSplit[1]
-			let reloadEverySec = colonSplit[2]
-			if (colonSplit[3]) {
-				elementParent = colonSplit[3]
-			}
-			if (reloadEverySec) {
-				out += "{\"elementType\":\"script\",\"innerText\":\"reloadEvery('"+elementParent+"','"+Url+"','"+reloadEverySec+"')\"},"
-			} else {
-				out += "{\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+elementParent+"','"+Url+"')\"},"
-			}
-			
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
 			//https://www.w3schools.com/howto/howto_js_todolist.asp
@@ -562,23 +576,27 @@ function replaceSymbols(text) {
 		let regex = new RegExp(tokenData[key].regex,"g")
 		let regexEscape = new RegExp("\\\\"+token,"g")
 		let regexSpaces = new RegExp(" "+token+" ","g")
-		let regexUrl = new RegExp(token,"g")
-
+		let regexToken = new RegExp(token,"g")
 		text = text.replace(regex,token)
 		//It's easier (faster and less complex) to replace all and then replace back the escaped ones after.
-		text = text.replace(regexEscape,tokenData[key].symbol)//Escaping the Backslashes - a potent sequel to the action-packed HTML thriller Escaping The Ampersands.
+		text = text.replace(regexEscape,tokenData[key].symbol)//Escaping The Backslashes - don't miss this potent sequel to the action-packed HTML thriller Escaping The Ampersands.
 		text = text.replace(regexSpaces," "+tokenData[key].symbol+" ")
-
 		//Detect URIs as either containing HTTP for an absolute link, or starting with a slash for a relative link. 
 		//But don't escape anchor or image tokens in this way, so they'll still be picked up by parseInline.
 		for (split of text.split(" ")){
-			if (((split.match("http")) || (split.substr(0,1) == "/")) &&(key != "an")&&(key != "im")&&(key != "am")) {
-				let tleaf = split.replaceAll(regexUrl,tokenData[key].symbol)
-				text = text.replaceAll(split,tleaf)
-			}
-		}
-		
-	}
+			if ((key == "hr") && (split.substr(0,1) == "/")){
+				let splitReplace = token+split
+				text = text.replaceAll(split,splitReplace)
+			} else if ((split.match("http") || (split.substr(0,1) == "/")) && (key != "am") && (key != "an") && (key != "im")) {
+				let splitReplace = split.replaceAll(regexToken,tokenData[key].symbol)
+				text = text.replaceAll(split,splitReplace)
+				if ((split.substr(0,4) == "http") && (key == "ha"))  {
+					text = text.replace(regex,token)
+				}; // end if split
+			}; // end split match
+		}; // end for split
+	}; // end for key
+	text = text.replace("¤¤¤ŒŒŒŒŒŒĦĦĦamĦĦĦŒŒŒŒŒŒ¤¤¤¤¤¤ŒŒŒŒŒŒĦĦĦhaĦĦĦŒŒŒŒŒŒ¤¤¤","¤¤¤ŒŒŒŒŒŒĦĦĦamĦĦĦŒŒŒŒŒŒ¤¤¤http")
 	return text
 }
 
@@ -636,12 +654,50 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 		elementType = tokenData[textSplit[b].replace(regexSymbol,"")].elementType //Reuse the variable by clobbering the extant data.
 		let innerText = textSplit[b+1].replace(regexBegin,"").replace(regexEnd,"")
 		//let elementType = textSplit[b+2]
-		let spanText = textSplit[b+3].replace(regexBegin,"").replace(regexEnd,"")
+		let spanText = ""
 		if ((elementType == "a") || (elementType == "img")) {
+			spanText = textSplit[b+3].replace(regexBegin,"").replace(regexEnd,"")
 			let href = spanText.match(/\S*\)/)[0].replace(/\)$/,"")
 			spanText = spanText.split(/\S*\)/)[1]
-			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\" "+innerText+"\",\"href\": \""+href+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\":\""+innerText+"\",\"href\": \""+href+"\"},"
+			
+		} else if (elementType == "ha") {
+			let href = innerText.split(/[ ]/)[0]
+			spanText = innerText.replace(href,"")
+			innerText = innerText.split(/[ ]/)[0]
+			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
+			let colonSplit = href.split(":")
+			href = colonSplit[0]+":"+colonSplit[1]
+			let reloadEverySec = colonSplit[2]
+			let eParent = id
+			if (colonSplit[3]) {
+				eParent = colonSplit[3]
+			}
+			if (reloadEverySec) {
+				out += "{\"elementParent\": \""+eParent+"\",\"elementType\":\"script\",\"innerText\":\"reloadEvery('"+eParent+"','http"+href+"','"+reloadEverySec+"')\"},"
+			} else {
+				out += "{\"elementParent\": \""+eParent+"\",\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+eParent+"','http"+href+"')\"},"
+			}
+		} else if (elementType == "hr") {
+			let href = innerText.split(/[ ]/)[0]
+			spanText = innerText.replace(href,"")
+			innerText = innerText.split(/[ ]/)[0]
+			//Drop your load in the road! Leave a URL anywhere to have the page eventually load and display that data.
+			let colonSplit = href.split(":")
+			href = colonSplit[0]
+			let reloadEverySec = colonSplit[1]
+			let eParent = id
+			if (colonSplit[3]) {
+				eParent = colonSplit[3]
+			}
+			if (reloadEverySec) {
+				out += "{\"elementParent\": \""+eParent+"\",\"elementType\":\"script\",\"innerText\":\"reloadEvery('"+eParent+"','"+href+"','"+reloadEverySec+"')\"},"
+			} else {
+				out += "{\"elementParent\": \""+eParent+"\",\"elementType\":\"script\",\"innerText\":\"convertWebElement('"+eParent+"','"+href+"')\"},"
+			}
+			
 		} else {
+			spanText = textSplit[b+3].replace(regexBegin,"").replace(regexEnd,"")
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+innerText+"\"},"
 		}
 		if (spanText) {
