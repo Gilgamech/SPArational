@@ -548,9 +548,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				if (elementType == "input" || elementType == "textarea") {
 					action = "onChange"
 				}
-                out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+id+"\"},"
+                out += "{\"elementParent\": \""+nestedParent+"\",\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\""+action+"\":\""+onAction+"\",\"id\": \""+eParent+"\"},"
 			} else {
-                out += "{\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+id+"\"},"
+                out += "{\"elementParent\": \""+nestedParent+"\",\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+eParent+"\"},"
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
