@@ -1,12 +1,12 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.26.0 - Make faster websites faster.
+//SPArational.js v3.26.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 1/6/2024
 //Version history:
+//3.26.1 Prevent Divs from clobbering parentElement ID. 
 //3.26.0 Move HTTP procesing from block to inline. 
 //3.25.4 Fix image processing.
-//3.25.3 Fix symbol escaping. 
 //Notes:
 
 /*Token data codes:
@@ -519,6 +519,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 
 			let elementType = "div"
 			let divRegex = /^[:]{3}/g
+			let eParent = id
 			elementHash = ""
 
 			let topLine = blockSplit[0].replace(divRegex,"")
@@ -532,7 +533,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			}
 			if (elementHash) {
 				elementType = elementHash.split("#")[0]
-				id = elementHash.split("#")[1]
+				if (elementHash.split("#")[1]) {
+					eParent = elementHash.split("#")[1]
+				}
 			}
 			
 			let elementClass = topLine.replace(divRegex,"").replace(" "+elementHash,"")
