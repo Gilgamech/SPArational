@@ -695,8 +695,8 @@ function parseInline(parentElement= "parentElement",text,elementType="p",id = (g
 			href = colonSplit[0]
 			let reloadEverySec = colonSplit[1]
 			let eParent = id
-			if (colonSplit[3]) {
-				eParent = colonSplit[3]
+			if (colonSplit[2]) {
+				eParent = colonSplit[2]
 			}
 			if (reloadEverySec) {
 				out += "{\"elementParent\": \""+eParent+"\",\"elementType\":\"script\",\"innerText\":\"reloadEvery('"+eParent+"','"+href+"','"+reloadEverySec+"')\"},"
