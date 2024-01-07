@@ -262,11 +262,16 @@ function convertWebElement(parentElement,URL){
 				webRequest(URL,function(callback){
 					convertJmlToElements(parentElement,JSON.parse('['+convertMdToJml(callback).replace(/[,]$/,"").replace(/\n/g,"")+']'))
 				})
+				break;
 			case "js": 
-				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}]')))
+				convertJmlToElements(parentElement,JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}]'))
+				break;
+			case "png": 
+			case "jpg": 
+				convertJmlToElements(parentElement,JSON.parse('[{\"elementType\":\"img\",\"innerText\":\"'+URL+'\",\"href\":\"'+URL+'\"}]'))
 				break;
 			default: //Fallback to supplying a link.
-				//convertJmlToElements(parentElement,rewriteJson(JSON.parse('[{\"elementType\":\"a\",\"href\":\"'+URL+'\"}]')))
+				convertJmlToElements(parentElement,JSON.parse('[{\"elementType\":\"a\",\"innerText\":\"'+URL+'\",\"href\":\"'+URL+'\"}]'))
 				break;
 		}
 };
