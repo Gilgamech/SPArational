@@ -15,7 +15,7 @@
 /sites/menu.md::navContainer
 
 ::: script#
-convertWebElement('content','/www'+decodeURIComponent(window.location.pathname).replace('html','md'))
+let pathname = decodeURIComponent(window.location.pathname);if (pathname == "/") {pathname = "/index.html"};convertWebElement('cRow','/www'+pathname.replace('html','md'))
 :::
 
 /sites/footer.md::copyright
