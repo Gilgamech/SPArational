@@ -49,6 +49,10 @@ body {
   top: 0px;
 }
 
+.grid-container p a {
+	border-radius: 15px;
+	background: #eee;
+}
 .grid-container {
 	display: grid;
 	gap: 10px;
@@ -74,72 +78,6 @@ body {
 	cursor: pointer;
 }
 
-.dropdown {
-	position: relative;
-	display: inline-block;
-	color: #9d9d9d;
-	padding-top: 15px;
-	padding-left: 15px;
-}
-.dropdown-content {
-	color: #9d9d9d;
-	background-color: #010101;
-	display: none;
-	position: absolute;
-	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	padding: 12px 16px;
-	z-index: 1;
-}
-.dropdown:hover .dropdown-content {
-	display: block;
-}
-div.dropdown-content a:link{
-	text-decoration:none;
-	color:#9d9d9d;
-}
-div.dropdown-content a:visited{
-	text-decoration:none;
-	color:#7f7f7f;
-}
-
-.popup {
-	background: #9df;
-	border-radius: 15px;
-}
-.popup span {
-	position: absolute;
-	/*margin: top  right bottom left*/
-	margin-left: auto;
-	margin-right: auto;
-	margin: 15px 5px 0 -30px;
-	text-align: center;
-	
-	padding: 3px 3px 3px 3px;
-	border-style:solid;
-	border-color:black;
-	border-width:1px;
-	border-radius: 15px;
-	background: #fff;
-	color: #000;
-	
-	display: none;
-}
-.popup:hover span {
-	display: inherit;
-} 
-
-nav {
-	color: #A3C7B2;
-	margin:0;
-	padding:0;
-	border:0;
-	text-align:left;
-	background-color:#000;
- 	position: fixed;
-	margin-top: 3em;
-	width: 100%;
-}
 div.content {
 	padding-top: 3em; /* top 5px plus height 30px */
 	margin: 2px 1em 0 5px;
