@@ -1,7 +1,7 @@
-::: #title jumbotron
+::: #title
 :::
 
-::: #menu 
+::: #menu
 :::
 
 ::: #content
