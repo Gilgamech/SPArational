@@ -1,5 +1,4 @@
 ::: #titleParent titleContainer
-[Gilgamech Technologies](/)
 :::
 
 ::: nav#navContainer
@@ -8,13 +7,15 @@
 ::: #content textBubbleBG 
 :::
 
-::: script#
-convertWebElement('content',decodeURIComponent(window.location.pathname).replace('html','md'))
-:::
-
 ::: #copyright copyright 
 :::
 
-https://www.Gilgamech.com/sites/menu.md::navContainer
+/sites/title.md::titleParent
 
-https://www.Sparational.com/sites/footer.md::copyright
+/sites/menu.md::navContainer
+
+::: script#
+convertWebElement('content','/www'+decodeURIComponent(window.location.pathname).replace('html','md'))
+:::
+
+/sites/footer.md::copyright
