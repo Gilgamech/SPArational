@@ -4,7 +4,7 @@
 ::: #cBanner grid-container grid-nav text-center
 :::
 
-::: #cRow grid-container grid-info
+::: #cRow
 :::
 
 ::: #copyright copyright
