@@ -8,18 +8,10 @@
 - Like a microservice for your website.
 - There are 3 sitelets currently available, a [basic calculator](https://www.Sparational.com/sitelets/calc.js), a [Sudoku solver](https://www.Sparational.com/sitelets/sudokuSolver.js), and the [RGB Calculator](https://www.Sparational.com/sitelets/rgb.js) which gives a new perspective on HTML colors:
 
-
-/sitelets/rgb.js 
-
-/sitelets/calc.js
-
 ::: #usingSiteletListRgb
 :::
 
-::: script#
-buildRgbSitelet('usingSiteletListRgb');
-:::
-
+/sites/rgb.jml::usingSiteletListRgb
 
 - To use it, add the script to your page with this script link:  \<script src='https://www.Sparational.com/Sparational.js'\>\</script\>.
 - Then just run `buildRgbSitelet('body')` and the RGB calculator will show up within the div specified. Can be other element types (span, p, et cetera) but may not work within textareas, inputs, buttons, et cetera.
