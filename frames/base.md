@@ -10,12 +10,12 @@
 ::: #copyright
 :::
 
-/sections/title.md::title
+/title.md::title
 
-/sections/menu.md::menu
+/menu.md::menu
 
 ::: script#
-convertWebElement('content','/www'+decodeURIComponent(window.location.pathname).replace('html','md'))
+let pathname = decodeURIComponent(window.location.pathname);if (pathname == "/") {pathname = "/index.html"};convertWebElement('content','/www'+pathname.replace('html','md'))
 :::
 
-/sections/copyright.md::copyright
+/copyright.md::copyright
