@@ -12,7 +12,7 @@
 	"pages": {
 		"main": {
 			"elements": [
-				{"elementClass":"container img-rounded","id": "Wrapper"},
+				{"elementClass":"img-rounded","id": "Wrapper"},
 				{"elementParent": "Wrapper","elementClass":"col-md-6 col-xs-12","id": "Calc"},
 				{"elementParent": "Calc","innerText":"RGB Calculator","elementClass":"background-color:#eee; color:#000;","elementStyle":"font-size: 4vw; width: 90vw; text-align:center; border-radius: 15px;","id":"CalcLabel"},
 				{"elementParent": "Calc","id": "HtmlRow"},
