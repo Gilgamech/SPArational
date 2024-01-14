@@ -17,7 +17,7 @@ buildRgbSitelet('usingSiteletListRgb');
 
 
 - To use it, add the script to your page with this script link:  \<script src='https://www.Sparational.com/Sparational.js'\>\</script\>.
-- Then just run 'buildRgbSitelet(\"body\")' and the RGB calculator will show up within the div specified. Can be other element types (span, p, et cetera) but may not work within textareas, inputs, buttons, et cetera.
+- Then just run `buildRgbSitelet('body')` and the RGB calculator will show up within the div specified. Can be other element types (span, p, et cetera) but may not work within textareas, inputs, buttons, et cetera.
 
 ## Build a page using CJE2:
 

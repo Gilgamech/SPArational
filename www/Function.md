@@ -6,7 +6,7 @@
 
 Example: addElement('content','Hello, World!'); - this adds an element with the text 'Hello, World!' to the DOM body inside the first element with id='content'.
 
-Returns: ID (string) of new element. Declare as a variable and use as the $elementParent of following elements. Or feel free to safely ignore. This makes it possible to nest addElement within itself - addElement(addElement('content','','borderRadiusCssClass','div','background: #000;),'Hello, World!','','h1','color: #FFF;') - doing this once nicely encapsulates an element with a wrapper div without needing a variable, but more than once is an antipattern to be avoided.
+Returns: ID (string) of new element. Declare as a variable and use as the $elementParent of following elements. Or feel free to safely ignore. This makes it possible to nest addElement within itself - `addElement(addElement('content','','borderRadiusCssClass','div','background: #000;),'Hello, World!','','h1','color: #FFF;')` - doing this once nicely encapsulates an element with a wrapper div without needing a variable, but more than once is an antipattern to be avoided.
 
 addElement($elementParent, innerText, $elementClass, $elementType, $elementStyle, $href, $onChange, $onClick, $contentEditable, $attributeType, $attributeAction, $elementId)
 
@@ -38,7 +38,7 @@ writeElement($elementId, data)
 
 ## readElement
 
-### Returns data being displayed by an element. Reads in the same way as writeElement writes - innerText for most, value in others, src sparingly. Pairs nicely with writeElement. Example:  onclick = 'writeElement(\"someDiv\", someOtherFunction( readElement(\"someDiv\")));'. In this example, the element 'someDiv' was read from, this was fed though some other function, and the returned value was written back to 'someDiv'. The other function could modify or transform the data in 'someDiv', or maybe just format it.
+### Returns data being displayed by an element. Reads in the same way as writeElement writes - innerText for most, value in others, src sparingly. Pairs nicely with writeElement. Example:  onclick = 'writeElement('someDiv', someOtherFunction( readElement('someDiv')));'. In this example, the element 'someDiv' was read from, this was fed though some other function, and the returned value was written back to 'someDiv'. The other function could modify or transform the data in 'someDiv', or maybe just format it.
 
 Example: var name = readElement('userNameInput')
 
@@ -337,7 +337,7 @@ numToTextNotation($inputObject, round)
 
 ### Converts a short scale textual number into the integer equivalent.
 
-Example: 'textToNumNotation(\"100 million\")'
+Example: 'textToNumNotation('100 million')'
 
 Returns: (integer) Number in numerical format, such as '100000000'
 
