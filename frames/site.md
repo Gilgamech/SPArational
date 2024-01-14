@@ -1,7 +1,7 @@
 ::: #jumbotron jumbotron text-center
 :::
 
-::: #cBanner grid-container 
+::: #menu 
 :::
 
 ::: #cRow
@@ -12,7 +12,7 @@
 
 /title.md::jumbotron
 
-/menu.md::cBanner
+/menu.md::menu
 
 ::: script#
 let pathname = decodeURIComponent(window.location.pathname);if (pathname == "/") {pathname = "/index.html"};convertWebElement('cRow','/www'+pathname.replace('html','md'))
