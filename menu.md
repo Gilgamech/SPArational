@@ -1,1 +1,1 @@
-[How-To Page](/) [Information](/Information.html) [Function Index](/Function.html)
+[How-To Page](/)[Information](/Information.html)[Function Index](/Function.html)
