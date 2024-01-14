@@ -1,4 +1,4 @@
-::: #title jumbotron text-center
+::: #title jumbotron
 :::
 
 ::: #menu 
