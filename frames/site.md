@@ -1,21 +1,21 @@
-::: #jumbotron jumbotron text-center
+::: #title jumbotron text-center
 :::
 
 ::: #menu 
 :::
 
-::: #cRow
+::: #content
 :::
 
-::: #copyright copyright
+::: #copyright
 :::
 
-/title.md::jumbotron
+/title.md::title
 
 /menu.md::menu
 
 ::: script#
-let pathname = decodeURIComponent(window.location.pathname);if (pathname == "/") {pathname = "/index.html"};convertWebElement('cRow','/www'+pathname.replace('html','md'))
+let pathname = decodeURIComponent(window.location.pathname);if (pathname == "/") {pathname = "/index.html"};convertWebElement('content','/www'+pathname.replace('html','md'))
 :::
 
-/footer.md::copyright
+/copyright.md::copyright

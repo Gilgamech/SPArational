@@ -73,7 +73,7 @@ div.content {
   padding-top: 3em; /* top 5px plus height 30px */
   margin: 2px 1em 0 5px;
 }
-.copyright {
+#copyright {
   font-weight:bold;
   text-align:center;
 }
