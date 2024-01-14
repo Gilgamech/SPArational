@@ -1,110 +1,110 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 <!--
 html,body {
-	width: auto !important;
-	overflow-x: hidden !important;
+  width: auto !important;
+  overflow-x: hidden !important;
 }
 html {
 }
 body {
-	background-color:#fff;
+  background-color:#fff;
 }
 
 .jumbotron {
-	background: #532F8C;
-	color: white;
-	padding: 80px;
+  background: #532F8C;
+  color: white;
+  padding: 80px;
 }
 .jumbotron .btn-primary {
-	background: #845ac7;
-	border-color: #845ac7;
+  background: #845ac7;
+  border-color: #845ac7;
 }
 .jumbotron .btn-primary:hover {
-		background: #7646c1;
+  background: #7646c1;
 }
 .jumbotron p {
-	color: #fff;
-	max-width: 75%;
-	margin: 1em auto 2em;
+  color: #fff;
+  max-width: 75%;
+  margin: 1em auto 2em;
 }
 .navbar + .jumbotron {
-	margin-top: -20px;
+  margin-top: -20px;
 }
 .jumbotron .lang-logo {
-	display: block;
-	background: #B01302;
-	border-radius: 50%;
-	overflow: hidden;
-	width: 100px;
-	height: 100px;
-	margin: auto;
-	border: 2px solid white;
+  display: block;
+  background: #B01302;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border: 2px solid white;
 }
 .jumbotron .lang-logo img {
-		max-width: 100%;
+  max-width: 100%;
 }
-#cBanner {
-	background: #fff;
+
+.grid-container {
+  background: #fff;
   position: sticky;
   top: 0px;
 }
-
 .grid-container p {
-	grid-template-columns: repeat( auto-fit, minmax(100px, 1fr ));
-	display: grid;
-	gap: 10px;
-	padding: 10px;
-    text-align: center!important;
+  grid-template-columns: repeat( auto-fit, minmax(100px, 1fr ));
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  text-align: center!important;
 }
 .grid-container p a {
-	border-radius: 15px;
-	background: #eee;
+  border-radius: 15px;
+  background: #eee;
 }
 .grid-container p a:hover {
   background: #bbb;
 }
 .link:hover {
-	color: var(--bs-link-color); 
-	text-decoration: underline;
-	cursor: pointer;
+  color: var(--bs-link-color); 
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 div.content {
-	padding-top: 3em; /* top 5px plus height 30px */
-	margin: 2px 1em 0 5px;
+  padding-top: 3em; /* top 5px plus height 30px */
+  margin: 2px 1em 0 5px;
 }
 .copyright {
-	font-weight:bold;
-	text-align:center;
+  font-weight:bold;
+  text-align:center;
 }
 
 /* Let's get this party started 
 https://css-tricks.com/custom-scrollbars-in-webkit */
 ::-webkit-scrollbar {
-	width: 12px;
+  width: 12px;
 }
  
 /* Track */
 ::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	background: rgba(200,200,200,0.8); 
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(200,200,200,0.8); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-	background: rgba(255,0,0,0.4); 
+  background: rgba(255,0,0,0.4); 
 }
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
-	-webkit-appearance: none; 
-	margin: 0; 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 
 -->
