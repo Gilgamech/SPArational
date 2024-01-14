@@ -15,7 +15,7 @@
 /menu.md::menu
 
 ::: script#
-let pathname = decodeURIComponent(window.location.pathname);if (pathname == "/") {pathname = "/index.html"};convertWebElement('content','/www'+pathname.replace('html','md'))
+let pathname = decodeURIComponent(window.location.pathname); if (pathname == "/") {pathname = "/index.html"}; convertWebElement('content','/www'+pathname.replace('html','md'))
 :::
 
 /copyright.md::copyright
