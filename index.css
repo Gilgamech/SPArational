@@ -63,16 +63,12 @@ body {
 #menu p a:hover {
   background: #bbb;
 }
-.link:hover {
-  color: var(--bs-link-color); 
-  text-decoration: underline;
-  cursor: pointer;
+
+#content {
+	/*margin: top right bottom left*/
+  margin: 0 1em 0 10px;
 }
 
-div.content {
-  padding-top: 3em; /* top 5px plus height 30px */
-  margin: 2px 1em 0 5px;
-}
 #copyright {
   font-weight:bold;
   text-align:center;
