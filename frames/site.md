@@ -1,7 +1,7 @@
 ::: #jumbotron jumbotron text-center
 :::
 
-::: #cBanner grid-container grid-nav text-center
+::: #cBanner grid-container 
 :::
 
 ::: #cRow
