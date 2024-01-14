@@ -8,6 +8,9 @@
 - Like a microservice for your website.
 - There are 3 sitelets currently available, a [basic calculator](https://www.Sparational.com/sitelets/calc.js), a [Sudoku solver](https://www.Sparational.com/sitelets/sudokuSolver.js), and the [RGB Calculator](https://www.Sparational.com/sitelets/rgb.js) which gives a new perspective on HTML colors:
 
+
+/sitelets/rgb.js /sitelets/calc.js
+
 ::: #usingSiteletListRgb
 :::
 
