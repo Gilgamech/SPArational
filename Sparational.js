@@ -1,12 +1,12 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.26.1 - Make faster websites faster.
+//SPArational.js v3.26.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 1/6/2024
+//Last updated: 1/14/2024
 //Version history:
+//3.26.2 Prevent Unordered List parsing unless the control characters start the line. 
 //3.26.1 Prevent Divs from clobbering parentElement ID. 
 //3.26.0 Move HTTP procesing from block to inline. 
-//3.25.4 Fix image processing.
 //Notes:
 
 /*Token data codes:
@@ -478,7 +478,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		} else if (symbol.match(/^\s*([-]+\s*){3,}\s*$/g)) {//horizontal row - Unparsed.
 			out += "{\"elementType\":\"hr\"},"
 			
-		} else if (symbol.match(/[-+*]{1,1}/)) {//Unordered Lists - Nesting.
+		} else if (symbol.match(/^[-+*]{1,1}/)) {//Unordered Lists - Nesting.
 			out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
 		
 		} else if (symbol.match(/\d+[.]/)) {//Ordered Lists - Nesting.
