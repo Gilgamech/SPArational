@@ -1,6 +1,5 @@
 ::: #jumbotron jumbotron text-center
 :::
-color: #fff; background: #532F8C
 
 ::: #cBanner grid-container grid-nav text-center
 :::
