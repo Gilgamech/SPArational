@@ -1,12 +1,12 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.26.2 - Make faster websites faster.
+//SPArational.js v3.26.3 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 1/14/2024
 //Version history:
+//3.26.3 Update reloadEvery to enable better functionality.
 //3.26.2 Prevent Unordered List parsing unless the control characters start the line. 
 //3.26.1 Prevent Divs from clobbering parentElement ID. 
-//3.26.0 Move HTTP procesing from block to inline. 
 //Notes:
 
 /*Token data codes:
@@ -362,12 +362,12 @@ function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 
 	xhRequest.send($file);
 }; // end webRequest
 
-function reloadEvery(parentElement,URL,seconds = 60){
+function reloadEvery(parentElement,URL,callback,JSON,seconds = 60){
 	let id = addElement(parentElement)
-	convertWebElement(id,URL)
+	webRequest(URL,function(response){callback(response,id)},JSON)
 	setInterval(function () {
 		rebuildElement(id)
-		convertWebElement(id,URL)
+		webRequest(URL,function(response){callback(response,id)},JSON)
 	}, seconds*1000);
 }
 
