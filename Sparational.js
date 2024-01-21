@@ -559,15 +559,15 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
-			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre",elementClass,"code")
+			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre","","code")
 
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
 			//https://www.w3schools.com/howto/howto_js_todolist.asp
-			out += parseBlock(block,/^-[ ]\[[X ]\]/g,"ul",elementClass,"li")
+			out += parseBlock(block,/^-[ ]\[[X ]\]/g,"ul","","li")
 
 		} else if (block.match(/^.+\n:[ ]/g)) {//Definition List block - Parsed.
-			out += parseBlock(block,/:[ ]/g,"dl",elementClass,"dd")
+			out += parseBlock(block,/:[ ]/g,"dl","","dd")
 
 		} else {//Return everything else as a paragraph.
 			out += parseInline(elementParent,block)
