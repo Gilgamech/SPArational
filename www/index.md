@@ -119,12 +119,10 @@ Just copy the above page frame and save on your web host as something like `fram
 - Like a microservice for your website.
 - Markdown sitelets are easy - just load and render:
 
-```
-::: #usingSiteletListRgb
-:::
-
-./sites/rgb.jml::usingSiteletListRgb
-```
+    ::: #usingSiteletListRgb
+    :::
+    
+    /sites/rgb.jml::usingSiteletListRgb
 
 ::: #usingSiteletListRgb
 :::
