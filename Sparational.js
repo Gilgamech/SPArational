@@ -1,12 +1,12 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.26.3 - Make faster websites faster.
+//SPArational.js v3.26.4 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 1/14/2024
+//Last updated: 1/21/2024
 //Version history:
+//3.26.4 Improve code block parsing.
 //3.26.3 Update reloadEvery to enable better functionality.
 //3.26.2 Prevent Unordered List parsing unless the control characters start the line. 
-//3.26.1 Prevent Divs from clobbering parentElement ID. 
 //Notes:
 
 /*Token data codes:
@@ -559,7 +559,10 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			}
 		
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
-			out += parseBlock(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"),"","pre","","code")
+			let outerClass = ""
+			let innerClass = ""
+			out += "{\"elementType\":\"pre\",\"elementClass\":\""+outerClass+",\""+id+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"elementClass\":\""+innerClass+"\",\"innerText\":"+block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n")+"\"},"
 
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
