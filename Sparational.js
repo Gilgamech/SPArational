@@ -561,9 +561,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
 			let outerClass = ""
 			let innerClass = ""
-			let innerText = JSON.stringify(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n"))
+			let innerText = JSON.stringify(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n")) //innerText gets its outer quotes from the JSON.stringify, so doesn't need to have extra escaped quotes around it. 
 			out += "{\"elementType\":\"pre\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
-			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"elementClass\":\""+innerClass+"\",\"innerText\":"+innerText+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"elementClass\":\""+innerClass+"\",\"innerText\":"+innerText+"\},"
 			
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
