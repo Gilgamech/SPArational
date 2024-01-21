@@ -28,7 +28,7 @@ This makes it easy to create a `button` with an ID of `inputField`, CSS class `c
   - Advanced Markdown parsing detects URLs in the text and converts these also into anchor tags. This is also not supported by all Markdown processors, but is gaining support. 
   - Extend by not just linking to the item, but by loading and rendering it, if it's a displayable file type.
     - Extend further by adding colon-delineated features: reload contents every x seconds, and nest under parent element. 
-	- Format of `url:reloadEvery:parentElement`. 
+    - Format of `url:reloadEvery:parentElement`. 
   
 This makes it easy to load images. Also supports converting CSV to Table, importing JavaScript files through `script` tags, and parsing Markdown into HTML inside the page. 
 
