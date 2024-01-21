@@ -558,13 +558,21 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
                 out += "{\"elementParent\": \""+nestedParent+"\",\"elementType\":\""+elementType+"\",\"elementClass\":\""+elementClass+"\",\"innerText\":"+innerText+",\"id\": \""+eParent+"\"},"
 			}
 		
-		} else if (block.substr(0,4).match(/[ ]{4}/g) || block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
+		} else if (block.substr(0,4).match(/[ ]{4}/g)) {//Code block - don't process anything.
 			let outerClass = ""
 			let innerClass = ""
-			let innerText = JSON.stringify(block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n")) //innerText gets its outer quotes from the JSON.stringify, so doesn't need to have extra escaped quotes around it. 
+			let text = block.replace(/^[ ]{4}/g,"").replace(/\n[ ]{4}/g,"\n")//Replace leading 4 spaces.
+			let innerText = JSON.stringify(text) //innerText gets its outer quotes from the JSON.stringify, so doesn't need to have extra escaped quotes around it. 
 			out += "{\"elementType\":\"pre\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
 			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"elementClass\":\""+innerClass+"\",\"innerText\":"+innerText+"\},"
-			
+		} else if (block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
+			let outerClass = ""
+			let innerClass = ""
+			let text = text.replace(/^```\n/,"").replace(/\n```$/,"")//Replace wrapping carets.
+			let text = text.replace(/^~~~\n/,"").replace(/\n~~~$/,"")//Replace wrapping tildes.
+			let innerText = JSON.stringify(text) //innerText gets its outer quotes from the JSON.stringify, so doesn't need to have extra escaped quotes around it. 
+			out += "{\"elementType\":\"pre\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
+			out += "{\"elementParent\": \""+id+"\",\"elementType\":\"code\",\"elementClass\":\""+innerClass+"\",\"innerText\":"+innerText+"\},"
 		} else if (block.substr(0,5).match(/^-[ ]\[[X ]\]/g)) {//Task List block - Nesting.
 			//This is an unordered list with a bunch of CSS: 
 			//https://www.w3schools.com/howto/howto_js_todolist.asp
