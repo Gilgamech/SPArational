@@ -10,10 +10,10 @@
 
 ## Two big innovations:
 
-1. Support triple-colon divs as a block type. This is not supported by all Markdown processors, but is gaining support. 
+1. Support triple-colon-tag wrapped divs as a block type. This is not supported by all Markdown processors, but is gaining support. 
   - Support giving the div an ID by prepending a hash, just like in CSS.
   - Extend by adding HTML5 Semantic Tag pass-through. Text prepended to the hash becomes the tag type. 
-    - Extend further by supporting 
+    - Extend further by supporting JavaScript one-liners in a bracket after the closing colon-tag. 
 
 This makes it easy to create a `button` with an ID of `inputField`, CSS class `class1`, displays `1`, and increments every click:
 
