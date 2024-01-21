@@ -84,6 +84,12 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 		$elementType = "input"
 		radioButton = true;
 	}
+	if ($elementType == "video") {
+		let intermediateElementId = getRandomishString();
+		addElement($elementParent,"","iframe-container","div","","","","","","","",intermediateElementId)
+		$elementParent = intermediateElementId
+		$elementType = "iframe"
+	}
 	var newElement = document.createElement($elementType);
 	if (!$elementId) {
 		$elementId = getRandomishString();
@@ -136,7 +142,10 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 	}; // end if attributeType
 	if (radioButton == true) {
 		getElement($elementId).setAttribute("type", "radio");
-		addElement($elementParent,innerText,"","label","","","","","","for",$elementId)
+		addElement($elementParent,innerText,"","label","","","","","","for",$elementId)//"for" is the attributeType and elementId is the attributeAction. So the label has "for: radioButton"
+	}
+	if ($elementType == "video") {
+		getElement($elementId).setAttribute("allowfullscreen", "true");
 	}
 	return $elementId
 }; // end addElement	
