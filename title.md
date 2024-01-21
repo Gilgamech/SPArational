@@ -1,1 +1,1 @@
-# Sparational 4 - make faster websites faster, faster. 
+# Sparational 4 - Make faster (websites) faster. 

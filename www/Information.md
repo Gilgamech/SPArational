@@ -1,50 +1,54 @@
-## Make faster websites faster
+# Make faster faster
 
 - Why pay for back-end compute when front-end compute is free?
 - Reduce development and loading time by moving everything into the browser.
 - Rehydrate pages, load additional content, and even lazy-load scripts or content elements.
-- Using standard Javascript and JSON enables serverless design while making websites easier to make.
+- Using standard Markdown and occasional Javascript enables entirely hostless design while making websites easier to make.
 - Serverless design accelerates through CDN very well.
 - Synchronous and functional library streamlines and encourages using DOM elements for data storage.
 - Use of JSON enables variable replacement, which is similar to how pages are built in many server-side frameworks.
 - Use of DOM for data storage, and caching functionality of webRequest, obviate any in-memory or server-side data structures that could become out of sync, along with most waiting for network.
 - Not waiting for server or network means faster, funner pages.
 
-## Mobile First
+## Beyond Serverless and into Hostless
 
-- Can run from local storage, S3, IPFS, IIS, Apache, container, CDN, or any number of other sources.
-- Write lightweight page engines which use less memory and bandwidth than server-side frameworks.
-- Most sites operate entirely without network, after initial page load.
-
-## Serverless design
-
-- Build sites entirely within the browser. Use addElement, readElement, writeElement, and more to create a page engine which programmatically creates sites from a data source and browser window location. Or choose one of our page engines. This is how [OfferingOverview](https://offeringoverview.s3-website-us-west-2.amazonaws.com/) operates.
-- Build a static site entirely in a SPA file, use webRequest to load it, and let CJE2 (Convert JSON to html Elements 2) to convert this into your site - which is how this site operates.
-- Have a traditional site that uses Sparational.js only in certain situations. [Gilgamech Technologies](https://www.gilgamech.com/) main site is still using this legacy architecture.
-- Make sitelets in the same way as making a page engine described above - but scoped to tools or applications. Our first sitelet, the RGB Calculator, can be found on the front page, with code [here](https://www.Sparational.com/sitelets/rgb.js). It converts HTML hex color codes into red, blue, and green values and back - while updating the input and title box colors with their value.
+- No Serverless Needed. Can run from local storage, S3, IPFS, IIS, Apache, container, CDN, or any number of other sources.
+- Sites are built entirely within the browser. Just point it at a Markdown file and Sparational 4 does the rest.
+- Lightweight pages use less memory and bandwidth than other frameworks.
+- Most sites can operate entirely without network, after initial page load. 
+  - Framework-level caching allows 0 second TTFB on subsequent loads, and on most page content when moving between pages on the same site.
 
 ## High Flexibility
 
-- Add, remove, read, and modify HTML elements with standard Javascript. SPA format is standard JSON, ready to be extended.
-- Functions including readElement and getNumberFromDiv can be used directly as parameters in Javascript functions from this and other libraries.
-- More CSS options: CSS styles can be specified normally, as classes declared in your own CSS file or a 3rd-party (i.e. Bootstrap), and applied in the elementClass attribute. Or they can be declared directly in the elementStyle field. These pass values directly to the new HTML element's class='' and style='' parameters. A third and fourth option are to use variable replacement to set either the class or the style with a variable. This helps ensure constant styling across the site, even where CSS is being overridden, while centralizing the data, so updating one location will update them all.
-- Feel free to call external CSS and Javascript files to extend your site beyond the basics, or define & call styles and functions within the JSON data that generates the site. Or use a mix of inline and external site styles and functions. Sparational.js lets you build your serverless site however you want.
+- Standard Markdown can't be simpler to create and edit. 
+- Previous Sparational controls (including readElement and getNumberFromDiv) are still available, to create beautiful, robust, and responsive pages. Just wrap your code in a `script` tag:
 
-## SPA format
+```
+::: script#
+codeGoesHere();
+:::
+```
 
-- SPA format is modified JML (JSON Markup Language) designed to work with HTML instead of XML
-- In SPA, HTML elements are described by JSON objects, such as the one you're reading: {'elementParent': 'sFFList', 'elementType': 'li', 'innerText': 'In SPA, HTML elements are described by JSON objects, such as the one you're reading:'}}
-- SPA format supports a replacement system, using the variable '$_' (dollar sign underscore) to represent the root of the file. So instead of putting the above element in a page's elements array, it can be put as a named object in any arbitrarily-named section, such as an object named 'sFFListItemReading' under a section named 'elements'. Then putting '$_.elements.sFFListReading' into the page's elements array will make the element show up there, once the page has been fully processed and built. Find 'rwjs' in the Function Index for more info about variable replacement.
+- More CSS options: 
+  1. Page-level: These usually apply a page, using page-wide element types and classes as identifiers. These are usually declared in a CSS file.
+  1. Frame-level: These usually apply to a section, using frame element IDs and relative references as identifiers. These are declared in a CSS file. 
+  1. Section-level: These usually apply to a section, using element IDs as identifiers. These are usually declared in a `style` tag near the top of the section page.
 
-- Why JSON?
-  - Easier to lint than HTML.
-  - Easier to find why something is in the wrong place, and easier to fix - if a word is outside the 'punctuation' in JSON, it will show up in lint testing. But in HTML, it might be expected to have one or more words outside of a tag. Like having several words inside an anchor tag, then having some after.
-  - Easier to parse as data, store in more and more DBs, and built-in parsing into basically any modern programming language as native objects.
-  - Easier to manipulate or transform - enabling the variable replacement system, which isn't possible with traditional serverless flat-file HTML.
-  - Easier to write applications to write it for you.
-  - JSON is a first class data citizen on today's Internet, while HTML is only a markup language.
-- Markdown, YAML, and Jupyter Notebook display support coming soon.
-- 'SPA' is pronounced like William Shatner saying 'Spock'. (Not really - pronounce however you like, including 'GIF'.)
+- Feel free to call external CSS and Javascript files to extend your site beyond the basics, or define & call your own classes, styles, and functions. 
+  - Or use a mix of inline and external site styles and functions. 
+  - Sparational 4 lets you build your site however you want.
+
+## Sparational History
+
+- 2010: Frustrations at overloaded network towers while waiting in line for PAX in Seattle led to the desire for a way of loading websites that used less network.
+- 2013: Discovery of the `document.createElement` JavaScript command while researching other website development.
+- 2016: Rediscovery of the `document.createElement` JavaScript command while reviewing research notes from 2013. 
+  - Creation of Sparational 1. This version took only JML SPA files as input. 
+- 2018: Sparational 2 was a functional rebuild of Sparational 1.
+- 2021: Relaunch of GT main site and blog on cloud-hosted IIS.
+  - Migrate site hosting from IIS to Container to S3 flat files. Change network from direct to CDN. 
+- 2022: Sparational 4 adds table, blog, input, list, and other tools. 
+- 2024: Sparational 4 adds Markdown support.
 
 ## Next Steps
 
