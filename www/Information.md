@@ -32,7 +32,7 @@
   - Enable full SPA operation, allowing switching between pages without reloading or using browser navigation. (This mode doesn't work well with current browsers, search engines, or user habits.)
   - Depreciated as hard to use. These are still supported but not recommended - instead, consider writing an API that uses this interface. This is how Sparational 4 Markdown support works. 
   - As of Sparational 4, has these requirements:
-    - `"jmlVersion": "30OCT2023"` or higher.
+    - `'jmlVersion': '30OCT2023'` or higher.
     - Main page elements at `$_.pages.main.elements`
     - Other pages optional.
     - Variable rewrite may not be supported.
