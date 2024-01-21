@@ -47,7 +47,7 @@ codeGoesHere();
 - 2018: Sparational 2 was a functional rebuild of Sparational 1.
 - 2021: Relaunch of GT main site and blog on cloud-hosted IIS.
   - Migrate site hosting from IIS to Container to S3 flat files. Change network from direct to CDN. 
-- 2022: Sparational 4 adds table, blog, input, list, and other tools. 
+- 2022: Sparational 3 adds table, blog, input, list, and other tools. 
 - 2024: Sparational 4 adds Markdown support.
 
 ## Next Steps

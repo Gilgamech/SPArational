@@ -101,7 +101,7 @@ Just copy the above page frame and save on your web host as something like `fram
 ::: #usingSiteletListRgb
 :::
 
-/sites/rgb.jml::usingSiteletListRgb
+./sites/rgb.jml::usingSiteletListRgb
 ```
 
 ::: #usingSiteletListRgb
