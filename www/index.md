@@ -111,6 +111,26 @@ codeGoesHere();
 
 Use Sparational tools including readElement to pull data from divs and other elements, and functions including writeElement to display.
 
+
+## Add CSS to a page:
+
+- Add CSS on the fly with a `style` tag. This creates the holiday colors on my December blog posts:
+
+```
+::: style#
+body { background-color: #700; } .textBubbleBG { border: 1px solid #32CD32;}
+:::
+```
+
+- Add normal CSS classes to other elements and style them, without having to modify your CSS file. Great for one-off style situations. 
+- More CSS options: 
+  1. Page-level: These usually apply a page, using page-wide element types and classes as identifiers. These are usually declared in a CSS file.
+  1. Frame-level: These usually apply to a section, using frame element IDs and relative references as identifiers. These are declared in a CSS file. 
+  1. Section-level: These usually apply to a section, using element IDs as identifiers. These are usually declared in a `style` tag near the top of the section page.
+  - Feel free to call external CSS and Javascript files to extend your site beyond the basics, or define & call your own classes, styles, and functions. 
+    - Or use a mix of inline and external site styles and functions. 
+    - Sparational 4 lets you build your site however you want.
+
 ## Next Steps
 
 - To try this with your own page, add [Sparational.js](https://www.Sparational.com/Sparational.js) to your page as a script link. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: `writeElement('replaceWithID','Hello, World!');`

@@ -1,5 +1,6 @@
 # Make faster faster
 
+- Standard Markdown can't be simpler to create and edit. 
 - Why pay for back-end compute when front-end compute is free?
 - Reduce development and loading time by moving everything into the browser.
 - Rehydrate sections, load additional content, and even lazy-load scripts or content elements.
@@ -17,25 +18,6 @@
 - Lightweight pages use less memory and bandwidth than other frameworks.
 - Most sites can operate entirely without network, after initial page load. 
   - Framework-level caching allows 0 second TTFB on subsequent loads, and on most page content when moving between pages on the same site.
-
-## High Flexibility
-
-- Standard Markdown can't be simpler to create and edit. 
-- Previous Sparational controls (including readElement and getNumberFromDiv) are still available, to create beautiful, robust, and responsive pages. Just wrap your code in a `script` tag:
-
-```
-::: script#
-codeGoesHere();
-:::
-```
-
-- More CSS options: 
-  1. Page-level: These usually apply a page, using page-wide element types and classes as identifiers. These are usually declared in a CSS file.
-  1. Frame-level: These usually apply to a section, using frame element IDs and relative references as identifiers. These are declared in a CSS file. 
-  1. Section-level: These usually apply to a section, using element IDs as identifiers. These are usually declared in a `style` tag near the top of the section page.
-  - Feel free to call external CSS and Javascript files to extend your site beyond the basics, or define & call your own classes, styles, and functions. 
-    - Or use a mix of inline and external site styles and functions. 
-    - Sparational 4 lets you build your site however you want.
 
 ### YAML and JSON page frames and full SPA files.
 
