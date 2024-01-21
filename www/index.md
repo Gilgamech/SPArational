@@ -50,7 +50,7 @@ HTML stub should be like 12 lines: Doctype, open HTML, open Head, maybe a couple
 	- menu.md (Page menu)
 	- copyright.md (Page copyright and footer.)
 	- Any content file (usually under ./www/Page.html)
-	  - Images, CSVs, and "grandchild" Markdown sitelets.
+	  - Images, CSVs, and 'grandchild' Markdown sitelets.
 
 ## Build a page using a prebuilt frame:
 
@@ -74,7 +74,7 @@ HTML stub should be like 12 lines: Doctype, open HTML, open Head, maybe a couple
 /menu.md::menu
 
 ::: script#
-let pathname = decodeURIComponent(window.location.pathname); if (pathname == "/") {pathname = "/index.html"}; convertWebElement('content','/www'+pathname.replace('html','md'))
+let pathname = decodeURIComponent(window.location.pathname); if (pathname == '/') {pathname = '/index.html'}; convertWebElement('content','/www'+pathname.replace('html','md'))
 :::
 
 /copyright.md::copyright
