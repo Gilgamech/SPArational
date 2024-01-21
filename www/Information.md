@@ -69,4 +69,4 @@
 
 ## Next Steps
 
-- Head on over to the [How-To Page](/www/index.html) to get started.
+- Head on over to the [How-To Page](/index.html) to get started.
