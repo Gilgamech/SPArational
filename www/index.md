@@ -56,30 +56,6 @@ HTML stub should be like 12 lines: Doctype, open HTML, open Head, maybe a couple
 
 - Currently there is one page frame available - the base frame:
 
-```
-::: #title
-:::
-
-::: #menu
-:::
-
-::: #content
-:::
-
-::: #copyright
-:::
-
-/title.md::title
-
-/menu.md::menu
-
-::: script#
-let pathname = decodeURIComponent(window.location.pathname); if (pathname == '/') {pathname = '/index.html'}; convertWebElement('content','/www'+pathname.replace('html','md'))
-:::
-
-/copyright.md::copyright
-```
-
 The default HTML bootstrap page uses this frame. Using local references allows it to call these files from whichever site is hosting the HTML bootstrap. Replacing based on `pathname` means the single HTML bootstrap page is meant to serve the entire site, using HTML error redirection to serve it instead of error pages. All Markdown content files live under `./www`, while the Frame-level Markdown files live on the root. Menu.md has to be populated by the user, but should be easy to script. 
 
 ## Build a page with your own frame:
@@ -147,4 +123,4 @@ Use Sparational tools including readElement to pull data from divs and other ele
 
 ## Next Steps
 
-- To try this with your own page, add [Sparational.js](https://www.Sparational.com/Sparational.js) to your page as a script link: \<script src='https://www.Sparational.com/Sparational.js'\>\</script\>. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: writeElement('replaceWithID','Hello, World!');
+- To try this with your own page, add [Sparational.js](https://www.Sparational.com/Sparational.js) to your page as a script link. Then find any Div, Input, Textarea, or other element with an ID, and replace the first variable with that ID when running this command: `writeElement('replaceWithID','Hello, World!');`
