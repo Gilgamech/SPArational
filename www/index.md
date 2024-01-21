@@ -23,6 +23,12 @@ This makes it easy to create a `button` with an ID of `inputField`, CSS class `c
 :::{writeElement('buttonField',getNumberFromDiv('buttonField')+1)}
 ```
 
+The above creates: 
+
+::: button#buttonField class1
+1
+:::{writeElement('buttonField',getNumberFromDiv('buttonField')+1)}
+
 2. Support direct HTML parsing. (Drop your load in the road!)
   - Basic Markdown has HTML parsing through bracket-and-parenthesis tags, and converts these to anchor tags.
   - Advanced Markdown parsing detects URLs in the text and converts these also into anchor tags. This is also not supported by all Markdown processors, but is gaining support. 
