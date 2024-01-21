@@ -568,7 +568,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		} else if (block.substr(0,3).match(/[```]{3}/g) || block.substr(0,3).match(/[~]{3}/g)) {//Code block - don't process anything.
 			let outerClass = ""
 			let innerClass = ""
-			let text = text.replace(/^```\n/,"").replace(/\n```$/,"")//Replace wrapping carets.
+			let text = block.replace(/^```\n/,"").replace(/\n```$/,"")//Replace wrapping carets.
 			text = text.replace(/^~~~\n/,"").replace(/\n~~~$/,"")//Replace wrapping tildes.
 			let innerText = JSON.stringify(text) //innerText gets its outer quotes from the JSON.stringify, so doesn't need to have extra escaped quotes around it. 
 			out += "{\"elementType\":\"pre\",\"elementClass\":\""+outerClass+"\",\"id\": \""+id+"\"},"
