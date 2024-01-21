@@ -47,10 +47,10 @@ HTML stub should be like 12 lines: Doctype, open HTML, open Head, maybe a couple
   - Other CSS and JS as desired.
   - frame.md (Page Frame)
     - title.md (Page title)
-	- menu.md (Page menu)
-	- copyright.md (Page copyright and footer.)
-	- Any content file (usually under ./www/Page.html)
-	  - Images, CSVs, and 'grandchild' Markdown sitelets.
+    - menu.md (Page menu)
+    - copyright.md (Page copyright and footer.)
+    - Any content file (usually under ./www/Page.html)
+      - Images, CSVs, and 'grandchild' Markdown sitelets.
 
 ## Build a page using a prebuilt frame:
 
