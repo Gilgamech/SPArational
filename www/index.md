@@ -84,36 +84,6 @@ The default HTML bootstrap page uses this frame. Using local references allows i
 
 Just copy the above page frame and save on your web host as something like `frame.md`. Then just update your HTML bootstrap to point at it instead of the base frame. Feel free to update URI locations, element types, element IDs, and add element classes as desired. 
 
-### YAML and JSON page frames and full SPA files.
-
-'SPA' is pronounced like William Shatner saying 'Spock'. (Not really - pronounce however you like, including 'GIF'.)
-
-- Full SPA pages in JSON are from Sparational 1. These:
-  - Had the filename `.spa`, but have been changed to `.jml` at the start of Sparational 4 alpha stage development.
-  - Can be identified by the `jmlVersion` variable in the root of the data.
-  - Use a version of JML (JSON Markdown Language) to represent HTML instead of XML. 
-  - Fully describe a site, including CSS classes and styles, numerous website pages, and additional elements and data as needed.
-  - Key feature is variable replacement system, allowing a reference to any other part of the data file through `$_.path.to.data`. 
-  - Enable full SPA operation, allowing switching between pages without reloading or using browser navigation. (This mode doesn't work well with current browsers, search engines, or user habits.)
-  - Depreciated as hard to use. These are still supported but not recommended - instead, consider writing an API that uses this interface. This is how Sparational 4 Markdown support works. 
-
-- JSON page frames are from Sparational 4 beta. These:
-  - Use a version of JML (JSON Markdown Language) to represent HTML instead of XML. 
-  - Describe only the outline of a site, and instruct the browser to load other elements from other locations.
-  - Enable page-based SPA operation, where site elements are technically reloaded on every call, but their static nature allows heavy caching at every level.
-  - Depreciated for general use as hard to use. These are still available for more complex page frames.
-
-- Full SPA pages in YAML are coming soon for Sparational 4. These:
-  - Use YAML to represent HTML. 
-  - Will have an identifier variable like `YAML-Hypertext`. 
-  - Fully describe a site, including CSS classes and styles, numerous website pages, and additional elements and data as needed.
-  - Variable replacement system might be added - this design decision is pending.
-
-- YAML page frames are coming soon for Sparational 4. These:
-  - Use YAML to represent HTML. 
-  - Describe only the outline of a site, and instruct the browser to load other elements from other locations.
-  - Enable page-based SPA operation, where site elements are technically reloaded on every call, but their static nature allows heavy caching at every level.
-
 ## Add a sitelet to your site:
 
 - Like a microservice for your website.
