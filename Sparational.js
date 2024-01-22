@@ -1,12 +1,14 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.26.4 - Make faster websites faster.
+//SPArational.js v3.27.1 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 1/21/2024
+//Last updated: 1/22/2024
 //Version history:
+//3.27.1 Add GIF to convertWebElement under image display.
+//3.27.0 Add YouTube embed link parsing into new Video (iframe-in-div) tag.
+//3.26.6 Remove code wrapper carets and tildes. Break out 4-space indented code blocks from tilde/caret wrapped to prevent clobbering of indentation.
+//3.26.5 Code block bugfixes and improvements.
 //3.26.4 Improve code block parsing.
-//3.26.3 Update reloadEvery to enable better functionality.
-//3.26.2 Prevent Unordered List parsing unless the control characters start the line. 
 //Notes:
 
 /*Token data codes:
@@ -148,7 +150,7 @@ function addElement($elementParent,innerText,$elementClass,$elementType,$element
 		getElement($elementId).setAttribute("allowfullscreen", "true");
 	}
 	return $elementId
-}; // end addElement	
+}; // end addElement
 
 function getElement(elementId){
 	return document.getElementById(elementId)
@@ -276,11 +278,16 @@ function convertWebElement(parentElement,URL){
 				convertJmlToElements(parentElement,JSON.parse('[{\"elementType\":\"script\",\"href\":\"'+URL+'\"}]'))
 				break;
 			case "png": 
+			case "gif": 
 			case "jpg": 
 				convertJmlToElements(parentElement,JSON.parse('[{\"elementType\":\"img\",\"innerText\":\"'+URL+'\",\"href\":\"'+URL+'\"}]'))
 				break;
-			default: //Fallback to supplying a link.
+			default:
+				if (URL.match("https://www.youtube.com/embed/")) {
+					convertJmlToElements(parentElement,JSON.parse('[{\"elementType\":\"video\",\"innerText\":\"YouTube video\",\"href\":\"'+URL+'\"}]'))
+				} else { //Fallback to supplying a link.
 				convertJmlToElements(parentElement,JSON.parse('[{\"elementType\":\"a\",\"innerText\":\"'+URL+'\",\"href\":\"'+URL+'\"}]'))
+				}
 				break;
 		}
 };
