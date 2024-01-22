@@ -3,9 +3,9 @@
 - Make easy-to-cache and fast-to-load websites that can be updated more quickly.
 - Sparational version 4 is so easy to use that instead of using it, you make faster websites faster.
   - Start with a site frame or write your own.
-  - Add a Markdown sitelet to your site.
+  - Add a Markdown pagelet to your site.
   - Or go crazy and build a full-blown back-end server to host and feed the API? 
-  - Maybe just start with a sitelet and go from there.
+  - Maybe just start with a pagelet and go from there.
 - Compose beautiful websites entirely from Markdown and CSS. You'll never need to write HTML or Javascript again.
 
 ## Two big innovations:
@@ -56,7 +56,7 @@ HTML stub should be like 12 lines: Doctype, open HTML, open Head, maybe a couple
     - menu.md (Page menu)
     - copyright.md (Page copyright and footer.)
     - Any content file (usually under ./www/Page.html)
-      - Images, CSVs, and 'grandchild' Markdown sitelets.
+      - Images, CSVs, and 'grandchild' Markdown pagelets.
 
 ## Build a page using a prebuilt frame:
 
@@ -90,20 +90,20 @@ The default HTML bootstrap page uses this frame. Using local references allows i
 
 Just copy the above page frame and save on your web host as something like `frame.md`. Then just update your HTML bootstrap to point at it instead of the base frame. Feel free to update URI locations, element types, element IDs, and add element classes as desired. 
 
-## Add a sitelet to your site:
+## Add a pagelet to your site:
 
 - Like a microservice for your website.
-- Markdown sitelets are easy - just load and render:
+- Markdown pagelets are easy - just load and render:
 
-    ::: #usingSiteletListRgb
+    ::: #usingPageletListRgb
     :::
     
-    /sites/rgb.jml::usingSiteletListRgb
+    /sites/rgb.jml::usingPageletListRgb
 
-::: #usingSiteletListRgb
+::: #usingPageletListRgb
 :::
 
-/sites/rgb.jml::usingSiteletListRgb
+/sites/rgb.jml::usingPageletListRgb
 
 ## Add Javascript to a page:
 
@@ -116,7 +116,6 @@ codeGoesHere();
 ```
 
 Use Sparational tools including readElement to pull data from divs and other elements, and functions including writeElement to display.
-
 
 ## Add CSS to a page:
 
@@ -136,6 +135,27 @@ body { background-color: #700; } .textBubbleBG { border: 1px solid #32CD32;}
   - Feel free to call external CSS and Javascript files to extend your site beyond the basics, or define & call your own classes, styles, and functions. 
     - Or use a mix of inline and external site styles and functions. 
     - Sparational 4 lets you build your site however you want.
+
+## Reserved element types: 
+
+|Type|Converts Into|
+|------|------|
+|Radio|Input element with 'radio:true' and label with 'for:radioButton'.|
+|Video|Div with class='iframe-container', and child iframe with src='videoUrl'.|
+
+## convertWebElement behavior:
+
+|Extension|Behavior|
+|------|------|
+|jml|Display $_.pages.main.elements as HTML.|
+|spa|Display $_.pages.main.elements as HTML.|
+|csv|Display as table.|
+|md|Display as HTML.|
+|js|Load as script element.|
+|png|Display as img element.|
+|jpg|Display as img element.|
+|youtube|Display as responsive iframe.|
+|default|Display as llink|
 
 ## Next Steps
 
