@@ -504,29 +504,147 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
 			
 		} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
-			out += "{\"elementType\":\"table\",\"id\": \""+id+"\"},"
-			let elementType = "th"
-			let Thead = blockSplit[0]
-			let Tdata = blockSplit[1]//Was going to split and match on this, but how many tables have multiple header rows?
-			//Use text-align: left; text-align: right; text-align: center;
-			//Introduce other styling? Like with === instead of ---?
-			let Tbody = block.replace(Thead+"\n","").replace(Tdata+"\n","")
+			let Tableid = id
+			let THead = blockSplit[0]
+			let TData = blockSplit[1]//Was going to split and match on this, but how many tables have multiple header rows?
+			let TBody = block.replace(THead+"\n","").replace(TData+"\n","")
 
-			for (Tpart of [Thead,Tbody]) {
-				let TpartId = getRandomishString();
-				out += "{\"elementParent\": \""+id+"\",\"elementType\":\"thead\",\"id\": \""+TpartId+"\"},"
-				for (line of Tpart.split("\n")) {
-					let TRowID = getRandomishString();
-					out += "{\"elementParent\": \""+TpartId+"\",\"elementType\":\"tr\",\"id\": \""+TRowID+"\"},"
+			if (THead.match(/#/)){
+				elementHash = THead.split(" ").filter(function( obj ) {
+					return obj.match(/#/g);
+				});
+				elementHash = elementHash[0]
+				if (elementHash.split("#")[1]) {
+					Tableid = elementHash.split("#")[1]
+					THead = THead.replace(" "+elementHash,"")
+				}
+			}
+
+			let elementType = "th"
+			out += "{\"elementType\":\"table\",\"id\": \""+Tableid+"\"},"
+			let elementTPart = "thead"
+			let row = 0;
+
+			for (TPart of [THead,TBody]) {
+				let TPartID = Tableid+"-"+elementTPart
+				out += "{\"elementParent\": \""+Tableid+"\",\"elementType\":\""+elementTPart+"\",\"id\": \""+TPartID+"\"},"
+				for (line of TPart.split("\n")) {
+					let col = 0;
+					let TRowID = TPartID+"-r"+row
+					out += "{\"elementParent\": \""+TPartID+"\",\"elementType\":\"tr\",\"id\": \""+TRowID+"\"},"
 					for (data of line.split("\|")) {
 						if (data){
-							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\"},"
+							let TDataID = TRowID+"-c"+col
+							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"id\": \""+TDataID+"\"},"
 						}; //end if data
+						col++
 					}; //end for data 
-					elementType = "td"//After the first time through, change cell type from table header to table data. 
+					row++
+					//After the first time through, change cell type from table header to table body data. 
+					elementType = "td"
+					elementTPart = "tbody"
 				}; //end for line
-			}; //end for Tpart
-			
+			}; //end for TPart
+
+			let THeadSplit = THead.replace("|").split("\|")
+			let columnSettings = TData.replace("|").split("\|")
+			let scriptText = ""
+			for (let setting = 0; setting < columnSettings.length; setting++) {
+				let currentSetting = columnSettings[setting]
+				if (currentSetting.match("math")){
+					//|---f-math('Hectares'*'USD per hectare')-|
+					
+					let mathSetting = currentSetting.replace("-1","n1").split("-").filter(function( obj ) {//Clobbers -1
+						return obj.match(/math/g);
+					});
+					mathSetting = mathSetting[0].replace("n1","-1").replace("math(","").replaceAll(")","")
+					mathSetting = mathSetting.split("'")
+					
+					let inputACol = mathSetting[1];
+					if (typeof(inputACol) == "string") {
+						inputACol = THeadSplit.indexOf(inputACol)
+					}
+				
+					let rowBAdj = ""
+					let inputBCol = ""
+					let ColBTableid = Tableid
+					if (mathSetting[3]) {
+						if (mathSetting[3].match(/\(/)) {
+							if (mathSetting[3].split("(")[0] == "") {
+								ColBTableid = ""
+								inputBCol = mathSetting[3].split("(")[1]
+							} else {
+								inputBCol = mathSetting[3].split("(")[0]
+								rowBAdj = mathSetting[3].split("(")[1]
+								if (typeof(inputBCol) == "string") {
+									inputBCol = THeadSplit.indexOf(inputBCol)
+								}
+							}
+						} else {
+							inputBCol = mathSetting[3]
+							if (typeof(inputBCol) == "string") {
+								inputBCol = THeadSplit.indexOf(inputBCol)
+							}
+						}
+					}
+					mathSetting[2] = mathSetting[2].replace("+","add").replace("-","subtract").replace("*","multiply").replace("/","divide").replace("%","percent")
+			console.log("Tableid: "+Tableid+" inputACol: "+inputACol+" inputBCol: "+inputBCol+" rowBAdj: "+rowBAdj+" setting "+setting+" mathSetting[2]: "+mathSetting[2])
+					if (THead.replace("|").split("\|")[setting]) {
+						//let newOutColumnName = THead.replace("|").split("\|")[setting]
+						//scriptText += "columnMath('"+Tableid+"','"+inputACol+"','"+ColBTableid+"','"+inputBCol+"','"+rowBAdj+"','"+Tableid+"','"+setting+"','"+mathSetting[2]+"',4,'','"+newOutColumnName+"');"
+					} else {
+					}
+					scriptText += "columnMath('"+Tableid+"','"+inputACol+"','"+ColBTableid+"','"+inputBCol+"','"+rowBAdj+"','"+Tableid+"','"+setting+"','"+mathSetting[2]+"',4);"//,'','"+newOutColumnName+"');"
+				}
+				if (columnSettings[setting].match('-f-')){
+					scriptText += "formatMax('"+setting+"','"+Tableid+"')";
+				} 
+				if (columnSettings[setting].match(!"-ns-")){
+				} 
+				if (columnSettings[setting].match("-:")){
+					//right justify
+				} else if (columnSettings[setting].match(":-")){
+					//left justify
+				} else if (columnSettings[setting].match("-:-")){
+					//center justify
+				} 
+				if (columnSettings[setting].match("-h-")){
+				} 
+				if (columnSettings[setting].match("class")){
+					classSetting = topLine.split("-").filter(function( obj ) {
+						return obj.match(/class/);
+					});
+				} 
+				if (columnSettings[setting].match("style")){
+					styleSetting = topLine.split("-").filter(function( obj ) {
+						return obj.match(/style/);
+					});
+				}
+			}
+			out += "{\"elementType\":\"script\",\"innerText\": \""+scriptText+"\"},"
+			/*columnMath definition
+			Use text-align: left; text-align: right; text-align: center;
+			Make them all sortable. Use 'ns' to turn off.
+			|--1--|---2---|---3---|-4--|--5--|----6----|
+			|Date|Name|Type|Qty|Price|Income|
+			|------|--------|----|---f-:|---f-|---=(Qty+Price)-f--|
+			Autodetect if sort is alpha or number based on first row of body. (Where do I have this?)
+			columnMath:
+			=(col1 symbol col2, rounding)
+			- none - (copy A)
+			+ - add
+			- - subtract
+			* - multiply
+			/ - divide
+			% - percent (divide then multiply by 100 - NOT modulus) 
+			columnMath(Tableid,inputACol,Tableid,inputBCol,rowBAdj,Tableid,outputCol,mathOperation,4,formatMaxOutput,newOutColumnName)
+			Can use either column numbers (starting at 0) or column name.
+			Other codes: 
+			f - formatMax(targetColumn,Tableid)
+			ns - Not sortable
+			: - justify (place on side or middle)
+			h - header column (gets th instead of td)
+			*/
 		} else if (block.substr(0,3).match(/[:]{3}/g)) {//Div block - Nesting.
 			/* Div definition 
 			- Curly brackets and dots optional in the top line. 
@@ -1122,20 +1240,29 @@ function addTable(parentElement,newTableID,columnData,divClass) {
 	}
 }
 
-function addColumn(tableid,columnData,headLess) {
+function addColumn(tableid,columnData,headLess) {//Need to extend table ID schema to these. i.e. Table1001-tbody-r8-c1
 	var rowCount = 0;
 	if (headLess != "true") {
 		var tableHead = returnTablePart(tableid,"THEAD");
 		for (var currentRow=0; currentRow<tableHead.rows.length; currentRow++) {
 			rowCount++
-			addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortNumTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
+			if (typeof(columnData) == "object") {
+				addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortNumTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
+			} else {
+				addElement(tableHead.rows[currentRow].id,columnData,"","th","","","","sortNumTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
+			}
 		}
 	}
-
 	var tableBody = returnTablePart(tableid,"TBODY");
-	for (var currentRow=0; currentRow<columnData.length-rowCount; currentRow++) {
-		addElement(tableBody.rows[currentRow].id,columnData[currentRow+rowCount],"","td");
-	}
+	try {
+		for (var currentRow=0; currentRow<tableBody.rows.length-rowCount+1; currentRow++) {
+			if (typeof(columnData) == "object") {
+					addElement(tableBody.rows[currentRow].id,columnData[currentRow+rowCount],"","td");
+				} else {
+					addElement(tableBody.rows[currentRow].id,"","","td");
+			}
+		}
+	} catch {}
 }
 
 function deleteColumn(tableid){
@@ -1147,14 +1274,15 @@ function deleteColumn(tableid){
 	}
 }
 
-function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,outputCol,mathOperation,roundDigits,formatMaxOutput,newOutColumnName) {
+function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,outputCol,mathOperation,roundDigits=4,formatMaxOutput,newOutColumnName) {
 	var TableA = returnTablePart(TableAid,"TBODY");
-	var TableB;
-	var TableOut = returnTablePart(TableOutid,"TBODY");
-	
-	if (TableBid != "") {
-		TableB = returnTablePart(TableBid,"TBODY");
+	let TableBListed = true;
+	if (TableBid == "") {
+		TableBid = TableAid;
+		TableBListed = false;
 	}
+	var TableB = returnTablePart(TableBid,"TBODY");
+	var TableOut = returnTablePart(TableOutid,"TBODY");
 	if (outputCol >= TableOut.children[0].children.length) {
 		if (newOutColumnName == null) {
 			var TableAHead = returnTablePart(TableAid,"THEAD");
@@ -1191,7 +1319,7 @@ function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,out
 				mathVerb = " error";
 				break;
 			}
-			if (TableBid != "") {
+			if (TableBListed == true) {
 				if (TableAHead.children[0].children[inputACol].innerText == TableBHead.children[0].children[inputBCol].innerText) {
 					newOutColumnName = TableAHead.children[0].children[inputACol].innerText + mathVerb;
 				} else {
@@ -1200,9 +1328,9 @@ function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,out
 			} else {
 				newOutColumnName = TableAHead.children[0].children[inputACol].innerText + mathOperator + numToTextNotation(inputBCol);
 			}
-		}
 
-		addColumn(TableOutid,newOutColumnName);
+			addColumn(TableOutid,["",""],"true");
+		}
 	}
 		
 	for (var currentRow = (0-rowBAdj); currentRow < TableA.children.length; currentRow++) {
@@ -1213,8 +1341,9 @@ function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,out
 		var InputAText = textToNumNotation(childrenOfA.children[inputACol].innerText);
 		var InputBText;
 		
-		if (TableBid != "") {
-			childrenOfB = TableB.children[currentRow+rowBAdj];
+		if (TableBListed == true) {
+			thisRow = currentRow+(rowBAdj *1)
+			childrenOfB = TableB.children[thisRow];
 			InputBText = textToNumNotation(childrenOfB.children[inputBCol].innerText);
 		} else {
 			InputBText = textToNumNotation(inputBCol);
