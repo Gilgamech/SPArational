@@ -1,13 +1,12 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.30.0 - Make faster websites faster.
+//SPArational.js v3.30.2 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 2/18/2024
 //Version history:
+//3.30.2 Add pending fixes to checkAllLinksOnPage
+//3.30.1 Make LI names incremental under the UL/OL.
 //3.30.0 Remove dollarsigns from all (most?) variable names. Except powers of 10.
-//3.29.6 Bugfix previous bugfix by moving replacement to the start of every line.
-//3.29.5 Bugfix to prevent ordered lists from clobbereing subsequent number-dot-space combinations. 
-//3.29.4 Version history catchup, comments, etc.
 //Notes:
 
 /*Token data codes:
@@ -1200,11 +1199,20 @@ function checkAllLinksOnPage(outputElement){
 	appendElement(outputElement,"\nReading "+document.links.length+" Document Links\n");
 	for (link of document.links) {
 		let href = link.href
-			let len = a.length;
-		webRequest(link.href,function(content,statusCode){
+		webRequest(href,function(content,statusCode){
 			let works = " fails"
-			if (len > 100) {works = " works"}
+			if ((statusCode == 200) || (statusCode == 304)) {works = " works"}
 			appendElement(outputElement,"link "+href+ works+"\n");
+			colorifyWords(outputElement, "works", "maxValueInArray")
+			colorifyWords(outputElement, "fails", "red9")
+		})
+	}
+	for (image of document.images) {
+		let href = image.src
+		webRequest(href,function(content,statusCode){
+			let works = " fails"
+			if ((statusCode == 200) || (statusCode == 304)) {works = " works"}
+			appendElement(outputElement,"image "+href+ works+"\n");
 			colorifyWords(outputElement, "works", "maxValueInArray")
 			colorifyWords(outputElement, "fails", "red9")
 		})
