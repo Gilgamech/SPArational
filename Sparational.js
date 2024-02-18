@@ -762,6 +762,7 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	let prevLI = ""
 	let tabLevel = 0 //Could be called indentationLevel. 
 	let listID = [] //listID holds UL IDs. 
+	let inc = 0;
 	listID[0] = getRandomishString();
 	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 	let emitType = "ul"
@@ -774,7 +775,7 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not a random number.
 		line = line.replace(regex,regexReplace)
 		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs and nesting UL/OL until they're the same.
-			listID[listID.length] = getRandomishString();
+			listID[listID.length] = listID[listID.length -1]+"-"+emitType+inc
 			if (prevLI == "") {
 				out += "{\"elementParent\":\""+listID[listID.length -2]+"\",\"elementType\":\""+emitType+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 			} else {
@@ -787,11 +788,12 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 		} 
 		//Once the list level is sorted, add the list items. If it's a list item, set up to parent any UL/OL children above.
 		if (innerType == "li") {
-			prevLI = getRandomishString()
+			prevLI = listID[listID.length -1]+"-li"+inc
 			out += parseInline(listID[listID.length -1],line,innerType,prevLI)
 		} else {
 			out += parseInline(listID[listID.length -1],line,innerType)
 		}
+	inc++
 	}
 	return out;
 }
