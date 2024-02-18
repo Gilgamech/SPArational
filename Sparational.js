@@ -1,12 +1,13 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.29.5 - Make faster websites faster.
+//SPArational.js v3.30.0 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 2/18/2024
 //Version history:
+//3.30.0 Remove dollarsigns from all (most?) variable names. Except powers of 10.
+//3.29.6 Bugfix previous bugfix by moving replacement to the start of every line.
 //3.29.5 Bugfix to prevent ordered lists from clobbereing subsequent number-dot-space combinations. 
 //3.29.4 Version history catchup, comments, etc.
-//3.29.3 Bugfix subsequent links not working.
 //Notes:
 
 /*Token data codes:
@@ -72,82 +73,82 @@ let tokenEnd = tokenB+tokenSplitter+tokenA
 
 //DOM tools
 //addElement("elementParent","innerText","elementClass","elementType","elementStyle","href","onChange","onClick","contentEditable","attributeType","attributeAction","elementId")
-function addElement($elementParent,innerText,$elementClass,$elementType,$elementStyle,$href,$onChange,$onClick,$contentEditable,$attributeType,$attributeAction,$elementId) {
+function addElement(elementParent,innerText,elementClass,elementType,elementStyle,href,onChange,onClick,contentEditable,attributeType,attributeAction,elementId) {
 	let radioButton = false;
-	if (!$elementParent) {
+	if (!elementParent) {
 		return;
 	}; // end if elementType	
-	if (!$elementType) {
-		$elementType = "div"
+	if (!elementType) {
+		elementType = "div"
 	}; // end if elementType	
-	if ($elementType == "radio") {
-		$elementType = "input"
+	if (elementType == "radio") {
+		elementType = "input"
 		radioButton = true;
 	}
-	if ($elementType == "video") {
+	if (elementType == "video") {
 		let intermediateElementId = getRandomishString();
-		addElement($elementParent,"","iframe-container","div","","","","","","","",intermediateElementId)
-		$elementParent = intermediateElementId
-		$elementType = "iframe"
+		addElement(elementParent,"","iframe-container","div","","","","","","","",intermediateElementId)
+		elementParent = intermediateElementId
+		elementType = "iframe"
 	}
-	var newElement = document.createElement($elementType);
-	if (!$elementId) {
-		$elementId = getRandomishString();
+	var newElement = document.createElement(elementType);
+	if (!elementId) {
+		elementId = getRandomishString();
 	}; // end if divParent
-	newElement.id = $elementId;
-	if ($elementStyle) {
-		newElement.style = $elementStyle
+	newElement.id = elementId;
+	if (elementStyle) {
+		newElement.style = elementStyle
 	}; // end if elementStyle
-	if ($elementClass) {
-		newElement.className = $elementClass
+	if (elementClass) {
+		newElement.className = elementClass
 	}; // end if elementClass
-	if ($elementParent == "body") {
+	if (elementParent == "body") {
 		document.body.appendChild(newElement);
-	} else if ($elementParent == "head") {
+	} else if (elementParent == "head") {
 		document.head.appendChild(newElement);
 	} else {
-		getElement($elementParent).appendChild(newElement);
+		getElement(elementParent).appendChild(newElement);
 	}; // end if divParent
-	if ($elementType == "input" && innerText) {
+	if (elementType == "input" && innerText) {
 		newElement.value = innerText
-	} else if ($elementType == "img" && innerText) {
+	} else if (elementType == "img" && innerText) {
 		newElement.title = innerText
 	} else if (innerText) {
 		newElement.innerText = innerText
 	}; // end if elementType	
-	if ($elementType == "a" && $href) {
-		newElement.href = $href
-	} else if ($elementType == "img" && $href) {
-		newElement.src = $href
-	} else if ($elementType == "script" && $href) {
-		newElement.src = $href
-	} else if ($elementType == "iframe" && $href) {
-		newElement.src = $href
-	} else if ($elementType == "link" && $href) {
-		newElement.href = $href;
+	if (elementType == "a" && href) {
+		newElement.href = href
+	} else if (elementType == "img" && href) {
+		newElement.src = href
+	} else if (elementType == "script" && href) {
+		newElement.src = href
+	} else if (elementType == "iframe" && href) {
+		newElement.src = href
+	} else if (elementType == "link" && href) {
+		newElement.href = href;
 		newElement.rel = "stylesheet";
 		newElement.type= "text/css";
 	}; // end if elementType	
-	if ($onChange) {
-		getElement($elementId).setAttribute("onchange", $onChange);
+	if (onChange) {
+		getElement(elementId).setAttribute("onchange", onChange);
 	}; // end if onChange	
-	if ($onClick) {
-		getElement($elementId).setAttribute("onclick", $onClick);
+	if (onClick) {
+		getElement(elementId).setAttribute("onclick", onClick);
 	}; // end if onClick	
-	if ($contentEditable) {
-		getElement($elementId).contentEditable = true;
+	if (contentEditable) {
+		getElement(elementId).contentEditable = true;
 	}; // end if contentEditable	
-	if ($attributeType && $attributeAction) {
-		getElement($elementId).setAttribute($attributeType, $attributeAction);
+	if (attributeType && attributeAction) {
+		getElement(elementId).setAttribute(attributeType, attributeAction);
 	}; // end if attributeType
 	if (radioButton == true) {
-		getElement($elementId).setAttribute("type", "radio");
-		addElement($elementParent,innerText,"","label","","","","","","for",$elementId)//"for" is the attributeType and elementId is the attributeAction. So the label has "for: radioButton"
+		getElement(elementId).setAttribute("type", "radio");
+		addElement(elementParent,innerText,"","label","","","","","","for",elementId)//"for" is the attributeType and elementId is the attributeAction. So the label has "for: radioButton"
 	}
-	if ($elementType == "video") {
-		getElement($elementId).setAttribute("allowfullscreen", "true");
+	if (elementType == "video") {
+		getElement(elementId).setAttribute("allowfullscreen", "true");
 	}
-	return $elementId
+	return elementId
 }; // end addElement
 
 function getElement(elementId){
@@ -315,38 +316,38 @@ function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 
     let timerStart = Date.now()
 	if (window.localStorage[URI] && Date.now() < window.localStorage[URI+":onlineCacheDuration"]) {
 		console.log(URI+" cached for "+((window.localStorage[URI+":onlineCacheDuration"]-Date.now())/1000)+" more seconds.")
-		$status = "304";
+		status = "304";
 		returnVar = window.localStorage[URI];
-		$callback(returnVar,$status);
+		callback(returnVar,status);
     let timerStop = Date.now()
     let totalTime = timerStop-timerStart;
-    console.log("webRequest for "+URI+" took "+totalTime+" ms")
+    console.log("Cached webRequest for "+URI+" took "+totalTime+" ms")
 		return;
 	}; //end if window.localStorage
 
 	let n = 0;
-	var $status;
+	var status;
 	var xhRequest = new XMLHttpRequest();
 	var returnVar;
-	if ($verb == "POST") {
+	if (verb == "POST") {
 		xhRequest.overrideMimeType("text/plain");
-	} else if ($verb == "GET") {
+	} else if (verb == "GET") {
 		xhRequest.overrideMimeType("application/json");
-	} else if ($verb == "PUT") {
+	} else if (verb == "PUT") {
 		xhRequest.overrideMimeType("application/json");
 	} else {
 		xhRequest.overrideMimeType("text/plain");
-	}; // end if $verb
-	xhRequest.open($verb, URI, true);
+	}; // end if verb
+	xhRequest.open(verb, URI, true);
 	xhRequest.onreadystatechange = function () {
 		try {
-			$status = xhRequest.status;
-			if ($status == "200") {
+			status = xhRequest.status;
+			if (status == "200") {
 				if (xhRequest.readyState == 4) {
 					returnVar = xhRequest.responseText;
-					if ($JSON) {
+					if (JSON) {
 						returnVar = JSON.parse(returnVar);
-					}; // end if $JSON
+					}; // end if JSON
 					if (onlineCacheDuration > 0) {
 						window.localStorage[URI] = returnVar;
 						window.localStorage[URI+":onlineCacheDuration"] = (onlineCacheDuration * 1000) + Date.now();
@@ -357,23 +358,23 @@ function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 
 						window.localStorage[URI+":onlineCacheDuration"] = Date.now();
 						console.log("Invalidating "+URI)
 					}; //end if onlineCacheDuration
-					$callback(returnVar,$status);
+					callback(returnVar,status);
 				}; // end xhRequest.readyState
-			} else if (($status.toString().substr(0,1) == "4" || $status.toString().substr(0,1) == "5") && window.localStorage[URI] && Date.now() < window.localStorage[URI+":offlineCacheDuration"] && n==0) { //&&
+			} else if ((status.toString().substr(0,1) == "4" || status.toString().substr(0,1) == "5") && window.localStorage[URI] && Date.now() < window.localStorage[URI+":offlineCacheDuration"] && n==0) { //&&
 				console.log("Page "+URI+" offline. Serving cached copy.")
-				$status = "304";
+				status = "304";
 				returnVar = window.localStorage[URI];
-				$callback(returnVar,$status);
+				callback(returnVar,status);
 				n = (n*1) + 1;
 			} else if (n==0) {
-				$callback(" Error: "+xhRequest.statusText,$status);
-			}; // end if $status
+				callback(" Error: "+xhRequest.statusText,status);
+			}; // end if status
 		} catch(e) {console.log(e)}; // end try - This try catch captures errors within the callback too.
     let timerStop = Date.now()
     let totalTime = timerStop-timerStart;
-    console.log("webRequest for "+URI+" took "+totalTime+" ms")
+    console.log("Full webRequest for "+URI+" took "+totalTime+" ms")
 	}; // end xhRequest.onreadystatechange
-	xhRequest.send($file);
+	xhRequest.send(file);
 }; // end webRequest
 
 function reloadEvery(parentElement,URL,callback,JSON,seconds = 60){
@@ -1059,117 +1060,117 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }; //end function onlyUnique
 
-function textToNumNotation($inputObject) {
-	if (typeof $inputObject == "string") {
-		$inputObject = $inputObject.replace(/,/g,"");
-		if ($inputObject.substring($inputObject.length -1,$inputObject.length) == "k") {
-			$inputObject = $inputObject.replace(/k/g," thousand");
+function textToNumNotation(inputObject) {
+	if (typeof inputObject == "string") {
+		inputObject = inputObject.replace(/,/g,"");
+		if (inputObject.substring(inputObject.length -1,inputObject.length) == "k") {
+			inputObject = inputObject.replace(/k/g," thousand");
 		}
-		if ($inputObject.substring($inputObject.length -2,2) == "bn") {
-			$inputObject = $inputObject.replace(/bn/g," billion");
+		if (inputObject.substring(inputObject.length -2,2) == "bn") {
+			inputObject = inputObject.replace(/bn/g," billion");
 		}
-		var $splitObject = $inputObject.split(" ");
-		var $value = $splitObject[0]
-		var $significand = $splitObject[1]
-		switch ($significand){
+		var splitObject = inputObject.split(" ");
+		var value = splitObject[0]
+		var significand = splitObject[1]
+		switch (significand){
 			case "decillion":
-				$significand = $decillion;
+				significand = $decillion;
 				break;
 			case "nonillion":
-				$significand = $nonillion;
+				significand = $nonillion;
 				break;
 			case "octillion":
-				$significand = $octillion;
+				significand = $octillion;
 				break;
 			case "septillion":
-				$significand = $septillion;
+				significand = $septillion;
 				break;
 			case "sixtillion":
-				$significand = $sixtillion;
+				significand = $sixtillion;
 				break;
 			case "quintillion":
-				$significand = $quintillion;
+				significand = $quintillion;
 				break;
 			case "quadrillion":
-				$significand = $quadrillion;
+				significand = $quadrillion;
 				break;
 			case "trillion":
-				$significand = $trillion;
+				significand = $trillion;
 				break;
 			case "billion":
-				$significand = $billion;
+				significand = $billion;
 				break;
 			case "million":
-				$significand = $million;
+				significand = $million;
 				break;
 			case "thousand":
-				$significand = $thousand;
+				significand = $thousand;
 				break;
 			default:
-				$significand = 1;
+				significand = 1;
 				break;
 		}
-		$outputItem = $value * $significand;
-		return $outputItem;
-	} else if (typeof $inputObject == "number") {
-		return $inputObject;
+		outputItem = value * significand;
+		return outputItem;
+	} else if (typeof inputObject == "number") {
+		return inputObject;
 	} else {
-		return $inputObject;
+		return inputObject;
 	}
 }
 
-function numToTextNotation($inputObject,round) {
-	var $significand = ""
-	var $outVal2
-	if (typeof $inputObject == "string") {
-		$inputObject = $inputObject.replace(/,/g,"") *1;
+function numToTextNotation(inputObject,round) {
+	var significand = ""
+	var outputValue
+	if (typeof inputObject == "string") {
+		inputObject = inputObject.replace(/,/g,"") *1;
 	}
-	if ($inputObject >= $decillion){
-		$outVal2 = getRoundedNumber($inputObject/$decillion,round);
-		$significand = " decillion";
-	}else if ($inputObject >= $nonillion){
-		$outVal2 = getRoundedNumber($inputObject/$nonillion,round);
-		$significand = " nonillion";
-	}else if ($inputObject >= $octillion){
-		$outVal2 = getRoundedNumber($inputObject/$octillion,round);
-		$significand = " octillion";
-	}else if ($inputObject >= $septillion){
-		$outVal2 = getRoundedNumber($inputObject/$septillion,round);
-		$significand = " septillion";
-	}else if ($inputObject >= $sixtillion){
-		$outVal2 = getRoundedNumber($inputObject/$sixtillion,round);
-		$significand = " sixtillion";
-	}else if ($inputObject >= $quintillion){
-		$outVal2 = getRoundedNumber($inputObject/$quintillion,round);
-		$significand = " quintillion";
-	}else if ($inputObject >= $quadrillion){
-		$outVal2 = getRoundedNumber($inputObject/$quadrillion,round);
-		$significand = " quadrillion";
-	}else if ($inputObject >= $trillion){
-		$outVal2 = getRoundedNumber($inputObject/$trillion,round);
-		$significand = " trillion";
-	}else if ($inputObject >= $billion){
-		$outVal2 = getRoundedNumber($inputObject/$billion,round);
-		$significand = " billion";
-	}else if ($inputObject >= $million){
-		$outVal2 = getRoundedNumber($inputObject/$million,round);
-		$significand = " million";
-	}else if ($inputObject >= $thousand){
-		$outVal2 = getRoundedNumber($inputObject/$thousand,round);
-		$significand = "k";
+	if (inputObject >= $decillion){
+		outputValue = getRoundedNumber(inputObject/$decillion,round);
+		significand = " decillion";
+	}else if (inputObject >= $nonillion){
+		outputValue = getRoundedNumber(inputObject/$nonillion,round);
+		significand = " nonillion";
+	}else if (inputObject >= $octillion){
+		outputValue = getRoundedNumber(inputObject/$octillion,round);
+		significand = " octillion";
+	}else if (inputObject >= $septillion){
+		outputValue = getRoundedNumber(inputObject/$septillion,round);
+		significand = " septillion";
+	}else if (inputObject >= $sixtillion){
+		outputValue = getRoundedNumber(inputObject/$sixtillion,round);
+		significand = " sixtillion";
+	}else if (inputObject >= $quintillion){
+		outputValue = getRoundedNumber(inputObject/$quintillion,round);
+		significand = " quintillion";
+	}else if (inputObject >= $quadrillion){
+		outputValue = getRoundedNumber(inputObject/$quadrillion,round);
+		significand = " quadrillion";
+	}else if (inputObject >= $trillion){
+		outputValue = getRoundedNumber(inputObject/$trillion,round);
+		significand = " trillion";
+	}else if (inputObject >= $billion){
+		outputValue = getRoundedNumber(inputObject/$billion,round);
+		significand = " billion";
+	}else if (inputObject >= $million){
+		outputValue = getRoundedNumber(inputObject/$million,round);
+		significand = " million";
+	}else if (inputObject >= $thousand){
+		outputValue = getRoundedNumber(inputObject/$thousand,round);
+		significand = "k";
 	}else{
-		$outVal2 = getRoundedNumber($inputObject,round);
+		outputValue = getRoundedNumber(inputObject,round);
 	}
-	if (isNaN($outVal2) == true) {
-		$outVal2 = 0;
+	if (isNaN(outputValue) == true) {
+		outputValue = 0;
 	}
-	return $outVal2 + $significand;
+	return outputValue + significand;
 }
 
-function detectEnter($keypress,$callback,$keycode=13){
-    if($keypress.keyCode === $keycode){
-        $keypress.preventDefault(); // Ensure it is only this code that runs
-		$callback();
+function detectEnter(keypress,callback,keycode=13){
+    if(keypress.keyCode === keycode){
+        keypress.preventDefault(); // Ensure it is only this code that runs
+		callback();
     };
 }; // end detectEnter
 
