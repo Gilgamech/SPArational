@@ -536,7 +536,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 						if (data){
 							let TDataID = TRowID+"-c"+col
 					if (TPart == THead) {
-							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"onClick\":\"sortTable("+col+",'"+tableid+"')\",\"id\": \""+TDataID+"\"},"
+							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"onClick\":\"sortTable("+col+",'"+Tableid+"')\",\"id\": \""+TDataID+"\"},"
 					} else {
 							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"id\": \""+TDataID+"\"},"
 					}
