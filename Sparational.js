@@ -754,7 +754,7 @@ function replaceSymbols(text) {
 			}; // end split match
 		}; // end for split
 	}; // end for key
-	text = text.replace("¤¤¤ŒŒŒŒŒŒĦĦĦamĦĦĦŒŒŒŒŒŒ¤¤¤¤¤¤ŒŒŒŒŒŒĦĦĦhaĦĦĦŒŒŒŒŒŒ¤¤¤","¤¤¤ŒŒŒŒŒŒĦĦĦamĦĦĦŒŒŒŒŒŒ¤¤¤http")
+	text = text.replaceAll("¤¤¤ŒŒŒŒŒŒĦĦĦamĦĦĦŒŒŒŒŒŒ¤¤¤¤¤¤ŒŒŒŒŒŒĦĦĦhaĦĦĦŒŒŒŒŒŒ¤¤¤","¤¤¤ŒŒŒŒŒŒĦĦĦamĦĦĦŒŒŒŒŒŒ¤¤¤http")
 	return text
 }
 
