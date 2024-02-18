@@ -1537,27 +1537,29 @@ function sortTable(currentColumn,tableid) {
 		nextCell = rows[currentRow + 1].getElementsByTagName("td")[currentColumn];
 		/* Check if the two rows should switch place, based on the direction, asc or desc: */
 		if (dir == "asc") {
-			if (typeof(currentCell) == "string") {
+			if (typeof(currentCell).innerText == "string") {
 				if (currentCell.innerHTML.toLowerCase() > nextCell.innerHTML.toLowerCase()) {
 				  // If so, mark as a switch and break the loop:
 				  shouldSwitch = true;
 				  break;
 				}
-			} else if (typeof(currentCell) == "number") {
+			} else if (typeof(currentCell).innerText == "number") {
 				if ((textToNumNotation(currentCell.innerHTML.replace("$",""))) > (textToNumNotation(nextCell.innerHTML.replace("$","")))) {
 				  // If so, mark as a switch and break the loop:
 				  shouldSwitch = true;
 				  break;
 				}
+			} else {
+				console.log(typeof(currentCell))
 			}// end if typeof
 		} else if (dir == "desc") {
-			if (typeof(currentCell) == "string") {
+			if (typeof(currentCell).innerText == "string") {
 				if (currentCell.innerHTML.toLowerCase() < nextCell.innerHTML.toLowerCase()) {
 					// If so, mark as a switch and break the loop:
 					shouldSwitch = true;
 					break;
 				}
-			} else if (typeof(currentCell) == "number") {
+			} else if (typeof(currentCell).innerText == "number") {
 				if ((textToNumNotation(currentCell.innerHTML.replace("$",""))) < (textToNumNotation(nextCell.innerHTML.replace("$","")))) {
 				  // If so, mark as a switch and break the loop:
 				  shouldSwitch = true;
