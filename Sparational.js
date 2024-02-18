@@ -1,12 +1,12 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.30.2 - Make faster websites faster.
+//SPArational.js v3.30.3 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 2/18/2024
 //Version history:
+//3.30.3 Bugfix to sortTable calls.
 //3.30.2 Add pending fixes to checkAllLinksOnPage
 //3.30.1 Make LI names incremental under the UL/OL.
-//3.30.0 Remove dollarsigns from all (most?) variable names. Except powers of 10.
 //Notes:
 
 /*Token data codes:
@@ -553,7 +553,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 						if (data){
 							let TDataID = TRowID+"-c"+col
 					if (TPart == THead) {
-							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"onClick\":\"sortTable("+col+",'"+Tableid+"')\",\"id\": \""+TDataID+"\"},"
+							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"onClick\":\"sortTable("+(col -1)+",'"+Tableid+"')\",\"id\": \""+TDataID+"\"},"
 					} else {
 							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"id\": \""+TDataID+"\"},"
 					}
@@ -1272,9 +1272,9 @@ function addColumn(tableid,columnData,headLess) {//Need to extend table ID schem
 		for (var currentRow=0; currentRow<tableHead.rows.length; currentRow++) {
 			rowCount++
 			if (typeof(columnData) == "object") {
-				addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
+				addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortTable("+(tableHead.children[0].children.length -1)+",'"+tableid+"')");
 			} else {
-				addElement(tableHead.rows[currentRow].id,columnData,"","th","","","","sortTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
+				addElement(tableHead.rows[currentRow].id,columnData,"","th","","","","sortTable("+(tableHead.children[0].children.length -1)+",'"+tableid+"')");
 			}
 		}
 	}
