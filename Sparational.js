@@ -1,16 +1,12 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.29.4 - Make faster websites faster.
+//SPArational.js v3.29.5 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
 //Last updated: 2/18/2024
 //Version history:
+//3.29.5 Bugfix to prevent ordered lists from clobbereing subsequent number-dot-space combinations. 
 //3.29.4 Version history catchup, comments, etc.
 //3.29.3 Bugfix subsequent links not working.
-//3.29.2 Improve sortTable type detection.
-//3.29.1 Bugfixf for sortTable. 
-//3.29.0 Add sortTable. Bugfix for columnMath.
-//3.28.0 Add new columnMath support in Markdown tables.
-//3.27.1 Add GIF to convertWebElement under image display.
 //Notes:
 
 /*Token data codes:
@@ -500,7 +496,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
 		
 		} else if (symbol.match(/\d+[.]/)) {//Ordered Lists - Nesting.
-			out += parseBlock(block,/[0-9]+[.][ ]/g,"ol","","li")
+			out += parseBlock(block,/^[0-9]+[.][ ]/g,"ol","","li")
 		
 		} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
 			out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
