@@ -1,14 +1,16 @@
 //Copyright 2013-2024 Gilgamech Technologies
-//SPArational.js v3.27.1 - Make faster websites faster.
+//SPArational.js v3.29.4 - Make faster websites faster.
 //Author: Stephen Gillie
 //Created on: 8/3/2022
-//Last updated: 1/22/2024
+//Last updated: 2/18/2024
 //Version history:
+//3.29.4 Version history catchup, comments, etc.
+//3.29.3 Bugfix subsequent links not working.
+//3.29.2 Improve sortTable type detection.
+//3.29.1 Bugfixf for sortTable. 
+//3.29.0 Add sortTable. Bugfix for columnMath.
+//3.28.0 Add new columnMath support in Markdown tables.
 //3.27.1 Add GIF to convertWebElement under image display.
-//3.27.0 Add YouTube embed link parsing into new Video (iframe-in-div) tag.
-//3.26.6 Remove code wrapper carets and tildes. Break out 4-space indented code blocks from tilde/caret wrapped to prevent clobbering of indentation.
-//3.26.5 Code block bugfixes and improvements.
-//3.26.4 Improve code block parsing.
 //Notes:
 
 /*Token data codes:
@@ -558,7 +560,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				if (currentSetting.match("math")){
 					//|---f-math('Hectares'*'USD per hectare')-|
 					
-					let mathSetting = currentSetting.replace("-1","n1").split("-").filter(function( obj ) {//Clobbers -1
+					let mathSetting = currentSetting.replace("-1","n1").split("-").filter(function( obj ) {//Clobbers -1, -2, .. -n, etc.
 						return obj.match(/math/g);
 					});
 					mathSetting = mathSetting[0].replace("n1","-1").replace("math(","").replaceAll(")","")
@@ -590,7 +592,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 								inputBCol = THeadSplit.indexOf(inputBCol)
 							}
 						}
-					}
+					}//end if mathSetting
 					mathSetting[2] = mathSetting[2].replace("+","add").replace("-","subtract").replace("*","multiply").replace("/","divide").replace("%","percent")
 			console.log("Tableid: "+Tableid+" inputACol: "+inputACol+" inputBCol: "+inputBCol+" rowBAdj: "+rowBAdj+" setting "+setting+" mathSetting[2]: "+mathSetting[2])
 					if (THead.replace("|").split("\|")[setting]) {
@@ -599,7 +601,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 					} else {
 					}
 					scriptText += "columnMath('"+Tableid+"','"+inputACol+"','"+ColBTableid+"','"+inputBCol+"','"+rowBAdj+"','"+Tableid+"','"+setting+"','"+mathSetting[2]+"',4);"//,'','"+newOutColumnName+"');"
-				}
+				}//end if match math
 				if (columnSettings[setting].match('-f-')){
 					scriptText += "formatMax('"+setting+"','"+Tableid+"');";
 				} 
@@ -614,6 +616,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				} 
 				if (columnSettings[setting].match("-h-")){
 				} 
+				//Add colgroup above and parent under.
 				if (columnSettings[setting].match("class")){
 					classSetting = topLine.split("-").filter(function( obj ) {
 						return obj.match(/class/);
@@ -624,7 +627,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 						return obj.match(/style/);
 					});
 				}
-			}
+			}//end for setting
 			out += "{\"elementType\":\"script\",\"innerText\": \""+scriptText+"\"},"
 			/*columnMath definition
 			Use text-align: left; text-align: right; text-align: center;
@@ -723,8 +726,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			out += parseInline(elementParent,block)
 		};//end switch symbol
 	};//end for block
-
-	out = out
+	
 	return out;
 }
 
@@ -1292,7 +1294,6 @@ function columnMath(TableAid,inputACol,TableBid,inputBCol,rowBAdj,TableOutid,out
 			var TableAHead = returnTablePart(TableAid,"THEAD");
 			var TableBHead = returnTablePart(TableBid,"THEAD");
 			var mathOperator;
-
 			switch(mathOperation) {
 			  case "none":
 				mathOperator = "";
@@ -1673,6 +1674,7 @@ function addRowHandlers(col,tableid) {
 }
 
 function returnTablePart(tableid,tablePart) {
+	//tablePart can be THEAD, TBODY, or COLGROUP, and the table has to have these defined or the function will have nothing to return. 
 	var table = getElement(tableid);
 	var tableData;
 	for (var i = 0; i < table.children.length; i++) {
@@ -1701,4 +1703,3 @@ var $septillion = $sixtillion *$thousand;
 var $octillion = $septillion *$thousand;
 var $nonillion = $octillion *$thousand;
 var $decillion = $nonillion *$thousand;
-
