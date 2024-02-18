@@ -311,7 +311,7 @@ function rwjs($JSON) {
 	//faster: stringify, 
 	
 }; // end function
-function webRequest(URI,$callback,$JSON,$verb="get",$file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
+function webRequest(URI,callback,JSON,verb="get",file,onlineCacheDuration = 30,offlineCacheDuration = 86400) {
 //if now is smaller than duration, read from cache.
     let timerStart = Date.now()
 	if (window.localStorage[URI] && Date.now() < window.localStorage[URI+":onlineCacheDuration"]) {
