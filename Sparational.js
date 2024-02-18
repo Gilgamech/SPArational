@@ -518,6 +518,22 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				}
 			}
 
+			for (let setting = 0; setting < columnSettings.length; setting++) {
+				if (columnSettings[setting].match(!"-ns-")){
+					//insertOnclick += "\"onClick\":\"sortTable('replaceWithCol','"+Tableid+"')\",";
+					//Needs some way to inject col.
+                } 
+				if (columnSettings[setting].match("-:")){
+				//right justify
+				} else if (columnSettings[setting].match(":-")){
+					//left justify
+				} else if (columnSettings[setting].match("-:-")){
+					//center justify
+				} 
+				if (columnSettings[setting].match("-h-")){
+				} 
+			}//end for setting
+
 			let elementType = "th"
 			out += "{\"elementType\":\"table\",\"id\": \""+Tableid+"\"},"
 			let elementTPart = "thead"
@@ -600,17 +616,6 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				}//end if match math
 				if (columnSettings[setting].match('-f-')){
 					scriptText += "formatMax('"+setting+"','"+Tableid+"');";
-				} 
-				if (columnSettings[setting].match(!"-ns-")){
-				} 
-				if (columnSettings[setting].match("-:")){
-					//right justify
-				} else if (columnSettings[setting].match(":-")){
-					//left justify
-				} else if (columnSettings[setting].match("-:-")){
-					//center justify
-				} 
-				if (columnSettings[setting].match("-h-")){
 				} 
 				//Add colgroup above and parent under.
 				if (columnSettings[setting].match("class")){
