@@ -535,7 +535,11 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 					for (data of line.split("\|")) {
 						if (data){
 							let TDataID = TRowID+"-c"+col
+					if (TPart == THead) {
+							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"onClick\":\"sortTable("+col+",'"+tableid+"')\",\"id\": \""+TDataID+"\"},"
+					} else {
 							out += "{\"elementParent\": \""+TRowID+"\",\"elementType\":\""+elementType+"\",\"innerText\": \""+data+"\",\"id\": \""+TDataID+"\"},"
+					}
 						}; //end if data
 						col++
 					}; //end for data 
@@ -597,7 +601,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 					scriptText += "columnMath('"+Tableid+"','"+inputACol+"','"+ColBTableid+"','"+inputBCol+"','"+rowBAdj+"','"+Tableid+"','"+setting+"','"+mathSetting[2]+"',4);"//,'','"+newOutColumnName+"');"
 				}
 				if (columnSettings[setting].match('-f-')){
-					scriptText += "formatMax('"+setting+"','"+Tableid+"')";
+					scriptText += "formatMax('"+setting+"','"+Tableid+"');";
 				} 
 				if (columnSettings[setting].match(!"-ns-")){
 				} 
@@ -1247,9 +1251,9 @@ function addColumn(tableid,columnData,headLess) {//Need to extend table ID schem
 		for (var currentRow=0; currentRow<tableHead.rows.length; currentRow++) {
 			rowCount++
 			if (typeof(columnData) == "object") {
-				addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortNumTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
+				addElement(tableHead.rows[currentRow].id,columnData[currentRow],"","th","","","","sortTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
 			} else {
-				addElement(tableHead.rows[currentRow].id,columnData,"","th","","","","sortNumTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
+				addElement(tableHead.rows[currentRow].id,columnData,"","th","","","","sortTable("+(tableHead.children[0].children.length)+",'"+tableid+"')");
 			}
 		}
 	}
@@ -1496,6 +1500,72 @@ function sortNumTable(currentColumn,tableid) {
         }
       }
     }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch and mark that a switch has been done: */
+      rows[currentRow].parentNode.insertBefore(rows[currentRow + 1], rows[currentRow]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+function sortTable(currentColumn,tableid) {
+  var table, rows, switching, currentRow, currentCell, nextCell, shouldSwitch, dir, switchcount = 0;
+  table = getElement(tableid);
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the first, which contains table headers): */
+    for (currentRow = 1; currentRow < (rows.length - 1); currentRow++) {
+		// Start by saying there should be no switching:
+		shouldSwitch = false;
+		/* Get the two elements you want to compare, one from current row and one from the next: */
+		currentCell = rows[currentRow].getElementsByTagName("td")[currentColumn];
+		nextCell = rows[currentRow + 1].getElementsByTagName("td")[currentColumn];
+		/* Check if the two rows should switch place, based on the direction, asc or desc: */
+		if (dir == "asc") {
+			if (typeof(currentCell) == "string") {
+				if (currentCell.innerHTML.toLowerCase() > nextCell.innerHTML.toLowerCase()) {
+				  // If so, mark as a switch and break the loop:
+				  shouldSwitch = true;
+				  break;
+				}
+			} else if (typeof(currentCell) == "number") {
+				if ((textToNumNotation(currentCell.innerHTML.replace("$",""))) > (textToNumNotation(nextCell.innerHTML.replace("$","")))) {
+				  // If so, mark as a switch and break the loop:
+				  shouldSwitch = true;
+				  break;
+				}
+			}// end if typeof
+		} else if (dir == "desc") {
+			if (typeof(currentCell) == "string") {
+				if (currentCell.innerHTML.toLowerCase() < nextCell.innerHTML.toLowerCase()) {
+					// If so, mark as a switch and break the loop:
+					shouldSwitch = true;
+					break;
+				}
+			} else if (typeof(currentCell) == "number") {
+				if ((textToNumNotation(currentCell.innerHTML.replace("$",""))) < (textToNumNotation(nextCell.innerHTML.replace("$","")))) {
+				  // If so, mark as a switch and break the loop:
+				  shouldSwitch = true;
+				  break;
+				}
+			}// end if typeof
+		}//end if dir
+	}//end for currentRow
     if (shouldSwitch) {
       /* If a switch has been marked, make the switch and mark that a switch has been done: */
       rows[currentRow].parentNode.insertBefore(rows[currentRow + 1], rows[currentRow]);
