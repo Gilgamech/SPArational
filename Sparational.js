@@ -493,9 +493,9 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			out += "{\"elementType\":\"hr\"},"
 			
 		} else if (symbol.match(/^[-+*]{1,1}/)) {//Unordered Lists - Nesting.
-			out += parseBlock(block.replace(/\-[ ]/g,"").replace(/\+[ ]/g,"").replace(/\*[ ]/g,""),/\-[ ]/g,"ul","","li")
+			out += parseBlock(block,/^-[ ]/g,"ul","","li") //.replace(/-[ ]/g,"").replace(/[ ]{}/,"").replace(/\*[ ]/g,"")
 		
-		} else if (symbol.match(/\d+[.]/)) {//Ordered Lists - Nesting.
+		} else if (symbol.match(/^\d+[.]/)) {//Ordered Lists - Nesting.
 			out += parseBlock(block,/^[0-9]+[.][ ]/g,"ol","","li")
 		
 		} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
@@ -763,7 +763,8 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	let listID = [] //listID holds UL IDs. 
 	listID[0] = getRandomishString();
 	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
-	for (line of block.replace(regex,regexReplace).split("\n")) {
+	for (line of block.split("\n")) {
+		line = line.replace(regex,regexReplace)
 		//listID holds as many IDs as are at tabLevel, or double the number of spaces leading the line.
 		tabLevel = line.match(/^\s*/).toString().split("  ").length//Gather the leading spaces and count the pairs to get the tabLevel.
 		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not a random number.
