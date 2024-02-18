@@ -504,9 +504,12 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 		} else if (symbol.match(/([|]\s*\S+\s*){1,}/g)) {//Tables
 			let Tableid = id
 			let THead = blockSplit[0]
+			let THeadSplit = THead.replace("|").split("\|")
 			let TData = blockSplit[1]//Was going to split and match on this, but how many tables have multiple header rows?
+			let columnSettings = TData.replace("|").split("\|")
 			let TBody = block.replace(THead+"\n","").replace(TData+"\n","")
-
+			let scriptText = ""
+			
 			if (THead.match(/#/)){
 				elementHash = THead.split(" ").filter(function( obj ) {
 					return obj.match(/#/g);
@@ -564,9 +567,7 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 				}; //end for line
 			}; //end for TPart
 
-			let THeadSplit = THead.replace("|").split("\|")
-			let columnSettings = TData.replace("|").split("\|")
-			let scriptText = ""
+
 			for (let setting = 0; setting < columnSettings.length; setting++) {
 				let currentSetting = columnSettings[setting]
 				if (currentSetting.match("math")){
