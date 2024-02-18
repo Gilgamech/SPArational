@@ -493,10 +493,10 @@ function convertMdToJml(markdown,nestedParent = "parentElement") {
 			out += "{\"elementType\":\"hr\"},"
 			
 		} else if (symbol.match(/^[-+*]{1,1}/)) {//Unordered Lists - Nesting.
-			out += parseBlock(block,/^-[ ]/g,"ul","","li") //.replace(/-[ ]/g,"").replace(/[ ]{}/,"").replace(/\*[ ]/g,"")
+			out += parseBlock(block,/-[ ]/,"ul","","li")
 		
 		} else if (symbol.match(/^\d+[.]/)) {//Ordered Lists - Nesting.
-			out += parseBlock(block,/^[0-9]+[.][ ]/g,"ol","","li")
+			out += parseBlock(block,/[0-9]+[.][ ]/,"ol","","li")
 		
 		} else if (symbol.match(/(>+\s*){1,}/g)) {//blockquote - Nesting.
 			out += parseBlock(block.replace(/^>[ ]/g,"").replace(/\n>[ ]/g,"\n"),"","blockquote","","")
@@ -763,23 +763,28 @@ function parseBlock(block,regex="",outerType="",outerClass="",innerType="",regex
 	let listID = [] //listID holds UL IDs. 
 	listID[0] = getRandomishString();
 	let out = "{\"elementType\":\""+outerType+"\",\"elementClass\":\""+outerClass+"\",\"id\": \""+listID[listID.length -1]+"\"},"
+	let emitType = "ul"
+	if (outerClass == "ol") {
+		emitType = outerClass;
+	}
 	for (line of block.split("\n")) {
-		line = line.replace(regex,regexReplace)
 		//listID holds as many IDs as are at tabLevel, or double the number of spaces leading the line.
 		tabLevel = line.match(/^\s*/).toString().split("  ").length//Gather the leading spaces and count the pairs to get the tabLevel.
 		line = line.replace(/^\s*/,"")//Should be tabLevel*2 spaces, not a random number.
-		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs until they're the same.
+		line = line.replace(regex,regexReplace)
+		while (tabLevel > listID.length) {//If listID.length is less than the tabLevel, then add IDs and nesting UL/OL until they're the same.
 			listID[listID.length] = getRandomishString();
 			if (prevLI == "") {
-				out += "{\"elementParent\":\""+listID[listID.length -2]+"\",\"elementType\":\"ul\",\"id\": \""+listID[listID.length -1]+"\"},"
+				out += "{\"elementParent\":\""+listID[listID.length -2]+"\",\"elementType\":\""+emitType+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 			} else {
-				out += "{\"elementParent\":\""+prevLI+"\",\"elementType\":\"ul\",\"id\": \""+listID[listID.length -1]+"\"},"
+				out += "{\"elementParent\":\""+prevLI+"\",\"elementType\":\""+emitType+"\",\"id\": \""+listID[listID.length -1]+"\"},"
 				prevLI = ""
 			}
 		}  
 		while (tabLevel < listID.length) {//If the listID.length is greater than the tabLevel, then delete IDs until they're the same.
 			listID.pop();
 		} 
+		//Once the list level is sorted, add the list items. If it's a list item, set up to parent any UL/OL children above.
 		if (innerType == "li") {
 			prevLI = getRandomishString()
 			out += parseInline(listID[listID.length -1],line,innerType,prevLI)
