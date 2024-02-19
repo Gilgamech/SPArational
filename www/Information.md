@@ -5,10 +5,9 @@
 - Reduce development and loading time by moving everything into the browser.
 - Rehydrate sections, load additional content, and even lazy-load scripts or content elements.
 - Using standard Markdown and occasional Javascript enables entirely hostless design while making websites easier to make.
-- Serverless design accelerates through CDN very well.
+- Client-side design accelerates through CDN very well.
 - Synchronous and functional library streamlines and encourages using DOM elements for data storage.
-- Use of JSON enables variable replacement, which is similar to how pages are built in many server-side frameworks.
-- Use of DOM for data storage, and caching functionality of webRequest, obviate any in-memory or server-side data structures that could become out of sync, along with most waiting for network.
+- webRequest default Local Storage caching enables 0 TTFB and no bandwidth used on many page loads.
 - Not waiting for server or network means faster, funner pages.
 
 ## Beyond Serverless and into Hostless

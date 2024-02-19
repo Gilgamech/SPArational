@@ -1,9 +1,11 @@
 #SPA-YAML-Version: 30OCT2023
+SpaVersion: 12DEC2023
 Author: Stephen Gillie
 Created: 11/1/2023
 Updated: 11/25/2023
 Notes: 
-- 2.0 - rewrite as SPA format.
+- 2.0 - rewrite as JML SPA format.
+- 2.1 - rewrite as YAML SPA format.
 pages:
   main:
     elements:
